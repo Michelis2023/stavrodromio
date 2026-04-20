@@ -1,30 +1,78 @@
 <!DOCTYPE html>
-<html lang=\"el\">
+<html lang="el">
 <head>
-    <meta charset=\"UTF-8\">
-    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Σταυροδρόμι</title>
-    <link href=\"https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap\" rel=\"stylesheet\">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
-        /* Base styles from the attached file */
         :root {
             --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
             --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
             --mast: #1e2b1f; --mast-mid: #2e4230;
             --rep: #7a1a1a; --ist: #5a3e10; --lao: #1e4a2e; --aut: #1a2e5a;
         }
-        body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; margin: 0; }
-        header { background: var(--mast); color: white; padding: 20px; text-align: center; }
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; margin: 0; line-height: 1.65; }
+        header { background: var(--mast); color: white; padding: 40px 24px; text-align: center; border-bottom: 4px solid var(--mast-mid); }
+        .site-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; margin: 0; }
+        .subtitle { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 10px; }
+        nav { background: var(--mast-mid); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
+        nav ul { display: flex; justify-content: center; list-style: none; padding: 0; margin: 0; gap: 20px; }
+        nav li a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.2s; }
+        nav li a:hover { color: white; }
+        .container { max-width: 1200px; margin: 40px auto; padding: 0 24px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .card { background: white; border: 1px solid var(--border); padding: 24px; transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; display: block; }
+        .rep .card-tag { color: var(--rep); }
+        .ist .card-tag { color: var(--ist); }
+        .lao .card-tag { color: var(--lao); }
+        .aut .card-tag { color: var(--aut); }
+        .card h3 { font-family: 'Libre Baskerville', serif; margin: 0 0 15px 0; font-size: 1.1rem; }
+        .card p { font-size: 0.85rem; color: var(--ink-soft); }
+        footer { background: var(--mast); color: rgba(255,255,255,0.4); padding: 60px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
     </style>
 </head>
 <body>
     <header>
-        <h1>Σταυροδρόμι</h1>
-        <p>Πύλη Πολιτισμού και Ιστορίας</p>
+        <h1 class="site-title">Σταυροδρόμι</h1>
+        <p class="subtitle">Πύλη Πολιτισμού, Ιστορίας και Λογοτεχνίας</p>
     </header>
-    <div class=\"container\">
-        <p>Το site είναι υπό κατασκευή. Σύντομα θα ανέβει το πλήρες περιεχόμενο του stavrodromio.html.</p>
+    <nav>
+        <ul>
+            <li><a href="#">Αποθετήριο</a></li>
+            <li><a href="#">Ιστορία</a></li>
+            <li><a href="#">Λαογραφία</a></li>
+            <li><a href="#">Ο Συγγραφέας</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <div class="grid">
+            <div class="card rep">
+                <span class="card-tag">Αποθετήριο</span>
+                <h3>Ιστορικά Αρχεία Αρκαδίας</h3>
+                <p>Μια συλλογή από έγγραφα και τεκμήρια που αφορούν την τοπική ιστορία της περιοχής.</p>
+            </div>
+            <div class="card ist">
+                <span class="card-tag">Ιστορία</span>
+                <h3>Οι ρίζες του τόπου</h3>
+                <p>Μελέτες και άρθρα για τα ιστορικά γεγονότα που σημάδεψαν την Πελοπόννησο.</p>
+            </div>
+            <div class="card lao">
+                <span class="card-tag">Λαογραφία</span>
+                <h3>Παραδόσεις και Θρύλοι</h3>
+                <p>Καταγραφή της προφορικής παράδοσης και των εθίμων της αρκαδικής υπαίθρου.</p>
+            </div>
+            <div class="card aut">
+                <span class="card-tag">Ο Συγγραφέας</span>
+                <h3>Λογοτεχνικά Έργα</h3>
+                <p>Διηγήματα και δοκίμια με επίκεντρο τον άνθρωπο και την παράδοση.</p>
+            </div>
+        </div>
     </div>
+    <footer>
+        <p>&copy; 2026 Σταυροδρόμι - Michelis2023. Με την υποστήριξη του GitHub Pages.</p>
+    </footer>
 </body>
 </html>

@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Σταυροδρόμι – Κοινότητα, Ιστορία & Σήμερα</title>
-    <!-- Open Graph / Social Media Meta Tags -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/">
   <meta property="og:title" content="Σταυροδρόμι – Κοινότητα, Ιστορία & Σήμερα">
@@ -22,7 +21,6 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Base */
   --ink:        #18191a;
   --ink-soft:   #36393c;
   --ink-muted:  #72777d;
@@ -30,25 +28,18 @@
   --bg-warm:    #ede8df;
   --white:      #ffffff;
   --border:     #d4cec4;
-
-  /* Masthead */
   --mast:       #1e2b1f;
   --mast-mid:   #2e4230;
-
-  /* Pillar colours */
-  --rep:        #7a1a1a;   /* Ρεπορτάζ – deep red */
+  --rep:        #7a1a1a;
   --rep-lt:     #a82828;
   --rep-bg:     #fdf4f4;
-
-  --ist:        #5a3e10;   /* Ιστορία – sepia */
+  --ist:        #5a3e10;
   --ist-lt:     #8a5f1e;
   --ist-bg:     #fdf8f0;
-
-  --lao:        #1e4a2e;   /* Λαογραφία – forest */
+  --lao:        #1e4a2e;
   --lao-lt:     #2e6e44;
   --lao-bg:     #f2faf4;
-
-  --aut:        #1a2e5a;   /* Αυτοδιοίκηση – slate */
+  --aut:        #1a2e5a;
   --aut-lt:     #2a4a8a;
   --aut-bg:     #f2f6fd;
 }
@@ -65,14 +56,12 @@ body {
 
 a { color: inherit; text-decoration: none; }
 
-/* ═══ PROGRESS ═══ */
 #progress {
   position: fixed; top: 0; left: 0; height: 3px;
   background: var(--rep); width: 0%; z-index: 300;
   transition: width 0.1s linear;
 }
 
-/* ═══ TOPBAR ═══ */
 .topbar {
   background: var(--mast);
   padding: 5px 0;
@@ -88,155 +77,85 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; gap: 6px;
   color: rgba(255,255,255,0.65);
 }
-.topbar .loc::before {
-  content: '◉'; font-size: 0.55rem; color: var(--lao-lt);
-}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 
-/* ═══ MASTHEAD ═══ */
 .masthead {
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
   position: sticky; top: 0; z-index: 100;
   box-shadow: 0 3px 20px rgba(0,0,0,0.25);
 }
-
 .mast-brand {
   max-width: 1200px; margin: 0 auto;
   padding: 20px 24px 16px;
   display: flex; align-items: flex-end;
   justify-content: space-between; gap: 24px;
 }
-
-.site-name {
-  display: flex; flex-direction: column;
-}
-
+.site-name { display: flex; flex-direction: column; }
 .site-name h1 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.6rem, 5vw, 2.6rem);
-  font-weight: 900;
-  color: var(--white);
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; line-height: 1;
 }
-
-.site-name h1 .cross {
-  color: rgba(255,255,255,0.35);
-  font-weight: 300;
-  font-style: italic;
-  margin: 0 2px;
-}
-
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
 .site-name .subtitle {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-top: 6px;
-  font-weight: 400;
+  font-size: 0.75rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
-
-.mast-pillars {
-  display: flex; gap: 8px; flex-shrink: 0;
-}
-
+.mast-pillars { display: flex; gap: 8px; flex-shrink: 0; }
 .pillar-dot {
-  display: flex; flex-direction: column;
-  align-items: center; gap: 3px;
-  padding: 6px 10px;
-  border: 1px solid rgba(255,255,255,0.1);
-  cursor: pointer;
-  transition: background 0.2s;
+  display: flex; flex-direction: column; align-items: center; gap: 3px;
+  padding: 6px 10px; border: 1px solid rgba(255,255,255,0.1);
+  cursor: pointer; transition: background 0.2s;
 }
 .pillar-dot:hover { background: rgba(255,255,255,0.07); }
-
-.pillar-dot .dot {
-  width: 8px; height: 8px; border-radius: 50%;
-}
+.pillar-dot .dot { width: 8px; height: 8px; border-radius: 50%; }
 .pillar-dot .dot.rep { background: var(--rep-lt); }
 .pillar-dot .dot.ist { background: var(--ist-lt); }
 .pillar-dot .dot.lao { background: var(--lao-lt); }
 .pillar-dot .dot.aut { background: var(--aut-lt); }
+.pillar-dot span { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); white-space: nowrap; }
 
-.pillar-dot span {
-  font-size: 0.6rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.45);
-  white-space: nowrap;
-}
-
-/* ═══ NAV ═══ */
-nav.primary {
-  background: var(--mast-mid);
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-
+nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
 nav.primary ul {
-  max-width: 1200px; margin: 0 auto;
-  padding: 0 24px;
-  display: flex; list-style: none;
-  overflow-x: auto; scrollbar-width: none;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; list-style: none; overflow-x: auto; scrollbar-width: none;
 }
 nav.primary ul::-webkit-scrollbar { display: none; }
-
 nav.primary li a {
   display: flex; align-items: center; gap: 6px;
-  padding: 11px 16px;
-  font-size: 0.74rem; font-weight: 500;
+  padding: 11px 16px; font-size: 0.74rem; font-weight: 500;
   letter-spacing: 0.05em; text-transform: uppercase;
-  color: rgba(255,255,255,0.62);
-  white-space: nowrap;
+  color: rgba(255,255,255,0.62); white-space: nowrap;
   border-bottom: 3px solid transparent;
   transition: color 0.18s, border-color 0.18s;
 }
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a:hover, nav.primary li a.active { color: var(--white); }
+nav.primary li a.home:hover, nav.primary li a.home.active { border-bottom-color: rgba(255,255,255,0.5); }
+nav.primary li a.nav-rep:hover, nav.primary li a.nav-rep.active { border-bottom-color: var(--rep-lt); color: white; }
+nav.primary li a.nav-ist:hover, nav.primary li a.nav-ist.active { border-bottom-color: var(--ist-lt); color: white; }
+nav.primary li a.nav-lao:hover, nav.primary li a.nav-lao.active { border-bottom-color: var(--lao-lt); color: white; }
+nav.primary li a.nav-aut:hover, nav.primary li a.nav-aut.active { border-bottom-color: var(--aut-lt); color: white; }
 
-nav.primary li a .nav-dot {
-  width: 6px; height: 6px; border-radius: 50%;
-  flex-shrink: 0;
-}
-nav.primary li a:hover,
-nav.primary li a.active {
-  color: var(--white);
-}
-nav.primary li a.home:hover,
-nav.primary li a.home.active { border-bottom-color: rgba(255,255,255,0.5); }
-nav.primary li a.nav-rep:hover,
-nav.primary li a.nav-rep.active { border-bottom-color: var(--rep-lt); color: white; }
-nav.primary li a.nav-ist:hover,
-nav.primary li a.nav-ist.active { border-bottom-color: var(--ist-lt); color: white; }
-nav.primary li a.nav-lao:hover,
-nav.primary li a.nav-lao.active { border-bottom-color: var(--lao-lt); color: white; }
-nav.primary li a.nav-aut:hover,
-nav.primary li a.nav-aut.active { border-bottom-color: var(--aut-lt); color: white; }
-
-/* ═══ FOUR-PILLAR INTRO STRIP ═══ */
-.pillars-intro {
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-}
+.pillars-intro { background: var(--white); border-bottom: 1px solid var(--border); }
 .pillars-intro-inner {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
   display: grid; grid-template-columns: repeat(4, 1fr);
 }
 .pi-block {
-  padding: 18px 20px;
-  border-right: 1px solid var(--border);
-  cursor: pointer;
-  transition: background 0.18s;
+  padding: 18px 20px; border-right: 1px solid var(--border);
+  cursor: pointer; transition: background 0.18s; text-decoration: none; display: block;
 }
 .pi-block:last-child { border-right: none; }
 .pi-block:hover { background: var(--bg); }
-
 .pi-block .pi-label {
   display: flex; align-items: center; gap: 7px;
   font-size: 0.65rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  margin-bottom: 5px;
+  letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 5px;
 }
-.pi-block .pi-label .bar {
-  width: 20px; height: 3px; border-radius: 2px;
-}
+.pi-block .pi-label .bar { width: 20px; height: 3px; border-radius: 2px; }
 .pi-block.rep .pi-label { color: var(--rep); }
 .pi-block.rep .pi-label .bar { background: var(--rep); }
 .pi-block.ist .pi-label { color: var(--ist); }
@@ -245,161 +164,58 @@ nav.primary li a.nav-aut.active { border-bottom-color: var(--aut-lt); color: whi
 .pi-block.lao .pi-label .bar { background: var(--lao); }
 .pi-block.aut .pi-label { color: var(--aut); }
 .pi-block.aut .pi-label .bar { background: var(--aut); }
+.pi-block p { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.5; }
 
-.pi-block p {
-  font-size: 0.78rem;
-  color: var(--ink-muted);
-  line-height: 1.5;
-}
-
-/* ═══ HERO / FEATURED ═══ */
-.hero-section {
-  max-width: 1200px; margin: 0 auto;
-  padding: 36px 24px 0;
-}
-
-.section-head {
-  display: flex; align-items: center; gap: 12px;
-  margin-bottom: 24px;
-}
-.section-head .sh-label {
-  font-size: 0.66rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  white-space: nowrap;
-}
+.hero-section { max-width: 1200px; margin: 0 auto; padding: 36px 24px 0; }
+.section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+.section-head .sh-label { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; white-space: nowrap; }
 .section-head .sh-rule { flex: 1; height: 1px; background: var(--border); }
 .section-head.rep .sh-label { color: var(--rep); }
 .section-head.ist .sh-label { color: var(--ist); }
-.section-head.lao .sh-label { color: var(--lao); }
-.section-head.aut .sh-label { color: var(--aut); }
 
-/* FEATURED GRID */
 .featured-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr;
-  gap: 0;
-  background: var(--white);
-  border: 1px solid var(--border);
-  margin-bottom: 40px;
+  display: grid; grid-template-columns: 1.6fr 1fr;
+  gap: 0; background: var(--white); border: 1px solid var(--border); margin-bottom: 40px;
 }
-
-.feat-main {
-  padding: 32px 36px;
-  border-right: 1px solid var(--border);
-}
-
+.feat-main { padding: 32px 36px; border-right: 1px solid var(--border); }
 .feat-main .kicker {
-  font-size: 0.65rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--rep);
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 12px;
+  font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rep); display: flex; align-items: center; gap: 8px; margin-bottom: 12px;
 }
-.feat-main .kicker::before {
-  content: ''; display: inline-block;
-  width: 20px; height: 2px; background: var(--rep);
-}
-
+.feat-main .kicker::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--rep); }
 .feat-main h2 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.4rem, 3vw, 2.0rem);
-  font-weight: 700; line-height: 1.25;
-  color: var(--ink); margin-bottom: 12px;
-  cursor: pointer; transition: color 0.18s;
+  font-size: clamp(1.4rem, 3vw, 2.0rem); font-weight: 700; line-height: 1.25;
+  color: var(--ink); margin-bottom: 12px; transition: color 0.18s;
 }
 .feat-main h2:hover { color: var(--rep); }
-
-.feat-main .deck {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.95rem; font-style: italic;
-  color: var(--ink-soft); line-height: 1.75;
-  margin-bottom: 18px;
-}
-
-.feat-main .body {
-  font-size: 0.88rem; color: var(--ink-soft);
-  line-height: 1.8; margin-bottom: 20px;
-}
+.feat-main h2 a { color: inherit; }
+.feat-main .deck { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.95rem; font-style: italic; color: var(--ink-soft); line-height: 1.75; margin-bottom: 18px; }
+.feat-main .body { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.8; margin-bottom: 20px; }
 .feat-main .body p + p { margin-top: 10px; }
-
-/* Question box */
-.q-box {
-  background: var(--rep-bg);
-  border-left: 4px solid var(--rep);
-  padding: 16px 20px; margin-bottom: 20px;
-}
-.q-box .q-label {
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--rep); margin-bottom: 10px;
-}
+.q-box { background: var(--rep-bg); border-left: 4px solid var(--rep); padding: 16px 20px; margin-bottom: 20px; }
+.q-box .q-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rep); margin-bottom: 10px; }
 .q-box ul { list-style: none; }
-.q-box ul li {
-  font-size: 0.83rem; color: var(--ink-soft);
-  padding: 5px 0; border-bottom: 1px solid rgba(139,26,26,0.1);
-  display: flex; gap: 8px; align-items: flex-start;
-}
+.q-box ul li { font-size: 0.83rem; color: var(--ink-soft); padding: 5px 0; border-bottom: 1px solid rgba(139,26,26,0.1); display: flex; gap: 8px; align-items: flex-start; }
 .q-box ul li:last-child { border-bottom: none; }
 .q-box ul li::before { content: '?'; color: var(--rep); font-weight: 700; flex-shrink: 0; }
-
-.feat-meta {
-  display: flex; align-items: center; gap: 10px;
-  font-size: 0.7rem; color: var(--ink-muted);
-  padding-top: 16px; border-top: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-.cat-pill {
-  padding: 2px 9px; font-size: 0.62rem;
-  font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: white;
-}
+.feat-meta { display: flex; align-items: center; gap: 10px; font-size: 0.7rem; color: var(--ink-muted); padding-top: 16px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+.cat-pill { padding: 2px 9px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: white; }
 .cat-pill.rep { background: var(--rep); }
 .cat-pill.ist { background: var(--ist); }
 .cat-pill.lao { background: var(--lao); }
 .cat-pill.aut { background: var(--aut); }
-
-.read-btn {
-  display: inline-block; margin-top: 16px;
-  padding: 9px 22px;
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.08em; text-transform: uppercase;
-  color: white; cursor: pointer;
-  transition: background 0.2s; border: none;
-}
+.read-btn { display: inline-block; margin-top: 16px; padding: 9px 22px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: white; cursor: pointer; transition: background 0.2s; border: none; }
 .read-btn.rep { background: var(--rep); }
 .read-btn.rep:hover { background: var(--rep-lt); }
 
-/* FEATURED ASIDE */
-.feat-aside {
-  display: flex; flex-direction: column;
-}
-
-.aside-header {
-  padding: 14px 20px;
-  font-size: 0.64rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.75);
-  background: var(--mast);
-}
-
+.feat-aside { display: flex; flex-direction: column; }
+.aside-header { padding: 14px 20px; font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.75); background: var(--mast); }
 .aside-cards { padding: 0 20px; }
-
-.aside-card {
-  padding: 18px 0;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-}
+.aside-card { padding: 18px 0; border-bottom: 1px solid var(--border); cursor: pointer; display: block; }
 .aside-card:last-child { border-bottom: none; }
-
-.aside-card .ac-pillar {
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  margin-bottom: 5px;
-  display: flex; align-items: center; gap: 5px;
-}
-.aside-card .ac-pillar .dot {
-  width: 5px; height: 5px; border-radius: 50%;
-}
+.aside-card .ac-pillar { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 5px; display: flex; align-items: center; gap: 5px; }
+.aside-card .ac-pillar .dot { width: 5px; height: 5px; border-radius: 50%; }
 .aside-card.rep .ac-pillar { color: var(--rep); }
 .aside-card.rep .ac-pillar .dot { background: var(--rep); }
 .aside-card.ist .ac-pillar { color: var(--ist); }
@@ -408,342 +224,119 @@ nav.primary li a.nav-aut.active { border-bottom-color: var(--aut-lt); color: whi
 .aside-card.lao .ac-pillar .dot { background: var(--lao); }
 .aside-card.aut .ac-pillar { color: var(--aut); }
 .aside-card.aut .ac-pillar .dot { background: var(--aut); }
-
-.aside-card h4 {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.88rem; font-weight: 700;
-  line-height: 1.4; color: var(--ink);
-  transition: color 0.18s; margin-bottom: 5px;
-}
+.aside-card h4 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.88rem; font-weight: 700; line-height: 1.4; color: var(--ink); transition: color 0.18s; margin-bottom: 5px; }
 .aside-card:hover h4 { color: var(--mast); }
 .aside-card .ac-meta { font-size: 0.68rem; color: var(--ink-muted); }
 
-/* ═══ MAIN BODY ═══ */
-.page-body {
-  max-width: 1200px; margin: 0 auto;
-  padding: 40px 24px 64px;
-  display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 48px;
-  align-items: start;
-}
+.page-body { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
 
-/* ═══ PILLAR SECTIONS ═══ */
-.pillar-section {
-  margin-bottom: 48px;
-}
-
-.pillar-banner {
-  padding: 14px 20px;
-  display: flex; align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0;
-}
+.pillar-section { margin-bottom: 48px; }
+.pillar-banner { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 0; }
 .pillar-banner.rep { background: var(--rep); }
 .pillar-banner.ist { background: var(--ist); }
 .pillar-banner.lao { background: var(--lao); }
 .pillar-banner.aut { background: var(--aut); }
-
-.pillar-banner .pb-title {
-  font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.9);
-}
-
-.pillar-banner .pb-more {
-  font-size: 0.65rem; color: rgba(255,255,255,0.55);
-  cursor: pointer; transition: color 0.18s;
-}
+.pillar-banner .pb-title { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.9); }
+.pillar-banner .pb-more { font-size: 0.65rem; color: rgba(255,255,255,0.55); cursor: pointer; transition: color 0.18s; }
 .pillar-banner .pb-more:hover { color: white; }
+.pillar-banner a.pb-more { text-decoration: none; }
 
-.pillar-body {
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-top: none;
-}
-
-/* Grid article layout inside pillar */
-.pillar-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0;
-}
-
-.p-card {
-  padding: 22px 24px;
-  border-right: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  transition: background 0.18s;
-}
+.pillar-body { background: var(--white); border: 1px solid var(--border); border-top: none; }
+.pillar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.p-card { padding: 22px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.18s; display: block; text-decoration: none; }
 .p-card:hover { background: var(--bg); }
 .p-card:nth-child(2n) { border-right: none; }
 .p-card:nth-last-child(-n+2) { border-bottom: none; }
-
-.p-card .pc-tag {
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  margin-bottom: 7px;
-}
+.p-card .pc-tag { font-size: 0.6rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 7px; }
 .p-card.rep .pc-tag { color: var(--rep); }
 .p-card.ist .pc-tag { color: var(--ist); }
 .p-card.lao .pc-tag { color: var(--lao); }
 .p-card.aut .pc-tag { color: var(--aut); }
-
-.p-card h3 {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.95rem; font-weight: 700;
-  line-height: 1.4; color: var(--ink);
-  margin-bottom: 8px;
-  transition: color 0.18s;
-}
+.p-card h3 { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.95rem; font-weight: 700; line-height: 1.4; color: var(--ink); margin-bottom: 8px; transition: color 0.18s; }
 .p-card:hover h3 { color: var(--mast); }
+.p-card .pc-excerpt { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 10px; }
+.p-card .pc-meta { font-size: 0.68rem; color: var(--ink-muted); }
 
-.p-card .pc-excerpt {
-  font-size: 0.82rem; color: var(--ink-soft);
-  line-height: 1.7; margin-bottom: 10px;
-}
-
-.p-card .pc-meta {
-  font-size: 0.68rem; color: var(--ink-muted);
-}
-
-/* TRACKER TABLE for Αυτοδιοίκηση */
-.tracker {
-  width: 100%; border-collapse: collapse;
-}
-.tracker thead {
-  background: var(--aut-bg);
-  border-bottom: 2px solid var(--aut-lt);
-}
-.tracker thead th {
-  padding: 10px 16px; text-align: left;
-  font-size: 0.65rem; font-weight: 600;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--aut);
-}
-.tracker tbody tr {
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
-  cursor: pointer;
-}
+.tracker { width: 100%; border-collapse: collapse; }
+.tracker thead { background: var(--aut-bg); border-bottom: 2px solid var(--aut-lt); }
+.tracker thead th { padding: 10px 16px; text-align: left; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aut); }
+.tracker tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; cursor: pointer; }
 .tracker tbody tr:hover { background: var(--aut-bg); }
 .tracker tbody tr:last-child { border-bottom: none; }
-.tracker td {
-  padding: 11px 16px;
-  font-size: 0.82rem; color: var(--ink-soft);
-  vertical-align: top;
-}
-.tracker td:first-child {
-  font-family: 'Libre Baskerville', serif;
-  font-weight: 700; color: var(--ink);
-  font-size: 0.85rem;
-}
-
-.status-pill {
-  display: inline-block; padding: 2px 8px;
-  font-size: 0.6rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border-radius: 2px;
-}
+.tracker td { padding: 11px 16px; font-size: 0.82rem; color: var(--ink-soft); vertical-align: top; }
+.tracker td:first-child { font-family: 'Libre Baskerville', serif; font-weight: 700; color: var(--ink); font-size: 0.85rem; }
+.status-pill { display: inline-block; padding: 2px 8px; font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
 .status-pill.open { background: #fef3cd; color: #8a5f1e; }
 .status-pill.wait { background: #e8f0fe; color: var(--aut); }
 .status-pill.closed { background: #e8faf0; color: #1e6e44; }
 .status-pill.noans { background: #fde8e8; color: var(--rep); }
 
-/* ═══ MISSION BLOCK ═══ */
-.mission-block {
-  background: var(--mast);
-  color: rgba(255,255,255,0.75);
-  padding: 32px 36px;
-  margin-bottom: 40px;
-}
-
-.mission-block .mb-label {
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: rgba(255,255,255,0.4); margin-bottom: 12px;
-}
-
-.mission-block h3 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.2rem; font-weight: 700;
-  color: var(--white); margin-bottom: 12px;
-  font-style: italic;
-}
-
-.mission-block p {
-  font-size: 0.85rem; line-height: 1.8;
-  color: rgba(255,255,255,0.65); margin-bottom: 10px;
-}
+.mission-block { background: var(--mast); color: rgba(255,255,255,0.75); padding: 32px 36px; margin-bottom: 40px; }
+.mission-block .mb-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+.mission-block h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: var(--white); margin-bottom: 12px; font-style: italic; }
+.mission-block p { font-size: 0.85rem; line-height: 1.8; color: rgba(255,255,255,0.65); margin-bottom: 10px; }
 .mission-block p:last-child { margin-bottom: 0; }
-
 .mission-block strong { color: rgba(255,255,255,0.9); }
 
-/* ═══ SIDEBAR ═══ */
 .sidebar { }
-
-.s-widget {
-  background: var(--white);
-  border: 1px solid var(--border);
-  margin-bottom: 20px; overflow: hidden;
-}
-
-.s-widget-head {
-  padding: 9px 14px;
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
-}
+.s-widget { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+.s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
 .s-widget-head.rep { background: var(--rep); }
 .s-widget-head.ist { background: var(--ist); }
 .s-widget-head.lao { background: var(--lao); }
 .s-widget-head.aut { background: var(--aut); }
 .s-widget-head.mast { background: var(--mast); }
-
+.s-widget-head a { color: inherit; display: block; }
 .s-widget-body { padding: 14px 16px; }
-
 .s-list { list-style: none; }
-.s-list li {
-  padding: 9px 0; border-bottom: 1px solid var(--bg-warm);
-  font-size: 0.8rem; color: var(--ink-soft);
-  line-height: 1.4; display: flex; gap: 7px;
-  align-items: flex-start; cursor: pointer;
-  transition: color 0.15s;
-}
+.s-list li { padding: 9px 0; border-bottom: 1px solid var(--bg-warm); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.4; display: flex; gap: 7px; align-items: flex-start; cursor: pointer; transition: color 0.15s; }
 .s-list li:last-child { border-bottom: none; }
 .s-list li::before { content: '›'; flex-shrink: 0; }
-
 .s-list.rep li::before { color: var(--rep); }
 .s-list.ist li::before { color: var(--ist); }
 .s-list.lao li::before { color: var(--lao); }
 .s-list.aut li::before { color: var(--aut); }
-
 .s-list li:hover { color: var(--mast); }
-
-.about-text {
-  font-size: 0.8rem; color: var(--ink-soft);
-  line-height: 1.75;
-}
+.s-list li a { color: inherit; }
+.about-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
 .about-text p + p { margin-top: 9px; }
-
-.tag-wrap {
-  display: flex; flex-wrap: wrap; gap: 6px;
-}
-.s-tag {
-  padding: 3px 9px; border: 1px solid var(--border);
-  font-size: 0.7rem; color: var(--ink-muted);
-  cursor: pointer; transition: all 0.15s;
-  text-transform: uppercase; letter-spacing: 0.08em;
-}
+.tag-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+.s-tag { padding: 3px 9px; border: 1px solid var(--border); font-size: 0.7rem; color: var(--ink-muted); cursor: pointer; transition: all 0.15s; text-transform: uppercase; letter-spacing: 0.08em; }
 .s-tag:hover { background: var(--mast); border-color: var(--mast); color: white; }
-
-/* Almanac widget */
-.almanac-item {
-  padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
-  display: flex; gap: 10px; align-items: flex-start;
-}
+.almanac-item { padding: 10px 0; border-bottom: 1px solid var(--bg-warm); display: flex; gap: 10px; align-items: flex-start; }
 .almanac-item:last-child { border-bottom: none; }
-.almanac-date {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.75rem; font-weight: 700;
-  color: var(--ist); min-width: 32px; text-align: center;
-  line-height: 1.2;
-}
+.almanac-date { font-family: 'Playfair Display', serif; font-size: 0.75rem; font-weight: 700; color: var(--ist); min-width: 32px; text-align: center; line-height: 1.2; }
 .almanac-date span { display: block; font-size: 0.55rem; font-weight: 400; color: var(--ink-muted); }
-.almanac-text {
-  font-size: 0.78rem; color: var(--ink-soft); line-height: 1.5;
-}
+.almanac-text { font-size: 0.78rem; color: var(--ink-soft); line-height: 1.5; }
 
-/* ═══ FOOTER ═══ */
-footer {
-  background: var(--mast);
-  color: rgba(255,255,255,0.45);
-  margin-top: 0;
-}
-
-.footer-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 44px 24px 32px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 36px;
-}
-
-.footer-brand h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.25rem; font-weight: 700;
-  color: rgba(255,255,255,0.85); margin-bottom: 6px;
-}
-
-.footer-brand .ft-sub {
-  font-size: 0.72rem; font-style: italic;
-  color: rgba(255,255,255,0.3);
-  letter-spacing: 0.08em; margin-bottom: 14px;
-}
-
-.footer-brand p {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.35);
-  line-height: 1.75;
-}
-
-.footer-col h4 {
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 12px;
-}
-
+footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 44px 24px 32px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
+.footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.footer-brand .ft-sub { font-size: 0.72rem; font-style: italic; color: rgba(255,255,255,0.3); letter-spacing: 0.08em; margin-bottom: 14px; }
+.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
+.footer-col h4 { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
 .footer-col ul { list-style: none; }
-.footer-col ul li {
-  padding: 6px 0; font-size: 0.78rem;
-  color: rgba(255,255,255,0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer; transition: color 0.15s;
-  display: flex; align-items: center; gap: 5px;
-}
+.footer-col ul li { padding: 6px 0; font-size: 0.78rem; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
 .footer-col ul li:last-child { border-bottom: none; }
 .footer-col ul li:hover { color: rgba(255,255,255,0.75); }
 .footer-col ul li::before { content: '›'; opacity: 0.4; }
-
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 16px 24px;
-  max-width: 1200px; margin: 0 auto;
-  display: flex; justify-content: space-between;
-  align-items: center; gap: 16px; flex-wrap: wrap;
-  font-size: 0.7rem;
-}
-
+.footer-col ul li a { color: inherit; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 0.7rem; }
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
-
-.footer-bottom .independence {
-  font-style: italic; color: rgba(255,255,255,0.22);
-}
-
-/* Pillar colour bars in footer */
-.footer-pillars {
-  display: flex; gap: 4px; align-items: center;
-}
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+.footer-pillars { display: flex; gap: 4px; align-items: center; }
 .fp-bar { width: 18px; height: 4px; border-radius: 2px; }
 
-/* ═══ RESPONSIVE ═══ */
 @media (max-width: 980px) {
   .featured-grid { grid-template-columns: 1fr; }
   .feat-aside { border-top: 1px solid var(--border); }
-  .aside-header { }
   .page-body { grid-template-columns: 1fr; }
   .pillars-intro-inner { grid-template-columns: 1fr 1fr; }
   .pi-block:nth-child(2) { border-right: none; }
-  .pi-block:nth-child(1),
-  .pi-block:nth-child(2) { border-bottom: 1px solid var(--border); }
+  .pi-block:nth-child(1), .pi-block:nth-child(2) { border-bottom: 1px solid var(--border); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
   .mast-pillars { display: none; }
 }
-
 @media (max-width: 640px) {
   .pillar-grid { grid-template-columns: 1fr; }
   .p-card { border-right: none !important; }
@@ -755,11 +348,7 @@ footer {
   .footer-inner { grid-template-columns: 1fr; }
   .tracker { display: block; overflow-x: auto; }
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .featured-grid { animation: fadeIn 0.5s ease both; }
 .pillars-intro-inner { animation: fadeIn 0.5s ease 0.1s both; }
 </style>
@@ -792,9 +381,10 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="#" class="home active">Αρχική</a></li>
+      <li><a href="index.html" class="home active">Αρχική</a></li>
       <li><a href="#" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="#" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
+      <!-- ✅ ΑΛΛΑΓΗ 1: Σύνδεσμος στη σελίδα Ιστορίας -->
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
       <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
       <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
       <li><a href="#" class="home">Σχετικά</a></li>
@@ -803,16 +393,17 @@ footer {
 </header>
 
 <!-- FOUR-PILLAR INTRO -->
+<!-- ✅ ΑΛΛΑΓΗ 2: Τα pi-blocks γίνονται σύνδεσμοι όπου υπάρχει σελίδα -->
 <div class="pillars-intro">
   <div class="pillars-intro-inner">
-    <div class="pi-block rep">
+    <a href="article-tsimeniostrosi.html" class="pi-block rep">
       <div class="pi-label"><div class="bar"></div>Ρεπορτάζ & Παρεμβάσεις</div>
       <p>Τεκμηριωμένα ρεπορτάζ για έργα, παραλείψεις και αποφάσεις που αφορούν την κοινότητα.</p>
-    </div>
-    <div class="pi-block ist">
+    </a>
+    <a href="history.html" class="pi-block ist">
       <div class="pi-label"><div class="bar"></div>Ιστορία & Μνήμη</div>
       <p>Η πορεία του Σταυροδρομίου μέσα στον χρόνο: άνθρωποι, γεγονότα, τόποι.</p>
-    </div>
+    </a>
     <div class="pi-block lao">
       <div class="pi-label"><div class="bar"></div>Λαογραφία & Πολιτισμός</div>
       <p>Έθιμα, παραδόσεις, προφορικές αφηγήσεις και πολιτιστικές εκφράσεις της κοινότητας.</p>
@@ -832,7 +423,6 @@ footer {
   </div>
 
   <div class="featured-grid">
-    <!-- MAIN ARTICLE -->
     <div class="feat-main">
       <div class="kicker">Έργα & Υποδομές · Ρεπορτάζ</div>
       <h2><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a></h2>
@@ -841,7 +431,6 @@ footer {
         <p>Εργατικό συνεργείο, στο πλαίσιο σύμβασης με τον Δήμο Γορτυνίας, ολοκλήρωσε εργασίες τσιμεντόστρωσης στην Κοινότητα Σταυροδρομίου. Το νέο τσιμέντο εφαρμόστηκε απευθείας πάνω στο παλιό υπόστρωμα, που βρισκόταν ήδη σε κακή κατάσταση, χωρίς πλήρη αποξήλωση ή επαρκή προετοιμασία βάσης.</p>
         <p>Από φωτογραφίες πεδίου διακρίνονται χονδρόκοκκο μίγμα, ανομοιόμορφη επιφάνεια και αμφίβολη συνοχή υλικού. Η κυκλοφορία οχημάτων και η βροχόπτωση αρκούν για να αποκολλήσουν τα χαλαρά αδρανή, δημιουργώντας άμεσο κίνδυνο για οδηγούς και πεζούς.</p>
       </div>
-
       <div class="q-box">
         <div class="q-label">Ανοιχτά ερωτήματα προς τον Δήμο Γορτυνίας</div>
         <ul>
@@ -850,7 +439,6 @@ footer {
           <li>Αν δεν τηρήθηκαν οι τεχνικές προδιαγραφές, ποιος φέρει ευθύνη και ποιος το πιστοποίησε;</li>
         </ul>
       </div>
-
       <div class="feat-meta">
         <span class="cat-pill rep">Ρεπορτάζ</span>
         <span class="cat-pill aut">Αυτοδιοίκηση</span>
@@ -860,15 +448,15 @@ footer {
       <a href="article-tsimeniostrosi.html" class="read-btn rep">Διαβάστε ολόκληρο &rarr;</a>
     </div>
 
-    <!-- ASIDE: UPCOMING -->
+    <!-- ✅ ΑΛΛΑΓΗ 3: Aside cards για Ιστορία → συνδέονται με history.html -->
     <div class="feat-aside">
       <div class="aside-header">Επόμενα κείμενα</div>
       <div class="aside-cards">
-        <div class="aside-card ist">
+        <a href="history.html#xronologio" class="aside-card ist">
           <div class="ac-pillar"><div class="dot"></div>Ιστορία & Μνήμη</div>
           <h4>Το Σταυροδρόμι τον 19ο αιώνα: πληθυσμός, κτήρια και ζωή της κοινότητας</h4>
-          <div class="ac-meta">Σε επεξεργασία</div>
-        </div>
+          <div class="ac-meta">Διαβάστε στη σελίδα Ιστορίας</div>
+        </a>
         <div class="aside-card lao">
           <div class="ac-pillar"><div class="dot"></div>Λαογραφία & Πολιτισμός</div>
           <h4>Τα έθιμα του Πάσχα στο Σταυροδρόμι: αφηγήσεις παλαιότερων κατοίκων</h4>
@@ -893,7 +481,6 @@ footer {
 <div class="page-body">
   <main>
 
-    <!-- MISSION -->
     <div class="mission-block">
       <div class="mb-label">Η ταυτότητα αυτού του site</div>
       <h3>«Σταυροδρόμι» σημαίνει τόπος όπου συναντιούνται δρόμοι.</h3>
@@ -901,38 +488,38 @@ footer {
       <p>Δεν συνδέεται με κόμμα, φορέα ή τοπική παράταξη. Μοναδικό κριτήριο: η ακρίβεια, η τεκμηρίωση και ο σεβασμός στον αναγνώστη και στον τόπο.</p>
     </div>
 
-    <!-- ΙΣΤΟΡΙΑ -->
+    <!-- ✅ ΑΛΛΑΓΗ 4: Pillar banner Ιστορία → pb-more ως σύνδεσμος, cards ως σύνδεσμοι -->
     <div class="pillar-section">
       <div class="pillar-banner ist">
         <span class="pb-title">Ιστορία & Μνήμη</span>
-        <span class="pb-more">Όλα τα άρθρα &rarr;</span>
+        <a href="history.html" class="pb-more">Όλα τα άρθρα &rarr;</a>
       </div>
       <div class="pillar-body">
         <div class="pillar-grid">
-          <div class="p-card ist">
+          <a href="history.html#onoma" class="p-card ist">
             <div class="pc-tag">Τοπική Ιστορία</div>
             <h3>Η ιστορία του ονόματος: γιατί λέγεται Σταυροδρόμι</h3>
             <p class="pc-excerpt">Η τοποθεσία του οικισμού σε κόμβο παλαιών αρκαδικών δρόμων και ο συμβολισμός του «σταυροδρομίου» στην ονοματολογία των ελληνικών κοινοτήτων.</p>
             <div class="pc-meta">Ιστορία τόπου</div>
-          </div>
-          <div class="p-card ist">
+          </a>
+          <a href="history.html#katoikoi" class="p-card ist">
             <div class="pc-tag">Μνήμη</div>
             <h3>Κάτοικοι που έφυγαν, κάτοικοι που έμειναν: η δημογραφία ενός αιώνα</h3>
             <p class="pc-excerpt">Από 239 μόνιμους κατοίκους το 2001, ο πληθυσμός έφτασε στους 96 το 2011. Μια ιστορία ενός αιώνα μετανάστευσης, αλλαγών και επιβίωσης μιας ορεινής αρκαδικής κοινότητας.</p>
-            <div class="pc-meta">Σε επεξεργασία · Δημογραφία</div>
-          </div>
-          <div class="p-card ist">
+            <div class="pc-meta">Δημογραφία</div>
+          </a>
+          <a href="history.html#ktiria" class="p-card ist">
             <div class="pc-tag">Τόπος & Κτήρια</div>
             <h3>Το παλιό σχολείο, το εκκλησάκι, η βρύση: κτήρια που φέρουν μνήμη</h3>
-            <p class="pc-excerpt">Ο Πετρόκτιστος Ωαός Κοιμήσεως της Θεοτόκου (1896–1910), το Παλιό Δημοτικό Σχολείο του 1909 που λειτουργεί σήμερα ως Μουσείο Λαϊκής Τέχνης, και η Ρεματιά της Μαυράδας με τον ερειπωμένο νερόμυλο. Κτίρια που φέρουν ζωντανή μνήμη.</p>
-            <div class="pc-meta">Σύντομα · Αρχιτεκτονική & τόπος</div>
-          </div>
-          <div class="p-card ist">
+            <p class="pc-excerpt">Ο πετρόκτιστος Ναός Κοιμήσεως της Θεοτόκου (1896–1910), το Παλιό Δημοτικό Σχολείο του 1909 που λειτουργεί σήμερα ως Μουσείο Λαϊκής Τέχνης, και η Ρεματιά της Μαυράδας με τον ερειπωμένο νερόμυλο.</p>
+            <div class="pc-meta">Αρχιτεκτονική & τόπος</div>
+          </a>
+          <a href="history.html#prosopa" class="p-card ist">
             <div class="pc-tag">Πρόσωπα</div>
             <h3>Άνθρωποι του Σταυροδρομίου: βιογραφικά σημειώματα και προφορικές ιστορίες</h3>
-            <p class="pc-excerpt">Από το Σταυροδρόμι κατάγονται επιφανείς προσωπικότητες: ο Ιωάννης Γεωργακόπουλος (τέως Αρχηγός Ελληνικής Αστυνομίας), η Ευσταθία Καμπισιούλη (πρώτη γυναίκα που εμβολιάστηκε για COVID-19 στην Ελλάδα) και ο συγγραφέας Γεώργιος Μιχαλακόπουλος.</p>
+            <p class="pc-excerpt">Από το Σταυροδρόμι κατάγονται επιφανείς προσωπικότητες: ο Ιωάννης Γεωργακόπουλος (τέως Αρχηγός Ελληνικής Αστυνομίας), η Ευσταθία Καμπισιούλη και ο συγγραφέας Γεώργιος Μιχαλακόπουλος.</p>
             <div class="pc-meta">Ανοιχτή πρόσκληση συμμετοχής</div>
-          </div>
+          </a>
         </div>
       </div>
     </div>
@@ -991,7 +578,7 @@ footer {
               </tr>
             </thead>
             <tbody>
-              <tr>
+              <tr onclick="location.href='article-tsimeniostrosi.html'">
                 <td>Τσιμεντόστρωση Σταυροδρομίου: ερωτήματα για εκτέλεση</td>
                 <td style="font-size:0.78rem; color:var(--ink-muted);">Έργα & Υποδομές</td>
                 <td style="font-size:0.78rem; color:var(--ink-muted);">19 Απρ. 2026</td>
@@ -1053,20 +640,21 @@ footer {
       </div>
     </div>
 
+    <!-- ✅ ΑΛΛΑΓΗ 5: Sidebar widget Ιστορίας → σύνδεσμος στον τίτλο και στα items -->
     <div class="s-widget">
-      <div class="s-widget-head ist">Από την ιστορία του τόπου</div>
+      <div class="s-widget-head ist"><a href="history.html" style="color:inherit; display:block;">Από την ιστορία του τόπου →</a></div>
       <div class="s-widget-body">
         <div class="almanac-item">
           <div class="almanac-date">1879<span>Απογραφή</span></div>
-          <div class="almanac-text">Πρώτη καταγεγραμμένη απογραφή με στοιχεία για τον οικισμό.</div>
+          <div class="almanac-text"><a href="history.html#xronologio" style="color:inherit;">Πρώτη καταγεγραμμένη απογραφή με στοιχεία για τον οικισμό.</a></div>
         </div>
         <div class="almanac-item">
           <div class="almanac-date">1922<span>Πρόσφυγες</span></div>
-          <div class="almanac-text">Άφιξη προσφύγων από τη Μικρά Ασία στην ευρύτερη περιοχή Γορτυνίας.</div>
+          <div class="almanac-text"><a href="history.html#xronologio" style="color:inherit;">Άφιξη προσφύγων από τη Μικρά Ασία στην ευρύτερη περιοχή Γορτυνίας.</a></div>
         </div>
         <div class="almanac-item">
           <div class="almanac-date">1960s<span>Μετανάστευση</span></div>
-          <div class="almanac-text">Μαζική εσωτερική και εξωτερική μετανάστευση από τα ορεινά χωριά της Αρκαδίας.</div>
+          <div class="almanac-text"><a href="history.html#katoikoi" style="color:inherit;">Μαζική εσωτερική και εξωτερική μετανάστευση από τα ορεινά χωριά της Αρκαδίας.</a></div>
         </div>
       </div>
     </div>
@@ -1102,6 +690,7 @@ footer {
 </div>
 
 <!-- FOOTER -->
+<!-- ✅ ΑΛΛΑΓΗ 6: Footer → σύνδεσμοι σε υπάρχουσες σελίδες -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -1118,8 +707,8 @@ footer {
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        <li>Ρεπορτάζ & Παρεμβάσεις</li>
-        <li>Ιστορία & Μνήμη</li>
+        <li><a href="article-tsimeniostrosi.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία & Μνήμη</a></li>
         <li>Λαογραφία & Πολιτισμός</li>
         <li>Αυτοδιοίκηση & Κοινωνία</li>
       </ul>
@@ -1127,7 +716,7 @@ footer {
     <div class="footer-col">
       <h4>Παρατηρητήριο</h4>
       <ul>
-        <li>Ανοιχτά ζητήματα</li>
+        <li><a href="article-tsimeniostrosi.html">Ανοιχτά ζητήματα</a></li>
         <li>Αποφάσεις Δήμου</li>
         <li>Έργα σε εξέλιξη</li>
         <li>Αναπάντητα ερωτήματα</li>
@@ -1136,7 +725,7 @@ footer {
     <div class="footer-col">
       <h4>Σελίδες</h4>
       <ul>
-        <li>Αρχική</li>
+        <li><a href="index.html">Αρχική</a></li>
         <li>Σχετικά</li>
         <li>Αρχείο κειμένων</li>
         <li>Επικοινωνία</li>
@@ -1150,11 +739,18 @@ footer {
 </footer>
 
 <script>
+  // Progress bar
   window.addEventListener('scroll', () => {
     const st = document.documentElement.scrollTop;
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     document.getElementById('progress').style.width = (st / dh * 100) + '%';
   });
+
+  // Dynamic date in topbar
+  const d = new Date();
+  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+  document.getElementById('topbar-date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 </script>
 </body>
 </html>

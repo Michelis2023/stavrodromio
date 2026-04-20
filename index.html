@@ -6,73 +6,228 @@
     <title>Σταυροδρόμι</title>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         :root {
             --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
             --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
             --mast: #1e2b1f; --mast-mid: #2e4230;
-            --rep: #7a1a1a; --ist: #5a3e10; --lao: #1e4a2e; --aut: #1a2e5a;
+            --rep: #7a1a1a; --rep-lt: #a82828; --rep-bg: #fdf4f4;
+            --ist: #5a3e10; --ist-lt: #8a5f1e; --ist-bg: #fdf8f0;
+            --lao: #1e4a2e; --lao-lt: #2e6e44; --lao-bg: #f2faf4;
+            --aut: #1a2e5a; --aut-lt: #2a4a8a; --aut-bg: #f2f6fd;
         }
-        body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', sans-serif; margin: 0; line-height: 1.65; }
-        header { background: var(--mast); color: white; padding: 40px 24px; text-align: center; border-bottom: 4px solid var(--mast-mid); }
-        .site-title { font-family: 'Playfair Display', serif; font-size: 3rem; font-weight: 900; margin: 0; }
-        .subtitle { font-size: 0.8rem; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-top: 10px; }
-        nav { background: var(--mast-mid); padding: 10px 0; border-top: 1px solid rgba(255,255,255,0.1); }
-        nav ul { display: flex; justify-content: center; list-style: none; padding: 0; margin: 0; gap: 20px; }
-        nav li a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em; transition: color 0.2s; }
-        nav li a:hover { color: white; }
-        .container { max-width: 1200px; margin: 40px auto; padding: 0 24px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
-        .card { background: white; border: 1px solid var(--border); padding: 24px; transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card-tag { font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 10px; display: block; }
-        .rep .card-tag { color: var(--rep); }
-        .ist .card-tag { color: var(--ist); }
-        .lao .card-tag { color: var(--lao); }
-        .aut .card-tag { color: var(--aut); }
-        .card h3 { font-family: 'Libre Baskerville', serif; margin: 0 0 15px 0; font-size: 1.1rem; }
-        .card p { font-size: 0.85rem; color: var(--ink-soft); }
-        footer { background: var(--mast); color: rgba(255,255,255,0.4); padding: 60px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+        html { scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
+        a { color: inherit; text-decoration: none; }
+        
+        .topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
+        .topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
+        .topbar .loc::before { content: "●"; font-size: 0.55rem; color: var(--lao-lt); }
+
+        .masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
+        .mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+        .site-name { display: flex; flex-direction: column; }
+        .site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+        .site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+        .site-name .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400; }
+
+        .mast-pillars { display: flex; gap: 8px; flex-shrink: 0; }
+        .pillar-dot { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 10px; border: 1px solid rgba(255,255,255,0.1); cursor: pointer; transition: background 0.2s; }
+        .pillar-dot:hover { background: rgba(255,255,255,0.07); }
+        .pillar-dot .dot { width: 8px; height: 8px; border-radius: 50%; }
+        .pillar-dot .dot.rep { background: var(--rep-lt); }
+        .pillar-dot .dot.ist { background: var(--ist-lt); }
+        .pillar-dot .dot.lao { background: var(--lao-lt); }
+        .pillar-dot .dot.aut { background: var(--aut-lt); }
+        .pillar-dot span { font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.45); white-space: nowrap; }
+
+        nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+        nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
+        nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 11px 16px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: all 0.18s; }
+        nav.primary li a:hover, nav.primary li a.active { color: var(--white); border-bottom-color: rgba(255,255,255,0.5); }
+
+        .pillars-intro { background: var(--white); border-bottom: 1px solid var(--border); }
+        .pillars-intro-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(4, 1fr); }
+        .pi-block { padding: 18px 20px; border-right: 1px solid var(--border); cursor: pointer; transition: background 0.18s; }
+        .pi-block:hover { background: var(--bg); }
+        .pi-label { display: flex; align-items: center; gap: 7px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 5px; }
+        .pi-label .bar { width: 20px; height: 3px; border-radius: 2px; }
+        .pi-block.rep .pi-label { color: var(--rep); } .pi-block.rep .pi-label .bar { background: var(--rep); }
+        .pi-block.ist .pi-label { color: var(--ist); } .pi-block.ist .pi-label .bar { background: var(--ist); }
+        .pi-block.lao .pi-label { color: var(--lao); } .pi-block.lao .pi-label .bar { background: var(--lao); }
+        .pi-block.aut .pi-label { color: var(--aut); } .pi-block.aut .pi-label .bar { background: var(--aut); }
+        .pi-block p { font-size: 0.78rem; color: var(--ink-muted); line-height: 1.5; }
+
+        .hero-section { max-width: 1200px; margin: 0 auto; padding: 36px 24px 0; }
+        .section-head { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
+        .sh-label { font-size: 0.66rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+        .sh-rule { flex: 1; height: 1px; background: var(--border); }
+        
+        .featured-grid { display: grid; grid-template-columns: 1.6fr 1fr; background: var(--white); border: 1px solid var(--border); margin-bottom: 40px; }
+        .feat-main { padding: 32px 36px; border-right: 1px solid var(--border); }
+        .kicker { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rep); display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+        .kicker::before { content: ""; width: 20px; height: 2px; background: var(--rep); }
+        h2 { font-family: 'Playfair Display', serif; font-size: clamp(1.4rem, 3vw, 2.0rem); font-weight: 700; line-height: 1.25; margin-bottom: 12px; }
+        .deck { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; font-style: italic; color: var(--ink-soft); line-height: 1.75; margin-bottom: 18px; }
+        .body p { font-size: 0.88rem; color: var(--ink-soft); margin-bottom: 10px; }
+
+        .q-box { background: var(--rep-bg); border-left: 4px solid var(--rep); padding: 16px 20px; margin-bottom: 20px; }
+        .q-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rep); margin-bottom: 10px; }
+        .q-box ul { list-style: none; }
+        .q-box li { font-size: 0.83rem; padding: 5px 0; border-bottom: 1px solid rgba(139,26,26,0.1); display: flex; gap: 8px; }
+        .q-box li::before { content: "?"; color: var(--rep); font-weight: 700; }
+
+        .page-body { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; display: grid; grid-template-columns: 1fr 300px; gap: 48px; }
+        .pillar-section { margin-bottom: 48px; }
+        .pillar-banner { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; color: white; }
+        .pillar-banner.ist { background: var(--ist); }
+        .pillar-banner.lao { background: var(--lao); }
+        .pillar-banner.aut { background: var(--aut); }
+        .pb-title { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; }
+        
+        .pillar-grid { display: grid; grid-template-columns: 1fr 1fr; background: white; border: 1px solid var(--border); border-top: none; }
+        .p-card { padding: 22px 24px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.18s; }
+        .p-card:hover { background: var(--bg); }
+        .p-card h3 { font-family: 'Libre Baskerville', serif; font-size: 0.95rem; margin-bottom: 8px; }
+        .pc-excerpt { font-size: 0.82rem; color: var(--ink-soft); }
+
+        .mission-block { background: var(--mast); color: rgba(255,255,255,0.75); padding: 32px 36px; margin-bottom: 40px; }
+        .mb-label { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 12px; }
+        .mission-block h3 { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: white; margin-bottom: 12px; font-style: italic; }
+
+        .sidebar .s-widget { background: white; border: 1px solid var(--border); margin-bottom: 20px; }
+        .s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: white; background: var(--mast); }
+        .s-widget-body { padding: 14px 16px; font-size: 0.8rem; color: var(--ink-soft); }
+
+        footer { background: var(--mast); color: rgba(255,255,255,0.45); padding: 60px 24px; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+        .footer-bottom { font-size: 0.75rem; letter-spacing: 0.05em; }
+
+        @media (max-width: 980px) {
+            .featured-grid, .page-body, .pillars-intro-inner { grid-template-columns: 1fr; }
+            .feat-main { border-right: none; border-bottom: 1px solid var(--border); }
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1 class="site-title">Σταυροδρόμι</h1>
-        <p class="subtitle">Πύλη Πολιτισμού, Ιστορίας και Λογοτεχνίας</p>
+    <div class="topbar">
+        <div class="topbar-inner">
+            <span class="loc">ΑΡΚΑΔΙΑ, 19 ΑΠΡΙΛΙΟΥ 2026</span>
+            <span>Σταυροδρόμι Πολιτισμού</span>
+        </div>
+    </div>
+
+    <header class="masthead">
+        <div class="mast-brand">
+            <div class="site-name">
+                <h1>ΣΤΑΥΡΟΔΡΟΜΙ<span class="cross">†</span></h1>
+                <div class="subtitle">Πύλη Πολιτισμού, Ιστορίας και Λογοτεχνίας</div>
+            </div>
+            <div class="mast-pillars">
+                <div class="pillar-dot"><div class="dot rep"></div><span>ΑΠΟΘΕΤΗΡΙΟ</span></div>
+                <div class="pillar-dot"><div class="dot ist"></div><span>ΙΣΤΟΡΙΑ</span></div>
+                <div class="pillar-dot"><div class="dot lao"></div><span>ΛΑΟΓΡΑΦΙΑ</span></div>
+                <div class="pillar-dot"><div class="dot aut"></div><span>ΣΥΓΓΡΑΦΕΑΣ</span></div>
+            </div>
+        </div>
+        <nav class="primary">
+            <ul>
+                <li><a href="#" class="active">ΑΡΧΙΚΗ</a></li>
+                <li><a href="#">ΑΠΟΘΕΤΗΡΙΟ</a></li>
+                <li><a href="#">ΙΣΤΟΡΙΑ</a></li>
+                <li><a href="#">ΛΑΟΓΡΑΦΙΑ</a></li>
+                <li><a href="#">ΣΥΓΓΡΑΦΕΑΣ</a></li>
+            </ul>
+        </nav>
     </header>
-    <nav>
-        <ul>
-            <li><a href="#">Αποθετήριο</a></li>
-            <li><a href="#">Ιστορία</a></li>
-            <li><a href="#">Λαογραφία</a></li>
-            <li><a href="#">Ο Συγγραφέας</a></li>
-        </ul>
-    </nav>
-    <div class="container">
-        <div class="grid">
-            <div class="card rep">
-                <span class="card-tag">Αποθετήριο</span>
-                <h3>Ιστορικά Αρχεία Αρκαδίας</h3>
-                <p>Μια συλλογή από έγγραφα και τεκμήρια που αφορούν την τοπική ιστορία της περιοχής.</p>
+
+    <div class="pillars-intro">
+        <div class="pillars-intro-inner">
+            <div class="pi-block rep">
+                <div class="pi-label"><div class="bar"></div>Αρχεία</div>
+                <p>Ιστορικά τεκμήρια και έγγραφα.</p>
             </div>
-            <div class="card ist">
-                <span class="card-tag">Ιστορία</span>
-                <h3>Οι ρίζες του τόπου</h3>
-                <p>Μελέτες και άρθρα για τα ιστορικά γεγονότα που σημάδεψαν την Πελοπόννησο.</p>
+            <div class="pi-block ist">
+                <div class="pi-label"><div class="bar"></div>Ρίζες</div>
+                <p>Μελέτες για τον τόπο και τους ανθρώπους.</p>
             </div>
-            <div class="card lao">
-                <span class="card-tag">Λαογραφία</span>
-                <h3>Παραδόσεις και Θρύλοι</h3>
-                <p>Καταγραφή της προφορικής παράδοσης και των εθίμων της αρκαδικής υπαίθρου.</p>
+            <div class="pi-block lao">
+                <div class="pi-label"><div class="bar"></div>Παράδοση</div>
+                <p>Ήθη, έθιμα και προφορική ιστορία.</p>
             </div>
-            <div class="card aut">
-                <span class="card-tag">Ο Συγγραφέας</span>
-                <h3>Λογοτεχνικά Έργα</h3>
-                <p>Διηγήματα και δοκίμια με επίκεντρο τον άνθρωπο και την παράδοση.</p>
+            <div class="pi-block aut">
+                <div class="pi-label"><div class="bar"></div>Λόγος</div>
+                <p>Διηγήματα και λογοτεχνικά δοκίμια.</p>
             </div>
         </div>
     </div>
+
+    <div class="hero-section">
+        <div class="section-head">
+            <div class="sh-label">Κεντρικό Θέμα</div>
+            <div class="sh-rule"></div>
+        </div>
+        <div class="featured-grid">
+            <div class="feat-main">
+                <div class="kicker">ΑΠΟΘΕΤΗΡΙΟ</div>
+                <h2>Ιστορικά Αρχεία Αρκαδίας: Η μνήμη που αντέχει στον χρόνο</h2>
+                <p class="deck">Μια αναδρομή στα έγγραφα που διαμόρφωσαν την ταυτότητα της περιοχής.</p>
+                <div class="body">
+                    <p>Η καταγραφή της ιστορίας δεν είναι απλά μια παράθεση γεγονότων, αλλά μια προσπάθεια κατανόησης των ριζών μας.</p>
+                </div>
+                <div class="q-box">
+                    <div class="q-label">ΕΡΕΥΝΑ</div>
+                    <ul>
+                        <li>Ποια ήταν η κοινωνική δομή τον 19ο αιώνα;</li>
+                        <li>Πώς επηρέασαν οι μετακινήσεις πληθυσμών την παράδοση;</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="feat-aside">
+                <!-- Additional content can go here -->
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <main>
+            <div class="mission-block">
+                <div class="mb-label">Η ΑΠΟΣΤΟΛΗ ΜΑΣ</div>
+                <h3>"Η παράδοση δεν είναι η διατήρηση της στάχτης, αλλά η μεταφορά της φλόγας."</h3>
+                <p>Το Σταυροδρόμι δημιουργήθηκε για να αποτελέσει ένα ψηφιακό καταφύγιο για την ιστορία και τον πολιτισμό της Αρκαδίας.</p>
+            </div>
+
+            <section class="pillar-section">
+                <div class="pillar-banner ist">
+                    <span class="pb-title">ΙΣΤΟΡΙΑ</span>
+                </div>
+                <div class="pillar-grid">
+                    <div class="p-card">
+                        <h3>Οι ρίζες του τόπου</h3>
+                        <p class="pc-excerpt">Μια σε βάθος μελέτη των ιστορικών απαρχών της περιοχής.</p>
+                    </div>
+                    <div class="p-card">
+                        <h3>Ηρωικές Μορφές</h3>
+                        <p class="pc-excerpt">Προσωπικότητες που σφράγισαν την αρκαδική ιστορία.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <aside class="sidebar">
+            <div class="s-widget">
+                <div class="s-widget-head">ΠΛΗΡΟΦΟΡΙΕΣ</div>
+                <div class="s-widget-body">
+                    <p>Το Σταυροδρόμι είναι μια ανεξάρτητη προσπάθεια καταγραφής και ανάδειξης του λαϊκού πολιτισμού.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
     <footer>
-        <p>&copy; 2026 Σταυροδρόμι - Michelis2023. Με την υποστήριξη του GitHub Pages.</p>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Σταυροδρόμι - Michelis2023. Με την υποστήριξη του GitHub Pages.</p>
+        </div>
     </footer>
 </body>
 </html>

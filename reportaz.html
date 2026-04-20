@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ρεπορτάζ & Παρεμβάσεις – Σταυροδρόμι</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
+  --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
+  --mast: #1e2b1f; --mast-mid: #2e4230;
+  --rep: #7a1a1a; --rep-lt: #a82828; --rep-bg: #fdf4f4;
+  --ist: #5a3e10; --ist-lt: #8a5f1e;
+  --lao: #1e4a2e; --lao-lt: #2e6e44;
+  --aut: #1a2e5a; --aut-lt: #2a4a8a;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
+a { color: inherit; text-decoration: none; }
+
+.topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
+.topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+.topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+
+.masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
+.mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+.site-name .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400; }
+
+nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
+nav.primary ul::-webkit-scrollbar { display: none; }
+nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 11px 16px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s; }
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a:hover { color: var(--white); }
+nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
+
+.page-hero { background: var(--rep); padding: 40px 24px; }
+.page-hero-inner { max-width: 1200px; margin: 0 auto; }
+.page-hero .ph-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 10px; }
+.page-hero h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 700; color: var(--white); line-height: 1.2; margin-bottom: 10px; }
+.page-hero p { font-size: 0.9rem; color: rgba(255,255,255,0.7); max-width: 600px; }
+
+.rep-list { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; }
+
+.rep-card { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; display: flex; transition: box-shadow 0.2s; }
+.rep-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+.rep-card-bar { width: 5px; background: var(--rep); flex-shrink: 0; }
+.rep-card-body { padding: 24px 28px; flex: 1; }
+.rep-card-body .kicker { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rep); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+.rep-card-body .kicker::before { content: ''; display: inline-block; width: 16px; height: 2px; background: var(--rep); }
+.rep-card-body h2 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 700; line-height: 1.3; color: var(--ink); margin-bottom: 10px; transition: color 0.18s; }
+.rep-card-body h2:hover { color: var(--rep); }
+.rep-card-body p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 14px; }
+.rep-card-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.7rem; color: var(--ink-muted); padding-top: 12px; border-top: 1px solid var(--border); }
+.cat-pill { padding: 2px 9px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: white; }
+.cat-pill.rep { background: var(--rep); }
+.cat-pill.aut { background: var(--aut); }
+.cat-pill.ist { background: var(--ist); }
+.status-noans { color: var(--rep); font-weight: 500; }
+.read-btn { display: inline-block; margin-top: 14px; padding: 8px 20px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: white; background: var(--rep); transition: background 0.2s; }
+.read-btn:hover { background: var(--rep-lt); }
+
+footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 0.7rem; }
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+
+@media (max-width: 640px) {
+  .rep-card { flex-direction: column; }
+  .rep-card-bar { width: 100%; height: 5px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
+    <span><span id="topbar-date"></span></span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="site-name">
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
+      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+    </div>
+  </div>
+  <nav class="primary">
+    <ul>
+      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
+      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
+      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="#">Σχετικά</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- HERO BANNER -->
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="ph-label">Ενότητα</div>
+    <h1>Ρεπορτάζ & Παρεμβάσεις</h1>
+    <p>Τεκμηριωμένα ρεπορτάζ για έργα, παραλείψεις και αποφάσεις που αφορούν την κοινότητα Σταυροδρομίου.</p>
+  </div>
+</div>
+
+<!-- ΛΙΣΤΑ ΑΡΘΡΩΝ -->
+<div class="rep-list">
+
+  <!-- ΑΡΘΡΟ 1 -->
+  <div class="rep-card">
+    <div class="rep-card-bar"></div>
+    <div class="rep-card-body">
+      <div class="kicker">Αυτοδιοίκηση & Κοινωνία · 20 Απριλίου 2026</div>
+      <h2><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση, αθροιστική τριετής είσπραξη και η απειλή στη σχολική αυλή του Σταυροδρομίου</a></h2>
+      <p>Ο Δήμος Γορτυνίας ζητά αθροιστικά τριετή τέλη χωρίς προηγούμενη ειδοποίηση, ενώ παραμένει αναπάντητη η πληροφορία για τη σχολική αυλή.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+        <span class="status-noans">⚠ Αναμένεται απάντηση Δήμου</span>
+      </div>
+      <a href="article-koimitiria-sxoleio.html" class="read-btn">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+  <!-- ΑΡΘΡΟ 2 -->
+  <div class="rep-card">
+    <div class="rep-card-bar"></div>
+    <div class="rep-card-body">
+      <div class="kicker">Έργα & Υποδομές · 19 Απριλίου 2026</div>
+      <h2><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a></h2>
+      <p>Ποιος έκανε τις εργασίες, με ποιες προδιαγραφές και πού πήγαν τα χρήματα; Ερωτήματα που αναμένουν ακόμα απάντηση.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill ist">Έργα</span>
+        <span class="status-noans">⚠ Αναμένεται απάντηση Δήμου</span>
+      </div>
+      <a href="article-tsimeniostrosi.html" class="read-btn">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο · Χωρίς χρηματοδότηση</span>
+  </div>
+</footer>
+
+<script>
+  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+  const d = new Date();
+  document.getElementById('topbar-date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+</script>
+</body>
+</html>

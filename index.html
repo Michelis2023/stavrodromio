@@ -442,7 +442,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; 
       <div class="feat-meta">
         <span class="cat-pill rep">Ρεπορτάζ</span>
         <span class="cat-pill aut">Αυτοδιοίκηση</span>
-        <span>19 Απριλίου 2026</span>
+        <span id="article-date"></span>
         <span style="color:var(--rep); font-weight:500;">Αναμένεται απάντηση Δήμου</span>
       </div>
       <a href="article-tsimeniostrosi.html" class="read-btn rep">Διαβάστε ολόκληρο &rarr;</a>
@@ -746,11 +746,21 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; 
     document.getElementById('progress').style.width = (st / dh * 100) + '%';
   });
 
-  // Dynamic date in topbar
-  const d = new Date();
+  // Συνάρτηση ημερομηνίας
   const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-  document.getElementById('topbar-date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+  function updateDates() {
+    const d = new Date();
+    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const shortStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    document.getElementById('topbar-date').textContent = dateStr;
+    const art = document.getElementById('article-date');
+    if (art) art.textContent = shortStr;
+  }
+
+  updateDates();
+  setInterval(updateDates, 60000);
 </script>
 </body>
 </html>

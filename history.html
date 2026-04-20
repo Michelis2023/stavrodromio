@@ -592,7 +592,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 <div class="topbar">
   <div class="topbar-inner">
     <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
-    <span>19 Απριλίου 2026</span>
+    <span id="topbar-date"></span>
   </div>
 </div>
 
@@ -1004,6 +1004,22 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     document.getElementById('progress').style.width = (st / dh * 100) + '%';
   });
+</script>
+
+  <script>
+  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  function updateDate() {
+    const d = new Date();
+    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const span = document.getElementById('topbar-date');
+    if (span) span.textContent = dateStr;
+  }
+
+  updateDate();
+  setInterval(updateDate, 60000);
 </script>
 </body>
 </html>

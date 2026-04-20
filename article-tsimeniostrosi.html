@@ -444,7 +444,7 @@ footer {
 <div class="topbar">
   <div class="topbar-inner">
     <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
-    <span>19 Απριλίου 2026</span>
+    <span id="topbar-date"></span>
   </div>
 </div>
 
@@ -492,7 +492,7 @@ footer {
       <p class="article-deck">Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.</p>
 
       <div class="article-meta">
-        <span>19 Απριλίου 2026</span>
+        <span id="article-date"></span>
         <span class="dot"></span>
         <span>Κοινότητα Σταυροδρομίου</span>
         <span class="dot"></span>
@@ -668,6 +668,24 @@ footer {
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     document.getElementById('progress').style.width = (st / dh * 100) + '%';
   });
+
+  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  function updateDates() {
+    const d = new Date();
+    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const shortStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+    const topDates = document.querySelectorAll('#topbar-date');
+    topDates.forEach(el => el.textContent = dateStr);
+
+    const art = document.getElementById('article-date');
+    if (art) art.textContent = shortStr;
+  }
+
+  updateDates();
+  setInterval(updateDates, 60000);
 </script>
 <div id="lightbox" class="lightbox"><span class="lb-close" id="lb-close">&times;</span><img id="lb-img" src="" alt=""><p class="lb-caption" id="lb-cap"></p></div> </body>
 </html>

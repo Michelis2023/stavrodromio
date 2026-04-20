@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Τσιμεντόστρωση στο Σταυροδρόμι – Σταυροδρόμι Κοινότητα</title>
+<meta name="description" content="Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:        #18191a;
+  --ink-soft:   #36393c;
+  --ink-muted:  #72777d;
+  --bg:         #f5f2ed;
+  --bg-warm:    #ede8df;
+  --white:      #ffffff;
+  --border:     #d4cec4;
+  --mast:       #1e2b1f;
+  --mast-mid:   #2e4230;
+  --rep:        #7a1a1a;
+  --rep-lt:     #a82828;
+  --rep-bg:     #fdf4f4;
+  --ist:        #5a3e10;
+  --ist-lt:     #8a5f1e;
+  --lao:        #1e4a2e;
+  --lao-lt:     #2e6e44;
+  --aut:        #1a2e5a;
+  --aut-lt:     #2a4a8a;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.65;
+}
+
+a { color: inherit; text-decoration: none; }
+
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--rep); width: 0%; z-index: 300;
+  transition: width 0.1s linear;
+}
+
+/* ─── TOPBAR ─── */
+.topbar {
+  background: var(--mast);
+  padding: 5px 0;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+.topbar-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar .loc {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.65);
+}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+
+/* ─── MASTHEAD ─── */
+.masthead {
+  background: var(--mast);
+  border-bottom: 4px solid var(--mast-mid);
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+}
+
+.mast-brand {
+  max-width: 1200px; margin: 0 auto;
+  padding: 20px 24px 16px;
+  display: flex; align-items: flex-end;
+  justify-content: space-between; gap: 24px;
+}
+
+.site-name h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
+.site-name .subtitle {
+  font-size: 0.72rem; color: rgba(255,255,255,0.4);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
+}
+
+nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary ul {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; list-style: none;
+  overflow-x: auto; scrollbar-width: none;
+}
+nav.primary ul::-webkit-scrollbar { display: none; }
+nav.primary li a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 11px 16px;
+  font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.18s, border-color 0.18s;
+}
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a:hover { color: var(--white); }
+nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
+nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
+nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
+nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
+
+/* ─── ARTICLE LAYOUT ─── */
+.article-wrapper {
+  max-width: 1200px; margin: 0 auto;
+  padding: 40px 24px 64px;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 56px;
+  align-items: start;
+}
+
+/* ─── ARTICLE HEADER ─── */
+.article-header {
+  margin-bottom: 32px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.article-breadcrumb {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 0.7rem; color: var(--ink-muted);
+  margin-bottom: 16px; flex-wrap: wrap;
+}
+.article-breadcrumb a { transition: color 0.15s; }
+.article-breadcrumb a:hover { color: var(--rep); }
+.article-breadcrumb .sep { color: var(--border); }
+.article-breadcrumb .current { color: var(--rep); font-weight: 500; }
+
+.article-cats {
+  display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
+}
+.cat-pill {
+  padding: 3px 10px; font-size: 0.62rem;
+  font-weight: 600; letter-spacing: 0.1em;
+  text-transform: uppercase; color: white;
+}
+.cat-pill.rep { background: var(--rep); }
+.cat-pill.aut { background: var(--aut); }
+
+h1.article-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700; line-height: 1.2;
+  color: var(--ink); margin-bottom: 14px;
+}
+
+.article-deck {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.05rem; font-style: italic;
+  color: var(--ink-soft); line-height: 1.75;
+  margin-bottom: 20px;
+  padding-left: 16px;
+  border-left: 3px solid var(--rep);
+}
+
+.article-meta {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 0.72rem; color: var(--ink-muted);
+  flex-wrap: wrap;
+}
+.article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+.article-meta .status {
+  color: var(--rep); font-weight: 500;
+  display: flex; align-items: center; gap: 5px;
+}
+.article-meta .status::before {
+  content: ''; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--rep); display: inline-block;
+  animation: blink 1.8s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* ─── ARTICLE BODY ─── */
+.article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
+
+.article-body p { margin-bottom: 18px; }
+
+.article-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem; font-weight: 700;
+  color: var(--ink); margin: 32px 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--rep);
+  display: inline-block;
+}
+
+.article-body h2::before {
+  content: '';
+  display: block;
+  width: 32px; height: 3px;
+  background: var(--rep);
+  margin-bottom: 10px;
+}
+
+/* Question box */
+.q-box {
+  background: var(--rep-bg);
+  border: 1px solid rgba(122,26,26,0.15);
+  border-left: 4px solid var(--rep);
+  padding: 20px 24px; margin: 28px 0;
+}
+.q-box .q-label {
+  font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--rep); margin-bottom: 14px;
+}
+.q-box ul { list-style: none; }
+.q-box ul li {
+  font-size: 0.9rem; color: var(--ink-soft);
+  padding: 10px 0; border-bottom: 1px solid rgba(122,26,26,0.1);
+  display: flex; gap: 10px; align-items: flex-start;
+  line-height: 1.6;
+}
+.q-box ul li:last-child { border-bottom: none; }
+.q-box ul li::before {
+  content: '?'; color: var(--rep); font-weight: 700;
+  flex-shrink: 0; font-size: 1rem;
+}
+
+/* Status notice */
+.status-notice {
+  background: #fff8e8;
+  border: 1px solid #e8c84a;
+  border-left: 4px solid #c8a020;
+  padding: 14px 18px; margin-top: 32px;
+  display: flex; align-items: flex-start; gap: 10px;
+  font-size: 0.84rem; color: var(--ink-soft); line-height: 1.6;
+}
+.status-notice::before {
+  content: '⚠';
+  font-size: 1rem; color: #c8a020; flex-shrink: 0; margin-top: 1px;
+}
+
+/* Photo placeholder */
+.photo-block {
+  background: var(--bg-warm);
+  border: 1px solid var(--border);
+  padding: 32px;
+  margin: 28px 0;
+  text-align: center;
+}
+.photo-block .ph-icon { font-size: 2rem; margin-bottom: 8px; }
+.photo-block p {
+  font-size: 0.78rem; color: var(--ink-muted);
+  font-style: italic; margin-bottom: 0;
+}
+
+/* Article footer */
+.article-footer {
+  margin-top: 40px;
+  padding-top: 24px;
+  border-top: 2px solid var(--border);
+}
+
+.article-footer .af-label {
+  font-size: 0.64rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 12px;
+}
+
+.article-tags {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+}
+.a-tag {
+  padding: 3px 10px; border: 1px solid var(--border);
+  font-size: 0.7rem; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  cursor: pointer; transition: all 0.15s;
+}
+.a-tag:hover { background: var(--rep); border-color: var(--rep); color: white; }
+
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
+  background: var(--mast);
+  color: rgba(255,255,255,0.8);
+  font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transition: background 0.2s;
+}
+.back-link:hover { background: var(--rep); color: white; }
+
+/* ─── SIDEBAR ─── */
+.sidebar { }
+
+.s-widget {
+  background: var(--white);
+  border: 1px solid var(--border);
+  margin-bottom: 20px; overflow: hidden;
+}
+.s-widget-head {
+  padding: 9px 14px;
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.85);
+}
+.s-widget-head.rep { background: var(--rep); }
+.s-widget-head.aut { background: var(--aut); }
+.s-widget-head.mast { background: var(--mast); }
+
+.s-widget-body { padding: 14px 16px; }
+
+/* Tracker mini */
+.tracker-mini { list-style: none; }
+.tracker-mini li {
+  padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.8rem; color: var(--ink-soft);
+  line-height: 1.4;
+}
+.tracker-mini li:last-child { border-bottom: none; }
+.tracker-mini li .tm-title {
+  color: var(--ink); font-weight: 400; margin-bottom: 4px;
+}
+.tracker-mini li .tm-meta {
+  font-size: 0.68rem; color: var(--ink-muted);
+  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+}
+
+.status-pill {
+  display: inline-block; padding: 1px 7px;
+  font-size: 0.58rem; font-weight: 600;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  border-radius: 2px;
+}
+.status-pill.noans { background: #fde8e8; color: var(--rep); }
+.status-pill.open  { background: #fef3cd; color: var(--ist); }
+.status-pill.wait  { background: #e8f0fe; color: var(--aut); }
+
+.about-text {
+  font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75;
+}
+.about-text p + p { margin-top: 9px; }
+
+.related-list { list-style: none; }
+.related-list li {
+  padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.8rem; color: var(--ink-soft);
+  line-height: 1.4; cursor: pointer;
+  transition: color 0.15s;
+  display: flex; gap: 7px; align-items: flex-start;
+}
+.related-list li:last-child { border-bottom: none; }
+.related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
+.related-list li:hover { color: var(--rep); }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--mast);
+  color: rgba(255,255,255,0.45);
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 40px 24px 28px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 36px;
+}
+.footer-brand h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: rgba(255,255,255,0.85); margin-bottom: 6px;
+}
+.footer-brand .ft-sub {
+  font-size: 0.7rem; font-style: italic;
+  color: rgba(255,255,255,0.3); margin-bottom: 12px;
+}
+.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
+.footer-col h4 {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li {
+  padding: 6px 0; font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer; transition: color 0.15s;
+  display: flex; align-items: center; gap: 5px;
+}
+.footer-col ul li:last-child { border-bottom: none; }
+.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
+.footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 24px;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 0.7rem;
+}
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 900px) {
+  .article-wrapper { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .article-wrapper { padding: 24px 16px 48px; }
+  h1.article-title { font-size: 1.5rem; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.article-header { animation: fadeIn 0.45s ease both; }
+.article-body   { animation: fadeIn 0.45s ease 0.1s both; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
+    <span>19 Απριλίου 2026</span>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="site-name">
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
+      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+    </div>
+  </div>
+  <nav class="primary">
+    <ul>
+      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="#" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
+      <li><a href="#" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
+      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
+      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="#">Σχετικά</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ARTICLE + SIDEBAR -->
+<div class="article-wrapper">
+  <article>
+
+    <!-- HEADER -->
+    <div class="article-header">
+      <div class="article-breadcrumb">
+        <a href="index.html">Αρχική</a>
+        <span class="sep">›</span>
+        <a href="#">Ρεπορτάζ & Παρεμβάσεις</a>
+        <span class="sep">›</span>
+        <span class="current">Έργα & Υποδομές</span>
+      </div>
+
+      <div class="article-cats">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+      </div>
+
+      <h1 class="article-title">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για την εκτέλεση και το κόστος</h1>
+
+      <p class="article-deck">Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.</p>
+
+      <div class="article-meta">
+        <span>19 Απριλίου 2026</span>
+        <span class="dot"></span>
+        <span>Κοινότητα Σταυροδρομίου</span>
+        <span class="dot"></span>
+        <span class="status">Αναμένεται απάντηση Δήμου</span>
+      </div>
+    </div>
+
+    <!-- PHOTO PLACEHOLDER -->
+    <div class="photo-block">
+      <div class="ph-icon">📷</div>
+      <p>Φωτογραφίες από τον τόπο εκτέλεσης του έργου. Η επιφάνεια αποτυπώνει τις παρατηρήσεις που περιγράφονται στο ρεπορτάζ.</p>
+    </div>
+
+    <!-- ARTICLE BODY -->
+    <div class="article-body">
+
+      <p>Εργατικό συνεργείο, στο πλαίσιο σύμβασης με τον Δήμο Γορτυνίας, ολοκλήρωσε χθες εργασίες τσιμεντόστρωσης στην Κοινότητα Σταυροδρομίου. Οι φωτογραφίες που συνοδεύουν το παρόν άρθρο καταγράφουν το αποτέλεσμα και τεκμηριώνουν σειρά ανησυχητικών παρατηρήσεων για τον τρόπο εκτέλεσης.</p>
+
+      <h2>Η τεχνική εικόνα</h2>
+
+      <p>Το νέο τσιμέντο εφαρμόστηκε απευθείας πάνω στο παλιό υπόστρωμα, το οποίο βρισκόταν ήδη σε κακή κατάσταση. Στις περιπτώσεις αυτές, η τυπική τεχνική πρακτική ορίζει δύο αποδεκτές επιλογές: είτε πλήρη αποξήλωση του παλιού στρώματος και προετοιμασία της βάσης, είτε εφαρμογή σημαντικά παχύτερης νέας στρώσης με την αναγκαία συμπύκνωση.</p>
+
+      <p>Καμία από τις δύο δεν εφαρμόστηκε. Από τις φωτογραφίες διακρίνονται χονδρόκοκκο μίγμα, ανομοιόμορφη επιφάνεια και αμφίβολη συνοχή υλικού. Πρόκειται για χαρακτηριστικά ορατά χωρίς εξειδικευμένες τεχνικές γνώσεις.</p>
+
+      <h2>Το ζήτημα της ανθεκτικότητας</h2>
+
+      <p>Η φθορά μιας λεπτής επίχυσης πάνω σε αδύναμη βάση ακολουθεί προβλέψιμη πορεία. Η κυκλοφορία οχημάτων σε συνδυασμό με τη βροχόπτωση αρκούν για να αποκολλήσουν τα χαλαρά αδρανή. Αν συμβεί αυτό, χονδρές πέτρες θα βρεθούν στο οδόστρωμα και θα δημιουργηθεί άμεσος κίνδυνος για οδηγούς και πεζούς. Παράλληλα θα αποκαλυφθεί ξανά το παλιό στρώμα, σε χειρότερη κατάσταση από πριν.</p>
+
+      <p>Το αποτέλεσμα θα ήταν δημόσιο χρήμα δαπανημένο για προσωρινή κάλυψη.</p>
+
+      <h2>Τα ερωτήματα στον Δήμο</h2>
+
+      <p>Η τοπική κοινωνία απευθύνει τρία συγκεκριμένα ερωτήματα στον Δήμο Γορτυνίας:</p>
+
+      <div class="q-box">
+        <div class="q-label">Δημόσια ερωτήματα προς τον Δήμο Γορτυνίας — 19 Απριλίου 2026</div>
+        <ul>
+          <li>Υπήρχε μελέτη και επίβλεψη από αρμόδιο τεχνικό υπάλληλο;</li>
+          <li>Ποιο ήταν το συμβατικό αντικείμενο και το συνολικό κόστος του έργου;</li>
+          <li>Αν δεν τηρήθηκαν οι τεχνικές προδιαγραφές, ποιος φέρει ευθύνη και ποιος το πιστοποίησε;</li>
+        </ul>
+      </div>
+
+      <div class="status-notice">
+        Ο Δήμος Γορτυνίας δεν έχει απαντήσει έως την ώρα δημοσίευσης. Το άρθρο θα ενημερωθεί όταν υπάρξει τοποθέτηση.
+      </div>
+
+    </div><!-- /article-body -->
+
+    <!-- ARTICLE FOOTER -->
+    <div class="article-footer">
+      <div class="af-label">Θεματικές ετικέτες</div>
+      <div class="article-tags">
+        <span class="a-tag">Έργα & Υποδομές</span>
+        <span class="a-tag">Δήμος Γορτυνίας</span>
+        <span class="a-tag">Τσιμεντόστρωση</span>
+        <span class="a-tag">Δημόσιο χρήμα</span>
+        <span class="a-tag">Αυτοδιοίκηση</span>
+        <span class="a-tag">Σταυροδρόμι</span>
+      </div>
+      <a href="index.html" class="back-link">← Επιστροφή στην αρχική</a>
+    </div>
+
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="s-widget">
+      <div class="s-widget-head aut">Παρατηρητήριο Αυτοδιοίκησης</div>
+      <div class="s-widget-body">
+        <ul class="tracker-mini">
+          <li>
+            <div class="tm-title">Τσιμεντόστρωση Σταυροδρομίου</div>
+            <div class="tm-meta">
+              19 Απρ. 2026
+              <span class="status-pill noans">Χωρίς απάντηση</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Οδικό δίκτυο κοινότητας</div>
+            <div class="tm-meta">
+              2026
+              <span class="status-pill open">Σε παρακολούθηση</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Αποφάσεις Δημοτικού Συμβουλίου</div>
+            <div class="tm-meta">
+              2025–2026
+              <span class="status-pill wait">Καταγραφή</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Κατάσταση δικτύου ύδρευσης</div>
+            <div class="tm-meta">
+              2026
+              <span class="status-pill open">Σε παρακολούθηση</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
+      <div class="s-widget-body">
+        <ul class="related-list">
+          <li>Κατάσταση δρόμων στην κοινότητα: επιτόπια καταγραφή (Σύντομα)</li>
+          <li>Δημόσιες αποφάσεις που αφορούν το Σταυροδρόμι (Σύντομα)</li>
+          <li>Πρωτοβάθμια φροντίδα υγείας: κάλυψη κοινότητας (Σε έρευνα)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head mast">Σχετικά με το site</div>
+      <div class="s-widget-body">
+        <div class="about-text">
+          <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.</p>
+          <p>Χωρίς κομματικές ή άλλες δεσμεύσεις. Μοναδικό κριτήριο: η ακρίβεια και ο σεβασμός στον αναγνώστη.</p>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h2>Σταυροδρόμι – Κοινότητα</h2>
+      <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ενότητες</h4>
+      <ul>
+        <li>Ρεπορτάζ & Παρεμβάσεις</li>
+        <li>Ιστορία & Μνήμη</li>
+        <li>Λαογραφία & Πολιτισμός</li>
+        <li>Αυτοδιοίκηση & Κοινωνία</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Παρατηρητήριο</h4>
+      <ul>
+        <li>Ανοιχτά ζητήματα</li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Σελίδες</h4>
+      <ul>
+        <li><a href="index.html" style="color:inherit;">Αρχική</a></li>
+        <li>Σχετικά</li>
+        <li>Αρχείο κειμένων</li>
+        <li>Επικοινωνία</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
+  </div>
+</footer>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+  });
+</script>
+</body>
+</html>

@@ -643,13 +643,45 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; 
     </div>
 
     <div class="s-widget">
-      <div class="s-widget-head aut">Επικοινωνία & Συμμετοχή</div>
-      <div class="s-widget-body">
-        <div class="about-text">
-          <p>Έχετε αφηγήσεις, φωτογραφίες ή πληροφορίες για το Σταυροδρόμι; Επικοινωνήστε. Κάθε μαρτυρία αντιμετωπίζεται με εμπιστευτικότητα, εφόσον ζητηθεί.</p>
-        </div>
-      </div>
+  <div class="s-widget-head aut">Επικοινωνία & Συμμετοχή</div>
+  <div class="s-widget-body">
+    <div class="about-text" style="margin-bottom:14px;">
+      <p>Έχετε αφηγήσεις, φωτογραφίες ή πληροφορίες για το Σταυροδρόμι; Στείλτε μας.</p>
     </div>
+    <form action="https://formspree.io/f/xbdqagyk" method="POST" enctype="multipart/form-data">
+      <div style="margin-bottom:8px;">
+        <input type="text" name="name" placeholder="Όνομα (προαιρετικό)"
+          style="width:100%; padding:7px 10px; font-size:0.78rem; border:1px solid var(--border);
+          background:var(--bg); color:var(--ink); font-family:inherit;">
+      </div>
+      <div style="margin-bottom:8px;">
+        <input type="email" name="email" placeholder="Email επικοινωνίας" required
+          style="width:100%; padding:7px 10px; font-size:0.78rem; border:1px solid var(--border);
+          background:var(--bg); color:var(--ink); font-family:inherit;">
+      </div>
+      <div style="margin-bottom:8px;">
+        <textarea name="message" placeholder="Αφήγηση, πληροφορία ή σχόλιο..." rows="4" required
+          style="width:100%; padding:7px 10px; font-size:0.78rem; border:1px solid var(--border);
+          background:var(--bg); color:var(--ink); font-family:inherit; resize:vertical;"></textarea>
+      </div>
+      <div style="margin-bottom:10px;">
+        <label style="font-size:0.7rem; color:var(--ink-muted); display:block; margin-bottom:4px;">
+          📷 Φωτογραφία ή αρχείο (προαιρετικό):
+        </label>
+        <input type="file" name="attachment" accept="image/*,.pdf"
+          style="font-size:0.74rem; color:var(--ink-muted); width:100%;">
+      </div>
+      <button type="submit"
+        style="width:100%; padding:9px; background:var(--aut); color:white; border:none;
+        font-size:0.74rem; font-weight:600; letter-spacing:0.08em; text-transform:uppercase;
+        cursor:pointer; transition:background 0.2s;"
+        onmouseover="this.style.background='var(--aut-lt)'"
+        onmouseout="this.style.background='var(--aut)'">
+        Αποστολή →
+      </button>
+    </form>
+  </div>
+</div>
 
   </aside>
 </div>

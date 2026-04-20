@@ -351,6 +351,9 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; 
 @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 .featured-grid { animation: fadeIn 0.5s ease both; }
 .pillars-intro-inner { animation: fadeIn 0.5s ease 0.1s both; }
+  @media (max-width: 640px) {
+  .dual-feat { grid-template-columns: 1fr !important; }
+}
 </style>
 </head>
 <body>
@@ -413,64 +416,45 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); margin-top: 0; 
   </div>
 </div>
 
-<!-- HERO: FEATURED ARTICLE -->
+<!-- DUAL FEATURED ARTICLES -->
 <div class="hero-section">
   <div class="section-head rep">
-    <div class="sh-label">Κύριο ρεπορτάζ</div>
+    <div class="sh-label">Τελευταία Ρεπορτάζ</div>
     <div class="sh-rule"></div>
   </div>
 
-  <div class="featured-grid">
-    <div class="feat-main">
+  <div style="display:grid; grid-template-columns:1fr 1fr; gap:0; background:var(--white); border:1px solid var(--border); margin-bottom:40px;">
+
+    <!-- ΑΡΘΡΟ 1: Κοιμητήρια & Σχολείο -->
+    <div style="padding:32px 36px; border-right:1px solid var(--border);">
       <div class="kicker">Αυτοδιοίκηση & Κοινωνία · Ρεπορτάζ</div>
-      <h2><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση, αθροιστική τριετής είσπραξη και η απειλή στη σχολική αυλή του Σταυροδρομίου</a></h2>
-      <p class="deck">Ο Δήμος Γορτυνίας ζητά αθροιστικά τριετή τέλη «χρήσης» κοιμητηρίων χωρίς προηγούμενη ειδοποίηση, ενώ παραμένει αναπάντητη και η πληροφορία για χρήση της σχολικής αυλής του Σταυροδρομίου ως χώρου στάθμευσης μηχανημάτων.</p>
-      <div class="body">
-        <p>Από το 2023 επιβάλλεται ετήσιο τέλος «χρήσης» κοιμητηρίου, 40 ευρώ για διπλούς τάφους και 20 ευρώ για μονούς, χωρίς να έχουν σταλεί ειδοποιήσεις ή να έχουν εισπραχθεί ποσά επί τρία χρόνια. Τώρα ο Δήμος ζητά την οφειλή αθροιστικά, εφάπαξ.</p>
-        <p>Παράλληλα, κυκλοφορεί η πληροφορία ότι ο προαύλιος χώρος του Δημοτικού Σχολείου Σταυροδρομίου προορίζεται για στάθμευση ή αποθήκευση μηχανημάτων. Για κανένα από τα δύο ζητήματα δεν υπάρχει έως τώρα δημόσια απάντηση του Δήμου.</p>
-      </div>
-      <div class="q-box">
-        <div class="q-label">Ανοιχτά ερωτήματα προς τον Δήμο Γορτυνίας</div>
-        <ul>
-          <li>Ποιο είναι το τεκμηριωμένο κόστος συντήρησης των κοιμητηρίων ανά κοινότητα;</li>
-          <li>Γιατί δεν εστάλησαν ειδοποιήσεις επί τρία χρόνια και τώρα ζητείται αθροιστική οφειλή;</li>
-          <li>Προορίζεται πράγματι η σχολική αυλή του Σταυροδρομίου για μηχανήματα του Δήμου;</li>
-        </ul>
-      </div>
-      <div class="feat-meta">
+      <h2 style="font-family:'Playfair Display',Georgia,serif; font-size:clamp(1.1rem,2.5vw,1.5rem); font-weight:700; line-height:1.25; color:var(--ink); margin-bottom:12px; transition:color 0.18s;">
+        <a href="article-koimitiria-sxoleio.html" style="color:inherit;">Τέλη κοιμητηρίων χωρίς κοστολόγηση, αθροιστική τριετής είσπραξη και η απειλή στη σχολική αυλή του Σταυροδρομίου</a>
+      </h2>
+      <p style="font-family:'Libre Baskerville',Georgia,serif; font-size:0.88rem; font-style:italic; color:var(--ink-soft); line-height:1.75; margin-bottom:16px;">Ο Δήμος Γορτυνίας ζητά αθροιστικά τριετή τέλη χωρίς προηγούμενη ειδοποίηση, ενώ παραμένει αναπάντητη η πληροφορία για τη σχολική αυλή.</p>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:0.7rem; color:var(--ink-muted); padding-top:14px; border-top:1px solid var(--border); margin-bottom:14px;">
         <span class="cat-pill rep">Ρεπορτάζ</span>
         <span class="cat-pill aut">Αυτοδιοίκηση</span>
-        <span id="article-date"></span>
         <span style="color:var(--rep); font-weight:500;">Αναμένεται απάντηση Δήμου</span>
       </div>
-      <a href="article-koimitiria-sxoleio.html" class="read-btn rep">Διαβάστε ολόκληρο &rarr;</a>
+      <a href="article-koimitiria-sxoleio.html" class="read-btn rep">Διαβάστε ολόκληρο →</a>
     </div>
 
-    <div class="feat-aside">
-      <div class="aside-header">Επόμενα κείμενα</div>
-      <div class="aside-cards">
-        <a href="article-tsimeniostrosi.html" class="aside-card rep">
-          <div class="ac-pillar"><div class="dot"></div>Ρεπορτάζ & Παρεμβάσεις</div>
-          <h4>Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</h4>
-          <div class="ac-meta">Διαβάστε το ρεπορτάζ</div>
-        </a>
-        <a href="history.html#xronologio" class="aside-card ist">
-          <div class="ac-pillar"><div class="dot"></div>Ιστορία & Μνήμη</div>
-          <h4>Το Σταυροδρόμι τον 19ο αιώνα: πληθυσμός, κτήρια και ζωή της κοινότητας</h4>
-          <div class="ac-meta">Διαβάστε στη σελίδα Ιστορίας</div>
-        </a>
-        <div class="aside-card lao">
-          <div class="ac-pillar"><div class="dot"></div>Λαογραφία & Πολιτισμός</div>
-          <h4>Τα έθιμα του Πάσχα στο Σταυροδρόμι: αφηγήσεις παλαιότερων κατοίκων</h4>
-          <div class="ac-meta">Σύντομα</div>
-        </div>
-        <div class="aside-card aut">
-          <div class="ac-pillar"><div class="dot"></div>Αυτοδιοίκηση & Κοινωνία</div>
-          <h4>Ποιες αποφάσεις του Δημοτικού Συμβουλίου αφορούν το Σταυροδρόμι το 2026</h4>
-          <div class="ac-meta">Σύντομα</div>
-        </div>
+    <!-- ΑΡΘΡΟ 2: Τσιμεντόστρωση -->
+    <div style="padding:32px 36px;">
+      <div class="kicker">Έργα & Υποδομές · Ρεπορτάζ</div>
+      <h2 style="font-family:'Playfair Display',Georgia,serif; font-size:clamp(1.1rem,2.5vw,1.5rem); font-weight:700; line-height:1.25; color:var(--ink); margin-bottom:12px; transition:color 0.18s;">
+        <a href="article-tsimeniostrosi.html" style="color:inherit;">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a>
+      </h2>
+      <p style="font-family:'Libre Baskerville',Georgia,serif; font-size:0.88rem; font-style:italic; color:var(--ink-soft); line-height:1.75; margin-bottom:16px;">Ποιος έκανε τις εργασίες, με ποιες προδιαγραφές και πού πήγαν τα χρήματα; Ερωτήματα που αναμένουν ακόμα απάντηση.</p>
+      <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; font-size:0.7rem; color:var(--ink-muted); padding-top:14px; border-top:1px solid var(--border); margin-bottom:14px;">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill" style="background:var(--ist);">Έργα</span>
+        <span style="color:var(--rep); font-weight:500;">Αναμένεται απάντηση Δήμου</span>
       </div>
+      <a href="article-tsimeniostrosi.html" class="read-btn rep">Διαβάστε ολόκληρο →</a>
     </div>
+
   </div>
 </div>
 

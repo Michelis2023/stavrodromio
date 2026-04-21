@@ -125,10 +125,7 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 /* CATEGORY SECTIONS */
 .cat-section { margin-bottom: 44px; }
 .cat-section-head { padding: 10px 14px; margin-bottom: 18px; display: flex; align-items: center; gap: 10px; }
-.cat-section-head.rep { background: var(--rep); }
 .cat-section-head.ist { background: var(--ist); }
-.cat-section-head.lao { background: var(--lao); }
-.cat-section-head.aut { background: var(--aut); }
 .cat-section-head h3 { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: white; }
 .cat-section-head .csh-icon { font-size: 0.9rem; }
 
@@ -138,8 +135,6 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .s-widget-head.rep { background: var(--rep); }
 .s-widget-head.aut { background: var(--aut); }
 .s-widget-head.mast { background: var(--mast); }
-.s-widget-head.lao { background: var(--lao); }
-.s-widget-head.ist { background: var(--ist); }
 .s-widget-body { padding: 14px 16px; }
 
 .tracker-list { list-style: none; }
@@ -151,7 +146,6 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .tl-meta { display: flex; align-items: center; gap: 7px; font-size: 0.67rem; color: var(--ink-muted); flex-wrap: wrap; }
 .status-pill { display: inline-block; padding: 1px 7px; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
 .status-pill.noans { background: #fde8e8; color: var(--rep); }
-.status-pill.open  { background: #fef3cd; color: var(--ist); }
 .status-pill.wait  { background: #e8f0fe; color: var(--aut); }
 .status-pill.closed { background: #e8faf0; color: #1e6e44; }
 
@@ -187,9 +181,11 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
+/* RESPONSIVE */
 @media (max-width: 960px) { .hero-inner { grid-template-columns: 1fr; } .hero-meta { grid-template-columns: repeat(4,1fr); } }
 @media (max-width: 900px) { .main-wrapper { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 600px) { .main-wrapper { padding: 24px 16px 48px; } .hero { padding: 32px 16px 28px; } .footer-inner { grid-template-columns: 1fr; } .hero-meta { grid-template-columns: 1fr 1fr; } }
+
 @keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
 .hero-text { animation: fadeIn 0.5s ease both; }
 .featured-article { animation: fadeIn 0.5s ease 0.1s both; }
@@ -207,7 +203,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 <header class="masthead">
   <div class="mast-brand">
     <div class="site-name">
-      <h1>Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</h1>
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
       <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
     </div>
     <div class="mast-date">
@@ -220,9 +216,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <li><a href="index.html">Αρχική</a></li>
       <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
       <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
-      <li><a href="#">Σχετικά</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -339,7 +336,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
           <div class="al-num">01</div>
           <div class="al-content">
             <div class="al-cat ist">Ιστορία</div>
-            <div class="al-title"><a href="history.html">Το Σταυροδρόμι μέσα στον χρόνο: από τα βυζαντινά χρόνια ως τον 20ό αιώνα</a></div>
+            <div class="al-title"><a href="history.html">Το Σταυροδρόμι μέσα στον χρόνο: από τα πρώτα τεκμήρια ως τον 20ό αιώνα</a></div>
             <div class="al-desc">Η ιστορική διαδρομή του χωριού, τα τοπωνύμια, οι ρίζες και η ζωή των κατοίκων μέσα από αρχεία και προφορική παράδοση.</div>
             <div class="al-meta"><span>Αρχείο Κοινότητας</span><span class="dot"></span><span>Ιστορία & Μνήμη</span></div>
           </div>
@@ -379,10 +376,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <div class="s-widget-head mast">Ενότητες</div>
       <div class="s-widget-body">
         <ul class="cat-links">
-          <li class="rep"><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a><span class="cl-count">3</span></li>
-          <li class="ist"><a href="history.html">Ιστορία & Μνήμη</a><span class="cl-count">1</span></li>
-          <li class="lao"><a href="#">Λαογραφία & Πολιτισμός</a><span class="cl-count">0</span></li>
-          <li class="aut"><a href="#">Αυτοδιοίκηση & Κοινωνία</a><span class="cl-count">3</span></li>
+          <li class="rep"><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a><span class="cl-count">3</span></li>
+          <li class="ist"><a href="history.html">Ιστορία &amp; Μνήμη</a><span class="cl-count">1</span></li>
+          <li class="lao"><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a><span class="cl-count">0</span></li>
+          <li class="aut"><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a><span class="cl-count">3</span></li>
         </ul>
       </div>
     </div>
@@ -411,10 +408,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        <li><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
-        <li><a href="history.html">Ιστορία & Μνήμη</a></li>
-        <li>Λαογραφία & Πολιτισμός</li>
-        <li>Αυτοδιοίκηση & Κοινωνία</li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -430,9 +427,8 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <h4>Σελίδες</h4>
       <ul>
         <li><a href="index.html">Αρχική</a></li>
-        <li>Σχετικά</li>
-        <li>Αρχείο κειμένων</li>
-        <li>Επικοινωνία</li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>

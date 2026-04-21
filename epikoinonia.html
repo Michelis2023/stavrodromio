@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Επικοινωνία – Σταυροδρόμι Κοινότητα</title>
-<meta name="description" content="Φόρμα επικοινωνίας με τον διαχειριστή του site «Σταυροδρόμι – Κοινότητα» για παρατηρήσεις, υλικό και ερωτήματα.">
+<meta name="description" content="Επικοινωνία με τον διαχειριστή του site Σταυροδρόμι – Κοινότητα για παρατηρήσεις, υλικό και ερωτήματα.">
 <meta property="og:title" content="Επικοινωνία – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Στείλτε μήνυμα στον διαχειριστή του site για παρατηρήσεις, υλικό και προτάσεις.">
+<meta property="og:description" content="Φόρμα επικοινωνίας με τον διαχειριστή του site Σταυροδρόμι – Κοινότητα.">
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/epikoinonia.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="el_GR">
@@ -26,6 +26,7 @@
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
 a { color: inherit; text-decoration: none; }
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--rep); width: 0; z-index: 300; transition: width 0.1s linear; }
 
 /* TOPBAR */
 .topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
@@ -61,13 +62,12 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .contact-hero-main .ch-kicker { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--rep-lt); margin-bottom: 14px; }
 .contact-hero-main h2 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 3.5vw, 2.3rem); font-weight: 700; color: white; line-height: 1.2; margin-bottom: 14px; }
 .contact-hero-main p { font-size: 0.9rem; color: rgba(255,255,255,0.65); line-height: 1.8; margin-bottom: 6px; }
-
 .contact-hero-side { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); padding: 16px 18px; }
 .contact-hero-side h3 { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
 .contact-hero-side p { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.7; }
 
 /* MAIN LAYOUT */
-.page-body { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: start; }
+.page-body { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; display: grid; grid-template-columns: 2fr 1fr; gap: 48px; align-items: flex-start; }
 
 /* FORM */
 .contact-section { margin-bottom: 40px; }
@@ -77,19 +77,16 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .contact-form { background: var(--white); border: 1px solid var(--border); padding: 22px 22px 20px; }
 .contact-form .cf-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
 .contact-form .cf-row-full { grid-column: 1 / -1; }
-
 .cf-field { display: flex; flex-direction: column; gap: 4px; }
 .cf-label { font-size: 0.8rem; font-weight: 500; color: var(--ink-soft); }
 .cf-input, .cf-textarea { border-radius: 3px; border: 1px solid var(--border); background: #fbf9f4; padding: 7px 9px; font-size: 0.88rem; color: var(--ink-soft); font-family: 'IBM Plex Sans', sans-serif; outline: none; transition: border-color 0.15s, background 0.15s; }
 .cf-input:focus, .cf-textarea:focus { border-color: var(--mast-mid); background: var(--white); }
 .cf-textarea { min-height: 140px; resize: vertical; }
-
 .cf-help { font-size: 0.72rem; color: var(--ink-muted); margin-top: 3px; }
 
-.cf-submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; }
+.cf-submit-row { display: flex; align-items: center; justify-content: space-between; margin-top: 16px; gap: 12px; flex-wrap: wrap; }
 .cf-button { border: none; cursor: pointer; padding: 9px 20px; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; border-radius: 2px; background: var(--rep); color: white; transition: background 0.2s; }
 .cf-button:hover { background: var(--rep-lt); }
-
 .cf-note { font-size: 0.7rem; color: var(--ink-muted); max-width: 260px; line-height: 1.6; }
 
 /* SIDEBAR */
@@ -156,6 +153,8 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </head>
 <body>
 
+<div id="progress"></div>
+
 <div class="topbar">
   <div class="topbar-inner">
     <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
@@ -177,11 +176,12 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   <nav class="primary">
     <ul>
       <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -190,14 +190,13 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   <div class="contact-hero-inner">
     <div class="contact-hero-main">
       <div class="ch-kicker">Επικοινωνία</div>
-      <h2>Στείλτε μήνυμα στον διαχειριστή του site</h2>
-      <p>Μπορείτε να χρησιμοποιήσετε τη φόρμα για να στείλετε παρατηρήσεις, διορθώσεις, υλικό ή ερωτήματα για κείμενα και θέματα που αφορούν το Σταυροδρόμι.</p>
+      <h2>Στείλτε μήνυμα για το Σταυροδρόμι</h2>
+      <p>Μπορείτε να χρησιμοποιήσετε τη φόρμα για παρατηρήσεις, διορθώσεις, υλικό ή ερωτήματα για κείμενα και θέματα που αφορούν την κοινότητα Σταυροδρομίου.</p>
       <p>Τα μηνύματα φτάνουν απευθείας στον διαχειριστή του site και δεν δημοσιεύονται πουθενά χωρίς προηγούμενη συνεννόηση.</p>
     </div>
     <aside class="contact-hero-side">
       <h3>Πριν στείλετε</h3>
-      <p>Αν αναφέρεστε σε συγκεκριμένο άρθρο ή θέμα, είναι χρήσιμο να γράψετε τον τίτλο ή το link του κειμένου.</p>
-      <p>Αν στέλνετε υλικό (π.χ. φωτογραφίες), μπορείτε να περιγράψετε τι αφορά και θα γίνει συνεννόηση για τον τρόπο αποστολής.</p>
+      <p>Αν αναφέρεστε σε συγκεκριμένο άρθρο ή θέμα, είναι χρήσιμο να γράψετε τον τίτλο ή το link του κειμένου. Αν στέλνετε υλικό (π.χ. φωτογραφίες), περιγράψτε τι αφορά και θα γίνει συνεννόηση για τον τρόπο αποστολής.</p>
     </aside>
   </div>
 </section>
@@ -208,31 +207,29 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <h3>Φόρμα επικοινωνίας</h3>
       <p>Τα πεδία «Όνομα» και «Email» βοηθούν ώστε να μπορώ να απαντήσω στο μήνυμά σας. Μπορείτε, αν προτιμάτε, να χρησιμοποιήσετε μόνο μικρό όνομα ή αρχικά.</p>
 
-      <form class="contact-form" action="https://formspree.io/f/xbdqagyk" method="POST">
+      <form class="contact-form" action="https://formspree.io/f/XXXXYYYY" method="POST">
         <div class="cf-grid">
           <div class="cf-field">
-            <label class="cf-label" for="name">Όνομα</label>
-            <input class="cf-input" type="text" id="name" name="name" placeholder="Προαιρετικά: μικρό όνομα ή αρχικά">
+            <label class="cf-label" for="name">Όνομα (προαιρετικό)</label>
+            <input class="cf-input" type="text" id="name" name="name" placeholder="Μικρό όνομα ή αρχικά">
+            <div class="cf-help">Χρησιμοποιήστε ό,τι σας κάνει να αισθάνεστε άνετα.</div>
           </div>
           <div class="cf-field">
-            <label class="cf-label" for="email">Email</label>
-            <input class="cf-input" type="email" id="email" name="email" required placeholder="email για απάντηση">
-            <div class="cf-help">Δε χρησιμοποιείται για αποστολή ενημερωτικών, μόνο για απάντηση στο μήνυμά σας.</div>
+            <label class="cf-label" for="email">Email για απάντηση</label>
+            <input class="cf-input" type="email" id="email" name="email" required placeholder="π.χ. onoma@example.com">
+            <div class="cf-help">Δε χρησιμοποιείται για ενημερωτικά, μόνο για απάντηση στο μήνυμά σας.</div>
           </div>
-
           <div class="cf-field cf-row-full">
             <label class="cf-label" for="subject">Θέμα</label>
             <input class="cf-input" type="text" id="subject" name="subject" placeholder="π.χ. Διόρθωση σε άρθρο, Υλικό για ιστορία, Ερώτηση για έργο κ.λπ.">
           </div>
-
           <div class="cf-field cf-row-full">
             <label class="cf-label" for="message">Μήνυμα</label>
-            <textarea class="cf-textarea" id="message" name="message" required placeholder="Γράψτε εδώ το μήνυμα ή την παρατήρησή σας"></textarea>
+            <textarea class="cf-textarea" id="message" name="message" required></textarea>
           </div>
         </div>
-
         <div class="cf-submit-row">
-          <button class="cf-button" type="submit">Αποστολή μηνύματος</button>
+          <button type="submit" class="cf-button">Αποστολή μηνύματος</button>
           <div class="cf-note">
             Με την αποστολή, το μήνυμα αποθηκεύεται ασφαλώς μέσω Formspree και αποστέλλεται μόνο στον διαχειριστή του site.
           </div>
@@ -307,6 +304,11 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+  });
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];

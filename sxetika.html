@@ -344,15 +344,25 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
   function updateDates() {
-    const d = new Date();
-    const top = document.getElementById('topbar-date');
-    const mdDay = document.getElementById('mast-day');
+    const d      = new Date();
+    const top    = document.getElementById('topbar-date');
+    const mdDay  = document.getElementById('mast-day');
     const mdFull = document.getElementById('mast-full');
-    if (top) top.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+                 months[d.getMonth()] + ' ' + d.getFullYear();
+
+    if (top)   top.textContent   = full;
     if (mdDay) mdDay.textContent = d.getDate();
-    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    if (mdFull) {
+      mdFull.textContent =
+        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+        months[d.getMonth()] + ' ' + d.getFullYear();
+    }
   }
+
   updateDates();
   setInterval(updateDates, 60000);
 </script>

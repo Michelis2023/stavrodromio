@@ -139,13 +139,14 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     </div>
   </div>
   <nav class="primary">
+    <u
     <ul>
-      ><a href="index.html">Αρχική</a></li>
-      ><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      ><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      ><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      ><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
-      ><a href="sxetika.html">Σχετικά</a></li>
+      ><a href="index.html">Αρχική</a></l/li>
+      ><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></l/li>
+      ><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></l/li>
+      ><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></l/li>
+      ><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></l/li>
+      ><a href="sxetika.html">Σχετικά</a></l/li>
       ><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
@@ -154,7 +155,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 <div class="page-hero">
   <div class="page-hero-inner">
     <div class="ph-label">Ενότητα</div>
-    <h1>Ρεπορτάζ & Παρεμβάσεις</h1>
+    <h1>Ρεπορτάζ &amp; Παρεμβάσεις</h1>
     <p>Τεκμηριωμένα ρεπορτάζ για έργα, παραλείψεις και αποφάσεις που αφορούν την κοινότητα Σταυροδρομίου.</p>
   </div>
 </div>
@@ -220,27 +221,30 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     </div>
     <div class="footer-col">
       <h4>Ενότητες</h4>
+      <u
       <ul>
-        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-        ><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></l/li>
+        ><a href="history.html">Ιστορία &amp; Μνήμη</a></l/li>
+        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></l/li>
         ><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Παρατηρητήριο</h4>
+      <u
       <ul>
-        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
-        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
-        >Αποφάσεις Δήμου</li>
+        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></l/li>
+        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></l/li>
+        >Αποφάσεις Δήμου</l/li>
         >Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Σελίδες</h4>
+      <u
       <ul>
-        ><a href="index.html">Αρχική</a></li>
-        ><a href="sxetika.html">Σχετικά</a></li>
+        ><a href="index.html">Αρχική</a></l/li>
+        ><a href="sxetika.html">Σχετικά</a></l/li>
         ><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
@@ -261,9 +265,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
-    const d = new Date();
-    document.getElementById('topbar-date').textContent =
-      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const d = new Dat      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
     document.getElementById('mast-day').textContent  = d.getDate();
     document.getElementById('mast-full').textContent =
       days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();

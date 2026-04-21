@@ -54,7 +54,7 @@ a { color: inherit; text-decoration: none; }
   transition: width 0.1s linear;
 }
 
-/* ─── TOPBAR ─── */
+/* TOPBAR */
 .topbar {
   background: var(--mast);
   padding: 5px 0;
@@ -72,7 +72,7 @@ a { color: inherit; text-decoration: none; }
 }
 .topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 
-/* ─── MASTHEAD ─── */
+/* MASTHEAD */
 .masthead {
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
@@ -99,6 +99,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
 }
 
+/* NAV */
 nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
 nav.primary ul {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
@@ -123,7 +124,7 @@ nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: whit
 nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
 nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
 
-/* ─── ARTICLE LAYOUT ─── */
+/* ARTICLE LAYOUT */
 .article-wrapper {
   max-width: 1200px; margin: 0 auto;
   padding: 40px 24px 64px;
@@ -133,7 +134,7 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
   align-items: start;
 }
 
-/* ─── ARTICLE HEADER ─── */
+/* ARTICLE HEADER */
 .article-header {
   margin-bottom: 32px;
   padding-bottom: 24px;
@@ -198,7 +199,7 @@ h1.article-title {
   50% { opacity: 0.3; }
 }
 
-/* ─── ARTICLE BODY ─── */
+/* ARTICLE BODY */
 .article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
 
 .article-body p { margin-bottom: 18px; }
@@ -220,6 +221,7 @@ h1.article-title {
   margin-bottom: 10px;
 }
 
+/* Q BOX */
 .q-box {
   background: var(--rep-bg);
   border: 1px solid rgba(122,26,26,0.15);
@@ -244,6 +246,7 @@ h1.article-title {
   flex-shrink: 0; font-size: 1rem;
 }
 
+/* NOTICE */
 .status-notice {
   background: #fff8e8;
   border: 1px solid #e8c84a;
@@ -257,6 +260,7 @@ h1.article-title {
   font-size: 1rem; color: #c8a020; flex-shrink: 0; margin-top: 1px;
 }
 
+/* ARTICLE FOOTER */
 .article-footer {
   margin-top: 40px;
   padding-top: 24px;
@@ -291,7 +295,7 @@ h1.article-title {
 }
 .back-link:hover { background: var(--rep); color: white; }
 
-/* ─── SIDEBAR ─── */
+/* SIDEBAR */
 .s-widget {
   background: var(--white);
   border: 1px solid var(--border);
@@ -351,7 +355,7 @@ h1.article-title {
 .related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
 .related-list li:hover { color: var(--rep); }
 
-/* ─── FOOTER ─── */
+/* FOOTER */
 footer {
   background: var(--mast);
   color: rgba(255,255,255,0.45);
@@ -392,6 +396,7 @@ footer {
 .footer-col ul li:last-child { border-bottom: none; }
 .footer-col ul li:hover { color: rgba(255,255,255,0.75); }
 .footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-col ul li a { color: inherit; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 16px 24px;
@@ -403,7 +408,7 @@ footer {
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
-/* ─── RESPONSIVE ─── */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .article-wrapper { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -443,11 +448,12 @@ footer {
   <nav class="primary">
     <ul>
       <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
-      <li><a href="#">Σχετικά</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -459,9 +465,9 @@ footer {
       <div class="article-breadcrumb">
         <a href="index.html">Αρχική</a>
         <span class="sep">›</span>
-        <a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a>
+        <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
         <span class="sep">›</span>
-        <span class="current">Αυτοδιοίκηση & Κοινωνία</span>
+        <span class="current">Αυτοδιοίκηση &amp; Κοινωνία</span>
       </div>
 
       <div class="article-cats">
@@ -474,7 +480,7 @@ footer {
       <p class="article-deck">Ο Δήμος Γορτυνίας επιβάλλει από το 2023 ετήσιο τέλος «χρήσης» κοιμητηρίων χωρίς προηγούμενη είσπραξη ή ειδοποίηση, ενώ παραμένει αναπάντητη και η πληροφορία ότι ο προαύλιος χώρος του Δημοτικού Σχολείου Σταυροδρομίου προορίζεται για στάθμευση μηχανημάτων.</p>
 
       <div class="article-meta">
-        <span id="article-date"></span>
+        <span>20 Απριλίου 2026</span>
         <span class="dot"></span>
         <span>Κοινότητα Σταυροδρομίου</span>
         <span class="dot"></span>
@@ -483,36 +489,37 @@ footer {
     </div>
 
     <div class="article-body">
+
       <!-- ΦΩΤΟΓΡΑΦΙΕΣ ΚΟΙΜΗΤΗΡΙΟΥ -->
-<div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:28px;">
-  <figure style="margin:0;">
-    <img src="images/koimitirio/IMG_20260420_184836.jpg"
-         alt="Κοιμητήριο Σταυροδρομίου – περιποιημένος κεντρικός δρόμος"
-         style="width:100%; display:block; border:1px solid var(--border);">
-    <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
-      Ο κεντρικός διάδρομος του κοιμητηρίου
-    </figcaption>
-  </figure>
-  <figure style="margin:0;">
-    <img src="images/koimitirio/IMG_20260420_184854.jpg"
-         alt="Υπεργεμάτος κάδος απορριμμάτων εκτός κοιμητηρίου"
-         style="width:100%; display:block; border:1px solid var(--border);">
-    <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
-      Ο κάδος έξω από το κοιμητήριο – χωρίς αποκομιδή
-    </figcaption>
-  </figure>
-  <figure style="margin:0;">
-    <img src="images/koimitirio/IMG_20260420_184806.jpg"
-         alt="Κάδος Δήμου Τροπαίων 2010 υπεργεμάτος"
-         style="width:100%; display:block; border:1px solid var(--border);">
-    <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
-      Κάδος «Δήμος Τροπαίων 2010» – ξεχειλίζει
-    </figcaption>
-  </figure>
-</div>
-<p style="font-size:0.78rem; color:var(--ink-muted); font-style:italic; margin-bottom:24px; border-left:3px solid var(--border); padding-left:12px;">
-  📷 Φωτογραφίες: 20 Απριλίου 2026 · Κοιμητήριο Σταυροδρομίου Γορτυνίας
-</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:10px; margin-bottom:28px;">
+        <figure style="margin:0;">
+          <img src="images/koimitirio/IMG_20260420_184836.jpg"
+               alt="Κοιμητήριο Σταυροδρομίου – περιποιημένος κεντρικός δρόμος"
+               style="width:100%; display:block; border:1px solid var(--border);">
+          <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
+            Ο κεντρικός διάδρομος του κοιμητηρίου
+          </figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <img src="images/koimitirio/IMG_20260420_184854.jpg"
+               alt="Υπεργεμάτος κάδος απορριμμάτων εκτός κοιμητηρίου"
+               style="width:100%; display:block; border:1px solid var(--border);">
+          <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
+            Ο κάδος έξω από το κοιμητήριο – χωρίς αποκομιδή
+          </figcaption>
+        </figure>
+        <figure style="margin:0;">
+          <img src="images/koimitirio/IMG_20260420_184806.jpg"
+               alt="Κάδος Δήμου Τροπαίων 2010 υπεργεμάτος"
+               style="width:100%; display:block; border:1px solid var(--border);">
+          <figcaption style="font-size:0.68rem; color:var(--ink-muted); padding:6px 2px; line-height:1.4;">
+            Κάδος «Δήμος Τροπαίων 2010» – ξεχειλίζει
+          </figcaption>
+        </figure>
+      </div>
+      <p style="font-size:0.78rem; color:var(--ink-muted); font-style:italic; margin-bottom:24px; border-left:3px solid var(--border); padding-left:12px;">
+        📷 Φωτογραφίες: 20 Απριλίου 2026 · Κοιμητήριο Σταυροδρομίου Γορτυνίας
+      </p>
 
       <p>Ο Δήμος Γορτυνίας επιβάλλει από το 2023 ετήσιο τέλος «χρήσης» κοιμητηρίου: 40 ευρώ για διπλούς τάφους και 20 ευρώ για μονούς. Η απόφαση ψηφίστηκε ομόφωνα από δημοτικό συμβούλιο και αντιπολίτευση. Ειδοποιήσεις, ωστόσο, δεν εστάλησαν και ποσά δεν εισπράχθηκαν. Τρία χρόνια αργότερα, ο Δήμος απαιτεί την τριετή οφειλή αθροιστικά.</p>
 
@@ -616,7 +623,7 @@ footer {
       <div class="s-widget-body">
         <ul class="related-list">
           <li><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση Σταυροδρομίου: ερωτήματα για την εκτέλεση και το κόστος</a></li>
-          <li>Δημόσιες αποφάσεις που αφορούν το Σταυροδρόμι (Σύντομα)</li>
+          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></li>
           <li>Κατάσταση κοινοτικών υποδομών και υπηρεσιών (Σε έρευνα)</li>
         </ul>
       </div>
@@ -645,16 +652,17 @@ footer {
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        <li>Ρεπορτάζ & Παρεμβάσεις</li>
-        <li>Ιστορία & Μνήμη</li>
-        <li>Λαογραφία & Πολιτισμός</li>
-        <li>Αυτοδιοίκηση & Κοινωνία</li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Παρατηρητήριο</h4>
       <ul>
-        <li>Ανοιχτά ζητήματα</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
         <li>Αποφάσεις Δήμου</li>
         <li>Αναπάντητα ερωτήματα</li>
       </ul>
@@ -662,10 +670,9 @@ footer {
     <div class="footer-col">
       <h4>Σελίδες</h4>
       <ul>
-        <li><a href="index.html" style="color:inherit;">Αρχική</a></li>
-        <li>Σχετικά</li>
-        <li>Αρχείο κειμένων</li>
-        <li>Επικοινωνία</li>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>
@@ -676,27 +683,26 @@ footer {
 </footer>
 
 <script>
+  // progress bar
   window.addEventListener('scroll', () => {
     const st = document.documentElement.scrollTop;
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
   });
 
-  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-
+  // date (μοναδικό topbar-date, πίνακες days/months σύμφωνα με getDay 0–6)
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
     const d = new Date();
-    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    const shortStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-
-    const topDates = document.querySelectorAll('#topbar-date');
-    topDates.forEach(el => el.textContent = dateStr);
-
-    const art = document.getElementById('article-date');
-    if (art) art.textContent = shortStr;
+    const top = document.getElementById('topbar-date');
+    if (top) {
+      top.textContent =
+        days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
   }
-
   updateDates();
   setInterval(updateDates, 60000);
 </script>

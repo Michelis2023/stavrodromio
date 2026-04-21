@@ -84,7 +84,7 @@ nav.primary li a.nav-aut { border-bottom-color: var(--aut-lt); color: rgba(255,2
 .aut-section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
 .aut-section p { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.9; margin-bottom: 14px; font-family: 'Libre Baskerville', Georgia, serif; }
 
-/* TRACKER TABLE (CARDS) */
+/* TRACKER TABLE */
 .tracker-table { border: 1px solid var(--border); background: var(--white); }
 .tracker-head { display: grid; grid-template-columns: 1.8fr 0.9fr 0.9fr; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; background: var(--aut-bg); color: var(--ink-muted); padding: 8px 14px; border-bottom: 1px solid var(--border); }
 .tracker-head span:nth-child(2),
@@ -100,7 +100,7 @@ nav.primary li a.nav-aut { border-bottom-color: var(--aut-lt); color: rgba(255,2
 .status-wait { background: #e8f0fe; color: var(--aut); }
 .status-closed { background: #e8faf0; color: #1e6e44; }
 
-/* LINKS LIST */
+/* LIST */
 .aut-list { list-style: none; margin-top: 8px; }
 .aut-list li { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 6px; }
 .aut-list li::before { content: '•'; position: absolute; left: 0; top: 0; color: var(--aut-lt); }
@@ -412,22 +412,28 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+  // progress bar
   window.addEventListener('scroll', () => {
     const st = document.documentElement.scrollTop;
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
   });
+
+  // date
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
     const d = new Date();
     const span = document.getElementById('topbar-date');
-    if (span) span.textContent =
-      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    document.getElementById('mast-day').textContent  = d.getDate();
-    document.getElementById('mast-full').textContent =
-      days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const mdDay = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+    if (span) span.textContent = full;
+    if (mdDay) mdDay.textContent = d.getDate();
+    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
   updateDates();
   setInterval(updateDates, 60000);

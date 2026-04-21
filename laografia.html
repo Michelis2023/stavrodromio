@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Λαογραφία & Πολιτισμός – Σταυροδρόμι Κοινότητα</title>
+<meta name="description" content="Λαϊκές μνήμες, έθιμα, αφηγήσεις και πολιτιστικές εκδηλώσεις από την κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας.">
+<meta property="og:title" content="Λαογραφία & Πολιτισμός – Σταυροδρόμι Κοινότητα">
+<meta property="og:description" content="Ιστορίες, έθιμα και πολιτιστική ζωή του Σταυροδρομίου.">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/laografia.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="el_GR">
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/og-image.png">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
+  --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
+  --mast: #1e2b1f; --mast-mid: #2e4230;
+  --rep: #7a1a1a; --rep-lt: #a82828; --rep-bg: #fdf4f4;
+  --ist: #5a3e10; --ist-lt: #8a5f1e; --ist-bg: #fdf8f0;
+  --lao: #1e4a2e; --lao-lt: #2e6e44; --lao-bg: #f2faf4;
+  --aut: #1a2e5a; --aut-lt: #2a4a8a; --aut-bg: #f2f6fd;
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
+a { color: inherit; text-decoration: none; }
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--lao); width: 0%; z-index: 300; transition: width 0.1s linear; }
+
+/* TOPBAR */
+.topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
+.topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+.topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+
+/* MASTHEAD */
+.masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
+.mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+.site-name .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400; }
+.mast-date { text-align: right; }
+.mast-date .md-day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(255,255,255,0.15); line-height: 1; }
+.mast-date .md-full { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 3px; }
+
+/* NAV */
+nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
+nav.primary ul::-webkit-scrollbar { display: none; }
+nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 11px 16px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s; }
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a:hover { color: var(--white); }
+nav.primary li a.nav-lao,
+nav.primary li a.nav-lao.active { border-bottom-color: var(--lao-lt); color: rgba(255,255,255,0.92); }
+nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
+nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
+nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
+
+/* PAGE HERO */
+.page-hero { background: linear-gradient(160deg, var(--lao) 0%, #245a36 100%); padding: 48px 24px 40px; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232e6e44' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+.page-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; position: relative; }
+.page-hero-main .ph-kicker { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--lao-lt); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.page-hero-main .ph-kicker::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--lao-lt); }
+.page-hero-main h2 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; color: white; line-height: 1.2; margin-bottom: 14px; }
+.page-hero-main .ph-desc { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.97rem; font-style: italic; color: rgba(255,255,255,0.7); line-height: 1.75; margin-bottom: 24px; max-width: 580px; }
+.jump-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.jump-nav a { display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.72rem; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; }
+.jump-nav a:hover { background: var(--lao-lt); border-color: var(--lao-lt); color: white; }
+
+/* HERO ASIDE */
+.page-hero-aside { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 0; overflow: hidden; }
+.pha-header { background: rgba(255,255,255,0.1); padding: 10px 16px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.pha-list { list-style: none; padding: 8px 0; }
+.pha-list li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+.pha-list li:last-child { border-bottom: none; }
+.pha-list li a { display: flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: 0.78rem; color: rgba(255,255,255,0.65); transition: all 0.18s; line-height: 1.4; }
+.pha-list li a:hover { color: white; background: rgba(255,255,255,0.07); padding-left: 20px; }
+.pha-list li a .num { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; color: var(--lao-lt); min-width: 18px; flex-shrink: 0; }
+
+/* MAIN LAYOUT */
+.page-body { max-width: 1200px; margin: 0 auto; padding: 48px 24px 64px; display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: start; }
+
+/* SECTIONS */
+.lao-section { margin-bottom: 56px; scroll-margin-top: 100px; }
+.lao-section:last-child { margin-bottom: 0; }
+.section-anchor { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.section-anchor .num-badge { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--lao-lt); line-height: 1; min-width: 28px; }
+.section-anchor h3 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.15rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--ink); line-height: 1.3; }
+.section-rule { width: 100%; height: 1px; background: linear-gradient(to right, var(--lao-lt), var(--border), transparent); margin-bottom: 24px; }
+.lao-section p { font-size: 0.97rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 16px; font-family: 'Libre Baskerville', Georgia, serif; font-weight: 400; }
+.lao-section h4 { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--lao); letter-spacing: 0.02em; margin: 28px 0 10px; display: flex; align-items: center; gap: 8px; }
+.lao-section h4::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--lao-lt); flex-shrink: 0; }
+
+/* STORIES GRID */
+.story-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 12px; }
+.story-card { background: var(--white); border: 1px solid var(--border); padding: 16px 18px; }
+.story-card h5 { font-family: 'Libre Baskerville', serif; font-size: 0.9rem; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
+.story-card p { font-size: 0.82rem; color: var(--ink-soft); line-height: 1.7; font-family: 'IBM Plex Sans', sans-serif; }
+
+/* FESTIVALS LIST */
+.fest-list { list-style: none; margin-top: 8px; }
+.fest-list li { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; color: var(--ink-soft); display: flex; flex-direction: column; gap: 3px; }
+.fest-list li:last-child { border-bottom: none; }
+.fest-title { font-weight: 600; color: var(--lao); }
+.fest-meta { font-size: 0.75rem; color: var(--ink-muted); }
+
+/* PARTICIPATION BOX */
+.participate-box { background: var(--lao-bg); border: 1px solid rgba(30,74,46,0.18); border-left: 4px solid var(--lao-lt); padding: 20px 24px; margin-top: 24px; }
+.participate-box .pb-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lao); margin-bottom: 10px; }
+.participate-box p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-family: 'IBM Plex Sans', sans-serif; font-weight: 300; }
+
+/* SECTION DIVIDER */
+.section-divider { display: flex; align-items: center; gap: 12px; margin: 48px 0 0; }
+.section-divider .rule { flex: 1; height: 1px; background: var(--border); }
+.section-divider span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); white-space: nowrap; }
+
+/* SIDEBAR */
+.sidebar .s-widget { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+.s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+.s-widget-head.lao { background: var(--lao); }
+.s-widget-head.rep { background: var(--rep); }
+.s-widget-head.ist { background: var(--ist); }
+.s-widget-head.aut { background: var(--aut); }
+.s-widget-head.mast { background: var(--mast); }
+.s-widget-body { padding: 14px 16px; }
+
+.s-list { list-style: none; }
+.s-list li { padding: 9px 0; border-bottom: 1px solid var(--bg-warm); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.4; display: flex; gap: 7px; align-items: flex-start; cursor: pointer; transition: color 0.15s; }
+.s-list li:last-child { border-bottom: none; }
+.s-list li::before { content: '›'; flex-shrink: 0; }
+.s-list.lao li::before { color: var(--lao-lt); }
+.s-list.rep li::before { color: var(--rep); }
+.s-list.ist li::before { color: var(--ist-lt); }
+.s-list.aut li::before { color: var(--aut-lt); }
+.s-list li:hover { color: var(--mast); }
+
+.about-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
+.about-text p + p { margin-top: 9px; }
+
+/* FOOTER */
+footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 40px 24px 28px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
+.footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.footer-brand .ft-sub { font-size: 0.7rem; font-style: italic; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
+.footer-col h4 { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
+.footer-col ul { list-style: none; }
+.footer-col ul li { padding: 6px 0; font-size: 0.78rem; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
+.footer-col ul li:last-child { border-bottom: none; }
+.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
+.footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-col ul li a { color: inherit; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 0.7rem; }
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+
+/* RESPONSIVE */
+@media (max-width: 980px) {
+  .page-hero-inner { grid-template-columns: 1fr; }
+  .page-hero-aside { display: none; }
+  .page-body { grid-template-columns: 1fr; }
+  .story-grid { grid-template-columns: 1fr 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 640px) {
+  .page-body { padding: 32px 16px 48px; }
+  .story-grid { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-hero-inner { animation: fadeIn 0.45s ease both; }
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
+    <span id="topbar-date"></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="site-name">
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
+      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+    </div>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
+  </div>
+  <nav class="primary">
+    <ul>
+      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao active"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
+      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="#">Σχετικά</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-main">
+      <div class="ph-kicker">Ενότητα · Λαογραφία & Πολιτισμός</div>
+      <h2>Λαϊκές μνήμες, έθιμα και καθημερινή ζωή στο Σταυροδρόμι</h2>
+      <p class="ph-desc">Ιστορίες από τις γιορτές, τα πανηγύρια, την καθημερινή ζωή και τη λαϊκή σοφία του χωριού. Μνήμες που περνούν από στόμα σε στόμα και διασώζονται μέσα από την αφήγηση.</p>
+      <div class="jump-nav">
+        <a href="#kathimerini-zoí">Καθημερινή ζωή</a>
+        <a href="#giortes">Γιορτές & πανηγύρια</a>
+        <a href="#logia">Λόγια & εκφράσεις</a>
+        <a href="#piimata">Τραγούδια & δίστιχα</a>
+        <a href="#symmetoxi">Συμμετοχή</a>
+      </div>
+    </div>
+    <aside class="page-hero-aside">
+      <div class="pha-header">Περιεχόμενα ενότητας</div>
+      <ul class="pha-list">
+        <li><a href="#kathimerini-zoí"><span class="num">01</span> Καθημερινή ζωή</a></li>
+        <li><a href="#giortes"><span class="num">02</span> Γιορτές & πανηγύρια</a></li>
+        <li><a href="#logia"><span class="num">03</span> Λόγια & εκφράσεις</a></li>
+        <li><a href="#piimata"><span class="num">04</span> Τραγούδια & δίστιχα</a></li>
+        <li><a href="#symmetoxi"><span class="num">05</span> Συμμετοχή</a></li>
+      </ul>
+    </aside>
+  </div>
+</div>
+
+<div class="page-body">
+  <main>
+
+    <!-- 1. ΚΑΘΗΜΕΡΙΝΗ ΖΩΗ -->
+    <section id="kathimerini-zoí" class="lao-section">
+      <div class="section-anchor">
+        <span class="num-badge">01</span>
+        <h3>Καθημερινή ζωή στο χωριό</h3>
+      </div>
+      <div class="section-rule"></div>
+      <p>Η καθημερινή ζωή στο Σταυροδρόμι διαμορφώθηκε γύρω από τις αγροτικές εργασίες, τα ζώα, το σπίτι και την πλατεία. Ο ρυθμός της ημέρας ακολουθούσε τον κύκλο του ήλιου αλλά και τις ανάγκες της γης.</p>
+      <p>Οι δουλειές μοιράζονταν ανάμεσα στα μέλη της οικογένειας, ενώ η αλληλοβοήθεια ανάμεσα σε γειτονιά και συγγενείς ήταν αυτονόητη. Η κουβέντα στο καφενείο, οι δουλειές στη βρύση, το ζύμωμα και το ψήσιμο του ψωμιού είναι στιγμές που επανέρχονται στις αφηγήσεις των παλιότερων.</p>
+
+      <div class="story-grid">
+        <div class="story-card">
+          <h5>Στο καφενείο του χωριού</h5>
+          <p>Το καφενείο λειτούργησε ως μικρό «κοινοβούλιο» της κοινότητας. Εκεί συζητιούνταν τα νέα, λύνονταν παρεξηγήσεις, κλείνονταν συμφωνίες και μεταφέρονταν ειδήσεις από τον έξω κόσμο.</p>
+        </div>
+        <div class="story-card">
+          <h5>Η βρύση και το νερό</h5>
+          <p>Η διαδρομή προς τη βρύση για νερό ήταν καθημερινή πράξη αλλά και αφορμή για συνάντηση. Ιστορίες, νέα και σχόλια περνούσαν μαζί με τα δοχεία που γέμιζαν και άδειαζαν.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΓΙΟΡΤΕΣ</span>
+      <div class="rule"></div>
+    </div>
+
+    <!-- 2. ΓΙΟΡΤΕΣ & ΠΑΝΗΓΥΡΙΑ -->
+    <section id="giortes" class="lao-section">
+      <div class="section-anchor">
+        <span class="num-badge">02</span>
+        <h3>Γιορτές, πανηγύρια και συνάξεις</h3>
+      </div>
+      <div class="section-rule"></div>
+      <p>Οι γιορτές και τα πανηγύρια αποτελούσαν κορυφαίες στιγμές για το χωριό. Τότε μαζεύονταν όσοι είχαν φύγει, άναβαν ψησταριές, στήνονταν χοροί και το χωριό έπαιρνε ξανά ζωή.</p>
+
+      <ul class="fest-list">
+        <li>
+          <span class="fest-title">Πανηγύρι Αγίας Τριάδας</span>
+          <span class="fest-meta">Θρησκευτική γιορτή – σύναξη χωριανών και φίλων</span>
+          <span>Θεία Λειτουργία, τραπέζια στην αυλή και μουσική μέχρι αργά. Οι αφηγήσεις συχνά αναφέρονται σε συγκεκριμένα χρόνια, όπου ο χορός κράτησε «ως το ξημέρωμα».</span>
+        </li>
+        <li>
+          <span class="fest-title">Γιορτές καλοκαιριού</span>
+          <span class="fest-meta">Επιστροφές από πόλη και εξωτερικό</span>
+          <span>Το καλοκαίρι θεωρούνταν η εποχή της επιστροφής. Παιδιά και εγγόνια ξαναγέμιζαν τα σπίτια, ενώ οργανώνονταν αυθόρμητες συνεστιάσεις σε αυλές και πλατείες.</span>
+        </li>
+      </ul>
+    </section>
+
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΛΟΓΙΑ</span>
+      <div class="rule"></div>
+    </div>
+
+    <!-- 3. ΛΟΓΙΑ & ΕΚΦΡΑΣΕΙΣ -->
+    <section id="logia" class="lao-section">
+      <div class="section-anchor">
+        <span class="num-badge">03</span>
+        <h3>Λόγια, εκφράσεις και λαϊκή σοφία</h3>
+      </div>
+      <div class="section-rule"></div>
+      <p>Οι τοπικές εκφράσεις και τα «λόγια των παλιών» μεταφέρουν έναν ιδιαίτερο τρόπο να βλέπεις τον κόσμο. Πολλά από αυτά συνδέονται με τον καιρό, τις δουλειές ή τις ανθρώπινες σχέσεις.</p>
+      <p>Η λαϊκή σοφία καταγράφεται συχνά σε μορφή μικρών φράσεων, που λέγονται σε κατάλληλες στιγμές και λειτουργούν ως σχόλιο, προειδοποίηση ή παρηγοριά.</p>
+
+      <div class="story-grid">
+        <div class="story-card">
+          <h5>Λόγια για τον καιρό</h5>
+          <p>Παρατηρήσεις για τα σύννεφα, τους ανέμους και τα ζώα της περιοχής συνοδεύονταν από φράσεις που πρόβλεπαν βροχή, χιόνι ή καλοσύνη του καιρού.</p>
+        </div>
+        <div class="story-card">
+          <h5>Εκφράσεις της καθημερινότητας</h5>
+          <p>Φράσεις που χρησιμοποιούνταν μόνο στο χωριό ή σε λίγες οικογένειες, συχνά με χιούμορ ή ειρωνεία, δίνουν τον τόνο της τοπικής προφορικής παράδοσης.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΤΡΑΓΟΥΔΙΑ</span>
+      <div class="rule"></div>
+    </div>
+
+    <!-- 4. ΤΡΑΓΟΥΔΙΑ & ΔΙΣΤΙΧΑ -->
+    <section id="piimata" class="lao-section">
+      <div class="section-anchor">
+        <span class="num-badge">04</span>
+        <h3>Τραγούδια, δίστιχα και αφηγήσεις</h3>
+      </div>
+      <div class="section-rule"></div>
+      <p>Χωρίς τραγούδι δεν υπάρχει γλέντι. Στο Σταυροδρόμι, όπως και σε κάθε χωριό, τα τραγούδια της παρέας, τα μοιρολόγια και τα αυτοσχέδια δίστιχα συνόδευαν τις πιο χαρές και τις πιο δύσκολες στιγμές.</p>
+      <p>Η καταγραφή της μουσικής μνήμης του χωριού είναι ακόμα σε εξέλιξη. Στόχος είναι να διασωθούν τίτλοι τραγουδιών, ιστορίες γύρω από αυτά και, όπου είναι δυνατό, ηχογραφήσεις ή στίχοι που μπορούν να δημοσιευθούν.</p>
+
+      <div class="participate-box">
+        <div class="pb-label">Συμμετοχή στη μουσική μνήμη</div>
+        <p>Αν γνωρίζετε τραγούδια, δίστιχα ή ιστορίες που λέγονταν στο χωριό – σε γλέντια, γάμους, πανηγύρια ή δύσκολες στιγμές – μπορείτε να τα μοιραστείτε ώστε να συμπεριληφθούν σε επόμενες ενημερώσεις της ενότητας.</p>
+      </div>
+    </section>
+
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΣΥΜΜΕΤΟΧΗ</span>
+      <div class="rule"></div>
+    </div>
+
+    <!-- 5. ΣΥΜΜΕΤΟΧΗ -->
+    <section id="symmetoxi" class="lao-section">
+      <div class="section-anchor">
+        <span class="num-badge">05</span>
+        <h3>Πώς μπορείτε να συμβάλετε</h3>
+      </div>
+      <div class="section-rule"></div>
+      <p>Η ενότητα Λαογραφία & Πολιτισμός στηρίζεται στη μνήμη των κατοίκων και των ανθρώπων που αγαπούν το Σταυροδρόμι. Κάθε μικρή ιστορία, φωτογραφία ή φράση μπορεί να αποτελέσει πολύτιμο κομμάτι του παζλ.</p>
+
+      <div class="participate-box">
+        <div class="pb-label">Υλικό λαογραφίας</div>
+        <p>Αν θέλετε να μοιραστείτε υλικό (φωτογραφίες από γιορτές, διηγήσεις για έθιμα, λόγια που θυμάστε), μπορείτε να επικοινωνήσετε με τον διαχειριστή του site μέσω της σελίδας επικοινωνίας. Το υλικό θα αξιολογείται και, όπου είναι δυνατό, θα εντάσσεται στην ενότητα με σεβασμό στους ανθρώπους και την ιστορία τους.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <aside class="sidebar">
+
+    <div class="s-widget">
+      <div class="s-widget-head lao">Θέματα λαογραφίας</div>
+      <div class="s-widget-body">
+        <ul class="s-list lao">
+          <li>Καφενείο και πλατεία – μικρές ιστορίες</li>
+          <li>Το πανηγύρι της Αγίας Τριάδας</li>
+          <li>Λόγια και εκφράσεις των παλιών</li>
+          <li>Μνήμες από γλέντια και χορούς</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head mast">Ενότητες</div>
+      <div class="s-widget-body">
+        <ul class="s-list lao">
+          <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+          <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+          <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+          <li>Αυτοδιοίκηση &amp; Κοινωνία</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head rep">Σχετικά κείμενα</div>
+      <div class="s-widget-body">
+        <ul class="s-list rep">
+          <li><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head mast">Σχετικά με το site</div>
+      <div class="s-widget-body">
+        <div class="about-text">
+          <p>Ανεξάρτητος χώρος τεκμηρίωσης, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας.</p>
+          <p>Λαογραφία, ιστορία και ρεπορτάζ συνυπάρχουν με στόχο να διασωθεί η μνήμη και να τιμηθεί η καθημερινή ζωή των ανθρώπων του χωριού.</p>
+        </div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div style="display:flex; gap:4px; margin-bottom:10px;">
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--rep-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--ist-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--lao-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--aut-lt);"></div>
+      </div>
+      <h2>Σταυροδρόμι – Κοινότητα</h2>
+      <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ενότητες</h4>
+      <ul>
+        <li><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία & Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία & Πολιτισμός</a></li>
+        <li>Αυτοδιοίκηση & Κοινωνία</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Παρατηρητήριο</h4>
+      <ul>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Σελίδες</h4>
+      <ul>
+        <li><a href="index.html">Αρχική</a></li>
+        <li>Σχετικά</li>
+        <li>Αρχείο κειμένων</li>
+        <li>Επικοινωνία</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
+  </div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+  });
+
+  // Dates
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  function updateDates() {
+    const d = new Date();
+    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const span = document.getElementById('topbar-date');
+    if (span) span.textContent = dateStr;
+    const mdDay  = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+    if (mdDay)  mdDay.textContent = d.getDate();
+    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+
+  updateDates();
+  setInterval(updateDates, 60000);
+</script>
+</body>
+</html>

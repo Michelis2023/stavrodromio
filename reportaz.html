@@ -26,7 +26,7 @@
 html { scroll-behavior: smooth; }
 body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
 a { color: inherit; text-decoration: none; }
-#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--rep); width: 0%; z-index: 300; transition: width 0.1s linear; }
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--rep); width: 0; z-index: 300; transition: width 0.1s linear; }
 
 /* TOPBAR */
 .topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
@@ -252,23 +252,39 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+  // scroll progress bar με ασφαλή πρόσβαση στο στοιχείο
   window.addEventListener('scroll', () => {
-    const st = document.documentElement.scrollTop;
-    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const st  = document.documentElement.scrollTop;
+    const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) {
+      bar.style.width = (st / dh * 100) + '%';
+    }
   });
+
+  // ημερομηνία topbar + masthead
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
   function updateDates() {
-    const d = new Date();
-    const top = document.getElementById('topbar-date');
-    const mdDay = document.getElementById('mast-day');
+    const d      = new Date();
+    const span   = document.getElementById('topbar-date');
+    const mdDay  = document.getElementById('mast-day');
     const mdFull = document.getElementById('mast-full');
-    if (top) top.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+                 months[d.getMonth()] + ' ' + d.getFullYear();
+
+    if (span)  span.textContent  = full;
     if (mdDay) mdDay.textContent = d.getDate();
-    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    if (mdFull) {
+      mdFull.textContent =
+        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+        months[d.getMonth()] + ' ' + d.getFullYear();
+    }
   }
+
   updateDates();
   setInterval(updateDates, 60000);
 </script>

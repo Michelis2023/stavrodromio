@@ -614,23 +614,39 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+  // scroll progress bar με έλεγχο DOM/ύψους
   window.addEventListener('scroll', () => {
-    const st = document.documentElement.scrollTop;
-    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const st  = document.documentElement.scrollTop;
+    const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) {
+      bar.style.width = (st / dh * 100) + '%';
+    }
   });
+
+  // ημερομηνίες
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
   function updateDates() {
-    const d = new Date();
-    const span = document.getElementById('topbar-date');
-    if (span) span.textContent =
-      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    document.getElementById('mast-day').textContent  = d.getDate();
-    document.getElementById('mast-full').textContent =
-      days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const d      = new Date();
+    const span   = document.getElementById('topbar-date');
+    const mdDay  = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+                 months[d.getMonth()] + ' ' + d.getFullYear();
+
+    if (span)  span.textContent  = full;
+    if (mdDay) mdDay.textContent = d.getDate();
+    if (mdFull) {
+      mdFull.textContent =
+        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+        months[d.getMonth()] + ' ' + d.getFullYear();
+    }
   }
+
   updateDates();
   setInterval(updateDates, 60000);
 </script>

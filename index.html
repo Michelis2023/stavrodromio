@@ -182,11 +182,25 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
 /* RESPONSIVE */
-@media (max-width: 960px) { .hero-inner { grid-template-columns: 1fr; } .hero-meta { grid-template-columns: repeat(4,1fr); } }
-@media (max-width: 900px) { .main-wrapper { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .main-wrapper { padding: 24px 16px 48px; } .hero { padding: 32px 16px 28px; } .footer-inner { grid-template-columns: 1fr; } .hero-meta { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 960px) {
+  .hero-inner { grid-template-columns: 1fr; }
+  .hero-meta { grid-template-columns: repeat(4,1fr); }
+}
+@media (max-width: 900px) {
+  .main-wrapper { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .main-wrapper { padding: 24px 16px 48px; }
+  .hero { padding: 32px 16px 28px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .hero-meta { grid-template-columns: 1fr 1fr; }
+}
 
-@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .hero-text { animation: fadeIn 0.5s ease both; }
 .featured-article { animation: fadeIn 0.5s ease 0.1s both; }
 </style>
@@ -214,10 +228,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   <nav class="primary">
     <ul>
       <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
@@ -240,7 +254,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <div class="hero-label">Ανεξάρτητο ρεπορτάζ · Κοινότητα Σταυροδρομίου</div>
       <h2>Ιστορία, μνήμη και δημόσιος λόγος για ένα χωριό της Γορτυνίας</h2>
       <p>Καταγραφή, τεκμηρίωση και παρέμβαση για τα ζητήματα της κοινότητας. Χωρίς κομματικές δεσμεύσεις. Μοναδικό κριτήριο: η ακρίβεια και ο σεβασμός στον αναγνώστη.</p>
-      <a href="reportaz.html" class="hero-cta">Ρεπορτάζ & Παρεμβάσεις →</a>
+      <a href="reportaz.html" class="hero-cta">Ρεπορτάζ &amp; Παρεμβάσεις →</a>
     </div>
     <div class="hero-meta">
       <div class="hero-stat hs-rep">
@@ -329,7 +343,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     <div class="cat-section">
       <div class="cat-section-head ist">
         <span class="csh-icon">📜</span>
-        <h3>Ιστορία & Μνήμη</h3>
+        <h3>Ιστορία &amp; Μνήμη</h3>
       </div>
       <ul class="article-list">
         <li>
@@ -338,7 +352,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
             <div class="al-cat ist">Ιστορία</div>
             <div class="al-title"><a href="history.html">Το Σταυροδρόμι μέσα στον χρόνο: από τα πρώτα τεκμήρια ως τον 20ό αιώνα</a></div>
             <div class="al-desc">Η ιστορική διαδρομή του χωριού, τα τοπωνύμια, οι ρίζες και η ζωή των κατοίκων μέσα από αρχεία και προφορική παράδοση.</div>
-            <div class="al-meta"><span>Αρχείο Κοινότητας</span><span class="dot"></span><span>Ιστορία & Μνήμη</span></div>
+            <div class="al-meta"><span>Αρχείο Κοινότητας</span><span class="dot"></span><span>Ιστορία &amp; Μνήμη</span></div>
           </div>
         </li>
       </ul>
@@ -444,10 +458,13 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
     const d = new Date();
-    document.getElementById('topbar-date').textContent =
+    const top = document.getElementById('topbar-date');
+    const mdDay = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+    if (top) top.textContent =
       days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    document.getElementById('mast-day').textContent  = d.getDate();
-    document.getElementById('mast-full').textContent =
+    if (mdDay) mdDay.textContent  = d.getDate();
+    if (mdFull) mdFull.textContent =
       days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
   updateDates();

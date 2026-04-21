@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Τσιμεντόστρωση στο Σταυροδρόμι – Σταυροδρόμι Κοινότητα</title>
 <meta name="description" content="Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.">
-  <meta property="og:title" content="Τσιμεντόστρωση Σταυροδρομίου: ερωτήματα για την εκτέλεση και το κόστος">
+<meta property="og:title" content="Τσιμεντόστρωση Σταυροδρομίου: ερωτήματα για την εκτέλεση και το κόστος">
 <meta property="og:description" content="Ερωτήματα για τον τρόπο εκτέλεσης και το κόστος των εργασιών τσιμεντόστρωσης στο Σταυροδρόμι Γορτυνίας.">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/tsimento-01.jpg">
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-tsimeniostrosi.html">
@@ -54,7 +54,7 @@ a { color: inherit; text-decoration: none; }
   transition: width 0.1s linear;
 }
 
-/* ─── TOPBAR ─── */
+/* TOPBAR */
 .topbar {
   background: var(--mast);
   padding: 5px 0;
@@ -72,7 +72,7 @@ a { color: inherit; text-decoration: none; }
 }
 .topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 
-/* ─── MASTHEAD ─── */
+/* MASTHEAD */
 .masthead {
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
@@ -99,6 +99,7 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
 }
 
+/* NAV */
 nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
 nav.primary ul {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
@@ -123,7 +124,7 @@ nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: whit
 nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
 nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
 
-/* ─── ARTICLE LAYOUT ─── */
+/* ARTICLE LAYOUT */
 .article-wrapper {
   max-width: 1200px; margin: 0 auto;
   padding: 40px 24px 64px;
@@ -133,7 +134,7 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
   align-items: start;
 }
 
-/* ─── ARTICLE HEADER ─── */
+/* ARTICLE HEADER */
 .article-header {
   margin-bottom: 32px;
   padding-bottom: 24px;
@@ -198,7 +199,7 @@ h1.article-title {
   50% { opacity: 0.3; }
 }
 
-/* ─── ARTICLE BODY ─── */
+/* ARTICLE BODY */
 .article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
 
 .article-body p { margin-bottom: 18px; }
@@ -259,18 +260,57 @@ h1.article-title {
   font-size: 1rem; color: #c8a020; flex-shrink: 0; margin-top: 1px;
 }
 
-/* Photo placeholder */
-.photo-block {
-  background: var(--bg-warm);
-  border: 1px solid var(--border);
-  padding: 32px;
+/* Photo collage/lightbox */
+.photo-collage {
   margin: 28px 0;
-  text-align: center;
 }
-.photo-block .ph-icon { font-size: 2rem; margin-bottom: 8px; }
-.photo-block p {
-  font-size: 0.78rem; color: var(--ink-muted);
-  font-style: italic; margin-bottom: 0;
+.photo-collage .pc-label {
+  font-size: .64rem; font-weight: 600;
+  letter-spacing: .18em; text-transform: uppercase;
+  color: var(--rep); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.photo-collage .pc-label::before {
+  content:''; display:inline-block;
+  width:20px; height:2px; background:var(--rep);
+}
+.collage-grid {
+  display:grid; grid-template-columns:repeat(4,1fr);
+  gap:4px; margin-bottom:4px; width:100%;
+}
+.collage-grid img {
+  width:100%; height:110px; max-height:110px;
+  object-fit:cover; display:block;
+  cursor:zoom-in; border:1px solid var(--border);
+}
+.pc-caption {
+  font-size:.74rem; color:var(--ink-muted);
+  font-style:italic; text-align:center;
+  margin-top:8px; line-height:1.5;
+}
+.lightbox {
+  display:none; position:fixed; inset:0;
+  background:rgba(0,0,0,.9); z-index:9999;
+  justify-content:center; align-items:center;
+  cursor:zoom-out;
+}
+.lightbox.active { display:flex; }
+.lightbox img {
+  max-width:90vw; max-height:85vh;
+  object-fit:contain; cursor:default;
+}
+.lb-close {
+  position:fixed; top:16px; right:22px;
+  color:rgba(255,255,255,.85);
+  font-size:2.4rem; cursor:pointer;
+  line-height:1; font-weight:300;
+}
+.lb-close:hover{color:#fff;}
+.lb-caption{
+  position:fixed; bottom:18px; left:0; right:0;
+  text-align:center; color:rgba(255,255,255,.55);
+  font-size:.78rem; font-style:italic;
+  pointer-events:none;
 }
 
 /* Article footer */
@@ -308,9 +348,7 @@ h1.article-title {
 }
 .back-link:hover { background: var(--rep); color: white; }
 
-/* ─── SIDEBAR ─── */
-.sidebar { }
-
+/* SIDEBAR */
 .s-widget {
   background: var(--white);
   border: 1px solid var(--border);
@@ -328,7 +366,6 @@ h1.article-title {
 
 .s-widget-body { padding: 14px 16px; }
 
-/* Tracker mini */
 .tracker-mini { list-style: none; }
 .tracker-mini li {
   padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
@@ -371,7 +408,7 @@ h1.article-title {
 .related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
 .related-list li:hover { color: var(--rep); }
 
-/* ─── FOOTER ─── */
+/* FOOTER */
 footer {
   background: var(--mast);
   color: rgba(255,255,255,0.45);
@@ -412,6 +449,7 @@ footer {
 .footer-col ul li:last-child { border-bottom: none; }
 .footer-col ul li:hover { color: rgba(255,255,255,0.75); }
 .footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-col ul li a { color: inherit; }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 16px 24px;
@@ -423,7 +461,7 @@ footer {
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
-/* ─── RESPONSIVE ─── */
+/* RESPONSIVE */
 @media (max-width: 900px) {
   .article-wrapper { grid-template-columns: 1fr; }
   .footer-inner { grid-template-columns: 1fr 1fr; }
@@ -432,8 +470,11 @@ footer {
   .article-wrapper { padding: 24px 16px 48px; }
   h1.article-title { font-size: 1.5rem; }
   .footer-inner { grid-template-columns: 1fr; }
+  .collage-grid { grid-template-columns: repeat(2,1fr); }
+  .collage-grid img { height: 85px; }
 }
 
+/* ANIMATIONS */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(14px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -446,7 +487,6 @@ footer {
 
 <div id="progress"></div>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-inner">
     <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
@@ -454,7 +494,6 @@ footer {
   </div>
 </div>
 
-<!-- MASTHEAD -->
 <header class="masthead">
   <div class="mast-brand">
     <div class="site-name">
@@ -465,27 +504,26 @@ footer {
   <nav class="primary">
     <ul>
       <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
-      <li><a href="#">Σχετικά</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
 
-<!-- ARTICLE + SIDEBAR -->
 <div class="article-wrapper">
   <article>
 
-    <!-- HEADER -->
     <div class="article-header">
       <div class="article-breadcrumb">
         <a href="index.html">Αρχική</a>
         <span class="sep">›</span>
-        <a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a>
+        <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
         <span class="sep">›</span>
-        <span class="current">Έργα & Υποδομές</span>
+        <span class="current">Έργα &amp; Υποδομές</span>
       </div>
 
       <div class="article-cats">
@@ -506,13 +544,23 @@ footer {
       </div>
     </div>
 
-    <!-- PHOTO PLACEHOLDER -->
-    <style>.photo-collage{margin:28px 0}.photo-collage .pc-label{font-size:.64rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:var(--rep);margin-bottom:10px;display:flex;align-items:center;gap:8px}.photo-collage .pc-label::before{content:'';display:inline-block;width:20px;height:2px;background:var(--rep)}.collage-grid{display:grid!important;grid-template-columns:repeat(4,1fr)!important;gap:4px!important;margin-bottom:4px!important;width:100%}.collage-grid img{width:100%!important;height:110px!important;max-height:110px!important;object-fit:cover!important;display:block!important;cursor:zoom-in;border:1px solid var(--border)}.pc-caption{font-size:.74rem;color:var(--ink-muted);font-style:italic;text-align:center;margin-top:8px;line-height:1.5}.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:9999;justify-content:center;align-items:center;cursor:zoom-out}.lightbox.active{display:flex}.lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;cursor:default}.lb-close{position:fixed;top:16px;right:22px;color:rgba(255,255,255,.85);font-size:2.4rem;cursor:pointer;line-height:1;font-weight:300}.lb-close:hover{color:#fff}.lb-caption{position:fixed;bottom:18px;left:0;right:0;text-align:center;color:rgba(255,255,255,.55);font-size:.78rem;font-style:italic;pointer-events:none}@media(max-width:600px){.collage-grid{grid-template-columns:repeat(2,1fr)!important}.collage-grid img{height:85px!important}}</style> <div class="photo-collage">
+    <div class="photo-collage">
       <div class="pc-label">Φωτογραφική τεκμηρίωση από τον τόπο εκτέλεσης</div>
-      <div class="collage-grid">   <img src="images/tsimento-01.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 1" loading="lazy">   <img src="images/tsimento-02.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 2" loading="lazy">   <img src="images/tsimento-03.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 3" loading="lazy">   <img src="images/tsimento-04.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 4" loading="lazy"> </div> <div class="collage-grid row2">   <img src="images/tsimento-05.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 5" loading="lazy">   <img src="images/tsimento-06.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 6" loading="lazy">   <img src="images/tsimento-07.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 7" loading="lazy">   <img src="images/tsimento-08.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 8" loading="lazy"> </div> <p class="pc-caption">Φωτογραφίες πεδίου από τον τόπο εκτέλεσης — Κοινότητα Σταυροδρομίου, 19 Απριλίου 2026</p>
+      <div class="collage-grid">
+        <img src="images/tsimento-01.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 1" loading="lazy">
+        <img src="images/tsimento-02.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 2" loading="lazy">
+        <img src="images/tsimento-03.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 3" loading="lazy">
+        <img src="images/tsimento-04.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 4" loading="lazy">
+      </div>
+      <div class="collage-grid">
+        <img src="images/tsimento-05.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 5" loading="lazy">
+        <img src="images/tsimento-06.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 6" loading="lazy">
+        <img src="images/tsimento-07.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 7" loading="lazy">
+        <img src="images/tsimento-08.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 8" loading="lazy">
+      </div>
+      <p class="pc-caption">Φωτογραφίες πεδίου από τον τόπο εκτέλεσης — Κοινότητα Σταυροδρομίου, 19 Απριλίου 2026</p>
     </div>
 
-    <!-- ARTICLE BODY -->
     <div class="article-body">
 
       <p>Εργατικό συνεργείο, στο πλαίσιο σύμβασης με τον Δήμο Γορτυνίας, ολοκλήρωσε χθες εργασίες τσιμεντόστρωσης στην Κοινότητα Σταυροδρομίου. Οι φωτογραφίες που συνοδεύουν το παρόν άρθρο καταγράφουν το αποτέλεσμα και τεκμηριώνουν σειρά ανησυχητικών παρατηρήσεων για τον τρόπο εκτέλεσης.</p>
@@ -534,7 +582,7 @@ footer {
       <p>Η τοπική κοινωνία απευθύνει τρία συγκεκριμένα ερωτήματα στον Δήμο Γορτυνίας:</p>
 
       <div class="q-box">
-        <div class="q-label">Δημόσια ερωτήματα προς τον Δήμο Γορτυνίας — <span id="topbar-date"></span></div>
+        <div class="q-label">Δημόσια ερωτήματα προς τον Δήμο Γορτυνίας – 19 Απριλίου 2026</div>
         <ul>
           <li>Υπήρχε μελέτη και επίβλεψη από αρμόδιο τεχνικό υπάλληλο;</li>
           <li>Ποιο ήταν το συμβατικό αντικείμενο και το συνολικό κόστος του έργου;</li>
@@ -546,13 +594,12 @@ footer {
         Ο Δήμος Γορτυνίας δεν έχει απαντήσει έως την ώρα δημοσίευσης. Το άρθρο θα ενημερωθεί όταν υπάρξει τοποθέτηση.
       </div>
 
-    </div><!-- /article-body -->
+    </div>
 
-    <!-- ARTICLE FOOTER -->
     <div class="article-footer">
       <div class="af-label">Θεματικές ετικέτες</div>
       <div class="article-tags">
-        <span class="a-tag">Έργα & Υποδομές</span>
+        <span class="a-tag">Έργα &amp; Υποδομές</span>
         <span class="a-tag">Δήμος Γορτυνίας</span>
         <span class="a-tag">Τσιμεντόστρωση</span>
         <span class="a-tag">Δημόσιο χρήμα</span>
@@ -564,7 +611,6 @@ footer {
 
   </article>
 
-  <!-- SIDEBAR -->
   <aside class="sidebar">
 
     <div class="s-widget">
@@ -607,9 +653,8 @@ footer {
       <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
       <div class="s-widget-body">
         <ul class="related-list">
-          <li>Κατάσταση δρόμων στην κοινότητα: επιτόπια καταγραφή (Σύντομα)</li>
-          <li>Δημόσιες αποφάσεις που αφορούν το Σταυροδρόμι (Σύντομα)</li>
-          <li>Πρωτοβάθμια φροντίδα υγείας: κάλυψη κοινότητας (Σε έρευνα)</li>
+          <li><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η απειλή στη σχολική αυλή</a></li>
+          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></li>
         </ul>
       </div>
     </div>
@@ -627,7 +672,6 @@ footer {
   </aside>
 </div>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -638,16 +682,17 @@ footer {
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        <li>Ρεπορτάζ & Παρεμβάσεις</li>
-        <li>Ιστορία & Μνήμη</li>
-        <li>Λαογραφία & Πολιτισμός</li>
-        <li>Αυτοδιοίκηση & Κοινωνία</li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Παρατηρητήριο</h4>
       <ul>
-        <li>Ανοιχτά ζητήματα</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
         <li>Αποφάσεις Δήμου</li>
         <li>Αναπάντητα ερωτήματα</li>
       </ul>
@@ -655,10 +700,9 @@ footer {
     <div class="footer-col">
       <h4>Σελίδες</h4>
       <ul>
-        <li><a href="index.html" style="color:inherit;">Αρχική</a></li>
-        <li>Σχετικά</li>
-        <li>Αρχείο κειμένων</li>
-        <li>Επικοινωνία</li>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>
@@ -669,29 +713,65 @@ footer {
 </footer>
 
 <script>
+  // progress bar
   window.addEventListener('scroll', () => {
     const st = document.documentElement.scrollTop;
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
   });
 
-  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-
+  // date
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
     const d = new Date();
-    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    const shortStr = d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-
-    const topDates = document.querySelectorAll('#topbar-date');
-    topDates.forEach(el => el.textContent = dateStr);
-
+    const top = document.getElementById('topbar-date');
     const art = document.getElementById('article-date');
-    if (art) art.textContent = shortStr;
+    if (top) {
+      top.textContent =
+        days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+    if (art) {
+      // στα άρθρα αφήνουμε ημερομηνία δημοσίευσης σταθερή αν προτιμάς,
+      // αλλιώς μπορείς να κρατήσεις αυτή τη δυναμική μορφή
+      art.textContent = '19 Απριλίου 2026';
+    }
   }
-
   updateDates();
   setInterval(updateDates, 60000);
+
+  // lightbox για τις φωτογραφίες
+  const lb = document.createElement('div');
+  lb.id = 'lightbox';
+  lb.className = 'lightbox';
+  lb.innerHTML = '<span class="lb-close" id="lb-close">&times;</span><img id="lb-img" src="" alt=""><p class="lb-caption" id="lb-cap"></p>';
+  document.body.appendChild(lb);
+
+  const lbImg = document.getElementById('lb-img');
+  const lbCap = document.getElementById('lb-cap');
+  const lbClose = document.getElementById('lb-close');
+
+  document.querySelectorAll('.collage-grid img').forEach(img => {
+    img.addEventListener('click', () => {
+      lb.classList.add('active');
+      lbImg.src = img.src;
+      lbCap.textContent = img.alt;
+    });
+  });
+
+  function closeLb() {
+    lb.classList.remove('active');
+    lbImg.src = '';
+  }
+  lbClose.addEventListener('click', closeLb);
+  lb.addEventListener('click', (e) => {
+    if (e.target === lb) closeLb();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLb();
+  });
 </script>
-<div id="lightbox" class="lightbox"><span class="lb-close" id="lb-close">&times;</span><img id="lb-img" src="" alt=""><p class="lb-caption" id="lb-cap"></p></div> </body>
+</body>
 </html>

@@ -28,17 +28,20 @@ body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', s
 a { color: inherit; text-decoration: none; }
 #progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--aut); width: 0%; z-index: 300; transition: width 0.1s linear; }
 
+/* TOPBAR */
 .topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
 .topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
 .topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
 .topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 
+/* MASTHEAD */
 .masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
 .mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
 .site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.4rem, 4vw, 2.2rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
 .site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
 .site-name .subtitle { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px; }
 
+/* NAV */
 nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
 nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
 nav.primary ul::-webkit-scrollbar { display: none; }
@@ -50,6 +53,7 @@ nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: whit
 nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
 nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
 
+/* ARTICLE LAYOUT */
 .article-wrapper { max-width: 1200px; margin: 0 auto; padding: 40px 24px 64px; display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: start; }
 
 .article-header { margin-bottom: 32px; padding-bottom: 24px; border-bottom: 1px solid var(--border); }
@@ -78,6 +82,7 @@ h1.article-title { font-family: 'Playfair Display', Georgia, serif; font-size: c
 .article-body h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.25rem; font-weight: 700; color: var(--ink); margin: 32px 0 14px; padding-bottom: 8px; border-bottom: 2px solid var(--aut); display: inline-block; }
 .article-body h2::before { content: ''; display: block; width: 32px; height: 3px; background: var(--aut); margin-bottom: 10px; }
 
+/* SPECIAL BOXES */
 .ref-box { background: var(--aut-bg); border: 1px solid rgba(26,46,90,0.15); border-left: 4px solid var(--aut); padding: 18px 22px; margin: 24px 0; }
 .ref-box .rb-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--aut); margin-bottom: 12px; }
 .ref-box ul { list-style: none; }
@@ -99,6 +104,7 @@ h1.article-title { font-family: 'Playfair Display', Georgia, serif; font-size: c
 .status-notice { background: #fff8e8; border: 1px solid #e8c84a; border-left: 4px solid #c8a020; padding: 14px 18px; margin-top: 32px; display: flex; align-items: flex-start; gap: 10px; font-size: 0.84rem; color: var(--ink-soft); line-height: 1.6; }
 .status-notice::before { content: '⚠'; font-size: 1rem; color: #c8a020; flex-shrink: 0; margin-top: 1px; }
 
+/* ARTICLE FOOTER */
 .article-footer { margin-top: 40px; padding-top: 24px; border-top: 2px solid var(--border); }
 .article-footer .af-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 12px; }
 .article-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px; }
@@ -107,6 +113,7 @@ h1.article-title { font-family: 'Playfair Display', Georgia, serif; font-size: c
 .back-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; background: var(--mast); color: rgba(255,255,255,0.8); font-size: 0.74rem; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }
 .back-link:hover { background: var(--aut); color: white; }
 
+/* SIDEBAR */
 .s-widget { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
 .s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
 .s-widget-head.rep { background: var(--rep); }
@@ -134,6 +141,7 @@ h1.article-title { font-family: 'Playfair Display', Georgia, serif; font-size: c
 .related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
 .related-list li:hover { color: var(--rep); }
 
+/* FOOTER */
 footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-inner { max-width: 1200px; margin: 0 auto; padding: 40px 24px 28px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
 .footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
@@ -150,9 +158,22 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
-@media (max-width: 900px) { .article-wrapper { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .article-wrapper { padding: 24px 16px 48px; } h1.article-title { font-size: 1.5rem; } .footer-inner { grid-template-columns: 1fr; } }
-@keyframes fadeIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .article-wrapper { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .article-wrapper { padding: 24px 16px 48px; }
+  h1.article-title { font-size: 1.5rem; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 .article-header { animation: fadeIn 0.45s ease both; }
 .article-body { animation: fadeIn 0.45s ease 0.1s both; }
 </style>
@@ -178,11 +199,12 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   <nav class="primary">
     <ul>
       <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
-      <li><a href="#" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
-      <li><a href="#" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
-      <li><a href="#">Σχετικά</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -193,9 +215,9 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <div class="article-breadcrumb">
         <a href="index.html">Αρχική</a>
         <span class="sep">›</span>
-        <a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a>
+        <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
         <span class="sep">›</span>
-        <span class="current">Αυτοδιοίκηση & Κοινωνία</span>
+        <span class="current">Αυτοδιοίκηση &amp; Κοινωνία</span>
       </div>
       <div class="article-cats">
         <span class="cat-pill rep">Ρεπορτάζ</span>
@@ -367,10 +389,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        <li><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
-        <li><a href="history.html">Ιστορία & Μνήμη</a></li>
-        <li>Λαογραφία & Πολιτισμός</li>
-        <li>Αυτοδιοίκηση & Κοινωνία</li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -386,9 +408,8 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <h4>Σελίδες</h4>
       <ul>
         <li><a href="index.html">Αρχική</a></li>
-        <li>Σχετικά</li>
-        <li>Αρχείο κειμένων</li>
-        <li>Επικοινωνία</li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>
@@ -399,16 +420,25 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+  // progress bar
   window.addEventListener('scroll', () => {
     const st = document.documentElement.scrollTop;
     const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
   });
-  const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  // date
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   function updateDates() {
     const d = new Date();
-    document.getElementById('topbar-date').textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const top = document.getElementById('topbar-date');
+    if (top) {
+      top.textContent =
+        days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    }
   }
   updateDates();
   setInterval(updateDates, 60000);

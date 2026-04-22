@@ -1,218 +1,438 @@
-<!DOCTYPE html>
-<html lang="el">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Το νερό χύνεται στο ρέμα, η ευθύνη όχι – Σταυροδρόμι Κοινότητα</title>
-<meta name="description" content="Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα, με κίνδυνο για τη δημόσια υγεία και την επάρκεια ύδρευσης.">
-<meta property="og:title" content="Το νερό χύνεται στο ρέμα, η ευθύνη όχι – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Ρεπορτάζ για την αποσύνδεση της πηγής Ζενίκος από τη δεξαμενή του Σταυροδρομίου, τη ροή του νερού στο ρέμα και την εφεδρική παροχή από τον Λάδωνα.">
-<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-nero-zenikos.html">
-<meta property="og:type" content="article">
-<meta property="og:locale" content="el_GR">
-<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/IMG_20260420_181002.jpg">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
-<style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<!DOCTYPE html><html lang="el"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Το νερό χύνεται στο ρέμα, η ευθύνη όχι – Σταυροδρόμι Κοινότητα</title><meta name="description" content="Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα, με κίνδυνο για τη δημόσια υγεία και την επάρκεια ύδρευσης."><meta property="og:title" content="Το νερό χύνεται στο ρέμα, η ευθύνη όχι – Σταυροδρόμι Κοινότητα"><meta property="og:description" content="Ρεπορτάζ για την αποσύνδεση της πηγής Ζενίκος από τη δεξαμενή του Σταυροδρομίου, τη ροή του νερού στο ρέμα και την εφεδρική παροχή από τον Λάδωνα."><meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg"><meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-nero-zenikos.html"><meta property="og:type" content="article"><meta property="og:locale" content="el_GR"><link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet"><style>*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
-  --bg: #f5f2ed; --white: #ffffff; --border: #d4cec4;
-  --mast: #1e2b1f; --mast-mid: #2e4230;
-  --rep: #7a1a1a; --rep-lt: #a82828;
+ --ink: #18191a;
+ --ink-soft: #36393c;
+ --ink-muted: #72777d;
+ --bg: #f5f2ed;
+ --bg-warm: #ede8df;
+ --white: #ffffff;
+ --border: #d4cec4;
+ --mast: #1e2b1f;
+ --mast-mid: #2e4230;
+ --rep: #7a1a1a;
+ --rep-lt: #a82828;
+ --rep-bg: #fdf4f4;
+ --ist: #5a3e10;
+ --ist-lt: #8a5f1e;
+ --lao: #1e4a2e;
+ --lao-lt: #2e6e44;
+ --aut: #1a2e5a;
+ --aut-lt: #2a4a8a;
 }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.7; }
+body {
+ background: var(--bg);
+ color: var(--ink);
+ font-family: 'IBM Plex Sans', system-ui, sans-serif;
+ font-weight: 300;
+ line-height: 1.65;
+}
 a { color: inherit; text-decoration: none; }
-#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--rep); width: 0; z-index: 300; transition: width 0.1s linear; }
-
+#progress {
+ position: fixed; top: 0; left: 0; height: 3px;
+ background: var(--rep); width: 0%; z-index: 300;
+ transition: width 0.1s linear;
+}
 /* TOPBAR */
-.topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
-.topbar-inner { max-width: 900px; margin: 0 auto; padding: 0 18px; display: flex; justify-content: space-between; align-items: center; }
-.topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
-.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
-
+.topbar {
+ background: var(--mast);
+ padding: 5px 0;
+ font-size: 0.7rem;
+ color: rgba(255,255,255,0.5);
+ letter-spacing: 0.05em;
+}
+.topbar-inner {
+ max-width: 1200px; margin: 0 auto; padding: 0 24px;
+ display: flex; justify-content: space-between; align-items: center;
+}
+.topbar .loc {
+ display: flex; align-items: center; gap: 6px;
+ color: rgba(255,255,255,0.65);
+}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 /* MASTHEAD */
-.masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
-.mast-brand { max-width: 900px; margin: 0 auto; padding: 18px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-.site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.5rem, 4vw, 2.3rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
-.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
-.site-name .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400; }
-.mast-date { text-align: right; }
-.mast-date .md-day { font-family: 'Playfair Display', serif; font-size: 1.7rem; font-weight: 700; color: rgba(255,255,255,0.18); line-height: 1; }
-.mast-date .md-full { font-size: 0.68rem; color: rgba(255,255,255,0.35); letter-spacing: 0.06em; margin-top: 3px; }
-
+.masthead {
+ background: var(--mast);
+ border-bottom: 4px solid var(--mast-mid);
+ position: sticky; top: 0; z-index: 100;
+ box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+}
+.mast-brand {
+ max-width: 1200px; margin: 0 auto;
+ padding: 20px 24px 16px;
+ display: flex; align-items: flex-end;
+ justify-content: space-between; gap: 24px;
+}
+.site-name h1 {
+ font-family: 'Playfair Display', Georgia, serif;
+ font-size: clamp(1.4rem, 4vw, 2.2rem);
+ font-weight: 900; color: var(--white);
+ letter-spacing: -0.02em; line-height: 1;
+}
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
+.site-name .subtitle {
+ font-size: 0.72rem; color: rgba(255,255,255,0.4);
+ letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
+}
 /* NAV */
 nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
-nav.primary ul { max-width: 900px; margin: 0 auto; padding: 0 18px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
+nav.primary ul {
+ max-width: 1200px; margin: 0 auto; padding: 0 24px;
+ display: flex; list-style: none;
+ overflow-x: auto; scrollbar-width: none;
+}
 nav.primary ul::-webkit-scrollbar { display: none; }
-nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 10px 14px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s; }
+nav.primary li a {
+ display: flex; align-items: center; gap: 6px;
+ padding: 11px 16px;
+ font-size: 0.74rem; font-weight: 500;
+ letter-spacing: 0.05em; text-transform: uppercase;
+ color: rgba(255,255,255,0.62);
+ white-space: nowrap;
+ border-bottom: 3px solid transparent;
+ transition: color 0.18s, border-color 0.18s;
+}
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
-
+nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
+nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
+nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
+nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
 /* ARTICLE LAYOUT */
-.main-wrap { max-width: 900px; margin: 32px auto 48px; padding: 0 18px 40px; background: var(--white); border: 1px solid var(--border); box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
-.article-main { padding: 26px 22px 32px; }
-.article-header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 18px; }
-.article-kicker { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rep); margin-bottom: 6px; }
-.article-header h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 3.2vw, 2.1rem); line-height: 1.25; margin-bottom: 8px; color: var(--ink); }
-.article-subtitle { font-size: 0.9rem; color: var(--ink-soft); margin-bottom: 8px; }
-.article-date { display: block; font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; }
-
-/* PHOTOS STRIP */
-.article-photos {
-  margin-top: 16px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 8px;
+.article-wrapper {
+ max-width: 1200px; margin: 0 auto;
+ padding: 40px 24px 64px;
+ display: grid;
+ grid-template-columns: 1fr 300px;
+ gap: 56px;
+ align-items: start;
 }
-.article-photos figure {
-  margin: 0;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: #fff;
-  overflow: hidden;
+/* ARTICLE HEADER */
+.article-header {
+ margin-bottom: 32px;
+ padding-bottom: 24px;
+ border-bottom: 1px solid var(--border);
 }
-.article-photos img {
-  display: block;
-  width: 100%;
-  height: auto;
+.article-breadcrumb {
+ display: flex; align-items: center; gap: 8px;
+ font-size: 0.7rem; color: var(--ink-muted);
+ margin-bottom: 16px; flex-wrap: wrap;
 }
-
+.article-breadcrumb a { transition: color 0.15s; }
+.article-breadcrumb a:hover { color: var(--rep); }
+.article-breadcrumb .sep { color: var(--border); }
+.article-breadcrumb .current { color: var(--rep); font-weight: 500; }
+.article-cats {
+ display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
+}
+.cat-pill {
+ padding: 3px 10px; font-size: 0.62rem;
+ font-weight: 600; letter-spacing: 0.1em;
+ text-transform: uppercase; color: white;
+}
+.cat-pill.rep { background: var(--rep); }
+.cat-pill.aut { background: var(--aut); }
+h1.article-title {
+ font-family: 'Playfair Display', Georgia, serif;
+ font-size: clamp(1.6rem, 4vw, 2.4rem);
+ font-weight: 700; line-height: 1.2;
+ color: var(--ink); margin-bottom: 14px;
+}
+.article-deck {
+ font-family: 'Libre Baskerville', Georgia, serif;
+ font-size: 1.05rem; font-style: italic;
+ color: var(--ink-soft); line-height: 1.75;
+ margin-bottom: 20px;
+ padding-left: 16px;
+ border-left: 3px solid var(--rep);
+}
+.article-meta {
+ display: flex; align-items: center; gap: 12px;
+ font-size: 0.72rem; color: var(--ink-muted);
+ flex-wrap: wrap;
+}
+.article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
 /* BODY */
-.article-body p {
-  margin-bottom: 14px;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
+.article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
+.article-body p { margin-bottom: 18px; }
+.article-body ol { margin: 8px 0 14px 20px; padding-left: 4px; }
+.article-body li { margin-bottom: 6px; }
+/* PHOTO GRID */
+.photo-grid {
+ display:grid;
+ grid-template-columns: repeat(4,1fr);
+ gap:10px;
+ margin: 24px 0 24px;
 }
-.article-body p:first-child { margin-top: 4px; }
-.article-body ol {
-  margin: 8px 0 14px 20px;
-  padding-left: 10px;
+.photo-grid figure { margin:0; }
+.photo-grid img {
+ width:100%; display:block;
+ border:1px solid var(--border);
 }
-.article-body ol li {
-  margin-bottom: 6px;
-  font-size: 0.95rem;
-  color: var(--ink-soft);
+.photo-grid figcaption {
+ font-size:0.68rem;
+ color:var(--ink-muted);
+ padding:6px 2px;
+ line-height:1.4;
 }
-.article-signature {
-  margin-top: 10px;
-  font-weight: 500;
-  color: var(--ink);
+.photo-credit {
+ font-size:0.78rem;
+ color:var(--ink-muted);
+ font-style:italic;
+ margin-bottom:24px;
+ border-left:3px solid var(--border);
+ padding-left:12px;
 }
-
-/* FOOTER (SIMPLE) */
-.page-footer {
-  max-width: 900px;
-  margin: 0 auto 32px;
-  padding: 0 18px;
-  font-size: 0.7rem;
-  color: #777;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
+/* ARTICLE FOOTER */
+.article-footer {
+ margin-top: 32px;
+ padding-top: 24px;
+ border-top: 2px solid var(--border);
 }
-</style>
-</head>
-<body>
+.article-footer .af-label {
+ font-size: 0.64rem; font-weight: 600;
+ letter-spacing: 0.18em; text-transform: uppercase;
+ color: var(--ink-muted); margin-bottom: 12px;
+}
+.article-tags {
+ display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
+}
+.a-tag {
+ padding: 3px 10px; border: 1px solid var(--border);
+ font-size: 0.7rem; color: var(--ink-muted);
+ text-transform: uppercase; letter-spacing: 0.08em;
+ cursor: pointer; transition: all 0.15s;
+}
+.a-tag:hover { background: var(--rep); border-color: var(--rep); color: white; }
+.back-link {
+ display: inline-flex; align-items: center; gap: 8px;
+ padding: 10px 20px;
+ background: var(--mast);
+ color: rgba(255,255,255,0.8);
+ font-size: 0.74rem; font-weight: 500;
+ letter-spacing: 0.06em; text-transform: uppercase;
+ transition: background 0.2s;
+}
+.back-link:hover { background: var(--rep); color: white; }
+/* SIDEBAR */
+.s-widget {
+ background: var(--white);
+ border: 1px solid var(--border);
+ margin-bottom: 20px; overflow: hidden;
+}
+.s-widget-head {
+ padding: 9px 14px;
+ font-size: 0.62rem; font-weight: 600;
+ letter-spacing: 0.18em; text-transform: uppercase;
+ color: rgba(255,255,255,0.85);
+}
+.s-widget-head.rep { background: var(--rep); }
+.s-widget-head.aut { background: var(--aut); }
+.s-widget-head.mast { background: var(--mast); }
+.s-widget-body { padding: 14px 16px; }
+.tracker-mini { list-style: none; }
+.tracker-mini li {
+ padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
+ font-size: 0.8rem; color: var(--ink-soft);
+ line-height: 1.4;
+}
+.tracker-mini li:last-child { border-bottom: none; }
+.tracker-mini li .tm-title {
+ color: var(--ink); font-weight: 400; margin-bottom: 4px;
+}
+.tracker-mini li .tm-meta {
+ font-size: 0.68rem; color: var(--ink-muted);
+ display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+}
+.status-pill {
+ display: inline-block; padding: 1px 7px;
+ font-size: 0.58rem; font-weight: 600;
+ letter-spacing: 0.1em; text-transform: uppercase;
+ border-radius: 2px;
+}
+.status-pill.noans { background: #fde8e8; color: var(--rep); }
+.status-pill.open { background: #fef3cd; color: var(--ist); }
+.status-pill.wait { background: #e8f0fe; color: var(--aut); }
+.about-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
+.about-text p + p { margin-top: 9px; }
+.related-list { list-style: none; }
+.related-list li {
+ padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
+ font-size: 0.8rem; color: var(--ink-soft);
+ line-height: 1.4; cursor: pointer;
+ transition: color 0.15s;
+ display: flex; gap: 7px; align-items: flex-start;
+}
+.related-list li:last-child { border-bottom: none; }
+.related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
+.related-list li:hover { color: var(--rep); }
+/* FOOTER */
+footer {
+ background: var(--mast);
+ color: rgba(255,255,255,0.45);
+}
+.footer-inner {
+ max-width: 1200px; margin: 0 auto;
+ padding: 40px 24px 28px;
+ display: grid;
+ grid-template-columns: 2fr 1fr 1fr 1fr;
+ gap: 36px;
+}
+.footer-brand h2 {
+ font-family: 'Playfair Display', serif;
+ font-size: 1.2rem; font-weight: 700;
+ color: rgba(255,255,255,0.85); margin-bottom: 6px;
+}
+.footer-brand .ft-sub {
+ font-size: 0.7rem; font-style: italic;
+ color: rgba(255,255,255,0.3); margin-bottom: 12px;
+}
+.footer-brand p {
+ font-size: 0.78rem; color: rgba(255,255,255,0.35);
+ line-height: 1.75;
+}
+.footer-col h4 {
+ font-size: 0.62rem; font-weight: 600;
+ letter-spacing: 0.18em; text-transform: uppercase;
+ color: rgba(255,255,255,0.55);
+ padding-bottom: 8px;
+ border-bottom: 1px solid rgba(255,255,255,0.08);
+ margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; }
+.footer-col ul li {
+ padding: 6px 0; font-size: 0.78rem;
+ color: rgba(255,255,255,0.35);
+ border-bottom: 1px solid rgba(255,255,255,0.04);
+ cursor: pointer; transition: color 0.15s;
+ display: flex; align-items: center; gap: 5px;
+}
+.footer-col ul li:last-child { border-bottom: none; }
+.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
+.footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-col ul li a { color: inherit; }
+.footer-bottom {
+ border-top: 1px solid rgba(255,255,255,0.06);
+ padding: 16px 24px;
+ max-width: 1200px; margin: 0 auto;
+ display: flex; justify-content: space-between;
+ align-items: center; gap: 16px; flex-wrap: wrap;
+ font-size: 0.7rem;
+}
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+/* RESPONSIVE */
+@media (max-width: 900px) {
+ .article-wrapper { grid-template-columns: 1fr; }
+ .footer-inner { grid-template-columns: 1fr 1fr; }
+ .photo-grid { grid-template-columns: repeat(2,1fr); }
+}
+@media (max-width: 600px) {
+ .article-wrapper { padding: 24px 16px 48px; }
+ h1.article-title { font-size: 1.5rem; }
+ .footer-inner { grid-template-columns: 1fr; }
+ .photo-grid { grid-template-columns: 1fr 1fr; }
+}
+@keyframes fadeIn {
+ from { opacity: 0; transform: translateY(14px); }
+ to { opacity: 1; transform: translateY(0); }
+}
+.article-header { animation: fadeIn 0.45s ease both; }
+.article-body { animation: fadeIn 0.45s ease 0.1s both; }
+</style></head><body><div id="progress"></div><div class="topbar"><div class="topbar-inner"><span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span><span id="topbar-date"></span></div></div><header class="masthead"><div class="mast-brand"><div class="site-name"><h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1><div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div></div></div><nav class="primary"><ul><li><a href="index.html">Αρχική</a></li><li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li><li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li><li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li><li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li><li><a href="sxetika.html">Σχετικά</a></li><li><a href="epikoinonia.html">Επικοινωνία</a></li></ul></nav></header>
 
-<div id="progress"></div>
+<div class="article-wrapper">
+  <article>
+    <div class="article-header">
+      <div class="article-breadcrumb">
+        <a href="index.html">Αρχική</a>
+        <span class="sep">›</span>
+        <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
+        <span class="sep">›</span>
+        <span class="current">Αυτοδιοίκηση &amp; Κοινωνία</span>
+      </div>
 
-<div class="topbar">
-  <div class="topbar-inner">
-    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
-    <span id="topbar-date"></span>
-  </div>
-</div>
+      <div class="article-cats">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+      </div>
 
-<header class="masthead">
-  <div class="mast-brand">
-    <div class="site-name">
-      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
-      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
-    </div>
-    <div class="mast-date">
-      <div class="md-day" id="mast-day"></div>
-      <div class="md-full" id="mast-full"></div>
-    </div>
-  </div>
-  <nav class="primary">
-    <ul>
-      <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-      <li><a href="sxetika.html">Σχετικά</a></li>
-      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
-    </ul>
-  </nav>
-</header>
+      <h1 class="article-title">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</h1>
 
-<main class="main-wrap">
-  <article class="article-main">
-    <header class="article-header">
-      <div class="article-kicker">Αυτοδιοίκηση &amp; Κοινωνία · Ρεπορτάζ</div>
-      <h1>Το νερό χύνεται στο ρέμα, η ευθύνη όχι</h1>
-      <p class="article-subtitle">
-        Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα, 
+      <p class="article-deck">
+        Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα,
         ενώ η κοινότητα υδροδοτείται προσωρινά από εφεδρική παροχή του Λάδωνα.
       </p>
-      <time class="article-date" datetime="2026-04-22">22 Απριλίου 2026</time>
 
-      <div class="article-photos">
-        <figure>
-          <img src="IMG_20260420_181002.jpg" alt="Εκροή νερού δίπλα στη δεξαμενή Σταυροδρομίου">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181010.jpg" alt="Αγωγός νερού που καταλήγει στο ρέμα">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181023.jpg" alt="Ροή νερού έξω από τη δεξαμενή προς το ρέμα">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181031.jpg" alt="Σημείο αποσύνδεσης της πηγής από τη δεξαμενή">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181053.jpg" alt="Αγωγοί και εκροή νερού στο πρανές">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_180957.jpg" alt="Γενική άποψη του χώρου γύρω από τη δεξαμενή">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181014.jpg" alt="Ροή νερού σε μικρό αυλάκι δίπλα στη δεξαμενή">
-        </figure>
-        <figure>
-          <img src="IMG_20260420_181125.jpg" alt="Άποψη της εκροής νερού προς το ρέμα">
-        </figure>
+      <div class="article-meta">
+        <span>22 Απριλίου 2026</span>
+        <span class="dot"></span>
+        <span>Κοινότητα Σταυροδρομίου</span>
       </div>
-    </header>
+    </div>
 
     <div class="article-body">
+
+      <!-- ΦΩΤΟΓΡΑΦΙΕΣ ΝΕΡΟΥ / ΖΕΝΙΚΟΣ -->
+      <div class="photo-grid">
+        <figure>
+          <img src="images/nero/IMG_20260420_181010.jpg" alt="Αγωγός νερού που καταλήγει στο ρέμα">
+          <figcaption>Αγωγός νερού δίπλα στη δεξαμενή – η παροχή δεν οδηγεί στη δεξαμενή</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181014.jpg" alt="Ροή νερού σε μικρό αυλάκι δίπλα στη δεξαμενή">
+          <figcaption>Ροή νερού σε πρόχειρο αυλάκι προς το ρέμα</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181023.jpg" alt="Ροή νερού έξω από τη δεξαμενή προς το ρέμα">
+          <figcaption>Νερό έξω από το περίβλημα της δεξαμενής, σε μόνιμη ροή</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181031.jpg" alt="Σημείο αποσύνδεσης της πηγής από τη δεξαμενή">
+          <figcaption>Σημείο αποσύνδεσης της πηγής Ζενίκος από την κεντρική δεξαμενή</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181053.jpg" alt="Αγωγοί και εκροή νερού στο πρανές">
+          <figcaption>Αγωγοί και εκροή νερού στο πρανές, κατεύθυνση προς το ρέμα</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181206.jpg" alt="Ροή νερού προς το ρέμα σε κατηφορικό πρανές">
+          <figcaption>Το νερό συνεχίζει προς το ρέμα, εκτός δικτύου ύδρευσης</figcaption>
+        </figure>
+        <figure>
+          <img src="images/nero/IMG_20260420_181212.jpg" alt="Άποψη πρανούς με νερό και βλάστηση">
+          <figcaption>Κατάληξη της ροής σε φυσικό ρέμα κάτω από τη δεξαμενή</figcaption>
+        </figure>
+      </div>
+
+      <p class="photo-credit">
+        📷 Φωτογραφίες: 20 Απριλίου 2026 · Πηγή Ζενίκος και κεντρική δεξαμενή Σταυροδρομίου
+      </p>
+
       <p>Κυρίες και κύριοι της Δημοτικής Αρχής,</p>
 
       <p>
-        Ό,τι αντικρίσαμε στην κεντρική δεξαμενή του Σταυροδρομίου δεν είναι «βλάβη» και δεν είναι «προσωρινή ρύθμιση». 
-        Είναι εικόνα διοικητικής ανευθυνότητας σε κατάσταση ακινησίας: το νερό της πηγής Ζενίκος, που επί χρόνια υδροδοτεί τα χωριά της περιοχής, 
-        έχει αποσυνδεθεί από τη δεξαμενή και χύνεται στο ρέμα. Ο αγωγός δεν οδηγεί πια στον ταμιευτήρα. Το νερό χάνεται. 
+        Ό,τι αντικρίσαμε στην κεντρική δεξαμενή του Σταυροδρομίου δεν είναι «βλάβη» και δεν είναι «προσωρινή ρύθμιση».
+        Είναι εικόνα διοικητικής ανευθυνότητας σε κατάσταση ακινησίας: το νερό της πηγής Ζενίκος, που επί χρόνια υδροδοτεί τα χωριά της περιοχής,
+        έχει αποσυνδεθεί από τη δεξαμενή και χύνεται στο ρέμα. Ο αγωγός δεν οδηγεί πια στον ταμιευτήρα. Το νερό χάνεται.
         Αιτία, σύμφωνα με την επιτόπια διαπίστωση: απόβλητα από παρακείμενο ποιμνιοστάσιο εισχώρησαν τον χειμώνα στην υδροσυλλογή.
       </p>
 
       <p>
-        Η κατάσταση αυτή θέτει άμεσο ζήτημα δημόσιας υγείας. Κι εδώ εντοπίζεται η ευθύνη της Δημοτικής Αρχής: 
-        δεν διαφαίνεται καμία ουσιαστική κινητοποίηση, κανένα χρονοδιάγραμμα αποκατάστασης, κανένα γραπτό ίχνος ενημέρωσης των αρμόδιων υπηρεσιών. 
+        Η κατάσταση αυτή θέτει άμεσο ζήτημα δημόσιας υγείας. Κι εδώ εντοπίζεται η ευθύνη της Δημοτικής Αρχής:
+        δεν διαφαίνεται καμία ουσιαστική κινητοποίηση, κανένα χρονοδιάγραμμα αποκατάστασης, κανένα γραπτό ίχνος ενημέρωσης των αρμόδιων υπηρεσιών.
         Ούτε και από τους ίδιους τους κατοίκους ακούγεται κάτι. Σαν να εθίστηκαν και αυτοί στην αδράνεια.
       </p>
 
       <p>
-        Προς το παρόν, υδροδοτούμαστε από εφεδρική παροχή που προέρχεται από το «Πρώτο Παράθυρο», κοντά στο φράγμα της λίμνης του Λάδωνα. 
-        Το νερό αυτό εξυπηρετεί και άλλα χωριά. Το καλοκαίρι δεν έρχεται σε κάποιο απώτερο μέλλον· έρχεται τώρα, με αυξημένη κατανάλωση και φθίνοντα αποθέματα. 
+        Προς το παρόν, υδροδοτούμαστε από εφεδρική παροχή που προέρχεται από το «Πρώτο Παράθυρο», κοντά στο φράγμα της λίμνης του Λάδωνα.
+        Το νερό αυτό εξυπηρετεί και άλλα χωριά. Το καλοκαίρι δεν έρχεται σε κάποιο απώτερο μέλλον· έρχεται τώρα, με αυξημένη κατανάλωση και φθίνοντα αποθέματα.
         Χωρίς τεχνική και διοικητική παρέμβαση, η λειψυδρία είναι βεβαιότητα.
       </p>
 
       <p>
-        Το νερό είναι δημόσιο αγαθό, συνταγματικά κατοχυρωμένο. Δεν ανήκει σε κανέναν αιρετό, σε κανέναν κτηνοτρόφο και σε κανέναν εργολάβο. 
-        Όταν η κύρια πηγή ύδρευσης ενός οικισμού τίθεται εκτός λειτουργίας, η δημοτική αρχή δεν δικαιούται να αρκείται σε «μελέτες» που δεν είδε κανείς 
+        Το νερό είναι δημόσιο αγαθό, συνταγματικά κατοχυρωμένο. Δεν ανήκει σε κανέναν αιρετό, σε κανέναν κτηνοτρόφο και σε κανέναν εργολάβο.
+        Όταν η κύρια πηγή ύδρευσης ενός οικισμού τίθεται εκτός λειτουργίας, η δημοτική αρχή δεν δικαιούται να αρκείται σε «μελέτες» που δεν είδε κανείς
         και σε υποσχέσεις ότι «το καλοκαίρι θα τακτοποιηθούν όλα». Το καλοκαίρι έρχεται. Χωρίς ουσιαστική παρέμβαση, το μόνο που θα «τακτοποιηθεί» είναι η δίψα των κατοίκων.
       </p>
 
@@ -228,21 +448,21 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
       </ol>
 
       <p>
-        Δεν μπορείτε να ζητάτε από τον πολίτη «κατανόηση» όταν εκείνος βλέπει με τα μάτια του την πηγή να χύνεται στο ρέμα, 
-        ενώ σήμερα πίνει από εφεδρική παροχή με αβέβαιο αύριο. Η κτηνοτροφική δραστηριότητα είναι σημαντική για την περιοχή, 
-        αλλά δεν λειτουργεί εκτός νόμου: όταν τα υγρά απόβλητα ποιμνιοστασίου απειλούν πηγή ύδρευσης, δεν τίθεται θέμα ισορροπίας ανάμεσα σε συμφέροντα. 
+        Δεν μπορείτε να ζητάτε από τον πολίτη «κατανόηση» όταν εκείνος βλέπει με τα μάτια του την πηγή να χύνεται στο ρέμα,
+        ενώ σήμερα πίνει από εφεδρική παροχή με αβέβαιο αύριο. Η κτηνοτροφική δραστηριότητα είναι σημαντική για την περιοχή,
+        αλλά δεν λειτουργεί εκτός νόμου: όταν τα υγρά απόβλητα ποιμνιοστασίου απειλούν πηγή ύδρευσης, δεν τίθεται θέμα ισορροπίας ανάμεσα σε συμφέροντα.
         Τίθεται θέμα εφαρμογής της νομοθεσίας, προστασίας του περιβάλλοντος και σεβασμού του κοινού συμφέροντος.
       </p>
 
       <p>
-        Κυρίες και κύριοι της Δημοτικής Αρχής, η ευθύνη εδώ δεν είναι «συλλογική» για να διαχέεται και να χάνεται. Έχει ονόματα, υπογραφές και αρμοδιότητες. 
-        Αν η πηγή Ζενίκος παραμείνει αποσυνδεδεμένη, αν η δεξαμενή δεν αποκατασταθεί και αν το καλοκαίρι βρει τα χωριά με ανεπαρκή ύδρευση, 
-        αυτό δεν θα είναι «ατυχές συμβάν». Θα είναι υπόδειγμα διοικητικής αμέλειας. Και η αμέλεια στην προστασία της δημόσιας υγείας 
+        Κυρίες και κύριοι της Δημοτικής Αρχής, η ευθύνη εδώ δεν είναι «συλλογική» για να διαχέεται και να χάνεται. Έχει ονόματα, υπογραφές και αρμοδιότητες.
+        Αν η πηγή Ζενίκος παραμείνει αποσυνδεδεμένη, αν η δεξαμενή δεν αποκατασταθεί και αν το καλοκαίρι βρει τα χωριά με ανεπαρκή ύδρευση,
+        αυτό δεν θα είναι «ατυχές συμβάν». Θα είναι υπόδειγμα διοικητικής αμέλειας. Και η αμέλεια στην προστασία της δημόσιας υγείας
         δεν συνιστά απλώς ηθικό παράπτωμα· είναι νομικό ζήτημα.
       </p>
 
       <p>
-        Σας καλούμε να σταματήσετε τα ημίμετρα και τις σιωπές, να δώσετε τις απαντήσεις που οφείλετε και να προχωρήσετε άμεσα στα αναγκαία έργα αποκατάστασης. 
+        Σας καλούμε να σταματήσετε τα ημίμετρα και τις σιωπές, να δώσετε τις απαντήσεις που οφείλετε και να προχωρήσετε άμεσα στα αναγκαία έργα αποκατάστασης.
         Δεν διεκδικούμε κάτι περισσότερο από το αυτονόητο: καθαρό, ασφαλές, επαρκές νερό.
       </p>
 
@@ -250,52 +470,147 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
         Εκεί όπου απειλείται η υγεία των ανθρώπων, η αδράνεια δεν είναι λάθος. Είναι συνενοχή.
       </p>
 
-      <p class="article-signature">Οι κάτοικοι του Σταυροδρομίου</p>
+      <p class="article-signature" style="font-weight:500; color:var(--ink);">
+        Οι κάτοικοι του Σταυροδρομίου
+      </p>
+
+      <div class="article-footer">
+        <div class="af-label">Θεματικές ετικέτες</div>
+        <div class="article-tags">
+          <span class="a-tag">Ύδρευση</span>
+          <span class="a-tag">Πηγή Ζενίκος</span>
+          <span class="a-tag">Δήμος Γορτυνίας</span>
+          <span class="a-tag">Αυτοδιοίκηση</span>
+          <span class="a-tag">Σταυροδρόμι</span>
+        </div>
+        <a href="index.html" class="back-link">← Επιστροφή στην αρχική</a>
+      </div>
+
     </div>
   </article>
-</main>
 
-<div class="page-footer">
-  <span>© 2026 Σταυροδρόμι – Κοινότητα</span>
-  <span>Ανεξάρτητο · Αδέσμευτο</span>
+  <aside class="sidebar">
+    <div class="s-widget">
+      <div class="s-widget-head aut">Παρατηρητήριο Αυτοδιοίκησης</div>
+      <div class="s-widget-body">
+        <ul class="tracker-mini">
+          <li>
+            <div class="tm-title">Ύδρευση – Πηγή Ζενίκος</div>
+            <div class="tm-meta">
+              2026
+              <span class="status-pill open">Σε παρακολούθηση</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Εφεδρική παροχή από Λάδωνα</div>
+            <div class="tm-meta">
+              2026
+              <span class="status-pill open">Σε παρακολούθηση</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Τέλη κοιμητηρίων Σταυροδρομίου</div>
+            <div class="tm-meta">
+              2023–2026
+              <span class="status-pill noans">Χωρίς απάντηση</span>
+            </div>
+          </li>
+          <li>
+            <div class="tm-title">Τσιμεντόστρωση Σταυροδρομίου</div>
+            <div class="tm-meta">
+              2026
+              <span class="status-pill wait">Καταγραφή</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
+      <div class="s-widget-body">
+        <ul class="related-list">
+          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></li>
+          <li><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η σχολική αυλή</a></li>
+          <li><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση: ερωτήματα για την εκτέλεση και το κόστος</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="s-widget">
+      <div class="s-widget-head mast">Σχετικά με το site</div>
+      <div class="s-widget-body">
+        <div class="about-text">
+          <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.</p>
+          <p>Χωρίς κομματικές ή άλλες δεσμεύσεις. Μοναδικό κριτήριο: η ακρίβεια και ο σεβασμός στον αναγνώστη.</p>
+        </div>
+      </div>
+    </div>
+  </aside>
 </div>
 
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h2>Σταυροδρόμι – Κοινότητα</h2>
+      <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ενότητες</h4>
+      <ul>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Παρατηρητήριο</h4>
+      <ul>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Σελίδες</h4>
+      <ul>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
+  </div>
+</footer>
+
 <script>
-  // scroll progress bar
-  window.addEventListener('scroll', () => {
-    const st  = document.documentElement.scrollTop;
-    const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const bar = document.getElementById('progress');
-    if (bar && dh > 0) {
-      bar.style.width = (st / dh * 100) + '%';
-    }
-  });
-
-  // ημερομηνία topbar + masthead
-  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
-                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-
-  function updateDates() {
-    const d      = new Date();
-    const span   = document.getElementById('topbar-date');
-    const mdDay  = document.getElementById('mast-day');
-    const mdFull = document.getElementById('mast-full');
-
-    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
-                 months[d.getMonth()] + ' ' + d.getFullYear();
-
-    if (span)  span.textContent  = full;
-    if (mdDay) mdDay.textContent = d.getDate();
-    if (mdFull) {
-      mdFull.textContent =
-        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
-        months[d.getMonth()] + ' ' + d.getFullYear();
-    }
+// progress bar
+window.addEventListener('scroll', () => {
+  const st  = document.documentElement.scrollTop;
+  const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const bar = document.getElementById('progress');
+  if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
+});
+// date (μοναδικό topbar-date)
+const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+function updateDates() {
+  const d = new Date();
+  const top = document.getElementById('topbar-date');
+  if (top) {
+    top.textContent =
+      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
-
-  updateDates();
-  setInterval(updateDates, 60000);
+}
+updateDates();
+setInterval(updateDates, 60000);
 </script>
-</body>
-</html>
+
+</body></html>

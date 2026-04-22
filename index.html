@@ -124,7 +124,12 @@ nav.primary li a {
 }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
+
+/* ενεργή σελίδα */
+nav.primary li a.nav-active {
+  border-bottom-color: var(--mast-mid);
+  color: #ffffff;
+}
 
 /* MAIN LAYOUT */
 .main {
@@ -258,6 +263,19 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: white; }
   background: var(--white);
   border: 1px solid var(--border);
   padding: 16px 18px 18px;
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 14px;
+}
+.feature-image-wrap {
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+.feature-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .feature-meta-top {
   font-size: 0.7rem;
@@ -501,6 +519,9 @@ footer {
   .footer-inner {
     grid-template-columns: 1fr 1fr;
   }
+  .feature-card {
+    grid-template-columns: 1fr;
+  }
 }
 @media (max-width: 600px) {
   .main {
@@ -536,7 +557,7 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="index.html" class="nav-active"><span class="nav-dot" style="background:var(--border)"></span> Αρχική</a></li>
       <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
       <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
       <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
@@ -604,17 +625,24 @@ footer {
         <a href="reportaz.html" class="feature-all-link">ΟΛΑ ΤΑ ΡΕΠΟΡΤΑΖ →</a>
       </div>
       <article class="feature-card">
-        <div class="feature-meta-top">ΝΕΟ · 22 ΑΠΡ. 2026</div>
-        <h3 class="feature-title">
-          <a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a>
-        </h3>
-        <div class="feature-tags">ΡΕΠΟΡΤΑΖ · ΑΥΤΟΔΙΟΙΚΗΣΗ · ΥΔΡΕΥΣΗ</div>
-        <div class="feature-date">22 Απριλίου 2026 · Κοινότητα Σταυροδρομίου</div>
-        <p class="feature-excerpt">
-          Χρόνια προβλήματα στο δίκτυο ύδρευσης, αδιαφορία του Δήμου Γορτυνίας και η σιωπηλή επιβάρυνση των κατοίκων.
-          Ένα ρεπορτάζ για αυτά που δεν βλέπουν τα πρακτικά.
-        </p>
-        <a href="article-nero-zenikos.html" class="feature-cta">ΔΙΑΒΑΣΤΕ ΤΟ ΑΡΘΡΟ →</a>
+        <div class="feature-image-wrap">
+          <a href="article-nero-zenikos.html">
+            <img src="images/nero/IMG_20260420_181010.jpg" alt="Αγωγός νερού δίπλα στη δεξαμενή Σταυροδρομίου" class="feature-image">
+          </a>
+        </div>
+        <div>
+          <div class="feature-meta-top">ΝΕΟ · 22 ΑΠΡ. 2026</div>
+          <h3 class="feature-title">
+            <a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a>
+          </h3>
+          <div class="feature-tags">ΡΕΠΟΡΤΑΖ · ΑΥΤΟΔΙΟΙΚΗΣΗ · ΥΔΡΕΥΣΗ</div>
+          <div class="feature-date">22 Απριλίου 2026 · Κοινότητα Σταυροδρομίου</div>
+          <p class="feature-excerpt">
+            Χρόνια προβλήματα στο δίκτυο ύδρευσης, αδιαφορία του Δήμου Γορτυνίας και η σιωπηλή επιβάρυνση των κατοίκων.
+            Ένα ρεπορτάζ για αυτά που δεν βλέπουν τα πρακτικά.
+          </p>
+          <a href="article-nero-zenikos.html" class="feature-cta">ΔΙΑΒΑΣΤΕ ΤΟ ΑΡΘΡΟ →</a>
+        </div>
       </article>
     </section>
 

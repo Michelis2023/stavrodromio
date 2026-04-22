@@ -14,11 +14,10 @@
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-nero-zenikos.html">
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg">
-<!-- αν ξέρεις τις πραγματικές διαστάσεις, βάλε τις εδώ -->
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 
-//fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&amp;family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&amp;family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -56,6 +55,7 @@ a { color: inherit; text-decoration: none; }
  background: var(--rep); width: 0%; z-index: 300;
  transition: width 0.1s linear;
 }
+
 /* TOPBAR */
 .topbar {
  background: var(--mast);
@@ -73,6 +73,7 @@ a { color: inherit; text-decoration: none; }
  color: rgba(255,255,255,0.65);
 }
 .topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+
 /* MASTHEAD */
 .masthead {
  background: var(--mast);
@@ -97,6 +98,19 @@ a { color: inherit; text-decoration: none; }
  font-size: 0.72rem; color: rgba(255,255,255,0.4);
  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
 }
+.mast-date {
+ text-align: right;
+}
+.mast-date .md-day {
+ font-family: 'Playfair Display', serif;
+ font-size: 1.7rem; font-weight: 700;
+ color: rgba(255,255,255,0.18); line-height: 1;
+}
+.mast-date .md-full {
+ font-size: 0.68rem; color: rgba(255,255,255,0.35);
+ letter-spacing: 0.06em; margin-top: 3px;
+}
+
 /* NAV */
 nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
 nav.primary ul {
@@ -121,6 +135,7 @@ nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: whit
 nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
 nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
 nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
+
 /* ARTICLE LAYOUT */
 .article-wrapper {
  max-width: 1200px; margin: 0 auto;
@@ -130,6 +145,7 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
  gap: 56px;
  align-items: start;
 }
+
 /* ARTICLE HEADER */
 .article-header {
  margin-bottom: 32px;
@@ -175,11 +191,13 @@ h1.article-title {
  flex-wrap: wrap;
 }
 .article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
+
 /* BODY */
 .article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
 .article-body p { margin-bottom: 18px; }
 .article-body ol { margin: 8px 0 14px 20px; padding-left: 4px; }
 .article-body li { margin-bottom: 6px; }
+
 /* PHOTO GRID */
 .photo-grid {
  display:grid;
@@ -206,6 +224,7 @@ h1.article-title {
  border-left:3px solid var(--border);
  padding-left:12px;
 }
+
 /* ARTICLE FOOTER */
 .article-footer {
  margin-top: 32px;
@@ -237,6 +256,7 @@ h1.article-title {
  transition: background 0.2s;
 }
 .back-link:hover { background: var(--rep); color: white; }
+
 /* SIDEBAR */
 .s-widget {
  background: var(--white);
@@ -289,6 +309,7 @@ h1.article-title {
 .related-list li:last-child { border-bottom: none; }
 .related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
 .related-list li:hover { color: var(--rep); }
+
 /* FOOTER */
 footer {
  background: var(--mast);
@@ -344,6 +365,7 @@ footer {
 }
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+
 /* RESPONSIVE */
 @media (max-width: 900px) {
  .article-wrapper { grid-template-columns: 1fr; }
@@ -356,6 +378,8 @@ footer {
  .footer-inner { grid-template-columns: 1fr; }
  .photo-grid { grid-template-columns: 1fr 1fr; }
 }
+
+/* μικρό animation */
 @keyframes fadeIn {
  from { opacity: 0; transform: translateY(14px); }
  to { opacity: 1; transform: translateY(0); }
@@ -365,29 +389,36 @@ footer {
 </style>
 </head>
 <body>
+
 <div id="progress"></div>
+
 <div class="topbar">
   <div class="topbar-inner">
     <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
     <span id="topbar-date"></span>
   </div>
 </div>
+
 <header class="masthead">
   <div class="mast-brand">
     <div class="site-name">
       <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
       <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
     </div>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
   </div>
   <nav class="primary">
     <ul>
-      ><a href="index.html">Αρχική</a></li>
-      ><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      ><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
-      ><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      ><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-      ><a href="sxetika.html">Σχετικά</a></li>
-      ><a href="epikoinonia.html">Επικοινωνία</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -490,12 +521,12 @@ footer {
       <p>Ζητούμε δημόσιες, γραπτές και τεκμηριωμένες απαντήσεις:</p>
 
       <ol>
-        >Ποιος έδωσε εντολή να αποσυνδεθεί η πηγή Ζενίκος από την κεντρική δεξαμενή και με ποια αιτιολογία;</li>
-        >Πότε έγινε η τελευταία επίσημη δειγματοληψία και εργαστηριακός έλεγχος του νερού της πηγής και της δεξαμενής, και ποια ήταν τα αποτελέσματα;</li>
-        >Ποιες αρχές έχουν ενημερωθεί εγγράφως για την εισχώρηση αποβλήτων από το ποιμνιοστάσιο και ποια μέτρα έχουν επιβληθεί;</li>
-        >Γιατί επελέγη ως «λύση» η εκτροπή του νερού στο ρέμα, αντί για την αποκατάσταση αδιάκοπης παροχής στο χωριό;</li>
-        >Ποιο είναι το συγκεκριμένο χρονοδιάγραμμα, με ημερομηνίες και ονόματα υπευθύνων, για την αποκατάσταση της πηγής και την ασφαλή επανασύνδεσή της με τη δεξαμενή;</li>
-        >Με ποια λογική κρίθηκε κατεπείγουσα η δαπάνη περίπου 5 εκατομμυρίων ευρώ για ψηφιακούς υδρομετρητές, έργο που φέρεται να ερευνάται, ενώ η εξασφάλιση βασικής, ελεγχόμενης ύδρευσης παραμένει χωρίς λύση;</li>
+        <li>Ποιος έδωσε εντολή να αποσυνδεθεί η πηγή Ζενίκος από την κεντρική δεξαμενή και με ποια αιτιολογία;</li>
+        <li>Πότε έγινε η τελευταία επίσημη δειγματοληψία και εργαστηριακός έλεγχος του νερού της πηγής και της δεξαμενής, και ποια ήταν τα αποτελέσματα;</li>
+        <li>Ποιες αρχές έχουν ενημερωθεί εγγράφως για την εισχώρηση αποβλήτων από το ποιμνιοστάσιο και ποια μέτρα έχουν επιβληθεί;</li>
+        <li>Γιατί επελέγη ως «λύση» η εκτροπή του νερού στο ρέμα, αντί για την αποκατάσταση αδιάκοπης παροχής στο χωριό;</li>
+        <li>Ποιο είναι το συγκεκριμένο χρονοδιάγραμμα, με ημερομηνίες και ονόματα υπευθύνων, για την αποκατάσταση της πηγής και την ασφαλή επανασύνδεσή της με τη δεξαμενή;</li>
+        <li>Με ποια λογική κρίθηκε κατεπείγουσα η δαπάνη περίπου 5 εκατομμυρίων ευρώ για ψηφιακούς υδρομετρητές, έργο που φέρεται να ερευνάται, ενώ η εξασφάλιση βασικής, ελεγχόμενης ύδρευσης παραμένει χωρίς λύση;</li>
       </ol>
 
       <p>
@@ -544,29 +575,29 @@ footer {
     <div class="s-widget">
       <div class="s-widget-head aut">Παρατηρητήριο Αυτοδιοίκησης</div>
       <div class="s-widget-body">
-        <ul class="tracker-minini">
-          >
+        <ul class="tracker-mini">
+          <li>
             <div class="tm-title">Ύδρευση – Πηγή Ζενίκος</div>
             <div class="tm-meta">
               2026
               <span class="status-pill open">Σε παρακολούθηση</span>
             </div>
-          </l/li>
-          >
+          </li>
+          <li>
             <div class="tm-title">Εφεδρική παροχή από Λάδωνα</div>
             <div class="tm-meta">
               2026
               <span class="status-pill open">Σε παρακολούθηση</span>
             </div>
-          </l/li>
-          >
+          </li>
+          <li>
             <div class="tm-title">Τέλη κοιμητηρίων Σταυροδρομίου</div>
             <div class="tm-meta">
               2023–2026
               <span class="status-pill noans">Χωρίς απάντηση</span>
             </div>
-          </l/li>
-          >
+          </li>
+          <li>
             <div class="tm-title">Τσιμεντόστρωση Σταυροδρομίου</div>
             <div class="tm-meta">
               2026
@@ -580,10 +611,10 @@ footer {
     <div class="s-widget">
       <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
       <div class="s-widget-body">
-        <ul class="related-listst">
-          ><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></l/li>
-          ><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η σχολική αυλή</a></l/li>
-          ><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση: ερωτήματα για την εκτέλεση και το κόστος</a></li>
+        <ul class="related-list">
+          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></li>
+          <li><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η σχολική αυλή</a></li>
+          <li><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση: ερωτήματα για την εκτέλεση και το κόστος</a></li>
         </ul>
       </div>
     </div>
@@ -610,27 +641,27 @@ footer {
     <div class="footer-col">
       <h4>Ενότητες</h4>
       <ul>
-        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-        ><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
-        ><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Παρατηρητήριο</h4>
       <ul>
-        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
-        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
-        >Αποφάσεις Δήμου</li>
-        >Αναπάντητα ερωτήματα</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Σελίδες</h4>
       <ul>
-        ><a href="index.html">Αρχική</a></li>
-        ><a href="sxetika.html">Σχετικά</a></li>
-        ><a href="epikoinonia.html">Επικοινωνία</a></li>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>
@@ -648,18 +679,30 @@ window.addEventListener('scroll', () => {
   const bar = document.getElementById('progress');
   if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
 });
-// date (μοναδικό topbar-date)
+
+// ημερομηνία topbar + masthead
 const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
 const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                 'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
 function updateDates() {
-  const d = new Date();
-  const top = document.getElementById('topbar-date');
-  if (top) {
-    top.textContent =
-      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  const d      = new Date();
+  const span   = document.getElementById('topbar-date');
+  const mdDay  = document.getElementById('mast-day');
+  const mdFull = document.getElementById('mast-full');
+
+  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+               months[d.getMonth()] + ' ' + d.getFullYear();
+
+  if (span)  span.textContent  = full;
+  if (mdDay) mdDay.textContent = d.getDate();
+  if (mdFull) {
+    mdFull.textContent =
+      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+      months[d.getMonth()] + ' ' + d.getFullYear();
   }
 }
+
 updateDates();
 setInterval(updateDates, 60000);
 </script>

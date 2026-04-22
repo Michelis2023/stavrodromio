@@ -194,13 +194,36 @@ nav.primary li a.nav-rep {
   margin-bottom: 7px;
 }
 
-/* photo captions block */
+/* PHOTO GRID */
 .article-photos {
-  font-size: 0.82rem;
+  margin: 12px 0 16px;
+}
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.photo-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.photo-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.photo-grid figcaption {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  padding-top: 3px;
+}
+.article-photos-note {
+  font-size: 0.8rem;
   color: var(--ink-muted);
   border-left: 3px solid var(--rep-lt);
   padding-left: 10px;
-  margin: 10px 0 14px;
 }
 
 /* tags / back link */
@@ -345,6 +368,9 @@ footer {
   .main {
     grid-template-columns: 1fr;
   }
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
   .footer-inner {
     grid-template-columns: 1fr 1fr;
   }
@@ -417,14 +443,35 @@ footer {
       <p>Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα, ενώ η κοινότητα υδροδοτείται προσωρινά από εφεδρική παροχή του Λάδωνα.</p>
 
       <div class="article-photos">
-        <p>Αγωγός νερού δίπλα στη δεξαμενή – η παροχή δεν οδηγεί στη δεξαμενή.</p>
-        <p>Ροή νερού σε πρόχειρο αυλάκι προς το ρέμα.</p>
-        <p>Νερό έξω από το περίβλημα της δεξαμενής, σε μόνιμη ροή.</p>
-        <p>Σημείο αποσύνδεσης της πηγής Ζενίκος από την κεντρική δεξαμενή.</p>
-        <p>Αγωγοί και εκροή νερού στο πρανές, κατεύθυνση προς το ρέμα.</p>
-        <p>Το νερό συνεχίζει προς το ρέμα, εκτός δικτύου ύδρευσης.</p>
-        <p>Κατάληξη της ροής σε φυσικό ρέμα κάτω από τη δεξαμενή.</p>
-        <p>📷 Φωτογραφίες: 20 Απριλίου 2026 · Πηγή Ζενίκος και κεντρική δεξαμενή Σταυροδρομίου.</p>
+        <div class="photo-grid">
+          <figure>
+            <img src="images/nero/IMG_20260420_181010.jpg" alt="Αγωγός νερού δίπλα στη δεξαμενή – η παροχή δεν οδηγεί στη δεξαμενή">
+            <figcaption>Αγωγός νερού δίπλα στη δεξαμενή – η παροχή δεν οδηγεί στη δεξαμενή.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/nero/IMG_20260420_181120.jpg" alt="Ροή νερού σε πρόχειρο αυλάκι προς το ρέμα">
+            <figcaption>Ροή νερού σε πρόχειρο αυλάκι προς το ρέμα.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/nero/IMG_20260420_181200.jpg" alt="Νερό έξω από το περίβλημα της δεξαμενής, σε μόνιμη ροή">
+            <figcaption>Νερό έξω από το περίβλημα της δεξαμενής, σε μόνιμη ροή.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/nero/IMG_20260420_181240.jpg" alt="Σημείο αποσύνδεσης της πηγής Ζενίκος από την κεντρική δεξαμενή">
+            <figcaption>Σημείο αποσύνδεσης της πηγής Ζενίκος από την κεντρική δεξαμενή.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/nero/IMG_20260420_181310.jpg" alt="Εκροή νερού στο πρανές, κατεύθυνση προς το ρέμα">
+            <figcaption>Εκροή νερού στο πρανές με κατεύθυνση προς το ρέμα.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/nero/IMG_20260420_181350.jpg" alt="Κατάληξη της ροής σε φυσικό ρέμα κάτω από τη δεξαμενή">
+            <figcaption>Κατάληξη της ροής σε φυσικό ρέμα κάτω από τη δεξαμενή.</figcaption>
+          </figure>
+        </div>
+        <div class="article-photos-note">
+          📷 Φωτογραφίες: 20 Απριλίου 2026 · Πηγή Ζενίκος και κεντρική δεξαμενή Σταυροδρομίου.
+        </div>
       </div>
 
       <p>Κυρίες και κύριοι της Δημοτικής Αρχής,</p>

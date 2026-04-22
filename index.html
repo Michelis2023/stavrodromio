@@ -93,10 +93,10 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 
 /* FEATURED ARTICLE */
 .featured-article { margin-bottom: 40px; border: 1px solid var(--border); background: var(--white); overflow: hidden; }
-.fa-img { height: 240px; background: linear-gradient(135deg, #1e2b1f 0%, #2e4230 40%, #3a5240 100%); display: flex; align-items: flex-end; padding: 20px; position: relative; overflow: hidden; }
+.fa-img { height: 240px; background: linear-gradient(135deg, #1a2e3a 0%, #1e3d50 40%, #2a5468 100%); display: flex; align-items: flex-end; padding: 20px; position: relative; overflow: hidden; }
 .fa-img::before { content: ''; position: absolute; inset: 0; background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.02'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"); }
-.fa-badge { position: absolute; top: 16px; left: 16px; background: var(--rep); color: white; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 9px; }
-.fa-img-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: white; line-height: 1.25; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.4); }
+.fa-badge { position: absolute; top: 16px; left: 16px; background: var(--aut); color: white; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; padding: 3px 9px; }
+.fa-img-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 700; color: white; line-height: 1.25; position: relative; z-index: 1; text-shadow: 0 2px 8px rgba(0,0,0,0.5); }
 .fa-body { padding: 20px 22px 22px; }
 .fa-meta { display: flex; align-items: center; gap: 10px; font-size: 0.68rem; color: var(--ink-muted); margin-bottom: 10px; flex-wrap: wrap; }
 .fa-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
@@ -104,8 +104,8 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .fa-meta .cat.rep { color: var(--rep); }
 .fa-meta .cat.aut { color: var(--aut); }
 .fa-deck { font-family: 'Libre Baskerville', serif; font-size: 0.92rem; font-style: italic; color: var(--ink-soft); line-height: 1.7; margin-bottom: 14px; }
-.fa-read { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--rep); border-bottom: 1px solid transparent; transition: border-color 0.15s; }
-.fa-read:hover { border-bottom-color: var(--rep); }
+.fa-read { display: inline-flex; align-items: center; gap: 6px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--aut); border-bottom: 1px solid transparent; transition: border-color 0.15s; }
+.fa-read:hover { border-bottom-color: var(--aut); }
 
 /* ARTICLE LIST */
 .article-list { list-style: none; margin-bottom: 36px; }
@@ -148,8 +148,8 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .tl-title a:hover { color: var(--rep); }
 .tl-meta { display: flex; align-items: center; gap: 7px; font-size: 0.67rem; color: var(--ink-muted); flex-wrap: wrap; }
 .status-pill { display: inline-block; padding: 1px 7px; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
-.status-pill.noans { background: #fde8e8; color: var(--rep); }
-.status-pill.wait  { background: #e8f0fe; color: var(--aut); }
+.status-pill.noans  { background: #fde8e8; color: var(--rep); }
+.status-pill.wait   { background: #e8f0fe; color: var(--aut); }
 .status-pill.closed { background: #e8faf0; color: #1e6e44; }
 
 .about-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
@@ -243,12 +243,13 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   </nav>
 </header>
 
+<!-- BREAKING BANNER → τελευταίο άρθρο -->
 <div class="breaking-bar">
   <div class="breaking-inner">
     <span class="breaking-label">Τελευταίο</span>
     <span class="breaking-text">
-      <a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</a>
-      &nbsp;·&nbsp; 21 Απριλίου 2026
+      <a href="article-nero-zenikos.html">Νερό και ξένοι: προβλήματα υδροδότησης στο Σταυροδρόμι και αδιαφορία του Δήμου</a>
+      &nbsp;·&nbsp; 22 Απριλίου 2026
     </span>
   </div>
 </div>
@@ -263,7 +264,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     </div>
     <div class="hero-meta">
       <div class="hero-stat hs-rep">
-        <div class="hs-num">3</div>
+        <div class="hs-num">4</div>
         <div class="hs-label">Ρεπορτάζ &amp; Παρεμβάσεις</div>
       </div>
       <div class="hero-stat hs-ist">
@@ -285,16 +286,16 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 <div class="main-wrapper">
   <main>
 
-    <!-- FEATURED -->
+    <!-- FEATURED → νέο άρθρο νερό -->
     <div class="section-header">
       <h2><span class="sh-line" style="background:var(--rep)"></span> Κύριο Θέμα</h2>
       <a href="reportaz.html" class="see-all">Όλα τα ρεπορτάζ →</a>
     </div>
 
     <div class="featured-article">
-      <div class="fa-img">
-        <span class="fa-badge">Νέο · 21 Απρ. 2026</span>
-        <div class="fa-img-title">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</div>
+      <div class="fa-img" style="background: linear-gradient(135deg, #1a2e3a 0%, #1e3d50 40%, #2a5468 100%);">
+        <span class="fa-badge" style="background:var(--rep);">Νέο · 22 Απρ. 2026</span>
+        <div class="fa-img-title">Νερό και ξένοι: προβλήματα υδροδότησης στο Σταυροδρόμι και αδιαφορία του Δήμου</div>
       </div>
       <div class="fa-body">
         <div class="fa-meta">
@@ -302,10 +303,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
           <span class="dot"></span>
           <span class="cat aut">Αυτοδιοίκηση</span>
           <span class="dot"></span>
-          <span>21 Απριλίου 2026</span>
+          <span>22 Απριλίου 2026</span>
         </div>
-        <p class="fa-deck">Η δημόσια τοποθέτηση του Προέδρου της Κοινότητας Σταυροδρομίου επιλύει ένα ζήτημα — τη σχολική αυλή. Για την τσιμεντόστρωση και τα τέλη κοιμητηρίων, τα κρίσιμα ερωτήματα παραμένουν αναπάντητα.</p>
-        <a href="article-apantisi-proedro.html" class="fa-read">Διαβάστε το άρθρο →</a>
+        <p class="fa-deck">Χρόνια προβλήματα στο δίκτυο ύδρευσης, αδιαφορία του Δήμου Γορτυνίας και η σιωπηλή επιβάρυνση των κατοίκων. Ένα ρεπορτάζ για αυτά που δεν βλέπουν τα πρακτικά.</p>
+        <a href="article-nero-zenikos.html" class="fa-read" style="color:var(--rep);">Διαβάστε το άρθρο →</a>
       </div>
     </div>
 
@@ -372,12 +373,16 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <div class="s-widget-body">
         <ul class="tracker-list">
           <li>
+            <div class="tl-title"><a href="article-nero-zenikos.html">Υδροδότηση Σταυροδρομίου – ανοιχτό ζήτημα</a></div>
+            <div class="tl-meta">22 Απρ. 2026 <span class="status-pill noans">Χωρίς απάντηση</span></div>
+          </li>
+          <li>
             <div class="tl-title"><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></div>
             <div class="tl-meta">21 Απρ. 2026 <span class="status-pill wait">Σε παρακολούθηση</span></div>
           </li>
           <li>
             <div class="tl-title">Σχολική αυλή Δημοτικού Σχολείου</div>
-            <div class="tl-meta">2026 <span class="status-pill.closed">Απαντήθηκε</span></div>
+            <div class="tl-meta">2026 <span class="status-pill closed">Απαντήθηκε</span></div>
           </li>
           <li>
             <div class="tl-title">Τέλη κοιμητηρίων – ανταποδοτικότητα</div>
@@ -395,7 +400,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       <div class="s-widget-head mast">Ενότητες</div>
       <div class="s-widget-body">
         <ul class="cat-links">
-          <li class="rep"><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a><span class="cl-count">3</span></li>
+          <li class="rep"><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a><span class="cl-count">4</span></li>
           <li class="ist"><a href="history.html">Ιστορία &amp; Μνήμη</a><span class="cl-count">1</span></li>
           <li class="lao"><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a><span class="cl-count">0</span></li>
           <li class="aut"><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a><span class="cl-count">3</span></li>
@@ -458,14 +463,11 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
-  // scroll progress bar (ίδιο μοτίβο με τις άλλες σελίδες)
   window.addEventListener('scroll', () => {
     const st  = document.documentElement.scrollTop;
     const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
     const bar = document.getElementById('progress');
-    if (bar && dh > 0) {
-      bar.style.width = (st / dh * 100) + '%';
-    }
+    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
   });
 
   const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
@@ -473,21 +475,14 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
                   'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
 
   function updateDates() {
-    const d     = new Date();
-    const top   = document.getElementById('topbar-date');
-    const mdDay = document.getElementById('mast-day');
-    const mdFull= document.getElementById('mast-full');
-
-    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
-                 months[d.getMonth()] + ' ' + d.getFullYear();
-
-    if (top)   top.textContent   = full;
-    if (mdDay) mdDay.textContent = d.getDate();
-    if (mdFull) {
-      mdFull.textContent =
-        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
-        months[d.getMonth()] + ' ' + d.getFullYear();
-    }
+    const d = new Date();
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const el = document.getElementById('topbar-date');
+    const day = document.getElementById('mast-day');
+    const mf  = document.getElementById('mast-full');
+    if (el)  el.textContent  = full;
+    if (day) day.textContent = d.getDate();
+    if (mf)  mf.textContent  = days[d.getDay()] + ' · ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
 
   updateDates();

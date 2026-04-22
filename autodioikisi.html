@@ -3,178 +3,332 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Αυτοδιοίκηση & Κοινωνία – Σταυροδρόμι Κοινότητα</title>
-<meta name="description" content="Ανοιχτά ζητήματα, έργα, αποφάσεις και παρατηρητήριο αυτοδιοίκησης που αφορούν την κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας.">
-<meta property="og:title" content="Αυτοδιοίκηση & Κοινωνία – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων για το Σταυροδρόμι Γορτυνίας.">
-<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/autodioikisi.html">
+<title>Λαογραφία &amp; Πολιτισμός – Σταυροδρόμι Κοινότητα</title>
+
+<meta name="description" content="Καθημερινή ζωή, έθιμα, γλώσσα και μικρές αφηγήσεις από το Σταυροδρόμι. Μικρά κομμάτια άυλου πολιτισμού που δεν καταγράφονται σε διοικητικά έγγραφα.">
+
+<meta property="og:title" content="Λαογραφία &amp; Πολιτισμός – Σταυροδρόμι Κοινότητα">
+<meta property="og:description" content="Καθημερινή ζωή, γιορτές, λέξεις και ιστορίες από το Σταυροδρόμι. Ενότητα που εμπλουτίζεται με υλικό των ανθρώπων του χωριού.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/laografia.html">
 <meta property="og:locale" content="el_GR">
-<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/og-image.png">
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/laografia/plateia-kai-giorti.jpg">
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
-  --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
-  --mast: #1e2b1f; --mast-mid: #2a3b54;
-  --rep: #7a1a1a; --rep-lt: #a82828; --rep-bg: #fdf4f4;
-  --ist: #5a3e10; --ist-lt: #8a5f1e; --ist-bg: #fdf8f0;
-  --lao: #1e4a2e; --lao-lt: #2e6e44; --lao-bg: #f2faf4;
-  --aut: #1a2e5a; --aut-lt: #2a4a8a; --aut-bg: #f2f6fd;
+  --ink: #18191a;
+  --ink-soft: #36393c;
+  --ink-muted: #72777d;
+  --bg: #f5f2ed;
+  --bg-warm: #ede8df;
+  --white: #ffffff;
+  --border: #d4cec4;
+  --mast: #1e2b1f;
+  --mast-mid: #2e4230;
+  --rep: #7a1a1a;
+  --rep-lt: #a82828;
+  --ist: #5a3e10;
+  --ist-lt: #8a5f1e;
+  --lao: #1e4a2e;
+  --lao-lt: #2e6e44;
+  --aut: #1a2e5a;
 }
 html { scroll-behavior: smooth; }
-body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
 a { color: inherit; text-decoration: none; }
-#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--aut); width: 0; z-index: 300; transition: width 0.1s linear; }
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--lao-lt); width: 0; z-index: 300;
+  transition: width 0.1s linear;
+}
 
 /* TOPBAR */
-.topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
-.topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
-.topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
-.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+.topbar {
+  background: var(--mast);
+  padding: 5px 0;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+.topbar-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar .loc {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.65);
+}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
 
 /* MASTHEAD */
-.masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
-.mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
-.site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
-.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
-.site-name .subtitle { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px; }
-.mast-date { text-align: right; }
-.mast-date .md-day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(255,255,255,0.15); line-height: 1; }
-.mast-date .md-full { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 3px; }
+.masthead {
+  background: var(--mast);
+  border-bottom: 4px solid var(--mast-mid);
+  box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.mast-brand {
+  max-width: 1200px; margin: 0 auto;
+  padding: 20px 24px 16px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+.site-name h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+  font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+.site-name .subtitle {
+  font-size: 0.75rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
+}
+.mast-date {
+  text-align: right;
+}
+.mast-date .md-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem; font-weight: 700;
+  color: rgba(255,255,255,0.18); line-height: 1;
+}
+.mast-date .md-full {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em; margin-top: 3px;
+}
 
 /* NAV */
-nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
-nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
+nav.primary {
+  background: var(--mast-mid);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+nav.primary ul {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; list-style: none;
+  overflow-x: auto; scrollbar-width: none;
+}
 nav.primary ul::-webkit-scrollbar { display: none; }
-nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 11px 16px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s; }
+nav.primary li a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.18s, border-color 0.18s;
+}
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
-nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
-nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
-nav.primary li a.nav-aut { border-bottom-color: var(--aut-lt); color: rgba(255,255,255,0.92); }
-
-/* HERO */
-.page-hero { background: linear-gradient(155deg, var(--aut) 0%, #101933 100%); padding: 44px 24px 38px; position: relative; overflow: hidden; }
-.page-hero::before { content: ''; position: absolute; inset: 0; opacity: 0.22;
-  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
-.page-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
-.ph-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--aut-lt); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-.ph-label::before { content: ''; width: 18px; height: 2px; background: var(--aut-lt); }
-.page-hero-main h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 12px; }
-.page-hero-main p { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.9; margin-bottom: 18px; max-width: 640px; }
-.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.hero-tag { font-size: 0.66rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.12em; }
-
-.hero-aside-aut { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); padding: 16px 18px; }
-.hero-aside-aut h3 { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
-.hero-aside-aut p { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.75; }
+/* ενεργή ενότητα */
+nav.primary li a.nav-lao {
+  border-bottom-color: var(--lao-lt);
+  color: #ffffff;
+}
 
 /* MAIN LAYOUT */
-.page-body { max-width: 1200px; margin: 0 auto; padding: 44px 24px 64px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: flex-start; }
+.main {
+  max-width: 1200px; margin: 32px auto 48px;
+  padding: 0 24px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+  gap: 40px;
+}
 
-/* SECTIONS */
-.aut-section { margin-bottom: 42px; }
-.aut-section:last-child { margin-bottom: 0; }
-.as-head { margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.as-head .as-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
-.as-head .as-line { flex: 1; height: 1px; background: var(--border); }
-.aut-section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
-.aut-section p { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.9; margin-bottom: 14px; font-family: 'Libre Baskerville', Georgia, serif; }
+/* LEFT COLUMN – CONTENT */
+.section-header {
+  margin-bottom: 22px;
+}
+.section-kicker {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 6px;
+}
+.section-title {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+}
+.section-subtitle {
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.section-intro {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
 
-/* TRACKER TABLE */
-.tracker-table { border: 1px solid var(--border); background: var(--white); }
-.tracker-head { display: grid; grid-template-columns: 1.8fr 0.9fr 0.9fr; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; background: var(--aut-bg); color: var(--ink-muted); padding: 8px 14px; border-bottom: 1px solid var(--border); }
-.tracker-head span:nth-child(2),
-.tracker-head span:nth-child(3) { text-align: center; }
-.tracker-row { display: grid; grid-template-columns: 1.8fr 0.9fr 0.9fr; font-size: 0.8rem; padding: 10px 14px; border-bottom: 1px solid var(--bg-warm); align-items: center; }
-.tracker-row:last-child { border-bottom: none; }
-.tr-col-title { display: flex; flex-direction: column; gap: 3px; }
-.tr-title-main { font-weight: 500; color: var(--ink); }
-.tr-title-meta { font-size: 0.7rem; color: var(--ink-muted); }
-.tr-col-date, .tr-col-status { text-align: center; font-size: 0.78rem; color: var(--ink-muted); }
-.status-pill { display: inline-block; padding: 2px 8px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 999px; }
-.status-open { background: #fde8e8; color: var(--rep); }
-.status-wait { background: #e8f0fe; color: var(--aut); }
-.status-closed { background: #e8faf0; color: #1e6e44; }
+/* history-like sections */
+.lao-section {
+  margin-bottom: 28px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--border);
+}
+.lao-section:last-of-type {
+  border-bottom: none;
+}
+.lao-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.lao-section h3 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+.lao-section p {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 10px;
+}
+.lao-section p:last-child {
+  margin-bottom: 0;
+}
 
-/* LIST */
-.aut-list { list-style: none; margin-top: 8px; }
-.aut-list li { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 6px; }
-.aut-list li::before { content: '•'; position: absolute; left: 0; top: 0; color: var(--aut-lt); }
+/* small blocks in lists */
+.lao-block-title {
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-top: 6px;
+  margin-bottom: 3px;
+}
+.lao-block-text {
+  font-size: 0.86rem;
+  color: var(--ink-soft);
+}
 
-/* PARTICIPATION BOX */
-.participate-box { background: var(--aut-bg); border: 1px solid rgba(26,46,90,0.18); border-left: 4px solid var(--aut-lt); padding: 20px 24px; margin-top: 18px; }
-.participate-box .pb-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--aut); margin-bottom: 10px; }
-.participate-box p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-family: 'IBM Plex Sans', sans-serif; }
-
-/* SIDEBAR */
-.sidebar .s-widget { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
-.s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
-.s-widget-head.aut { background: var(--aut); }
-.s-widget-head.rep { background: var(--rep); }
-.s-widget-head.mast { background: var(--mast); }
-.s-widget-body { padding: 14px 16px; }
-
-.tracker-list { list-style: none; }
-.tracker-list li { padding: 11px 0; border-bottom: 1px solid var(--bg-warm); display: flex; flex-direction: column; gap: 5px; }
-.tracker-list li:last-child { border-bottom: none; }
-.tl-title { font-size: 0.82rem; color: var(--ink); font-weight: 400; line-height: 1.4; }
-.tl-title a { color: inherit; }
-.tl-meta { display: flex; align-items: center; gap: 7px; font-size: 0.67rem; color: var(--ink-muted); flex-wrap: wrap; }
-
-.about-text-side { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
-.about-text-side p + p { margin-top: 8px; }
-
-.cat-links { list-style: none; }
-.cat-links li { padding: 8px 0; border-bottom: 1px solid var(--bg-warm); display: flex; justify-content: space-between; align-items: center; }
-.cat-links li:last-child { border-bottom: none; }
-.cat-links li a { font-size: 0.8rem; color: var(--ink-soft); display: flex; align-items: center; gap: 7px; transition: color 0.15s; }
-.cat-links li a::before { content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-.cat-links li.rep a::before { background: var(--rep); }
-.cat-links li.ist a::before { background: var(--ist); }
-.cat-links li.lao a::before { background: var(--lao); }
-.cat-links li.aut a::before { background: var(--aut); }
-.cat-links li a:hover { color: var(--rep); }
+/* RIGHT COLUMN */
+.right-col-section {
+  margin-bottom: 26px;
+}
+.right-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.right-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 16px 16px;
+  font-size: 0.86rem;
+}
+.right-card h3 {
+  font-size: 0.98rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-bottom: 6px;
+}
+.right-card h3 a:hover { text-decoration: underline; }
+.right-card-text {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.right-card-meta {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+}
 
 /* FOOTER */
-footer { background: var(--mast); color: rgba(255,255,255,0.45); }
-.footer-inner { max-width: 1200px; margin: 0 auto; padding: 40px 24px 28px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
-.footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
-.footer-brand .ft-sub { font-size: 0.7rem; font-style: italic; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
-.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
-.footer-col h4 { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
+footer {
+  background: var(--mast);
+  color: rgba(255,255,255,0.45);
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 40px 24px 28px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 36px;
+}
+.footer-brand h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 6px;
+}
+.footer-brand .ft-sub {
+  font-size: 0.7rem; font-style: italic;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 12px;
+}
+.footer-brand p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+}
+.footer-col h4 {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 12px;
+}
 .footer-col ul { list-style: none; }
-.footer-col ul li { padding: 6px 0; font-size: 0.78rem; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
-.footer-col ul li:last-child { border-bottom: none; }
-.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
-.footer-col ul li::before { content: '›'; opacity: 0.4; }
-.footer-col ul li a { color: inherit; }
-.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 0.7rem; }
-.footer-bottom .copy { color: rgba(255,255,255,0.25); }
-.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+.footer-col li {
+  padding: 6px 0;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
+  display: flex; gap: 5px; align-items: center;
+}
+.footer-col li:last-child { border-bottom: none; }
+.footer-col li::before { content: '›'; opacity: 0.4; }
+.footer-col li a { color: inherit; }
+.footer-col li:hover { color: rgba(255,255,255,0.75); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 24px;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 0.7rem;
+}
+.footer-bottom .copy {
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom .independence {
+  font-style: italic;
+  color: rgba(255,255,255,0.22);
+}
 
 /* RESPONSIVE */
-@media (max-width: 980px) {
-  .page-hero-inner { grid-template-columns: 1fr; }
-  .page-body { grid-template-columns: 1fr; }
-}
-@media (max-width: 720px) {
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 600px) {
-  .page-hero { padding: 32px 16px 26px; }
-  .page-body { padding: 32px 16px 48px; }
-  .footer-inner { grid-template-columns: 1fr; }
+  .main {
+    padding: 0 16px 32px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
 }
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-.page-hero-main { animation: fadeIn 0.5s ease both; }
 </style>
 </head>
 <body>
@@ -201,185 +355,198 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html">Αρχική</a></li>
-      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
       <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
 
-<section class="page-hero">
-  <div class="page-hero-inner">
-    <div class="page-hero-main">
-      <div class="ph-label">Αυτοδιοίκηση &amp; Κοινωνία</div>
-      <h1>Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων</h1>
-      <p>Η ενότητα αυτή παρακολουθεί όσα αποφασίζονται, όσα γίνονται και όσα μένουν σε εκκρεμότητα για την κοινότητα Σταυροδρομίου. Δεν αντικαθιστά καμία επίσημη ενημέρωση· επιχειρεί όμως να βάζει σε μια σειρά τα δεδομένα και τα ερωτήματα.</p>
-      <div class="hero-tags">
-        <span class="hero-tag">Έργα &amp; υποδομές</span>
-        <span class="hero-tag">Τέλη &amp; οικονομικά</span>
-        <span class="hero-tag">Ανοιχτά ερωτήματα</span>
-      </div>
+<main class="main">
+
+  <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ -->
+  <section>
+    <div class="section-header">
+      <div class="section-kicker">ΛΑΟΓΡΑΦΙΑ &amp; ΠΟΛΙΤΙΣΜΟΣ</div>
+      <h2 class="section-title">Καθημερινή ζωή, έθιμα και μνήμες από το Σταυροδρόμι</h2>
+      <p class="section-subtitle">
+        Εδώ συγκεντρώνονται μικρά κομμάτια του άυλου πολιτισμού: καθημερινές συνήθειες, γιορτές, λόγια, τραγούδια
+        και όσα δεν θα βρούμε σε διοικητικά έγγραφα, αλλά μόνο σε κουβέντες και μνήμες.
+      </p>
+      <p class="section-intro">
+        Η σελίδα αυτή ξεκινά με λίγες σημειώσεις. Σκοπός είναι να εμπλουτίζεται σταδιακά με υλικό των ανθρώπων του χωριού.
+      </p>
     </div>
-    <aside class="hero-aside-aut">
-      <h3>Τι παρακολουθείται εδώ</h3>
-      <p>Εργα, αποφάσεις, εισπράξεις, απαντήσεις (ή η απουσία τους) από τον Δήμο και την Κοινότητα. Κάθε θέμα συνοδεύεται από ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ, όπου υπάρχουν.</p>
-    </aside>
-  </div>
-</section>
 
-<div class="page-body">
-  <main>
-
-    <section class="aut-section">
-      <div class="as-head">
-        <span class="as-label">Ανοιχτά ζητήματα</span>
-        <div class="as-line"></div>
-      </div>
-      <h2>Σύντομο παρατηρητήριο</h2>
-      <p>Ο παρακάτω πίνακας συγκεντρώνει μερικά από τα βασικά ζητήματα που έχουν τεθεί δημόσια για το Σταυροδρόμι: τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή. Για κάθε υπόθεση σημειώνονται οι βασικές ημερομηνίες και η τρέχουσα κατάσταση.</p>
-
-      <div class="tracker-table">
-        <div class="tracker-head">
-          <span>Θέμα</span>
-          <span>Τελευταία κίνηση</span>
-          <span>Κατάσταση</span>
-        </div>
-
-        <div class="tracker-row">
-          <div class="tr-col-title">
-            <div class="tr-title-main"><a href="article-apantisi-proedro.html">Απάντηση Προέδρου στα ρεπορτάζ</a></div>
-            <div class="tr-title-meta">Τοποθέτηση για τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή.</div>
-          </div>
-          <div class="tr-col-date">21 Απρ. 2026</div>
-          <div class="tr-col-status">
-            <span class="status-pill status-wait">Σε παρακολούθηση</span>
-          </div>
-        </div>
-
-        <div class="tracker-row">
-          <div class="tr-col-title">
-            <div class="tr-title-main"><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση Σταυροδρομίου</a></div>
-            <div class="tr-title-meta">Ερωτήματα για τεχνική μελέτη, επίβλεψη και κόστος.</div>
-          </div>
-          <div class="tr-col-date">19 Απρ. 2026</div>
-          <div class="tr-col-status">
-            <span class="status-pill status-open">Χωρίς απάντηση</span>
-          </div>
-        </div>
-
-        <div class="tracker-row">
-          <div class="tr-col-title">
-            <div class="tr-title-main"><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a></div>
-            <div class="tr-title-meta">Αθροιστική τριετής είσπραξη τελών, χρήση σχολικής αυλής.</div>
-          </div>
-          <div class="tr-col-date">20 Απρ. 2026</div>
-          <div class="tr-col-status">
-            <span class="status-pill status-open">Χωρίς απάντηση</span>
-          </div>
-        </div>
-
-        <div class="tracker-row">
-          <div class="tr-col-title">
-            <div class="tr-title-main">Σχολική αυλή – χρήση από οχήματα</div>
-            <div class="tr-title-meta">Μετά τη δημόσια τοποθέτηση, το ζήτημα φαίνεται να έχει κλείσει υπέρ της ασφάλειας των παιδιών.</div>
-          </div>
-          <div class="tr-col-date">21 Απρ. 2026</div>
-          <div class="tr-col-status">
-            <span class="status-pill status-closed">Θετική εξέλιξη</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="participate-box">
-        <div class="pb-label">Συμπλήρωση στοιχείων</div>
-        <p>Αν γνωρίζετε επιπλέον δεδομένα (π.χ. αριθμούς αποφάσεων, ημερομηνίες, έγγραφα) για τα παραπάνω ζητήματα, μπορείτε να τα στείλετε μέσω της σελίδας <a href="epikoinonia.html" style="color:var(--aut); font-weight:500; text-decoration:underline;">Επικοινωνία</a>. Η τεκμηρίωση είναι όσο σημαντική όσο και η κριτική.</p>
-      </div>
+    <!-- ΤΙ ΘΕΩΡΕΙΤΑΙ ΛΑΟΓΡΑΦΙΑ -->
+    <section class="lao-section" id="ti-einai">
+      <div class="lao-label">01 · ΤΙ ΘΕΩΡΕΙΤΑΙ «ΛΑΟΓΡΑΦΙΑ» ΕΔΩ</div>
+      <h3>Τι εννοούμε «λαογραφία» σε αυτή την ενότητα</h3>
+      <p>
+        Οτιδήποτε αφορά την καθημερινή ζωή, τα έθιμα, τη γλώσσα, τις αφηγήσεις, τις μικρές «ιεροτελεστίες» του χωριού.
+        Όσα συνήθως δεν καταγράφονται, αλλά φτιάχνουν τον τρόπο που ζούμε.
+      </p>
     </section>
 
-    <section class="aut-section">
-      <div class="as-head">
-        <span class="as-label">Σχέση με τα ρεπορτάζ</span>
-        <div class="as-line"></div>
-      </div>
-      <h2>Πώς συνδέεται η ενότητα με τα άρθρα</h2>
-      <p>Η ενότητα «Αυτοδιοίκηση &amp; Κοινωνία» δεν επαναλαμβάνει τα ρεπορτάζ· λειτουργεί ως χάρτης. Κάθε υπόθεση έχει το αντίστοιχο αναλυτικό άρθρο, αλλά εδώ φαίνονται συγκεντρωμένα τα βασικά στοιχεία και η πορεία της υπόθεσης.</p>
-      <ul class="aut-list">
-        <li><strong>Τσιμεντόστρωση</strong> – αναλυτική παρουσίαση στο ρεπορτάζ «Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος».</li>
-        <li><strong>Τέλη κοιμητηρίων &amp; σχολική αυλή</strong> – αναλυτικά στο άρθρο «Τέλη κοιμητηρίων χωρίς κοστολόγηση…».</li>
-        <li><strong>Απάντηση Προέδρου</strong> – αξιολόγηση της τοποθέτησης στο άρθρο «Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά».</li>
-      </ul>
+    <!-- ΚΑΘΗΜΕΡΙΝΗ ΖΩΗ -->
+    <section class="lao-section" id="kathimerini-zoe">
+      <div class="lao-label">02 · ΚΑΘΗΜΕΡΙΝΗ ΖΩΗ</div>
+      <h3>Ρυθμός, εποχές και μικρές συνήθειες</h3>
+      <p>
+        Η ζωή στο Σταυροδρόμι, όπως και σε πολλά ορεινά χωριά της Γορτυνίας, ακολουθούσε για δεκαετίες τον ρυθμό των εποχών:
+        σπορά, θέρος, μάζεμα ελιάς, γιορτές. Η εβδομάδα δεν οριζόταν από ωράρια γραφείων, αλλά από τις δουλειές της γης και
+        τις ανάγκες του σπιτιού.
+      </p>
+      <p>
+        Στις αυλές, στους δρόμους και στα κατώγια γεννήθηκαν μορφές αλληλεγγύης και ανταλλαγής που σπάνια φαίνονται στα χαρτιά:
+        «έλα να βοηθήσεις σήμερα, έρχομαι εγώ αύριο», δανεικά εργαλεία, κοινές δουλειές. Αυτές οι μικρές κινήσεις είναι ίσως
+        το πιο γερό υπόστρωμα της τοπικής κοινωνίας.
+      </p>
+
+      <div class="lao-block-title">Καθημερινότητα – ο καφές της πλατείας</div>
+      <p class="lao-block-text">
+        Η καθημερινή στάση στην πλατεία, έστω και με λίγους, λειτουργεί ακόμη ως άτυπο «κέντρο ενημέρωσης».
+        Από εκεί περνούν ειδήσεις, μικρά παράπονα, ιστορίες από τα παλιά.
+      </p>
+
+      <div class="lao-block-title">Εποχές – χειμώνας στο χωριό</div>
+      <p class="lao-block-text">
+        Οι χειμώνες με λίγους ανθρώπους και πολύ κρύο διαμορφώνουν έναν διαφορετικό ρυθμό: ξύλα, σόμπες, κλειστά σπίτια,
+        αλλά και πιο ήσυχες, βαθιές κουβέντες.
+      </p>
     </section>
 
-    <section class="aut-section">
-      <div class="as-head">
-        <span class="as-label">Περιορισμοί &amp; πλαίσιο</span>
-        <div class="as-line"></div>
-      </div>
-      <h2>Τι μπορεί και τι δεν μπορεί να κάνει αυτό το site</h2>
-      <p>Το «Σταυροδρόμι – Κοινότητα» δεν είναι θεσμός ούτε αρχή. Δεν μπορεί να επιβάλει λύσεις, ούτε να αντικαταστήσει την επίσημη ενημέρωση των πολιτών. Μπορεί όμως να συγκεντρώνει πληροφορίες, να θέτει ερωτήματα και να κρατά ζωντανή τη συζήτηση γύρω από τις αποφάσεις που επηρεάζουν το χωριό.</p>
-      <p>Οι παρατηρήσεις και τα σχόλια γίνονται με σεβασμό σε πρόσωπα και ιδιότητες, αλλά χωρίς εκπτώσεις στην κριτική για πράξεις, παραλείψεις και επιλογές.</p>
+    <!-- ΕΘΙΜΑ & ΓΙΟΡΤΕΣ -->
+    <section class="lao-section" id="ethima">
+      <div class="lao-label">03 · ΕΘΙΜΑ &amp; ΓΙΟΡΤΕΣ</div>
+      <h3>Γιορτές που κρατούν το νήμα</h3>
+      <p>
+        Οι θρησκευτικές και τοπικές γιορτές δούλεψαν για χρόνια σαν «κόμβοι» μνήμης και συνάντησης.
+        Όσοι έφυγαν σε πόλεις και εξωτερικό συχνά διάλεγαν αυτές τις μέρες για να επιστρέψουν, έστω για λίγο.
+      </p>
+      <p class="lao-block-text">
+        • Το πανηγύρι της ενορίας, με τη λειτουργία, το τραπέζι και τον χορό.  
+        • Μικρές «επαναλήψεις» εθίμων σε οικογενειακό επίπεδο (ευχές, κόψιμο βασιλόπιτας, κοινά τραπέζια).  
+        • Συγκεντρώσεις σε σπίτια τα Χριστούγεννα ή το Πάσχα, όπου μοιράζονται ιστορίες από παλιότερα χρόνια.
+      </p>
+      <p>
+        Ακόμη κι αν οι γιορτές αλλάζουν μορφή, λειτουργούν ως ευκαιρία επανασύνδεσης με τον τόπο· έστω και για λίγες ώρες ή μέρες τον χρόνο.
+      </p>
     </section>
 
-  </main>
+    <!-- ΛΟΓΟΣ & ΙΣΤΟΡΙΕΣ -->
+    <section class="lao-section" id="logos">
+      <div class="lao-label">04 · ΛΟΓΟΣ &amp; ΙΣΤΟΡΙΕΣ</div>
+      <h3>Λέξεις, εκφράσεις και μικρές αφηγήσεις</h3>
+      <p>
+        Η τοπική γλώσσα, οι εκφράσεις και τα μικρά επεισόδια της καθημερινότητας είναι από τα πιο ευάλωτα στοιχεία της λαογραφίας.
+        Χάνονται γρήγορα, αν δεν ακουστούν, δεν γραφτούν ή δεν ηχογραφηθούν εγκαίρως.
+      </p>
+      <p>
+        Σε αυτή την ενότητα θα συγκεντρώνονται μικρές αφηγήσεις, εκφράσεις και περιστατικά· όχι για να γίνουν «μνημείο»,
+        αλλά για να μην χαθούν σιωπηλά.
+      </p>
 
-  <aside class="sidebar">
-    <div class="s-widget">
-      <div class="s-widget-head aut">Γρήγορη εικόνα</div>
-      <div class="s-widget-body">
-        <ul class="tracker-list">
-          <li>
-            <div class="tl-title"><a href="article-apantisi-proedro.html">Απάντηση Προέδρου – σε παρακολούθηση</a></div>
-            <div class="tl-meta">21 Απρ. 2026 <span class="status-pill status-wait">Σε παρακολούθηση</span></div>
-          </li>
-          <li>
-            <div class="tl-title"><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων – ανταποδοτικότητα</a></div>
-            <div class="tl-meta">2023–2026 <span class="status-pill status-open">Χωρίς απάντηση</span></div>
-          </li>
-          <li>
-            <div class="tl-title"><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση – τεχνική επίβλεψη</a></div>
-            <div class="tl-meta">19 Απρ. 2026 <span class="status-pill status-open">Χωρίς απάντηση</span></div>
-          </li>
-        </ul>
-      </div>
-    </div>
+      <div class="lao-block-title">Πώς μπορείτε να βοηθήσετε</div>
+      <p class="lao-block-text">
+        Αν θυμάστε λέξεις, φράσεις ή ιστορίες που λέγονταν παλιότερα στο χωριό, μπορείτε να τις στείλετε γραπτά
+        ή να ζητήσετε να καταγραφούν με συνέντευξη. Η επικοινωνία γίνεται από τη σελίδα <a href="epikoinonia.html">Επικοινωνία</a>.
+      </p>
+    </section>
 
-    <div class="s-widget">
-      <div class="s-widget-head mast">Πλοήγηση site</div>
-      <div class="s-widget-body">
-        <ul class="cat-links">
-          <li class="rep"><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-          <li class="ist"><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-          <li class="lao"><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
-          <li class="aut"><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-        </ul>
-      </div>
-    </div>
+    <!-- ΥΛΙΚΟ ΥΠΟ ΣΥΛΛΟΓΗ -->
+    <section class="lao-section" id="yliko">
+      <div class="lao-label">05 · ΥΛΙΚΟ ΥΠΟ ΣΥΛΛΟΓΗ</div>
+      <h3>Φωτογραφίες, τραγούδια, χειρόγραφα</h3>
+      <p>
+        Η ενότητα Λαογραφία &amp; Πολιτισμός θα εμπλουτίζεται με υλικό που μπορεί να προέλθει μόνο από τους ίδιους τους ανθρώπους
+        του χωριού και όσους συνδέονται μαζί του: παλιές φωτογραφίες, ηχογραφήσεις, σημειώσεις, συνταγές, τραγούδια.
+      </p>
+      <p class="lao-block-text">
+        • Παλιές φωτογραφίες (πανηγύρια, γάμοι, δουλειές στα χωράφια).  
+        • Τραγούδια ή σκοποί που τραγουδιούνταν/παίζονταν στο χωριό.  
+        • Χειρόγραφα, σημειώσεις ή μικρά ημερολόγια με αναφορές στην καθημερινότητα.
+      </p>
+      <p>
+        Όπου δημοσιεύεται υλικό, θα αναφέρεται ρητά η προέλευση και, όπου χρειάζεται, θα ζητείται άδεια για κάθε χρήση.
+      </p>
+    </section>
 
-    <div class="s-widget">
-      <div class="s-widget-head rep">Πολιτική κριτικής</div>
-      <div class="s-widget-body">
-        <div class="about-text-side">
-          <p>Η κριτική ασκείται σε πράξεις και αποφάσεις, όχι σε πρόσωπα ως χαρακτήρες. Όπου διαπιστώνεται λάθος, γίνεται διόρθωση με σχετική σημείωση.</p>
-          <p>Ο οποιοσδήποτε έχει δικαίωμα απάντησης και σχολιασμού· εφόσον η απάντηση είναι σαφής και τεκμηριωμένη, θα δημοσιεύεται ή θα συνοψίζεται αναλόγως.</p>
+    <!-- ΜΙΑ ΦΡΑΣΗ -->
+    <section class="lao-section" id="mia-frasi">
+      <div class="lao-label">06 · ΜΙΑ ΦΡΑΣΗ</div>
+      <h3>Μικρή υπενθύμιση</h3>
+      <p>
+        «Κάθε μικρή ιστορία του χωριού αξίζει να ειπωθεί τουλάχιστον μία φορά, πριν χαθεί μαζί με εκείνον που τη θυμάται.»
+      </p>
+    </section>
+
+  </section>
+
+  <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
+  <section>
+
+    <div class="right-col-section">
+      <div class="right-label">ΓΙΑ ΤΗΝ ΕΝΟΤΗΤΑ</div>
+      <div class="right-card">
+        <h3>Λαογραφία &amp; Πολιτισμός</h3>
+        <p class="right-card-text">
+          Καθημερινές συνήθειες, γιορτές, λέξεις και μικρές ιστορίες που δεν αποτυπώνονται σε διοικητικά έγγραφα,
+          αλλά διαμορφώνουν τον τρόπο ζωής στο Σταυροδρόμι.
+        </p>
+        <div class="right-card-meta">
+          Ανοιχτή ενότητα · Εμπλουτίζεται με υλικό των κατοίκων
         </div>
       </div>
     </div>
-  </aside>
-</div>
+
+    <div class="right-col-section">
+      <div class="right-label">ΣΥΜΜΕΤΟΧΗ</div>
+      <div class="right-card">
+        <h3><a href="epikoinonia.html">Πώς να συμβάλετε</a></h3>
+        <p class="right-card-text">
+          Μπορείτε να στείλετε φωτογραφίες, χειρόγραφα, τραγούδια ή απλές ιστορίες από την καθημερινότητα.
+          Κάθε μικρό τεκμήριο βοηθά να σωθεί κάτι που αλλιώς θα χαθεί.
+        </p>
+        <div class="right-card-meta">
+          Επικοινωνία: φόρμα &amp; στοιχεία στη σελίδα «Επικοινωνία».
+        </div>
+      </div>
+    </div>
+
+    <div class="right-col-section">
+      <div class="right-label">ΠΡΟΤΕΙΝΟΜΕΝΑ ΑΠΟ ΤΟ SITE</div>
+      <div class="right-card">
+        <h3><a href="history.html">Ιστορία &amp; Μνήμη</a></h3>
+        <p class="right-card-text">
+          Συνοδεύστε τις λαογραφικές μνήμες με το ιστορικό πλαίσιο: χρονολόγιο, κτίρια και απογραφές του Σταυροδρομίου.
+        </p>
+        <div class="right-card-meta">
+          Ιστορία &amp; Μνήμη · Αρχείο Κοινότητας
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+</main>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
       <h2>Σταυροδρόμι – Κοινότητα</h2>
       <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
-      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+      <p>
+        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.
+        Χωρίς κομματικές ή άλλες δεσμεύσεις.
+      </p>
     </div>
     <div class="footer-col">
-      <h4>Ενότητες</h4>
+      <h4>ΕΝΟΤΗΤΕΣ</h4>
       <ul>
         <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
         <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
@@ -388,7 +555,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Παρατηρητήριο</h4>
+      <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
       <ul>
         <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
         <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
@@ -397,7 +564,7 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Σελίδες</h4>
+      <h4>ΣΕΛΙΔΕΣ</h4>
       <ul>
         <li><a href="index.html">Αρχική</a></li>
         <li><a href="sxetika.html">Σχετικά</a></li>
@@ -412,31 +579,42 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
-  // progress bar
-  window.addEventListener('scroll', () => {
-    const st = document.documentElement.scrollTop;
-    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const bar = document.getElementById('progress');
-    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
-  });
-
-  // date
-  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
-                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-  function updateDates() {
-    const d = new Date();
-    const span = document.getElementById('topbar-date');
-    const mdDay = document.getElementById('mast-day');
-    const mdFull = document.getElementById('mast-full');
-    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-
-    if (span) span.textContent = full;
-    if (mdDay) mdDay.textContent = d.getDate();
-    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+// scroll progress bar
+window.addEventListener('scroll', () => {
+  const st  = document.documentElement.scrollTop;
+  const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const bar = document.getElementById('progress');
+  if (bar && dh > 0) {
+    bar.style.width = (st / dh * 100) + '%';
   }
-  updateDates();
-  setInterval(updateDates, 60000);
+});
+
+// ημερομηνία topbar + masthead
+const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+function updateDates() {
+  const d      = new Date();
+  const span   = document.getElementById('topbar-date');
+  const mdDay  = document.getElementById('mast-day');
+  const mdFull = document.getElementById('mast-full');
+
+  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+               months[d.getMonth()] + ' ' + d.getFullYear();
+
+  if (span)  span.textContent  = full;
+  if (mdDay) mdDay.textContent = d.getDate();
+  if (mdFull) {
+    mdFull.textContent =
+      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+      months[d.getMonth()] + ' ' + d.getFullYear();
+  }
+}
+
+updateDates();
+setInterval(updateDates, 60000);
 </script>
+
 </body>
 </html>

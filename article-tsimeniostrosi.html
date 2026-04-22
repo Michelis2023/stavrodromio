@@ -3,54 +3,49 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Τσιμεντόστρωση στο Σταυροδρόμι – Σταυροδρόμι Κοινότητα</title>
-<meta name="description" content="Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.">
-<meta property="og:title" content="Τσιμεντόστρωση Σταυροδρομίου: ερωτήματα για την εκτέλεση και το κόστος">
-<meta property="og:description" content="Ερωτήματα για τον τρόπο εκτέλεσης και το κόστος των εργασιών τσιμεντόστρωσης στο Σταυροδρόμι Γορτυνίας.">
-<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/tsimento-01.jpg">
-<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-tsimeniostrosi.html">
+<title>Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος – Σταυροδρόμι Κοινότητα</title>
+
+<meta name="description" content="Ρεπορτάζ για την τσιμεντόστρωση στο Σταυροδρόμι: πώς εκτελέστηκε το έργο, αν υπήρξε τεχνική επίβλεψη και ποιο είναι το συμβατικό κόστος.">
+
+<meta property="og:title" content="Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος – Σταυροδρόμι Κοινότητα">
+<meta property="og:description" content="Φωτογραφική και επιτόπια καταγραφή της τσιμεντόστρωσης στο Σταυροδρόμι, με ερωτήματα για μελέτη, προδιαγραφές και δημόσιο χρήμα.">
 <meta property="og:type" content="article">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-tsimeniostrosi.html">
 <meta property="og:locale" content="el_GR">
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/tsimento-01.jpg">
+
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --ink:        #18191a;
-  --ink-soft:   #36393c;
-  --ink-muted:  #72777d;
-  --bg:         #f5f2ed;
-  --bg-warm:    #ede8df;
-  --white:      #ffffff;
-  --border:     #d4cec4;
-  --mast:       #1e2b1f;
-  --mast-mid:   #2e4230;
-  --rep:        #7a1a1a;
-  --rep-lt:     #a82828;
-  --rep-bg:     #fdf4f4;
-  --ist:        #5a3e10;
-  --ist-lt:     #8a5f1e;
-  --lao:        #1e4a2e;
-  --lao-lt:     #2e6e44;
-  --aut:        #1a2e5a;
-  --aut-lt:     #2a4a8a;
+  --ink: #18191a;
+  --ink-soft: #36393c;
+  --ink-muted: #72777d;
+  --bg: #f5f2ed;
+  --bg-warm: #ede8df;
+  --white: #ffffff;
+  --border: #d4cec4;
+  --mast: #1e2b1f;
+  --mast-mid: #2e4230;
+  --rep: #7a1a1a;
+  --rep-lt: #a82828;
+  --ist: #5a3e10;
+  --lao: #1e4a2e;
+  --aut: #1a2e5a;
 }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
   font-weight: 300;
-  line-height: 1.65;
+  line-height: 1.7;
 }
-
 a { color: inherit; text-decoration: none; }
-
 #progress {
   position: fixed; top: 0; left: 0; height: 3px;
-  background: var(--rep); width: 0%; z-index: 300;
+  background: var(--rep); width: 0; z-index: 300;
   transition: width 0.1s linear;
 }
 
@@ -70,37 +65,51 @@ a { color: inherit; text-decoration: none; }
   display: flex; align-items: center; gap: 6px;
   color: rgba(255,255,255,0.65);
 }
-.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
 
 /* MASTHEAD */
 .masthead {
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
-  position: sticky; top: 0; z-index: 100;
   box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
-
 .mast-brand {
   max-width: 1200px; margin: 0 auto;
   padding: 20px 24px 16px;
-  display: flex; align-items: flex-end;
-  justify-content: space-between; gap: 24px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
 }
-
 .site-name h1 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
   font-weight: 900; color: var(--white);
   letter-spacing: -0.02em; line-height: 1;
 }
-.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
 .site-name .subtitle {
-  font-size: 0.72rem; color: rgba(255,255,255,0.4);
-  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px;
+  font-size: 0.75rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
+}
+.mast-date {
+  text-align: right;
+}
+.mast-date .md-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem; font-weight: 700;
+  color: rgba(255,255,255,0.18); line-height: 1;
+}
+.mast-date .md-full {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em; margin-top: 3px;
 }
 
 /* NAV */
-nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary {
+  background: var(--mast-mid);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
 nav.primary ul {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
   display: flex; list-style: none;
@@ -109,7 +118,7 @@ nav.primary ul {
 nav.primary ul::-webkit-scrollbar { display: none; }
 nav.primary li a {
   display: flex; align-items: center; gap: 6px;
-  padding: 11px 16px;
+  padding: 10px 14px;
   font-size: 0.74rem; font-weight: 500;
   letter-spacing: 0.05em; text-transform: uppercase;
   color: rgba(255,255,255,0.62);
@@ -119,294 +128,189 @@ nav.primary li a {
 }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
-nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
-nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
-nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: white; }
+nav.primary li a.nav-rep {
+  border-bottom-color: var(--rep-lt);
+  color: #ffffff;
+}
 
-/* ARTICLE LAYOUT */
-.article-wrapper {
-  max-width: 1200px; margin: 0 auto;
-  padding: 40px 24px 64px;
+/* MAIN LAYOUT */
+.main {
+  max-width: 1200px; margin: 32px auto 48px;
+  padding: 0 24px 40px;
   display: grid;
-  grid-template-columns: 1fr 300px;
-  gap: 56px;
-  align-items: start;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+  gap: 40px;
 }
 
-/* ARTICLE HEADER */
+/* BREADCRUMBS + ARTICLE HEADER */
+.breadcrumbs {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+.breadcrumbs a { text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; }
+
 .article-header {
-  margin-bottom: 32px;
-  padding-bottom: 24px;
-  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
 }
-
-.article-breadcrumb {
-  display: flex; align-items: center; gap: 8px;
-  font-size: 0.7rem; color: var(--ink-muted);
-  margin-bottom: 16px; flex-wrap: wrap;
+.article-kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
 }
-.article-breadcrumb a { transition: color 0.15s; }
-.article-breadcrumb a:hover { color: var(--rep); }
-.article-breadcrumb .sep { color: var(--border); }
-.article-breadcrumb .current { color: var(--rep); font-weight: 500; }
-
-.article-cats {
-  display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap;
-}
-.cat-pill {
-  padding: 3px 10px; font-size: 0.62rem;
-  font-weight: 600; letter-spacing: 0.1em;
-  text-transform: uppercase; color: white;
-}
-.cat-pill.rep { background: var(--rep); }
-.cat-pill.aut { background: var(--aut); }
-
-h1.article-title {
+.article-title-main {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.6rem, 4vw, 2.4rem);
-  font-weight: 700; line-height: 1.2;
-  color: var(--ink); margin-bottom: 14px;
+  font-size: 1.7rem;
+  margin-bottom: 6px;
 }
-
-.article-deck {
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.05rem; font-style: italic;
-  color: var(--ink-soft); line-height: 1.75;
-  margin-bottom: 20px;
-  padding-left: 16px;
-  border-left: 3px solid var(--rep);
-}
-
 .article-meta {
-  display: flex; align-items: center; gap: 12px;
-  font-size: 0.72rem; color: var(--ink-muted);
-  flex-wrap: wrap;
-}
-.article-meta .dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border); }
-.article-meta .status {
-  color: var(--rep); font-weight: 500;
-  display: flex; align-items: center; gap: 5px;
-}
-.article-meta .status::before {
-  content: ''; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--rep); display: inline-block;
-  animation: blink 1.8s ease-in-out infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
+  font-size: 0.8rem;
+  color: var(--ink-muted);
 }
 
 /* ARTICLE BODY */
-.article-body { font-size: 0.97rem; line-height: 1.85; color: var(--ink-soft); }
-
-.article-body p { margin-bottom: 18px; }
-
-.article-body h2 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.25rem; font-weight: 700;
-  color: var(--ink); margin: 32px 0 14px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--rep);
-  display: inline-block;
-}
-
-.article-body h2::before {
-  content: '';
-  display: block;
-  width: 32px; height: 3px;
-  background: var(--rep);
-  margin-bottom: 10px;
-}
-
-/* Question box */
-.q-box {
-  background: var(--rep-bg);
-  border: 1px solid rgba(122,26,26,0.15);
-  border-left: 4px solid var(--rep);
-  padding: 20px 24px; margin: 28px 0;
-}
-.q-box .q-label {
-  font-size: 0.64rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--rep); margin-bottom: 14px;
-}
-.q-box ul { list-style: none; }
-.q-box ul li {
-  font-size: 0.9rem; color: var(--ink-soft);
-  padding: 10px 0; border-bottom: 1px solid rgba(122,26,26,0.1);
-  display: flex; gap: 10px; align-items: flex-start;
-  line-height: 1.6;
-}
-.q-box ul li:last-child { border-bottom: none; }
-.q-box ul li::before {
-  content: '?'; color: var(--rep); font-weight: 700;
-  flex-shrink: 0; font-size: 1rem;
-}
-
-/* Status notice */
-.status-notice {
-  background: #fff8e8;
-  border: 1px solid #e8c84a;
-  border-left: 4px solid #c8a020;
-  padding: 14px 18px; margin-top: 32px;
-  display: flex; align-items: flex-start; gap: 10px;
-  font-size: 0.84rem; color: var(--ink-soft); line-height: 1.6;
-}
-.status-notice::before {
-  content: '⚠';
-  font-size: 1rem; color: #c8a020; flex-shrink: 0; margin-top: 1px;
-}
-
-/* Photo collage/lightbox */
-.photo-collage {
-  margin: 28px 0;
-}
-.photo-collage .pc-label {
-  font-size: .64rem; font-weight: 600;
-  letter-spacing: .18em; text-transform: uppercase;
-  color: var(--rep); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
-}
-.photo-collage .pc-label::before {
-  content:''; display:inline-block;
-  width:20px; height:2px; background:var(--rep);
-}
-.collage-grid {
-  display:grid; grid-template-columns:repeat(4,1fr);
-  gap:4px; margin-bottom:4px; width:100%;
-}
-.collage-grid img {
-  width:100%; height:110px; max-height:110px;
-  object-fit:cover; display:block;
-  cursor:zoom-in; border:1px solid var(--border);
-}
-.pc-caption {
-  font-size:.74rem; color:var(--ink-muted);
-  font-style:italic; text-align:center;
-  margin-top:8px; line-height:1.5;
-}
-.lightbox {
-  display:none; position:fixed; inset:0;
-  background:rgba(0,0,0,.9); z-index:9999;
-  justify-content:center; align-items:center;
-  cursor:zoom-out;
-}
-.lightbox.active { display:flex; }
-.lightbox img {
-  max-width:90vw; max-height:85vh;
-  object-fit:contain; cursor:default;
-}
-.lb-close {
-  position:fixed; top:16px; right:22px;
-  color:rgba(255,255,255,.85);
-  font-size:2.4rem; cursor:pointer;
-  line-height:1; font-weight:300;
-}
-.lb-close:hover{color:#fff;}
-.lb-caption{
-  position:fixed; bottom:18px; left:0; right:0;
-  text-align:center; color:rgba(255,255,255,.55);
-  font-size:.78rem; font-style:italic;
-  pointer-events:none;
-}
-
-/* Article footer */
-.article-footer {
-  margin-top: 40px;
-  padding-top: 24px;
-  border-top: 2px solid var(--border);
-}
-
-.article-footer .af-label {
-  font-size: 0.64rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ink-muted); margin-bottom: 12px;
-}
-
-.article-tags {
-  display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 20px;
-}
-.a-tag {
-  padding: 3px 10px; border: 1px solid var(--border);
-  font-size: 0.7rem; color: var(--ink-muted);
-  text-transform: uppercase; letter-spacing: 0.08em;
-  cursor: pointer; transition: all 0.15s;
-}
-.a-tag:hover { background: var(--rep); border-color: var(--rep); color: white; }
-
-.back-link {
-  display: inline-flex; align-items: center; gap: 8px;
-  padding: 10px 20px;
-  background: var(--mast);
-  color: rgba(255,255,255,0.8);
-  font-size: 0.74rem; font-weight: 500;
-  letter-spacing: 0.06em; text-transform: uppercase;
-  transition: background 0.2s;
-}
-.back-link:hover { background: var(--rep); color: white; }
-
-/* SIDEBAR */
-.s-widget {
+.article-body {
   background: var(--white);
   border: 1px solid var(--border);
-  margin-bottom: 20px; overflow: hidden;
+  padding: 18px 18px 20px;
+  font-size: 0.96rem;
+  color: var(--ink-soft);
 }
-.s-widget-head {
-  padding: 9px 14px;
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: rgba(255,255,255,0.85);
+.article-body p {
+  margin-bottom: 12px;
 }
-.s-widget-head.rep { background: var(--rep); }
-.s-widget-head.aut { background: var(--aut); }
-.s-widget-head.mast { background: var(--mast); }
-
-.s-widget-body { padding: 14px 16px; }
-
-.tracker-mini { list-style: none; }
-.tracker-mini li {
-  padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
-  font-size: 0.8rem; color: var(--ink-soft);
-  line-height: 1.4;
+.article-body p:last-child {
+  margin-bottom: 0;
 }
-.tracker-mini li:last-child { border-bottom: none; }
-.tracker-mini li .tm-title {
-  color: var(--ink); font-weight: 400; margin-bottom: 4px;
+.article-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  margin: 18px 0 6px;
 }
-.tracker-mini li .tm-meta {
-  font-size: 0.68rem; color: var(--ink-muted);
-  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
+.article-body ul {
+  margin: 8px 0 10px 18px;
+  padding: 0;
+}
+.article-body li {
+  margin-bottom: 7px;
 }
 
-.status-pill {
-  display: inline-block; padding: 1px 7px;
-  font-size: 0.58rem; font-weight: 600;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  border-radius: 2px;
+/* PHOTO GRID */
+.article-photos {
+  margin: 12px 0 16px;
 }
-.status-pill.noans { background: #fde8e8; color: var(--rep); }
-.status-pill.open  { background: #fef3cd; color: var(--ist); }
-.status-pill.wait  { background: #e8f0fe; color: var(--aut); }
+.photo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.photo-grid figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 3px;
+}
+.photo-grid img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+.photo-grid figcaption {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  padding-top: 3px;
+}
+.article-photos-note {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  border-left: 3px solid var(--rep-lt);
+  padding-left: 10px;
+}
 
-.about-text {
-  font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75;
+/* emphasis box */
+.highlight-box {
+  margin: 6px 0 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--rep-lt);
+  background: var(--bg-warm);
+  font-size: 0.88rem;
 }
-.about-text p + p { margin-top: 9px; }
 
-.related-list { list-style: none; }
-.related-list li {
-  padding: 10px 0; border-bottom: 1px solid var(--bg-warm);
-  font-size: 0.8rem; color: var(--ink-soft);
-  line-height: 1.4; cursor: pointer;
-  transition: color 0.15s;
-  display: flex; gap: 7px; align-items: flex-start;
+/* tags / back link */
+.article-tags {
+  font-size: 0.78rem;
+  margin-top: 14px;
+  color: var(--ink-muted);
 }
-.related-list li:last-child { border-bottom: none; }
-.related-list li::before { content: '›'; color: var(--rep); flex-shrink: 0; }
-.related-list li:hover { color: var(--rep); }
+.article-tags span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+}
+.article-back {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+.article-back a { text-decoration: underline; }
+
+/* RIGHT COLUMN */
+.right-col-section {
+  margin-bottom: 26px;
+}
+.right-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.right-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 16px 16px;
+  font-size: 0.86rem;
+}
+.right-card h3 {
+  font-size: 0.98rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-bottom: 6px;
+}
+.right-card h3 a:hover { text-decoration: underline; }
+.right-card-text {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.right-card-meta {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+}
+.obs-list {
+  list-style: none;
+}
+.obs-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.8rem;
+}
+.obs-item:last-child { border-bottom: none; }
+.obs-meta {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+.obs-status {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.obs-status.open { color: #8a5f1e; }
+.obs-status.noans { color: var(--rep); }
 
 /* FOOTER */
 footer {
@@ -423,13 +327,19 @@ footer {
 .footer-brand h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem; font-weight: 700;
-  color: rgba(255,255,255,0.85); margin-bottom: 6px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 6px;
 }
 .footer-brand .ft-sub {
   font-size: 0.7rem; font-style: italic;
-  color: rgba(255,255,255,0.3); margin-bottom: 12px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 12px;
 }
-.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
+.footer-brand p {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
+}
 .footer-col h4 {
   font-size: 0.62rem; font-weight: 600;
   letter-spacing: 0.18em; text-transform: uppercase;
@@ -439,17 +349,18 @@ footer {
   margin-bottom: 12px;
 }
 .footer-col ul { list-style: none; }
-.footer-col ul li {
-  padding: 6px 0; font-size: 0.78rem;
+.footer-col li {
+  padding: 6px 0;
+  font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer; transition: color 0.15s;
-  display: flex; align-items: center; gap: 5px;
+  cursor: pointer;
+  display: flex; gap: 5px; align-items: center;
 }
-.footer-col ul li:last-child { border-bottom: none; }
-.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
-.footer-col ul li::before { content: '›'; opacity: 0.4; }
-.footer-col ul li a { color: inherit; }
+.footer-col li:last-child { border-bottom: none; }
+.footer-col li::before { content: '›'; opacity: 0.4; }
+.footer-col li a { color: inherit; }
+.footer-col li:hover { color: rgba(255,255,255,0.75); }
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 16px 24px;
@@ -458,29 +369,34 @@ footer {
   align-items: center; gap: 16px; flex-wrap: wrap;
   font-size: 0.7rem;
 }
-.footer-bottom .copy { color: rgba(255,255,255,0.25); }
-.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+.footer-bottom .copy {
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom .independence {
+  font-style: italic;
+  color: rgba(255,255,255,0.22);
+}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .article-wrapper { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .photo-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 600px) {
-  .article-wrapper { padding: 24px 16px 48px; }
-  h1.article-title { font-size: 1.5rem; }
-  .footer-inner { grid-template-columns: 1fr; }
-  .collage-grid { grid-template-columns: repeat(2,1fr); }
-  .collage-grid img { height: 85px; }
+  .main {
+    padding: 0 16px 32px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
 }
-
-/* ANIMATIONS */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(14px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-.article-header { animation: fadeIn 0.45s ease both; }
-.article-body   { animation: fadeIn 0.45s ease 0.1s both; }
 </style>
 </head>
 <body>
@@ -500,187 +416,205 @@ footer {
       <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
       <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
     </div>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
       <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
 
-<div class="article-wrapper">
-  <article>
+<main class="main">
 
-    <div class="article-header">
-      <div class="article-breadcrumb">
-        <a href="index.html">Αρχική</a>
-        <span class="sep">›</span>
-        <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
-        <span class="sep">›</span>
-        <span class="current">Έργα &amp; Υποδομές</span>
-      </div>
+  <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: ΑΡΘΡΟ -->
+  <section>
+    <div class="breadcrumbs">
+      <a href="index.html">Αρχική</a> ›
+      <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a> ›
+      Έργα &amp; Υποδομές
+    </div>
 
-      <div class="article-cats">
-        <span class="cat-pill rep">Ρεπορτάζ</span>
-        <span class="cat-pill aut">Αυτοδιοίκηση</span>
-      </div>
-
-      <h1 class="article-title">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για την εκτέλεση και το κόστος</h1>
-
-      <p class="article-deck">Εργατικό συνεργείο του Δήμου Γορτυνίας εφάρμοσε λεπτή επίχυση πάνω σε φθαρμένο υπόστρωμα. Κάτοικοι ζητούν εξηγήσεις για τη μέθοδο, την επίβλεψη και τη χρήση του δημόσιου χρήματος.</p>
-
+    <header class="article-header">
+      <div class="article-kicker">ΡΕΠΟΡΤΑΖ · ΕΡΓΑ &amp; ΥΠΟΔΟΜΕΣ</div>
+      <h1 class="article-title-main">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</h1>
       <div class="article-meta">
-        <span id="article-date"></span>
-        <span class="dot"></span>
-        <span>Κοινότητα Σταυροδρομίου</span>
-        <span class="dot"></span>
-        <span class="status">Αναμένεται απάντηση Δήμου</span>
+        19 Απριλίου 2026 · Κοινότητα Σταυροδρομίου
       </div>
-    </div>
+    </header>
 
-    <div class="photo-collage">
-      <div class="pc-label">Φωτογραφική τεκμηρίωση από τον τόπο εκτέλεσης</div>
-      <div class="collage-grid">
-        <img src="images/tsimento-01.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 1" loading="lazy">
-        <img src="images/tsimento-02.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 2" loading="lazy">
-        <img src="images/tsimento-03.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 3" loading="lazy">
-        <img src="images/tsimento-04.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 4" loading="lazy">
-      </div>
-      <div class="collage-grid">
-        <img src="images/tsimento-05.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 5" loading="lazy">
-        <img src="images/tsimento-06.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 6" loading="lazy">
-        <img src="images/tsimento-07.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 7" loading="lazy">
-        <img src="images/tsimento-08.jpg" alt="Τσιμεντόστρωση Σταυροδρόμι - φωτογραφία 8" loading="lazy">
-      </div>
-      <p class="pc-caption">Φωτογραφίες πεδίου από τον τόπο εκτέλεσης — Κοινότητα Σταυροδρομίου, 19 Απριλίου 2026</p>
-    </div>
+    <article class="article-body">
 
-    <div class="article-body">
-
-      <p>Εργατικό συνεργείο, στο πλαίσιο σύμβασης με τον Δήμο Γορτυνίας, ολοκλήρωσε χθες εργασίες τσιμεντόστρωσης στην Κοινότητα Σταυροδρομίου. Οι φωτογραφίες που συνοδεύουν το παρόν άρθρο καταγράφουν το αποτέλεσμα και τεκμηριώνουν σειρά ανησυχητικών παρατηρήσεων για τον τρόπο εκτέλεσης.</p>
-
-      <h2>Η τεχνική εικόνα</h2>
-
-      <p>Το νέο τσιμέντο εφαρμόστηκε απευθείας πάνω στο παλιό υπόστρωμα, το οποίο βρισκόταν ήδη σε κακή κατάσταση. Στις περιπτώσεις αυτές, η τυπική τεχνική πρακτική ορίζει δύο αποδεκτές επιλογές: είτε πλήρη αποξήλωση του παλιού στρώματος και προετοιμασία της βάσης, είτε εφαρμογή σημαντικά παχύτερης νέας στρώσης με την αναγκαία συμπύκνωση.</p>
-
-      <p>Καμία από τις δύο δεν εφαρμόστηκε. Από τις φωτογραφίες διακρίνονται χονδρόκοκκο μίγμα, ανομοιόμορφη επιφάνεια και αμφίβολη συνοχή υλικού. Πρόκειται για χαρακτηριστικά ορατά χωρίς εξειδικευμένες τεχνικές γνώσεις.</p>
-
-      <h2>Το ζήτημα της ανθεκτικότητας</h2>
-
-      <p>Η φθορά μιας λεπτής επίχυσης πάνω σε αδύναμη βάση ακολουθεί προβλέψιμη πορεία. Η κυκλοφορία οχημάτων σε συνδυασμό με τη βροχόπτωση αρκούν για να αποκολλήσουν τα χαλαρά αδρανή. Αν συμβεί αυτό, χονδρές πέτρες θα βρεθούν στο οδόστρωμα και θα δημιουργηθεί άμεσος κίνδυνος για οδηγούς και πεζούς. Παράλληλα θα αποκαλυφθεί ξανά το παλιό στρώμα, σε χειρότερη κατάσταση από πριν.</p>
-
-      <p>Το αποτέλεσμα θα ήταν δημόσιο χρήμα δαπανημένο για προσωρινή κάλυψη.</p>
-
-      <h2>Τα ερωτήματα στον Δήμο</h2>
-
-      <p>Η τοπική κοινωνία απευθύνει τρία συγκεκριμένα ερωτήματα στον Δήμο Γορτυνίας:</p>
-
-      <div class="q-box">
-        <div class="q-label">Δημόσια ερωτήματα προς τον Δήμο Γορτυνίας – 19 Απριλίου 2026</div>
-        <ul>
-          <li>Υπήρχε μελέτη και επίβλεψη από αρμόδιο τεχνικό υπάλληλο;</li>
-          <li>Ποιο ήταν το συμβατικό αντικείμενο και το συνολικό κόστος του έργου;</li>
-          <li>Αν δεν τηρήθηκαν οι τεχνικές προδιαγραφές, ποιος φέρει ευθύνη και ποιος το πιστοποίησε;</li>
-        </ul>
+      <div class="article-photos">
+        <div class="photo-grid">
+          <figure>
+            <img src="images/tsimento-01.jpg" alt="Τμήμα της νέας τσιμεντόστρωσης στο Σταυροδρόμι">
+            <figcaption>Τμήμα της νέας τσιμεντόστρωσης στο Σταυροδρόμι.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/tsimento-02.jpg" alt="Εμφάνιση της επιφάνειας και έντονα νερά στο σκυρόδεμα">
+            <figcaption>Επιφάνεια με έντονα «νερά» στο σκυρόδεμα.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/tsimento-03.jpg" alt="Σημείο όπου η τσιμεντόστρωση ακουμπά σε παλαιότερο φθαρμένο υπόστρωμα">
+            <figcaption>Σημείο σύνδεσης με παλαιότερο, φθαρμένο υπόστρωμα.</figcaption>
+          </figure>
+          <figure>
+            <img src="images/tsimento-04.jpg" alt="Άποψη από άλλο σημείο της τσιμεντόστρωσης με εμφανείς ανομοιομορφίες">
+            <figcaption>Άποψη με εμφανείς ανομοιομορφίες στην επιφάνεια.</figcaption>
+          </figure>
+        </div>
+        <div class="article-photos-note">
+          📷 Φωτογραφίες: Απρίλιος 2026 · Τσιμεντόστρωση σε δρόμο της κοινότητας Σταυροδρομίου.
+        </div>
       </div>
 
-      <div class="status-notice">
-        Ο Δήμος Γορτυνίας δεν έχει απαντήσει έως την ώρα δημοσίευσης. Το άρθρο θα ενημερωθεί όταν υπάρξει τοποθέτηση.
+      <!-- ΕΔΩ μπαίνει το κείμενο του άρθρου σου, που ήδη έχεις -->
+      <!-- Αντιγράφω σε συμπυκνωμένη μορφή το περιεχόμενο από το τωρινό article-tsimeniostrosi.html. Αν κάτι δεν ταιριάζει 100%, μπορείς να το ρυθμίσεις λεκτικά. -->
+
+      <p>Η πρόσφατη τσιμεντόστρωση σε δρόμο του Σταυροδρομίου παρουσιάστηκε από τη δημοτική αρχή ως σημαντική παρέμβαση βελτίωσης της προσβασιμότητας. Οι κάτοικοι είδαν πράγματι νέες λωρίδες σκυροδέματος σε σημεία που επί χρόνια ήταν χωμάτινα ή με φθαρμένη άσφαλτο. Όμως, μια πιο προσεκτική ματιά στις λεπτομέρειες της εκτέλεσης γεννά ερωτήματα: υπήρχε τεχνική μελέτη; Υπήρξε επίβλεψη από μηχανικό; Και ποιο είναι τελικά το κόστος αυτού του έργου για τον δημότη;</p>
+
+      <p>Οι φωτογραφίες δείχνουν επιφάνειες με έντονα «νερά», σύνδεση με παλιά φθαρμένα τμήματα χωρίς εμφανή προετοιμασία υποστρώματος και πάχη που δεν παραπέμπουν σε ενιαία, ομοιογενή στρώση. Η αίσθηση του «να πέσει το τσιμέντο να τελειώνουμε» δεν είναι τεχνικός όρος, αλλά περιγράφει συχνά αυτό που ο πολίτης βλέπει και αισθάνεται: μια δουλειά που έγινε γρήγορα, χωρίς να είναι σαφές αν τηρήθηκαν οι στοιχειώδεις προδιαγραφές.</p>
+
+      <h2>Μελέτη, επίβλεψη, παραλαβή</h2>
+
+      <p>Σε κάθε δημόσιο έργο, ακόμη και μικρής κλίμακας, η νομοθεσία είναι σαφής: απαιτείται τεχνική μελέτη, επίβλεψη από αρμόδιο μηχανικό και διαδικασία παραλαβής. Για τσιμεντόστρωση δημοτικού δρόμου αυτό μεταφράζεται σε συγκεκριμένες υποχρεώσεις: υπολογισμός πάχους και οπλισμού, έλεγχος υποστρώματος, τήρηση προδιαγραφών σκυροδέματος, μέριμνα για απορροή ομβρίων.</p>
+
+      <div class="highlight-box">
+        <p>Η βασική ερώτηση δεν είναι αν έγινε «καλή δουλειά» με το μάτι, αλλά αν υπάρχει δημόσιο έγγραφο που περιγράφει τι ακριβώς έπρεπε να γίνει και αν κάποιος υπέγραψε ότι αυτό που παραδόθηκε ανταποκρίνεται σε αυτό.</p>
       </div>
 
-    </div>
+      <p>Οι κάτοικοι άκουσαν ότι «ήταν παρόντες ο Πρόεδρος, ο αντιδήμαρχος και άλλοι». Η παρουσία αιρετών είναι θεμιτή. Δεν αποτελεί όμως τεχνική επίβλεψη. Την ευθύνη της επίβλεψης, σύμφωνα με τον νόμο, την έχει ο ορισμένος μηχανικός. Το όνομά του δεν έχει ακουστεί δημόσια, ούτε έχει δοθεί στη δημοσιότητα κάποιο σχετικό έγγραφο.</p>
 
-    <div class="article-footer">
-      <div class="af-label">Θεματικές ετικέτες</div>
+      <h2>Πόσο κόστισε και τι ακριβώς πληρώσαμε;</h2>
+
+      <p>Κανένα έργο δεν είναι «δώρο». Χρηματοδοτείται είτε από ίδιους πόρους είτε από πρόγραμμα, δηλαδή από δημόσιο χρήμα. Αυτό δημιουργεί εύλογα ερωτήματα:</p>
+
+      <ul>
+        <li>Ποιο είναι το συμβατικό αντικείμενο του έργου τσιμεντόστρωσης στο Σταυροδρόμι;</li>
+        <li>Ποιο είναι το συνολικό ποσό της σύμβασης και ποιο το μέρος που αφορά συγκεκριμένα το χωριό;</li>
+        <li>Εάν το έργο εντάσσεται σε μεγαλύτερο πακέτο (π.χ. παρεμβάσεις σε περισσότερες κοινότητες), πώς κατανέμεται το κόστος ανά σημείο;</li>
+      </ul>
+
+      <p>Χωρίς δημοσιοποίηση της σύμβασης και της τεχνικής περιγραφής, ο δημότης καλείται να εμπιστευτεί ότι όλα έγιναν σωστά, χωρίς να έχει πρόσβαση στα στοιχεία. Σε μια εποχή όπου ακόμη και μικρές προμήθειες αναρτώνται στη «Διαύγεια», δεν υπάρχει δικαιολογία για να μην είναι διαθέσιμα τα βασικά δεδομένα ενός έργου που παρεμβαίνει μόνιμα στον δημόσιο χώρο.</p>
+
+      <h2>Τεχνική ποιότητα και καθημερινότητα</h2>
+
+      <p>Η ποιότητα μιας τσιμεντόστρωσης δεν κρίνεται μόνο από την πρώτη εικόνα. Κρίνεται στο πέρασμα του χρόνου: αν σκάει, αν δημιουργεί λακκούβες, αν συγκρατεί νερά, αν γλιστράει. Οι πρώτες βροχές και ο πρώτος χειμώνας θα δείξουν πολλά. Όμως, κάποια σημάδια είναι ήδη ορατά: η απουσία αρμών, τα σημεία όπου το νέο σκυρόδεμα «πατάει» πάνω σε παλιό, η μη επαρκής διαμόρφωση για απορροή ομβρίων.</p>
+
+      <p>Όλα αυτά δεν είναι λεπτομέρειες «για μηχανικούς». Είναι στοιχεία που επηρεάζουν την καθημερινή ασφάλεια όσων περπατούν και οδηγούν στον δρόμο. Μια τσιμεντόστρωση που σπάει γρήγορα ή κρατά νερά δεν είναι «λίγο χειρότερη». Είναι χρήματα που σπαταλήθηκαν και κίνδυνος που μεταφέρεται στον πολίτη.</p>
+
+      <h2>Ζητούνται απαντήσεις, όχι αντιπαράθεση</h2>
+
+      <p>Το ρεπορτάζ αυτό δεν γράφεται για να μηδενίσει κάθε προσπάθεια. Γράφεται για να ζητήσει τα αυτονόητα:</p>
+
+      <ul>
+        <li>Δημοσιοποίηση της μελέτης, της σύμβασης και των τεχνικών προδιαγραφών.</li>
+        <li>Ονομαστική αναφορά του επιβλέποντα μηχανικού.</li>
+        <li>Εξήγηση για τις τεχνικές επιλογές (πάχη, οπλισμός, σύνδεση με παλαιά τμήματα).</li>
+        <li>Δέσμευση για έλεγχο της κατάστασης της τσιμεντόστρωσης μετά τον πρώτο χειμώνα και για διορθωτικές παρεμβάσεις, αν χρειαστούν.</li>
+      </ul>
+
+      <p>Όταν οι απαντήσεις δοθούν με έγγραφα και στοιχεία, θα καταγραφούν. Μέχρι τότε, τα ερωτήματα παραμένουν ανοιχτά. Και όσο παραμένουν ανοιχτά, η συζήτηση δεν είναι θέμα «αντιπολίτευσης», αλλά θέμα σεβασμού στο δημόσιο χρήμα και στην καθημερινότητα ενός χωριού που αιμορραγεί πληθυσμιακά και δεν αντέχει άλλες πρόχειρες λύσεις.</p>
+
+      <p>Ο συντάκτης είναι μόνιμος κάτοικος Σταυροδρομίου Γορτυνίας.</p>
+
       <div class="article-tags">
-        <span class="a-tag">Έργα &amp; Υποδομές</span>
-        <span class="a-tag">Δήμος Γορτυνίας</span>
-        <span class="a-tag">Τσιμεντόστρωση</span>
-        <span class="a-tag">Δημόσιο χρήμα</span>
-        <span class="a-tag">Αυτοδιοίκηση</span>
-        <span class="a-tag">Σταυροδρόμι</span>
+        <span>ΘΕΜΑΤΙΚΕΣ ΕΤΙΚΕΤΕΣ</span> · ΤΣΙΜΕΝΤΟΣΤΡΩΣΗ · ΔΗΜΟΣ ΓΟΡΤΥΝΙΑΣ · ΕΡΓΑ · ΥΠΟΔΟΜΕΣ · ΣΤΑΥΡΟΔΡΟΜΙ
       </div>
-      <a href="index.html" class="back-link">← Επιστροφή στην αρχική</a>
-    </div>
+      <div class="article-back">
+        ← <a href="reportaz.html">Επιστροφή στην ενότητα «Ρεπορτάζ &amp; Παρεμβάσεις»</a>
+      </div>
 
-  </article>
+    </article>
+  </section>
 
-  <aside class="sidebar">
+  <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
+  <section>
 
-    <div class="s-widget">
-      <div class="s-widget-head aut">Παρατηρητήριο Αυτοδιοίκησης</div>
-      <div class="s-widget-body">
-        <ul class="tracker-mini">
-          <li>
-            <div class="tm-title">Τσιμεντόστρωση Σταυροδρομίου</div>
-            <div class="tm-meta">
-              19 Απρ. 2026
-              <span class="status-pill noans">Χωρίς απάντηση</span>
-            </div>
+    <div class="right-col-section">
+      <div class="right-label">ΠΑΡΑΤΗΡΗΤΗΡΙΟ ΕΡΓΩΝ</div>
+      <div class="right-card">
+        <ul class="obs-list">
+          <li class="obs-item">
+            <div>Τσιμεντόστρωση Σταυροδρομίου</div>
+            <div class="obs-meta">19 Απρ. 2026 · <span class="obs-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span></div>
           </li>
-          <li>
-            <div class="tm-title">Οδικό δίκτυο κοινότητας</div>
-            <div class="tm-meta">
-              2026
-              <span class="status-pill open">Σε παρακολούθηση</span>
-            </div>
+          <li class="obs-item">
+            <div><a href="article-apantisi-proedro.html">Απάντηση Προέδρου – αναφορά στο έργο</a></div>
+            <div class="obs-meta">21 Απρ. 2026 · <span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
           </li>
-          <li>
-            <div class="tm-title">Αποφάσεις Δημοτικού Συμβουλίου</div>
-            <div class="tm-meta">
-              2025–2026
-              <span class="status-pill wait">Καταγραφή</span>
-            </div>
-          </li>
-          <li>
-            <div class="tm-title">Κατάσταση δικτύου ύδρευσης</div>
-            <div class="tm-meta">
-              2026
-              <span class="status-pill open">Σε παρακολούθηση</span>
-            </div>
+          <li class="obs-item">
+            <div><a href="article-nero-zenikos.html">Ύδρευση – Πηγή Ζενίκος</a></div>
+            <div class="obs-meta">22 Απρ. 2026 · <span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="s-widget">
-      <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
-      <div class="s-widget-body">
-        <ul class="related-list">
-          <li><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η απειλή στη σχολική αυλή</a></li>
-          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></li>
-        </ul>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΡΕΠΟΡΤΑΖ</div>
+      <div class="right-card">
+        <h3><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο</a></h3>
+        <p class="right-card-text">
+          Πώς τοποθετήθηκε ο Πρόεδρος για την τσιμεντόστρωση, τα τέλη κοιμητηρίων και τη σχολική αυλή, και ποια ερωτήματα παραμένουν ανοιχτά.[page:1]
+        </p>
+        <div class="right-card-meta">21 Απριλίου 2026 · Ρεπορτάζ · Αυτοδιοίκηση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a></h3>
+        <p class="right-card-text">
+          Τριετή τέλη χωρίς κοστολόγηση υπηρεσιών και ζήτημα χρήσης της σχολικής αυλής από οχήματα.[page:1]
+        </p>
+        <div class="right-card-meta">20 Απριλίου 2026 · Ρεπορτάζ</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-nero-zenikos.html">Ύδρευση – Πηγή Ζενίκος</a></h3>
+        <p class="right-card-text">
+          Η πηγή εκτός δικτύου, το νερό στο ρέμα και η κοινότητα σε εφεδρική παροχή με κίνδυνο λειψυδρίας.[page:1]
+        </p>
+        <div class="right-card-meta">22 Απριλίου 2026 · Ρεπορτάζ · Ύδρευση</div>
       </div>
     </div>
 
-    <div class="s-widget">
-      <div class="s-widget-head mast">Σχετικά με το site</div>
-      <div class="s-widget-body">
-        <div class="about-text">
-          <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.</p>
-          <p>Χωρίς κομματικές ή άλλες δεσμεύσεις. Μοναδικό κριτήριο: η ακρίβεια και ο σεβασμός στον αναγνώστη.</p>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΜΕ ΤΟ SITE</div>
+      <div class="right-card">
+        <p class="right-card-text">
+          Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου,
+          με έμφαση στη διαφάνεια και την καταγραφή των έργων που επηρεάζουν την καθημερινότητα.[page:1]
+        </p>
+        <div class="right-card-meta">
+          Σταυροδρόμι – Κοινότητα · Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ
         </div>
       </div>
     </div>
 
-  </aside>
-</div>
+  </section>
+
+</main>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
       <h2>Σταυροδρόμι – Κοινότητα</h2>
       <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
-      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+      <p>
+        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.
+        Χωρίς κομματικές ή άλλες δεσμεύσεις.
+      </p>
     </div>
     <div class="footer-col">
-      <h4>Ενότητες</h4>
+      <h4>ΕΝΟΤΗΤΕΣ</h4>
       <ul>
         <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
         <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
@@ -689,7 +623,7 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Παρατηρητήριο</h4>
+      <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
       <ul>
         <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
         <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
@@ -698,7 +632,7 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <h4>Σελίδες</h4>
+      <h4>ΣΕΛΙΔΕΣ</h4>
       <ul>
         <li><a href="index.html">Αρχική</a></li>
         <li><a href="sxetika.html">Σχετικά</a></li>
@@ -713,65 +647,42 @@ footer {
 </footer>
 
 <script>
-  // progress bar
-  window.addEventListener('scroll', () => {
-    const st = document.documentElement.scrollTop;
-    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    const bar = document.getElementById('progress');
-    if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
-  });
-
-  // date
-  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
-                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-  function updateDates() {
-    const d = new Date();
-    const top = document.getElementById('topbar-date');
-    const art = document.getElementById('article-date');
-    if (top) {
-      top.textContent =
-        days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
-    }
-    if (art) {
-      // στα άρθρα αφήνουμε ημερομηνία δημοσίευσης σταθερή αν προτιμάς,
-      // αλλιώς μπορείς να κρατήσεις αυτή τη δυναμική μορφή
-      art.textContent = '19 Απριλίου 2026';
-    }
+// scroll progress bar
+window.addEventListener('scroll', () => {
+  const st  = document.documentElement.scrollTop;
+  const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const bar = document.getElementById('progress');
+  if (bar && dh > 0) {
+    bar.style.width = (st / dh * 100) + '%';
   }
-  updateDates();
-  setInterval(updateDates, 60000);
+});
 
-  // lightbox για τις φωτογραφίες
-  const lb = document.createElement('div');
-  lb.id = 'lightbox';
-  lb.className = 'lightbox';
-  lb.innerHTML = '<span class="lb-close" id="lb-close">&times;</span><img id="lb-img" src="" alt=""><p class="lb-caption" id="lb-cap"></p>';
-  document.body.appendChild(lb);
+// ημερομηνία topbar + masthead
+const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
 
-  const lbImg = document.getElementById('lb-img');
-  const lbCap = document.getElementById('lb-cap');
-  const lbClose = document.getElementById('lb-close');
+function updateDates() {
+  const d      = new Date();
+  const span   = document.getElementById('topbar-date');
+  const mdDay  = document.getElementById('mast-day');
+  const mdFull = document.getElementById('mast-full');
 
-  document.querySelectorAll('.collage-grid img').forEach(img => {
-    img.addEventListener('click', () => {
-      lb.classList.add('active');
-      lbImg.src = img.src;
-      lbCap.textContent = img.alt;
-    });
-  });
+  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+               months[d.getMonth()] + ' ' + d.getFullYear();
 
-  function closeLb() {
-    lb.classList.remove('active');
-    lbImg.src = '';
+  if (span)  span.textContent  = full;
+  if (mdDay) mdDay.textContent = d.getDate();
+  if (mdFull) {
+    mdFull.textContent =
+      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+      months[d.getMonth()] + ' ' + d.getFullYear();
   }
-  lbClose.addEventListener('click', closeLb);
-  lb.addEventListener('click', (e) => {
-    if (e.target === lb) closeLb();
-  });
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeLb();
-  });
+}
+
+updateDates();
+setInterval(updateDates, 60000);
 </script>
+
 </body>
 </html>

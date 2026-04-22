@@ -3,16 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Λαογραφία &amp; Πολιτισμός – Σταυροδρόμι Κοινότητα</title>
+<title>Αυτοδιοίκηση &amp; Κοινωνία – Σταυροδρόμι Κοινότητα</title>
 
-<meta name="description" content="Καθημερινή ζωή, έθιμα, γλώσσα και μικρές αφηγήσεις από το Σταυροδρόμι. Μικρά κομμάτια άυλου πολιτισμού που δεν καταγράφονται σε διοικητικά έγγραφα.">
+<meta name="description" content="Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων για την κοινότητα Σταυροδρομίου. Συγκεντρωμένα στοιχεία, ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ.">
 
-<meta property="og:title" content="Λαογραφία &amp; Πολιτισμός – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Καθημερινή ζωή, γιορτές, λέξεις και ιστορίες από το Σταυροδρόμι. Ενότητα που εμπλουτίζεται με υλικό των ανθρώπων του χωριού.">
+<meta property="og:title" content="Αυτοδιοίκηση &amp; Κοινωνία – Σταυροδρόμι Κοινότητα">
+<meta property="og:description" content="Εργα, τέλη, αποφάσεις και ανοιχτά ερωτήματα για την κοινότητα Σταυροδρομίου, με σύνδεση στα ρεπορτάζ.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/laografia.html">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/autodioikisi.html">
 <meta property="og:locale" content="el_GR">
-<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/laografia/plateia-kai-giorti.jpg">
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg">
 
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
@@ -35,6 +35,7 @@
   --lao: #1e4a2e;
   --lao-lt: #2e6e44;
   --aut: #1a2e5a;
+  --aut-lt: #2a4a8a;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -47,7 +48,7 @@ body {
 a { color: inherit; text-decoration: none; }
 #progress {
   position: fixed; top: 0; left: 0; height: 3px;
-  background: var(--lao-lt); width: 0; z-index: 300;
+  background: var(--aut-lt); width: 0; z-index: 300;
   transition: width 0.1s linear;
 }
 
@@ -131,8 +132,8 @@ nav.primary li a {
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
 /* ενεργή ενότητα */
-nav.primary li a.nav-lao {
-  border-bottom-color: var(--lao-lt);
+nav.primary li a.nav-aut {
+  border-bottom-color: var(--aut-lt);
   color: #ffffff;
 }
 
@@ -170,16 +171,16 @@ nav.primary li a.nav-lao {
   color: var(--ink-soft);
 }
 
-/* history-like sections */
-.lao-section {
+/* blocks */
+.auto-section {
   margin-bottom: 28px;
   padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
 }
-.lao-section:last-of-type {
+.auto-section:last-of-type {
   border-bottom: none;
 }
-.lao-label {
+.auto-label {
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.16em;
@@ -187,31 +188,47 @@ nav.primary li a.nav-lao {
   color: var(--ink-muted);
   margin-bottom: 4px;
 }
-.lao-section h3 {
+.auto-section h3 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.15rem;
   margin-bottom: 6px;
 }
-.lao-section p {
+.auto-section p {
   font-size: 0.9rem;
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
-.lao-section p:last-child {
+.auto-section p:last-child {
   margin-bottom: 0;
 }
 
-/* small blocks in lists */
-.lao-block-title {
+/* mini table / list */
+.issue-list {
+  margin-top: 8px;
+}
+.issue-item {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 10px 12px;
+  margin-bottom: 10px;
   font-size: 0.86rem;
+}
+.issue-title a { font-weight: 500; }
+.issue-title a:hover { text-decoration: underline; }
+.issue-meta {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-top: 4px;
+}
+.issue-status {
+  font-size: 0.7rem;
   font-weight: 600;
-  margin-top: 6px;
-  margin-bottom: 3px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
-.lao-block-text {
-  font-size: 0.86rem;
-  color: var(--ink-soft);
-}
+.issue-status.noans { color: var(--rep); }
+.issue-status.open { color: #8a5f1e; }
+.issue-status.positive { color: #1e4a2e; }
 
 /* RIGHT COLUMN */
 .right-col-section {
@@ -358,8 +375,8 @@ footer {
       <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
       <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
       <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
@@ -371,117 +388,131 @@ footer {
   <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ -->
   <section>
     <div class="section-header">
-      <div class="section-kicker">ΛΑΟΓΡΑΦΙΑ &amp; ΠΟΛΙΤΙΣΜΟΣ</div>
-      <h2 class="section-title">Καθημερινή ζωή, έθιμα και μνήμες από το Σταυροδρόμι</h2>
+      <div class="section-kicker">ΑΥΤΟΔΙΟΙΚΗΣΗ &amp; ΚΟΙΝΩΝΙΑ</div>
+      <h2 class="section-title">Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων</h2>
       <p class="section-subtitle">
-        Εδώ συγκεντρώνονται μικρά κομμάτια του άυλου πολιτισμού: καθημερινές συνήθειες, γιορτές, λόγια, τραγούδια
-        και όσα δεν θα βρούμε σε διοικητικά έγγραφα, αλλά μόνο σε κουβέντες και μνήμες.
+        Εδώ συγκεντρώνονται όσα αποφασίζονται, όσα γίνονται και όσα μένουν σε εκκρεμότητα για την κοινότητα Σταυροδρομίου.
       </p>
       <p class="section-intro">
-        Η σελίδα αυτή ξεκινά με λίγες σημειώσεις. Σκοπός είναι να εμπλουτίζεται σταδιακά με υλικό των ανθρώπων του χωριού.
+        Δεν αντικαθιστά καμία επίσημη ενημέρωση· επιχειρεί όμως να βάζει σε μια σειρά τα δεδομένα και τα ερωτήματα,
+        με σαφείς ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ.
       </p>
     </div>
 
-    <!-- ΤΙ ΘΕΩΡΕΙΤΑΙ ΛΑΟΓΡΑΦΙΑ -->
-    <section class="lao-section" id="ti-einai">
-      <div class="lao-label">01 · ΤΙ ΘΕΩΡΕΙΤΑΙ «ΛΑΟΓΡΑΦΙΑ» ΕΔΩ</div>
-      <h3>Τι εννοούμε «λαογραφία» σε αυτή την ενότητα</h3>
+    <!-- ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ -->
+    <section class="auto-section" id="ti-parakolouthei">
+      <div class="auto-label">01 · ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ ΕΔΩ</div>
+      <h3>Έργα, αποφάσεις, εισπράξεις, απαντήσεις</h3>
       <p>
-        Οτιδήποτε αφορά την καθημερινή ζωή, τα έθιμα, τη γλώσσα, τις αφηγήσεις, τις μικρές «ιεροτελεστίες» του χωριού.
-        Όσα συνήθως δεν καταγράφονται, αλλά φτιάχνουν τον τρόπο που ζούμε.
+        Στην ενότητα αυτή καταγράφονται έργα, αποφάσεις, εισπράξεις, καθώς και οι απαντήσεις (ή η απουσία τους) από τον Δήμο Γορτυνίας
+        και την Κοινότητα Σταυροδρομίου. Κάθε ζήτημα συνδέεται, όπου υπάρχει, με αναλυτικό ρεπορτάζ.
       </p>
     </section>
 
-    <!-- ΚΑΘΗΜΕΡΙΝΗ ΖΩΗ -->
-    <section class="lao-section" id="kathimerini-zoe">
-      <div class="lao-label">02 · ΚΑΘΗΜΕΡΙΝΗ ΖΩΗ</div>
-      <h3>Ρυθμός, εποχές και μικρές συνήθειες</h3>
+    <!-- ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ -->
+    <section class="auto-section" id="anoikta">
+      <div class="auto-label">02 · ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ</div>
+      <h3>Σύντομο παρατηρητήριο</h3>
       <p>
-        Η ζωή στο Σταυροδρόμι, όπως και σε πολλά ορεινά χωριά της Γορτυνίας, ακολουθούσε για δεκαετίες τον ρυθμό των εποχών:
-        σπορά, θέρος, μάζεμα ελιάς, γιορτές. Η εβδομάδα δεν οριζόταν από ωράρια γραφείων, αλλά από τις δουλειές της γης και
-        τις ανάγκες του σπιτιού.
-      </p>
-      <p>
-        Στις αυλές, στους δρόμους και στα κατώγια γεννήθηκαν μορφές αλληλεγγύης και ανταλλαγής που σπάνια φαίνονται στα χαρτιά:
-        «έλα να βοηθήσεις σήμερα, έρχομαι εγώ αύριο», δανεικά εργαλεία, κοινές δουλειές. Αυτές οι μικρές κινήσεις είναι ίσως
-        το πιο γερό υπόστρωμα της τοπικής κοινωνίας.
+        Παρακάτω συγκεντρώνονται ορισμένα από τα βασικά ζητήματα που έχουν τεθεί δημόσια για το Σταυροδρόμι:
+        τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή, ύδρευση. Για κάθε θέμα σημειώνονται οι βασικές ημερομηνίες και η τρέχουσα κατάσταση.
       </p>
 
-      <div class="lao-block-title">Καθημερινότητα – ο καφές της πλατείας</div>
-      <p class="lao-block-text">
-        Η καθημερινή στάση στην πλατεία, έστω και με λίγους, λειτουργεί ακόμη ως άτυπο «κέντρο ενημέρωσης».
-        Από εκεί περνούν ειδήσεις, μικρά παράπονα, ιστορίες από τα παλιά.
-      </p>
+      <div class="issue-list">
 
-      <div class="lao-block-title">Εποχές – χειμώνας στο χωριό</div>
-      <p class="lao-block-text">
-        Οι χειμώνες με λίγους ανθρώπους και πολύ κρύο διαμορφώνουν έναν διαφορετικό ρυθμό: ξύλα, σόμπες, κλειστά σπίτια,
-        αλλά και πιο ήσυχες, βαθιές κουβέντες.
+        <div class="issue-item">
+          <div class="issue-title">
+            <a href="article-apantisi-proedro.html">Απάντηση Προέδρου στα ρεπορτάζ</a>
+          </div>
+          <div class="issue-meta">
+            Τελευταία κίνηση: 21 Απρ. 2026 ·
+            <span class="issue-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span>
+          </div>
+          <p class="issue-text">
+            Δημόσια τοποθέτηση του Προέδρου για τσιμεντόστρωση, τέλη κοιμητηρίων και σχολική αυλή. Ένα ζήτημα φαίνεται να κλείνει,
+            τα υπόλοιπα παραμένουν χωρίς επαρκή τεκμηρίωση.
+          </p>
+        </div>
+
+        <div class="issue-item">
+          <div class="issue-title">
+            <a href="article-tsimeniostrosi.html">Τσιμεντόστρωση Σταυροδρομίου</a>
+          </div>
+          <div class="issue-meta">
+            Τελευταία κίνηση: 19 Απρ. 2026 ·
+            <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
+          </div>
+          <p class="issue-text">
+            Ερωτήματα για τεχνική μελέτη, επίβλεψη, συμβατικό κόστος και ποιότητα εκτέλεσης. Αναμένονται δημοσιοποιημένα στοιχεία
+            και επίσημες απαντήσεις.
+          </p>
+        </div>
+
+        <div class="issue-item">
+          <div class="issue-title">
+            <a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a>
+          </div>
+          <div class="issue-meta">
+            Περίοδος: 2023–2026 ·
+            <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
+          </div>
+          <p class="issue-text">
+            Αθροιστική τριετής είσπραξη τελών χωρίς σαφή κοστολόγηση υπηρεσιών συντήρησης και ερωτήματα για τη χρήση της σχολικής αυλής.
+          </p>
+        </div>
+
+        <div class="issue-item">
+          <div class="issue-title">
+            <span>Σχολική αυλή – χρήση από οχήματα</span>
+          </div>
+          <div class="issue-meta">
+            Τελευταία κίνηση: 21 Απρ. 2026 ·
+            <span class="issue-status positive">ΘΕΤΙΚΗ ΕΞΕΛΙΞΗ</span>
+          </div>
+          <p class="issue-text">
+            Μετά τη δημόσια συζήτηση και την τοποθέτηση, το ζήτημα φαίνεται να έχει κλείσει υπέρ της ασφάλειας των παιδιών.
+          </p>
+        </div>
+
+      </div>
+
+      <p>
+        Αν γνωρίζετε επιπλέον δεδομένα (π.χ. αριθμούς αποφάσεων, ημερομηνίες, έγγραφα) για τα παραπάνω ζητήματα,
+        μπορείτε να τα στείλετε μέσω της σελίδας <a href="epikoinonia.html">Επικοινωνία</a>. Η τεκμηρίωση είναι όσο σημαντική όσο και η κριτική.
       </p>
     </section>
 
-    <!-- ΕΘΙΜΑ & ΓΙΟΡΤΕΣ -->
-    <section class="lao-section" id="ethima">
-      <div class="lao-label">03 · ΕΘΙΜΑ &amp; ΓΙΟΡΤΕΣ</div>
-      <h3>Γιορτές που κρατούν το νήμα</h3>
+    <!-- ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ -->
+    <section class="auto-section" id="sxesi-reportaz">
+      <div class="auto-label">03 · ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ</div>
+      <h3>Πώς συνδέεται η ενότητα με τα άρθρα</h3>
       <p>
-        Οι θρησκευτικές και τοπικές γιορτές δούλεψαν για χρόνια σαν «κόμβοι» μνήμης και συνάντησης.
-        Όσοι έφυγαν σε πόλεις και εξωτερικό συχνά διάλεγαν αυτές τις μέρες για να επιστρέψουν, έστω για λίγο.
-      </p>
-      <p class="lao-block-text">
-        • Το πανηγύρι της ενορίας, με τη λειτουργία, το τραπέζι και τον χορό.  
-        • Μικρές «επαναλήψεις» εθίμων σε οικογενειακό επίπεδο (ευχές, κόψιμο βασιλόπιτας, κοινά τραπέζια).  
-        • Συγκεντρώσεις σε σπίτια τα Χριστούγεννα ή το Πάσχα, όπου μοιράζονται ιστορίες από παλιότερα χρόνια.
+        Η «Αυτοδιοίκηση &amp; Κοινωνία» δεν επαναλαμβάνει τα ρεπορτάζ· λειτουργεί ως χάρτης.
+        Κάθε υπόθεση έχει το αντίστοιχο αναλυτικό άρθρο, αλλά εδώ φαίνονται συγκεντρωμένα τα βασικά στοιχεία και η πορεία της.
       </p>
       <p>
-        Ακόμη κι αν οι γιορτές αλλάζουν μορφή, λειτουργούν ως ευκαιρία επανασύνδεσης με τον τόπο· έστω και για λίγες ώρες ή μέρες τον χρόνο.
+        • <strong>Τσιμεντόστρωση</strong>: αναλυτική παρουσίαση στο ρεπορτάζ
+        «<a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a>».<br>
+        • <strong>Τέλη κοιμητηρίων &amp; σχολική αυλή</strong>: αναλυτικά στο άρθρο
+        «<a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η απειλή στη σχολική αυλή</a>».<br>
+        • <strong>Απάντηση Προέδρου</strong>: αξιολόγηση της τοποθέτησης στο άρθρο
+        «<a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</a>».
       </p>
     </section>
 
-    <!-- ΛΟΓΟΣ & ΙΣΤΟΡΙΕΣ -->
-    <section class="lao-section" id="logos">
-      <div class="lao-label">04 · ΛΟΓΟΣ &amp; ΙΣΤΟΡΙΕΣ</div>
-      <h3>Λέξεις, εκφράσεις και μικρές αφηγήσεις</h3>
+    <!-- ΠΕΡΙΟΡΙΣΜΟΙ & ΠΛΑΙΣΙΟ -->
+    <section class="auto-section" id="periorismoi">
+      <div class="auto-label">04 · ΠΕΡΙΟΡΙΣΜΟΙ &amp; ΠΛΑΙΣΙΟ</div>
+      <h3>Τι μπορεί και τι δεν μπορεί να κάνει αυτό το site</h3>
       <p>
-        Η τοπική γλώσσα, οι εκφράσεις και τα μικρά επεισόδια της καθημερινότητας είναι από τα πιο ευάλωτα στοιχεία της λαογραφίας.
-        Χάνονται γρήγορα, αν δεν ακουστούν, δεν γραφτούν ή δεν ηχογραφηθούν εγκαίρως.
-      </p>
-      <p>
-        Σε αυτή την ενότητα θα συγκεντρώνονται μικρές αφηγήσεις, εκφράσεις και περιστατικά· όχι για να γίνουν «μνημείο»,
-        αλλά για να μην χαθούν σιωπηλά.
-      </p>
-
-      <div class="lao-block-title">Πώς μπορείτε να βοηθήσετε</div>
-      <p class="lao-block-text">
-        Αν θυμάστε λέξεις, φράσεις ή ιστορίες που λέγονταν παλιότερα στο χωριό, μπορείτε να τις στείλετε γραπτά
-        ή να ζητήσετε να καταγραφούν με συνέντευξη. Η επικοινωνία γίνεται από τη σελίδα <a href="epikoinonia.html">Επικοινωνία</a>.
-      </p>
-    </section>
-
-    <!-- ΥΛΙΚΟ ΥΠΟ ΣΥΛΛΟΓΗ -->
-    <section class="lao-section" id="yliko">
-      <div class="lao-label">05 · ΥΛΙΚΟ ΥΠΟ ΣΥΛΛΟΓΗ</div>
-      <h3>Φωτογραφίες, τραγούδια, χειρόγραφα</h3>
-      <p>
-        Η ενότητα Λαογραφία &amp; Πολιτισμός θα εμπλουτίζεται με υλικό που μπορεί να προέλθει μόνο από τους ίδιους τους ανθρώπους
-        του χωριού και όσους συνδέονται μαζί του: παλιές φωτογραφίες, ηχογραφήσεις, σημειώσεις, συνταγές, τραγούδια.
-      </p>
-      <p class="lao-block-text">
-        • Παλιές φωτογραφίες (πανηγύρια, γάμοι, δουλειές στα χωράφια).  
-        • Τραγούδια ή σκοποί που τραγουδιούνταν/παίζονταν στο χωριό.  
-        • Χειρόγραφα, σημειώσεις ή μικρά ημερολόγια με αναφορές στην καθημερινότητα.
+        Το «Σταυροδρόμι – Κοινότητα» δεν είναι θεσμός ούτε αρχή. Δεν μπορεί να επιβάλει λύσεις, ούτε να αντικαταστήσει την
+        επίσημη ενημέρωση των πολιτών. Μπορεί όμως να συγκεντρώνει πληροφορίες, να θέτει ερωτήματα και να κρατά ζωντανή
+        τη συζήτηση γύρω από τις αποφάσεις που επηρεάζουν το χωριό.
       </p>
       <p>
-        Όπου δημοσιεύεται υλικό, θα αναφέρεται ρητά η προέλευση και, όπου χρειάζεται, θα ζητείται άδεια για κάθε χρήση.
-      </p>
-    </section>
-
-    <!-- ΜΙΑ ΦΡΑΣΗ -->
-    <section class="lao-section" id="mia-frasi">
-      <div class="lao-label">06 · ΜΙΑ ΦΡΑΣΗ</div>
-      <h3>Μικρή υπενθύμιση</h3>
-      <p>
-        «Κάθε μικρή ιστορία του χωριού αξίζει να ειπωθεί τουλάχιστον μία φορά, πριν χαθεί μαζί με εκείνον που τη θυμάται.»
+        Η κριτική ασκείται σε πράξεις και αποφάσεις, όχι σε πρόσωπα ως χαρακτήρες. Όπου διαπιστώνεται λάθος, γίνεται διόρθωση
+        με σχετική σημείωση. Κάθε πολίτης ή αιρετός έχει δικαίωμα απάντησης· εφόσον η απάντηση είναι σαφής και τεκμηριωμένη,
+        θα δημοσιεύεται ή θα συνοψίζεται αναλόγως.
       </p>
     </section>
 
@@ -491,42 +522,40 @@ footer {
   <section>
 
     <div class="right-col-section">
-      <div class="right-label">ΓΙΑ ΤΗΝ ΕΝΟΤΗΤΑ</div>
+      <div class="right-label">ΓΡΗΓΟΡΗ ΕΙΚΟΝΑ</div>
       <div class="right-card">
-        <h3>Λαογραφία &amp; Πολιτισμός</h3>
+        <h3>Βασικά ζητήματα σε μία ματιά</h3>
         <p class="right-card-text">
-          Καθημερινές συνήθειες, γιορτές, λέξεις και μικρές ιστορίες που δεν αποτυπώνονται σε διοικητικά έγγραφα,
-          αλλά διαμορφώνουν τον τρόπο ζωής στο Σταυροδρόμι.
+          Μια σύντομη σύνοψη για όσους θέλουν να δουν γρήγορα πού βρισκόμαστε:
+          απάντηση Προέδρου, τέλη κοιμητηρίων, τσιμεντόστρωση.
         </p>
         <div class="right-card-meta">
-          Ανοιχτή ενότητα · Εμπλουτίζεται με υλικό των κατοίκων
+          Δείτε τα άρθρα στην ενότητα <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>.
         </div>
       </div>
     </div>
 
     <div class="right-col-section">
-      <div class="right-label">ΣΥΜΜΕΤΟΧΗ</div>
+      <div class="right-label">ΣΧΕΤΙΚΑ ΡΕΠΟΡΤΑΖ</div>
       <div class="right-card">
-        <h3><a href="epikoinonia.html">Πώς να συμβάλετε</a></h3>
+        <h3><a href="article-nero-zenikos.html">Ύδρευση – Πηγή Ζενίκος</a></h3>
         <p class="right-card-text">
-          Μπορείτε να στείλετε φωτογραφίες, χειρόγραφα, τραγούδια ή απλές ιστορίες από την καθημερινότητα.
-          Κάθε μικρό τεκμήριο βοηθά να σωθεί κάτι που αλλιώς θα χαθεί.
+          Το νερό της πηγής χύνεται στο ρέμα, ενώ το χωριό υδροδοτείται από εφεδρική παροχή. Ζήτημα δημόσιας υγείας και διοικητικής ευθύνης.
         </p>
-        <div class="right-card-meta">
-          Επικοινωνία: φόρμα &amp; στοιχεία στη σελίδα «Επικοινωνία».
-        </div>
+        <div class="right-card-meta">22 Απριλίου 2026 · Ρεπορτάζ · Ύδρευση</div>
       </div>
     </div>
 
     <div class="right-col-section">
-      <div class="right-label">ΠΡΟΤΕΙΝΟΜΕΝΑ ΑΠΟ ΤΟ SITE</div>
+      <div class="right-label">ΠΛΑΙΣΙΟ ΚΡΙΤΙΚΗΣ</div>
       <div class="right-card">
-        <h3><a href="history.html">Ιστορία &amp; Μνήμη</a></h3>
+        <h3>Πολιτική κριτικής</h3>
         <p class="right-card-text">
-          Συνοδεύστε τις λαογραφικές μνήμες με το ιστορικό πλαίσιο: χρονολόγιο, κτίρια και απογραφές του Σταυροδρομίου.
+          Οι παρατηρήσεις και τα σχόλια γίνονται με σεβασμό σε πρόσωπα και ιδιότητες, αλλά χωρίς εκπτώσεις στην κριτική
+          για πράξεις, παραλείψεις και επιλογές.
         </p>
         <div class="right-card-meta">
-          Ιστορία &amp; Μνήμη · Αρχείο Κοινότητας
+          Κάθε απάντηση που είναι σαφής και τεκμηριωμένη μπορεί να δημοσιευτεί.
         </div>
       </div>
     </div>

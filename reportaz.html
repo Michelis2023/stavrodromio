@@ -11,7 +11,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/og-image.png">
-//fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
@@ -77,11 +77,6 @@ nav.primary li a.nav-aut:hover { border-bottom-color: var(--aut-lt); color: whit
 .rep-card-body h2:hover { color: var(--rep); }
 .rep-card-body h2 a { color: inherit; }
 .rep-card-body p { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 14px; }
-
-/* CARD PHOTOS STRIP */
-.card-photos { display: flex; gap: 8px; flex-wrap: nowrap; overflow-x: auto; margin: 10px 0 14px; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-.card-photos img { height: 90px; width: auto; object-fit: cover; border: 1px solid var(--border); flex-shrink: 0; border-radius: 2px; }
-
 .rep-card-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 0.7rem; color: var(--ink-muted); padding-top: 12px; border-top: 1px solid var(--border); }
 .cat-pill { padding: 2px 9px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: white; }
 .cat-pill.rep { background: var(--rep); }
@@ -115,4 +110,199 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
-  .
+  .rep-card { flex-direction: column; }
+  .rep-card-bar { width: 100%; height: 5px; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
+    <span id="topbar-date"></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="site-name">
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
+      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+    </div>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
+  </div>
+  <nav class="primary">
+    <ul>
+      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="ph-label">Ενότητα</div>
+    <h1>Ρεπορτάζ &amp; Παρεμβάσεις</h1>
+    <p>Τεκμηριωμένα ρεπορτάζ για έργα, παραλείψεις και αποφάσεις που αφορούν την κοινότητα Σταυροδρομίου.</p>
+  </div>
+</div>
+
+<div class="rep-list">
+
+  <!-- ΑΡΘΡΟ 4 — ΝΕΟ: ΝΕΡΟ / ΠΗΓΗ ΖΕΝΙΚΟΣ -->
+  <div class="rep-card">
+    <div class="rep-card-bar" style="background:var(--rep);"></div>
+    <div class="rep-card-body">
+      <div class="kicker">Αυτοδιοίκηση &amp; Κοινωνία · 22 Απριλίου 2026</div>
+      <h2><a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a></h2>
+      <p>Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή του Σταυροδρομίου και το νερό καταλήγει στο ρέμα, ύστερα από εισχώρηση αποβλήτων ποιμνιοστασίου στην υδροσυλλογή. Η κοινότητα υδροδοτείται προσωρινά από εφεδρική παροχή του Λάδωνα, με βέβαιη απειλή λειψυδρίας το καλοκαίρι.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+        <span class="status-noans">⚠ Αναμένεται απάντηση Δήμου</span>
+      </div>
+      <a href="article-nero-zenikos.html" class="read-btn">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+  <!-- ΑΡΘΡΟ 3 — ΑΠΑΝΤΗΣΗ ΠΡΟΕΔΡΟΥ -->
+  <div class="rep-card">
+    <div class="rep-card-bar" style="background:var(--aut);"></div>
+    <div class="rep-card-body">
+      <div class="kicker aut-kicker">Αυτοδιοίκηση &amp; Κοινωνία · 21 Απριλίου 2026</div>
+      <h2><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</a></h2>
+      <p>Ο Πρόεδρος της Κοινότητας τοποθετήθηκε δημόσια στα ρεπορτάζ για την τσιμεντόστρωση, τα τέλη κοιμητηρίων και τη σχολική αυλή. Ένα ζήτημα κλείνει, τα υπόλοιπα παραμένουν χωρίς τεκμηριωμένη απάντηση.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+        <span class="status-noans" style="color:var(--aut-lt);">● Ανοιχτά ερωτήματα</span>
+      </div>
+      <a href="article-apantisi-proedro.html" class="read-btn aut">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+  <!-- ΑΡΘΡΟ 2 — ΤΕΛΗ ΚΟΙΜΗΤΗΡΙΩΝ -->
+  <div class="rep-card">
+    <div class="rep-card-bar"></div>
+    <div class="rep-card-body">
+      <div class="kicker">Αυτοδιοίκηση &amp; Κοινωνία · 20 Απριλίου 2026</div>
+      <h2><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση, αθροιστική τριετής είσπραξη και η απειλή στη σχολική αυλή του Σταυροδρομίου</a></h2>
+      <p>Ο Δήμος Γορτυνίας ζητά αθροιστικά τριετή τέλη χωρίς προηγούμενη ειδοποίηση, ενώ παραμένουν αναπάντητα κρίσιμα ερωτήματα για τη σχολική αυλή και την ανταποδοτικότητα των τελών.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill aut">Αυτοδιοίκηση</span>
+        <span class="status-noans">⚠ Αναμένεται απάντηση Δήμου</span>
+      </div>
+      <a href="article-koimitiria-sxoleio.html" class="read-btn">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+  <!-- ΑΡΘΡΟ 1 — ΤΣΙΜΕΝΤΟΣΤΡΩΣΗ -->
+  <div class="rep-card">
+    <div class="rep-card-bar"></div>
+    <div class="rep-card-body">
+      <div class="kicker">Έργα &amp; Υποδομές · 19 Απριλίου 2026</div>
+      <h2><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a></h2>
+      <p>Ποιος έκανε τις εργασίες, με ποιες προδιαγραφές και ποια είναι η τελική δαπάνη του έργου; Ερωτήματα που παραμένουν ανοιχτά όσο δεν δημοσιοποιούνται τα επίσημα στοιχεία.</p>
+      <div class="rep-card-meta">
+        <span class="cat-pill rep">Ρεπορτάζ</span>
+        <span class="cat-pill ist">Έργα</span>
+        <span class="status-noans">⚠ Αναμένεται απάντηση Δήμου</span>
+      </div>
+      <a href="article-tsimeniostrosi.html" class="read-btn">Διαβάστε ολόκληρο →</a>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h2>Σταυροδρόμι – Κοινότητα</h2>
+      <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Ενότητες</h4>
+      <ul>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Παρατηρητήριο</h4>
+      <ul>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Σελίδες</h4>
+      <ul>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
+  </div>
+</footer>
+
+<script>
+  // scroll progress bar
+  window.addEventListener('scroll', () => {
+    const st  = document.documentElement.scrollTop;
+    const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const bar = document.getElementById('progress');
+    if (bar && dh > 0) {
+      bar.style.width = (st / dh * 100) + '%';
+    }
+  });
+
+  // ημερομηνία topbar + masthead
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  function updateDates() {
+    const d      = new Date();
+    const span   = document.getElementById('topbar-date');
+    const mdDay  = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+
+    const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+                 months[d.getMonth()] + ' ' + d.getFullYear();
+
+    if (span)  span.textContent  = full;
+    if (mdDay) mdDay.textContent = d.getDate();
+    if (mdFull) {
+      mdFull.textContent =
+        days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+        months[d.getMonth()] + ' ' + d.getFullYear();
+    }
+  }
+
+  updateDates();
+  setInterval(updateDates, 60000);
+</script>
+</body>
+</html>

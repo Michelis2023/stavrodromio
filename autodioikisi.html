@@ -8,13 +8,13 @@
 <meta name="description" content="Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων για την κοινότητα Σταυροδρομίου. Συγκεντρωμένα στοιχεία, ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ.">
 
 <meta property="og:title" content="Αυτοδιοίκηση &amp; Κοινωνία – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Εργα, τέλη, αποφάσεις και ανοιχτά ερωτήματα για την κοινότητα Σταυροδρομίου, με σύνδεση στα ρεπορτάζ.">
+<meta property="og:description" content="Έργα, τέλη, αποφάσεις και ανοιχτά ερωτήματα για την κοινότητα Σταυροδρομίου, με σύνδεση στα ρεπορτάζ.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/autodioikisi.html">
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg">
 
-//fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -137,9 +137,9 @@ nav.primary li a.nav-aut {
   color: #ffffff;
 }
 
-/* MAIN LAYOUT */
+/* MAIN LAYOUT – ίδιο ύφος με τα άλλα, απλώς λίγο πιο άνετο margin */
 .main {
-  max-width: 1200px; margin: 32px auto 48px;
+  max-width: 1200px; margin: 40px auto 48px;
   padding: 0 24px 40px;
   display: grid;
   grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
@@ -164,7 +164,7 @@ nav.primary li a.nav-aut {
 .section-subtitle {
   font-size: 0.94rem;
   color: var(--ink-soft);
-  margin-bottom: 10px;
+  margin-bottom: 8px;
 }
 .section-intro {
   font-size: 0.9rem;
@@ -341,6 +341,7 @@ footer {
 @media (max-width: 600px) {
   .main {
     padding: 0 16px 32px;
+    margin: 32px auto 40px;
   }
   .footer-inner {
     grid-template-columns: 1fr;
@@ -372,13 +373,13 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      ><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
-      ><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      ><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      ><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      ><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-      ><a href="sxetika.html">Σχετικά</a></li>
-      ><a href="epikoinonia.html">Επικοινωνία</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -399,7 +400,7 @@ footer {
       </p>
     </div>
 
-    <!-- ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ -->
+    <!-- 01 · ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ -->
     <section class="auto-section" id="ti-parakolouthei">
       <div class="auto-label">01 · ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ ΕΔΩ</div>
       <h3>Έργα, αποφάσεις, εισπράξεις, απαντήσεις</h3>
@@ -409,7 +410,7 @@ footer {
       </p>
     </section>
 
-    <!-- ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ -->
+    <!-- 02 · ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ -->
     <section class="auto-section" id="anoikta">
       <div class="auto-label">02 · ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ</div>
       <h3>Σύντομο παρατηρητήριο</h3>
@@ -488,7 +489,6 @@ footer {
           </p>
         </div>
 
-        <!-- ΝΕΟ: ΚΕΡΑΙΕΣ ΣΤΑΥΡΟΥ -->
         <div class="issue-item">
           <div class="issue-title">
             <a href="article-keraies-stavros.html">Κεραίες στον Σταυρό – όρια και έσοδα</a>
@@ -511,7 +511,7 @@ footer {
       </p>
     </section>
 
-    <!-- ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ -->
+    <!-- 03 · ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ -->
     <section class="auto-section" id="sxesi-reportaz">
       <div class="auto-label">03 · ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ</div>
       <h3>Πώς συνδέεται η ενότητα με τα άρθρα</h3>
@@ -533,7 +533,7 @@ footer {
       </p>
     </section>
 
-    <!-- ΠΕΡΙΟΡΙΣΜΟΙ & ΠΛΑΙΣΙΟ -->
+    <!-- 04 · ΠΕΡΙΟΡΙΣΜΟΙ & ΠΛΑΙΣΙΟ -->
     <section class="auto-section" id="periorismoi">
       <div class="auto-label">04 · ΠΕΡΙΟΡΙΣΜΟΙ &amp; ΠΛΑΙΣΙΟ</div>
       <h3>Τι μπορεί και τι δεν μπορεί να κάνει αυτό το site</h3>
@@ -610,27 +610,27 @@ footer {
     <div class="footer-col">
       <h4>ΕΝΟΤΗΤΕΣ</h4>
       <ul>
-        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-        ><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
-        ><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
       <ul>
-        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
-        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
-        >Αποφάσεις Δήμου</li>
-        >Αναπάντητα ερωτήματα</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>ΣΕΛΙΔΕΣ</h4>
       <ul>
-        ><a href="index.html">Αρχική</a></li>
-        ><a href="sxetika.html">Σχετικά</a></li>
-        ><a href="epikoinonia.html">Επικοινωνία</a></li>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>

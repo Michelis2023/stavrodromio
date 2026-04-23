@@ -30,6 +30,7 @@
   --mast-mid: #2e4230;
   --rep: #7a1a1a;
   --rep-lt: #a82828;
+  --aut: #1a2e5a;
 }
 html { scroll-behavior: smooth; }
 body {
@@ -122,7 +123,12 @@ nav.primary li a {
 }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
+
+/* ενεργή ενότητα: Ρεπορτάζ */
+nav.primary li a.nav-rep {
+  border-bottom-color: var(--rep-lt);
+  color: #ffffff;
+}
 
 /* BREADCRUMB */
 .breadcrumb {

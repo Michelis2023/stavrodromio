@@ -94,9 +94,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.75rem; color: rgba(255,255,255,0.45);
   letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
-.mast-date {
-  text-align: right;
-}
+.mast-date { text-align: right; }
 .mast-date .md-day {
   font-family: 'Playfair Display', serif;
   font-size: 1.7rem; font-weight: 700;
@@ -131,7 +129,7 @@ nav.primary li a {
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
 nav.primary li a.nav-sxetika {
-  border-bottom-color: var(--mast-mid);
+  border-bottom-color: rgba(255,255,255,0.5);
   color: #ffffff;
 }
 
@@ -145,9 +143,7 @@ nav.primary li a.nav-sxetika {
 }
 
 /* LEFT COLUMN */
-.section-header {
-  margin-bottom: 22px;
-}
+.section-header { margin-bottom: 28px; }
 .section-kicker {
   font-size: 0.72rem; font-weight: 600;
   letter-spacing: 0.16em; text-transform: uppercase;
@@ -157,7 +153,7 @@ nav.primary li a.nav-sxetika {
 .section-title {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.6rem;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .section-subtitle {
   font-size: 0.94rem;
@@ -171,70 +167,77 @@ nav.primary li a.nav-sxetika {
 
 .about-section {
   margin-bottom: 28px;
-  padding-bottom: 18px;
+  padding-bottom: 22px;
   border-bottom: 1px solid var(--border);
 }
-.about-section:last-of-type {
-  border-bottom: none;
-}
+.about-section:last-of-type { border-bottom: none; }
+
 .about-label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-muted);
   margin-bottom: 4px;
 }
 .about-section h3 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.15rem;
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 .about-section p {
   font-size: 0.9rem;
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
-.about-section p:last-child {
-  margin-bottom: 0;
-}
+.about-section p:last-child { margin-bottom: 0; }
+
+/* ΛΙΣΤΕΣ — χωρίς διπλά σύμβολα */
 .about-list {
-  margin-top: 6px;
+  margin-top: 8px;
+  margin-left: 0;
+  padding-left: 0;
+  list-style: none;
   font-size: 0.9rem;
   color: var(--ink-soft);
 }
 .about-list li {
-  margin-bottom: 4px;
+  padding: 4px 0 4px 18px;
+  position: relative;
+  margin-bottom: 2px;
+  border-bottom: none;
+}
+.about-list li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  color: var(--mast-mid);
+  font-weight: 600;
+  opacity: 0.7;
 }
 
 /* RIGHT COLUMN */
-.right-col-section {
-  margin-bottom: 26px;
-}
+.right-col-section { margin-bottom: 26px; }
 .right-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.78rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-muted);
   margin-bottom: 8px;
 }
 .right-card {
   background: var(--white);
   border: 1px solid var(--border);
-  padding: 14px 16px 16px;
+  padding: 16px 18px;
   font-size: 0.86rem;
 }
 .right-card h3 {
   font-size: 0.98rem;
   font-family: 'Playfair Display', Georgia, serif;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
 }
 .right-card h3 a:hover { text-decoration: underline; }
 .right-card-text {
   font-size: 0.84rem;
   color: var(--ink-soft);
-  margin-bottom: 6px;
+  margin-bottom: 10px;
 }
 .right-card-meta {
   font-size: 0.76rem;
@@ -298,30 +301,17 @@ footer {
   align-items: center; gap: 16px; flex-wrap: wrap;
   font-size: 0.7rem;
 }
-.footer-bottom .copy {
-  color: rgba(255,255,255,0.25);
-}
-.footer-bottom .independence {
-  font-style: italic;
-  color: rgba(255,255,255,0.22);
-}
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-  }
+  .main { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
-  .main {
-    padding: 0 16px 32px;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
+  .main { padding: 0 16px 32px; }
+  .footer-inner { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -349,11 +339,11 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
-      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span>Αρχική</a></li>
+      <li><a href="reportaz.html"><span class="nav-dot"></span>Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span>Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html"><span class="nav-dot"></span>Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html"><span class="nav-dot"></span>Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html" class="nav-sxetika">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
@@ -402,9 +392,9 @@ footer {
         και ξεκάθαρο διαχωρισμό ανάμεσα σε γεγονότα, ερωτήματα και γνώμες.
       </p>
       <ul class="about-list">
-        <li>• Να καταγράφει γεγονότα και τεκμήρια που αλλιώς θα χαθούν.</li>
-        <li>• Να δίνει χώρο σε ερωτήματα για αποφάσεις και έργα του Δήμου.</li>
-        <li>• Να αναδεικνύει τη μνήμη των ανθρώπων του χωριού.</li>
+        <li>Να καταγράφει γεγονότα και τεκμήρια που αλλιώς θα χαθούν.</li>
+        <li>Να δίνει χώρο σε ερωτήματα για αποφάσεις και έργα του Δήμου.</li>
+        <li>Να αναδεικνύει τη μνήμη των ανθρώπων του χωριού.</li>
       </ul>
     </section>
 
@@ -416,10 +406,10 @@ footer {
         και το δικό της υλικό.
       </p>
       <ul class="about-list">
-        <li>• <strong>Ρεπορτάζ &amp; Παρεμβάσεις</strong>: τρέχοντα ζητήματα, έργα και αποφάσεις.</li>
-        <li>• <strong>Ιστορία &amp; Μνήμη</strong>: χρονολόγιο, κτίρια, πρόσωπα και αποσπάσματα από την ιστορία.</li>
-        <li>• <strong>Λαογραφία &amp; Πολιτισμός</strong>: καθημερινή ζωή, έθιμα, λόγια και τραγούδια.</li>
-        <li>• <strong>Αυτοδιοίκηση &amp; Κοινωνία</strong>: ανοιχτά ζητήματα, έργα και παρατηρητήριο αποφάσεων.</li>
+        <li><strong>Ρεπορτάζ &amp; Παρεμβάσεις</strong>: τρέχοντα ζητήματα, έργα και αποφάσεις.</li>
+        <li><strong>Ιστορία &amp; Μνήμη</strong>: χρονολόγιο, κτίρια, πρόσωπα και αποσπάσματα από την ιστορία.</li>
+        <li><strong>Λαογραφία &amp; Πολιτισμός</strong>: καθημερινή ζωή, έθιμα, λόγια και τραγούδια.</li>
+        <li><strong>Αυτοδιοίκηση &amp; Κοινωνία</strong>: ανοιχτά ζητήματα, έργα και παρατηρητήριο αποφάσεων.</li>
       </ul>
     </section>
 
@@ -444,13 +434,13 @@ footer {
         έγγραφο ή παρατήρηση είναι πολύτιμη.
       </p>
       <ul class="about-list">
-        <li>• Να στέλνετε ιστορίες, σχόλια ή διορθώσεις για ιστορικά στοιχεία.</li>
-        <li>• Να προτείνετε θέματα για ρεπορτάζ ή για την ενότητα Αυτοδιοίκηση &amp; Κοινωνία.</li>
-        <li>• Να μοιράζεστε υλικό λαογραφίας: έθιμα, λόγια, τραγούδια, φωτογραφίες.</li>
+        <li>Να στέλνετε ιστορίες, σχόλια ή διορθώσεις για ιστορικά στοιχεία.</li>
+        <li>Να προτείνετε θέματα για ρεπορτάζ ή για την ενότητα Αυτοδιοίκηση &amp; Κοινωνία.</li>
+        <li>Να μοιράζεστε υλικό λαογραφίας: έθιμα, λόγια, τραγούδια, φωτογραφίες.</li>
       </ul>
       <p>
-        Για επικοινωνία, μπορείτε να χρησιμοποιήσετε τη σελίδα <a href="epikoinonia.html">Επικοινωνία</a>, όπου θα βρείτε φόρμα
-        και στοιχεία επικοινωνίας.
+        Για επικοινωνία, μπορείτε να χρησιμοποιήσετε τη σελίδα <a href="epikoinonia.html" style="text-decoration:underline;">Επικοινωνία</a>,
+        όπου θα βρείτε φόρμα και στοιχεία επικοινωνίας.
       </p>
     </section>
 
@@ -476,14 +466,14 @@ footer {
       <div class="right-label">ΓΡΗΓΟΡΗ ΠΛΟΗΓΗΣΗ</div>
       <div class="right-card">
         <p class="right-card-text">
-          Αν θέλετε να διαβάσετε απευθείας τα κείμενα, μπορείτε να ξεκινήσετε από τις βασικές ενότητες:
+          Αν θέλετε να διαβάσετε απευθείας τα κείμενα, ξεκινήστε από τις βασικές ενότητες:
         </p>
         <div class="right-card-meta">
           <ul class="about-list">
-            <li>› <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-            <li>› <a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-            <li>› <a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
-            <li>› <a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+            <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+            <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+            <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+            <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
           </ul>
         </div>
       </div>
@@ -494,11 +484,30 @@ footer {
       <div class="right-card">
         <h3><a href="epikoinonia.html">Στείλτε μήνυμα</a></h3>
         <p class="right-card-text">
-          Για παρατηρήσεις, διορθώσεις, υλικό ή προτάσεις θεμάτων, μπορείτε να χρησιμοποιήσετε τη φόρμα επικοινωνίας.
+          Για παρατηρήσεις, διορθώσεις, υλικό ή προτάσεις θεμάτων, χρησιμοποιήστε τη φόρμα επικοινωνίας.
         </p>
         <div class="right-card-meta">
           Τα μηνύματα δεν δημοσιεύονται χωρίς προηγούμενη συνεννόηση.
         </div>
+      </div>
+    </div>
+
+    <div class="right-col-section">
+      <div class="right-label">ΤΕΛΕΥΤΑΙΑ ΑΡΘΡΑ</div>
+      <div class="right-card" style="margin-bottom:12px;">
+        <h3><a href="article-keraies-stavros.html">Κεραίες Σταυρού: Πού πηγαίνουν τα χρήματα;</a></h3>
+        <p class="right-card-text">Ιστορικό, σύνορα κοινοτήτων και αναπάντητα ερωτήματα.</p>
+        <div class="right-card-meta">Ρεπορτάζ &amp; Παρεμβάσεις</div>
+      </div>
+      <div class="right-card" style="margin-bottom:12px;">
+        <h3><a href="article-nero-zenikos.html">Το νερό του Ζένικου: Ιστορία και πραγματικότητα</a></h3>
+        <p class="right-card-text">Πώς το νερό διαμόρφωσε την καθημερινότητα του χωριού.</p>
+        <div class="right-card-meta">Ιστορία &amp; Μνήμη</div>
+      </div>
+      <div class="right-card">
+        <h3><a href="article-koimitiria-sxoleio.html">Κοιμητήρια &amp; Σχολείο: Μνήμες που φεύγουν</a></h3>
+        <p class="right-card-text">Τεκμηρίωση δύο χώρων που ορίζουν την ταυτότητα της κοινότητας.</p>
+        <div class="right-card-meta">Ιστορία &amp; Μνήμη</div>
       </div>
     </div>
 
@@ -554,9 +563,7 @@ window.addEventListener('scroll', () => {
   const st  = document.documentElement.scrollTop;
   const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const bar = document.getElementById('progress');
-  if (bar && dh > 0) {
-    bar.style.width = (st / dh * 100) + '%';
-  }
+  if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
 });
 
 const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
@@ -568,15 +575,10 @@ function updateDates() {
   const span   = document.getElementById('topbar-date');
   const mdDay  = document.getElementById('mast-day');
   const mdFull = document.getElementById('mast-full');
-  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
-               months[d.getMonth()] + ' ' + d.getFullYear();
-  if (span)  span.textContent  = full;
-  if (mdDay) mdDay.textContent = d.getDate();
-  if (mdFull) {
-    mdFull.textContent =
-      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
-      months[d.getMonth()] + ' ' + d.getFullYear();
-  }
+  const full   = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  if (span)   span.textContent  = full;
+  if (mdDay)  mdDay.textContent = d.getDate();
+  if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
 }
 
 updateDates();

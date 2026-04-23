@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Κεραίες στον Σταυρό – χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα</title>
+<title>Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα – Σταυροδρόμι Κοινότητα</title>
 
 <meta name="description" content="Δημόσια τοποθέτηση του Μιχαήλ Σωτηρίου Μιχαλακόπουλου για το ζήτημα των κεραιών στον Σταυρό και την ανάγκη σοβαρής, τεκμηριωμένης αντιμετώπισης.">
 
-<meta property="og:title" content="Κεραίες στον Σταυρό – χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα">
+<meta property="og:title" content="Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα – Σταυροδρόμι Κοινότητα">
 <meta property="og:description" content="Μια παλιά υπόθεση που παραμένει ανοιχτή, ενώ κανείς δεν σπεύδει να την κλείσει με τον σωστό τρόπο.">
 <meta property="og:type" content="article">
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-keraies-stavros.html">
@@ -30,6 +30,8 @@
   --mast-mid: #2e4230;
   --rep: #7a1a1a;
   --rep-lt: #a82828;
+  --ist: #5a3e10;
+  --lao: #1e4a2e;
   --aut: #1a2e5a;
 }
 html { scroll-behavior: smooth; }
@@ -70,7 +72,9 @@ a { color: inherit; text-decoration: none; }
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
   box-shadow: 0 3px 20px rgba(0,0,0,0.25);
-  position: sticky; top: 0; z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .mast-brand {
   max-width: 1200px; margin: 0 auto;
@@ -84,13 +88,11 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: -0.02em; line-height: 1;
 }
 .site-name h1 .cross {
-  color: rgba(255,255,255,0.35); font-weight: 300;
-  font-style: italic; margin: 0 2px;
+  color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px;
 }
 .site-name .subtitle {
   font-size: 0.75rem; color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-top: 6px; font-weight: 400;
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
 .mast-date { text-align: right; }
 .mast-date .md-day {
@@ -104,7 +106,10 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* NAV */
-nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary {
+  background: var(--mast-mid);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
 nav.primary ul {
   max-width: 1200px; margin: 0 auto; padding: 0 24px;
   display: flex; list-style: none;
@@ -123,71 +128,89 @@ nav.primary li a {
 }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-
-/* ενεργή ενότητα: Ρεπορτάζ */
 nav.primary li a.nav-rep {
   border-bottom-color: var(--rep-lt);
   color: #ffffff;
 }
 
-/* BREADCRUMB */
-.breadcrumb {
-  max-width: 800px; margin: 18px auto 0; padding: 0 24px;
-  font-size: 0.75rem; color: var(--ink-muted);
-  display: flex; gap: 6px; align-items: center; flex-wrap: wrap;
-}
-.breadcrumb a:hover { text-decoration: underline; }
-.breadcrumb .sep { opacity: 0.4; }
-
-/* ARTICLE LAYOUT */
-.article-wrapper {
-  max-width: 800px;
-  margin: 20px auto 56px;
+/* MAIN LAYOUT */
+.main {
+  max-width: 1200px; margin: 32px auto 48px;
   padding: 0 24px 40px;
+  display: grid;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+  gap: 40px;
+}
+
+/* BREADCRUMBS + ARTICLE HEADER */
+.breadcrumbs {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
+}
+.breadcrumbs a { text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; }
+
+.article-header {
+  margin-bottom: 18px;
 }
 .article-kicker {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--rep);
-  margin-bottom: 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
 }
-.article-title {
+.article-title-main {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.5rem, 4vw, 2.1rem);
-  line-height: 1.25;
-  margin-bottom: 10px;
-}
-.article-subtitle {
-  font-size: 1.02rem;
-  color: var(--ink-soft);
-  font-family: 'Libre Baskerville', Georgia, serif;
-  font-style: italic;
-  margin-bottom: 16px;
-  line-height: 1.6;
+  font-size: 1.7rem;
+  margin-bottom: 6px;
 }
 .article-meta {
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--ink-muted);
-  padding-bottom: 18px;
-  border-bottom: 2px solid var(--border);
-  margin-bottom: 26px;
-  display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
-}
-.article-meta .meta-tag {
-  background: var(--bg-warm);
-  border: 1px solid var(--border);
-  padding: 2px 8px;
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
 }
 
-/* HERO IMAGE */
-.article-hero {
-  margin-bottom: 28px;
-  border: 1px solid var(--border);
+/* ARTICLE BODY */
+.article-body {
   background: var(--white);
-  padding: 8px 8px 0;
+  border: 1px solid var(--border);
+  padding: 18px 18px 20px;
+  font-size: 0.96rem;
+  color: var(--ink-soft);
+}
+.article-body p {
+  margin-bottom: 12px;
+}
+.article-body p:last-child {
+  margin-bottom: 0;
+}
+/* ΑΚΥΡΩΣΗ drop cap αν κληρονομείται από αλλού */
+.article-body p:first-child::first-letter {
+  all: unset;
+}
+.article-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.1rem;
+  margin: 18px 0 6px;
+}
+.article-body ul {
+  margin: 8px 0 10px 18px;
+  padding: 0;
+}
+.article-body li {
+  margin-bottom: 7px;
+}
+
+/* PHOTO */
+.article-hero {
+  margin: 12px 0 16px;
+}
+.article-hero figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 3px;
 }
 .article-hero img {
   display: block;
@@ -195,63 +218,97 @@ nav.primary li a.nav-rep {
   height: auto;
 }
 .article-hero figcaption {
-  font-size: 0.8rem;
-  color: var(--ink-muted);
-  padding: 8px 4px 10px;
-  line-height: 1.5;
-}
-
-/* BODY */
-.article-body p {
-  font-size: 0.97rem;
-  color: var(--ink-soft);
-  margin-bottom: 16px;
-  line-height: 1.8;
-}
-.article-body p:first-child::first-letter {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 3.2rem;
-  font-weight: 700;
-  float: left;
-  line-height: 0.75;
-  margin-right: 6px;
-  margin-top: 6px;
-  color: var(--ink);
-}
-
-/* SIGNATURE */
-.article-signature {
-  margin-top: 32px;
-  padding-top: 18px;
-  border-top: 1px solid var(--border);
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
-.article-signature strong {
-  display: block;
-  font-size: 0.98rem;
-  color: var(--ink);
-  font-weight: 500;
-  margin-bottom: 2px;
-}
-.article-signature span {
-  font-size: 0.82rem;
-  color: var(--ink-muted);
-}
-
-/* BACK LINK */
-.back-link {
-  display: inline-block;
-  margin-top: 28px;
   font-size: 0.78rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--rep);
+  color: var(--ink-muted);
+  padding-top: 3px;
 }
-.back-link:hover { text-decoration: underline; }
+
+/* emphasis box */
+.highlight-box {
+  margin: 6px 0 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--rep-lt);
+  background: var(--bg-warm);
+  font-size: 0.88rem;
+}
+
+/* tags / back link */
+.article-tags {
+  font-size: 0.78rem;
+  margin-top: 14px;
+  color: var(--ink-muted);
+}
+.article-tags span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+}
+.article-back {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+.article-back a { text-decoration: underline; }
+
+/* RIGHT COLUMN */
+.right-col-section {
+  margin-bottom: 26px;
+}
+.right-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.right-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 16px 16px;
+  font-size: 0.86rem;
+}
+.right-card h3 {
+  font-size: 0.98rem;
+  font-family: 'Playfair Display', Georgia, serif;
+  margin-bottom: 6px;
+}
+.right-card h3 a:hover { text-decoration: underline; }
+.right-card-text {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+}
+.right-card-meta {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+}
+.obs-list {
+  list-style: none;
+}
+.obs-item {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.8rem;
+}
+.obs-item:last-child { border-bottom: none; }
+.obs-meta {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
+}
+.obs-status {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.obs-status.open { color: #8a5f1e; }
+.obs-status.noans { color: var(--rep); }
 
 /* FOOTER */
-footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+footer {
+  background: var(--mast);
+  color: rgba(255,255,255,0.45);
+}
 .footer-inner {
   max-width: 1200px; margin: 0 auto;
   padding: 40px 24px 28px;
@@ -262,14 +319,18 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-brand h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem; font-weight: 700;
-  color: rgba(255,255,255,0.85); margin-bottom: 6px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 6px;
 }
 .footer-brand .ft-sub {
   font-size: 0.7rem; font-style: italic;
-  color: rgba(255,255,255,0.3); margin-bottom: 12px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 12px;
 }
 .footer-brand p {
-  font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.7;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
 }
 .footer-col h4 {
   font-size: 0.62rem; font-weight: 600;
@@ -281,9 +342,11 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 }
 .footer-col ul { list-style: none; }
 .footer-col li {
-  padding: 6px 0; font-size: 0.78rem;
+  padding: 6px 0;
+  font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer;
   display: flex; gap: 5px; align-items: center;
 }
 .footer-col li:last-child { border-bottom: none; }
@@ -298,17 +361,30 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   align-items: center; gap: 16px; flex-wrap: wrap;
   font-size: 0.7rem;
 }
-.footer-bottom .copy { color: rgba(255,255,255,0.25); }
-.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+.footer-bottom .copy {
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom .independence {
+  font-style: italic;
+  color: rgba(255,255,255,0.22);
+}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 600px) {
-  .article-wrapper { padding: 0 16px 32px; }
-  .footer-inner { grid-template-columns: 1fr; }
-  .breadcrumb { padding: 0 16px; }
+  .main {
+    padding: 0 16px 32px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -347,66 +423,126 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   </nav>
 </header>
 
-<nav class="breadcrumb" aria-label="breadcrumb">
-  <a href="index.html">Αρχική</a>
-  <span class="sep">›</span>
-  <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
-  <span class="sep">›</span>
-  <span>Κεραίες στον Σταυρό</span>
-</nav>
+<main class="main">
 
-<main class="article-wrapper">
+  <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: ΑΡΘΡΟ -->
+  <section>
+    <div class="breadcrumbs">
+      <a href="index.html">Αρχική</a> ›
+      <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a> ›
+      Αυτοδιοίκηση &amp; Κοινωνία
+    </div>
 
-  <div class="article-kicker">ΑΥΤΟΔΙΟΙΚΗΣΗ &amp; ΚΟΙΝΩΝΙΑ · ΔΗΜΟΣΙΑ ΤΟΠΟΘΕΤΗΣΗ</div>
+    <header class="article-header">
+      <div class="article-kicker">ΡΕΠΟΡΤΑΖ · ΑΥΤΟΔΙΟΙΚΗΣΗ</div>
+      <h1 class="article-title-main">Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα</h1>
+      <div class="article-meta">
+        23 Απριλίου 2026 · Κοινότητα Σταυροδρομίου · Αναμένεται απάντηση Δήμου
+      </div>
+    </header>
 
-  <h1 class="article-title">Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα</h1>
+    <article class="article-body">
 
-  <p class="article-subtitle">Μια παλιά υπόθεση που παραμένει ανοιχτή, ενώ κανείς δεν σπεύδει να την κλείσει με τον σωστό τρόπο.</p>
+      <div class="article-hero">
+        <figure>
+          <img src="images/keraies-stavros/stauros-001.JPG" alt="Ο Σταυρός στο ομώνυμο ύψωμα με τις κεραίες κινητής τηλεφωνίας δίπλα του">
+          <figcaption>Ο Σταυρός και οι εγκαταστάσεις κεραιών στο ομώνυμο ύψωμα, όπως αποτυπώθηκαν σε επιτόπια αυτοψία.</figcaption>
+        </figure>
+      </div>
 
-  <div class="article-meta">
-    <span>Απρίλιος 2026</span>
-    <span class="meta-tag">Κεραίες</span>
-    <span class="meta-tag">Όρια Κοινοτήτων</span>
-    <span class="meta-tag">Αυτοδιοίκηση</span>
-  </div>
+      <p>Φίλοι μου, το ζήτημα των κεραιών στον Σταυρό δεν είναι νέο. Είναι, όμως, ζήτημα που συνεχίζει να αντιμετωπίζεται με την ίδια αόριστη, εύκολη βεβαιότητα που δεν οδηγεί πουθενά. Αυτό θέλω να αλλάξω με αυτές τις γραμμές.</p>
 
-  <figure class="article-hero">
-    <img
-      src="images/keraies-stavros/stauros-001.JPG"
-      alt="Ο Σταυρός στο ομώνυμο ύψωμα με τις κεραίες κινητής τηλεφωνίας δίπλα του">
-    <figcaption>
-      Ο Σταυρός και οι εγκαταστάσεις κεραιών στο ομώνυμο ύψωμα, όπως αποτυπώθηκαν σε επιτόπια αυτοψία.
-    </figcaption>
-  </figure>
+      <p>Γνωρίζω τον Σταυρό καλά. Τον έχω ανέβει, τον έχω περπατήσει, τον έχω καταγράψει, και το αποδεικνύω δημόσια: στο κανάλι μου στο YouTube, «Μέσα από τον Φακό Μου», υπάρχουν βίντεο από τον Σταυρό και από την ανάβαση μέσω του δημόσιου δρόμου. Δεν μιλώ από ακοή. Μιλώ από επίσκεψη, καταγραφή και σύγκριση.</p>
 
-  <div class="article-body">
+      <p>Πέρα από την προσωπική εξοικείωση με τον χώρο, έχω κάνει επιτόπια αυτοψία μαζί με δύο παλιούς ανθρώπους του τόπου: τον Γιαννίκο Μιχαλακόπουλο και τον Παναγιώτη Μιχαλακόπουλο, γνωστό ως Κλέτσο. Και οι δύο είχαν μεγάλη ηλικία εκείνη την εποχή, και οι δύο έχουν φύγει από τη ζωή, αλλά γνώριζαν τον χώρο και την ιστορία του από πρώτο χέρι. Είχαν γεννηθεί κοντά στην εποχή που χαράχτηκαν τα σύνορα και είχαν ακούσει από τους παλαιότερους τα σχετικά με τα όρια των δύο κοινοτήτων. Από εκείνη την επίσκεψη υπάρχει φωτογραφικό υλικό, που εξετάστηκε παράλληλα με το έγγραφο της απόφασης του Ειρηνοδικείου.</p>
 
-    <p>Φίλοι μου, το ζήτημα των κεραιών στον Σταυρό δεν είναι νέο. Είναι, όμως, ζήτημα που συνεχίζει να αντιμετωπίζεται με την ίδια αόριστη, εύκολη βεβαιότητα που δεν οδηγεί πουθενά. Αυτό θέλω να αλλάξω με αυτές τις γραμμές.</p>
+      <p>Η απόφαση αυτή δεν περιορίζεται στη ροή των υδάτων. Αναφέρει και σταθερά σημεία οριοθέτησης, και αυτά είναι, κατά την κρίση μου, τα πλέον αξιόπιστα κριτήρια. Τα όμβρια ύδατα μπορεί να έχουν αλλάξει πορεία μέσα σε εκατό χρόνια, ιδίως αφού ο χώρος έχει υποστεί σημαντικές μεταβολές: πρώτα με την ανέγερση του Σταυρού από τον αείμνηστο Παπαγιάννη, τον Γερόπαπα, και αργότερα με τις διαμορφώσεις που έκαναν οι εταιρείες κινητής τηλεφωνίας για τις εγκαταστάσεις τους. Το να επικαλείται κανείς μόνο τα ύδατα, αγνοώντας τα σταθερά σημεία, δεν είναι ερμηνεία της απόφασης· είναι επιλεκτική ανάγνωσή της.</p>
 
-    <p>Γνωρίζω τον Σταυρό καλά. Τον έχω ανέβει, τον έχω περπατήσει, τον έχω καταγράψει, και το αποδεικνύω δημόσια: στο κανάλι μου στο YouTube, «Μέσα από τον Φακό Μου», υπάρχουν βίντεο από τον Σταυρό και από την ανάβαση μέσω του δημόσιου δρόμου. Δεν μιλώ από ακοή. Μιλώ από επίσκεψη, καταγραφή και σύγκριση.</p>
+      <p>Με βάση τη σύγκριση του εγγράφου με την εικόνα του τόπου και με όσα διαπιστώθηκαν στην αυτοψία, θεωρώ ότι οι κεραίες βρίσκονται σε χώρο που ανήκει στην Κοινότητα Σταυροδρομίου. Αυτό δεν είναι εικασία. Είναι εκτίμηση που στηρίζεται σε επιτόπια εξέταση, σε αρχειακό έγγραφο και σε φωτογραφικό υλικό που διατηρώ.</p>
 
-    <p>Πέρα από την προσωπική εξοικείωση με τον χώρο, έχω κάνει επιτόπια αυτοψία μαζί με δύο παλιούς ανθρώπους του τόπου: τον Γιαννίκο Μιχαλακόπουλο και τον Παναγιώτη Μιχαλακόπουλο, γνωστό ως Κλέτσο. Και οι δύο είχαν μεγάλη ηλικία εκείνη την εποχή, και οι δύο έχουν φύγει από τη ζωή, αλλά γνώριζαν τον χώρο και την ιστορία του από πρώτο χέρι. Είχαν γεννηθεί κοντά στην εποχή που χαράχτηκαν τα σύνορα και είχαν ακούσει από τους παλαιότερους τα σχετικά με τα όρια των δύο κοινοτήτων. Από εκείνη την επίσκεψη υπάρχει φωτογραφικό υλικό, που εξετάστηκε παράλληλα με το έγγραφο της απόφασης του Ειρηνοδικείου.</p>
+      <p>Μιλώ και ως πρώην πρόεδρος της Κοινότητας Σταυροδρομίου. Ήμουν εκείνος που έκανε τις ενέργειες ώστε τα έσοδα από τις κεραίες να αποδίδονται στον Δήμο Τροπαίων για λογαριασμό της Κοινότητάς μας. Μέχρι τότε κατευθύνονταν στον Δήμο Λαγκαδίων. Ήταν μια δύσκολη διαδρομή. Οι περισσότεροι εκτιμούσαν ότι το θέμα ήταν άλυτο. Προχώρησα μόνος, το έβγαλα εις πέρας. Αυτή η εμπειρία δεν είναι προσωπική ικανοποίηση· είναι απόδειξη ότι τα ζητήματα αυτά μπορούν να ρυθμιστούν σωστά, αν τα προσεγγίσει κανείς με σοβαρότητα και επιμονή.</p>
 
-    <p>Η απόφαση αυτή δεν περιορίζεται στη ροή των υδάτων. Αναφέρει και σταθερά σημεία οριοθέτησης, και αυτά είναι, κατά την κρίση μου, τα πλέον αξιόπιστα κριτήρια. Τα όμβρια ύδατα μπορεί να έχουν αλλάξει πορεία μέσα σε εκατό χρόνια, ιδίως αφού ο χώρος έχει υποστεί σημαντικές μεταβολές: πρώτα με την ανέγερση του Σταυρού από τον αείμνηστο Παπαγιάννη, τον Γερόπαπα, και αργότερα με τις διαμορφώσεις που έκαναν οι εταιρείες κινητής τηλεφωνίας για τις εγκαταστάσεις τους. Το να επικαλείται κανείς μόνο τα ύδατα, αγνοώντας τα σταθερά σημεία, δεν είναι ερμηνεία της απόφασης. Είναι επιλεκτική ανάγνωσή της.</p>
+      <p>Τώρα, οι κεραίες βρίσκονται πάνω από τα κεφάλια μας σε απόσταση που προκαλεί εύλογη ανησυχία, και παρ' όλα αυτά λογίζονται ως ανήκουσες σε κοινότητα που απέχει χιλιόμετρα. Αυτό δεν είναι μικρή ανακρίβεια. Και δεν αντιμετωπίζεται με γενικόλογες τοποθετήσεις ή με συστάσεις να «ανέβει κανείς στον Σταυρό», χωρίς πρώτα να έχει μελετήσει το έγγραφο.</p>
 
-    <p>Με βάση τη σύγκριση του εγγράφου με την εικόνα του τόπου και με όσα διαπιστώθηκαν στην αυτοψία, θεωρώ ότι οι κεραίες βρίσκονται σε χώρο που ανήκει στην Κοινότητα Σταυροδρομίου. Αυτό δεν είναι εικασία. Είναι εκτίμηση που στηρίζεται σε επιτόπια εξέταση, σε αρχειακό έγγραφο και σε φωτογραφικό υλικό που διατηρώ.</p>
+      <p>Όποιος θέλει να ασχοληθεί σοβαρά: το έγγραφο της απόφασης βρίσκεται στο αρχείο της Κοινότητας. Υπάρχουν σαφείς περιγραφές και σταθερά σημεία. Υπάρχει η πραγματική θέση των εγκαταστάσεων. Η σύγκριση δεν είναι δύσκολη. Αυτό που χρειάζεται είναι καθαρό μυαλό, διάθεση να διαβαστεί το έγγραφο ολόκληρο και σεβασμός στον τόπο.</p>
 
-    <p>Μιλώ και ως πρώην πρόεδρος της Κοινότητας Σταυροδρομίου. Ήμουν εκείνος που έκανε τις ενέργειες ώστε τα έσοδα από τις κεραίες να αποδίδονται στον Δήμο Τροπαίων για λογαριασμό της Κοινότητάς μας. Μέχρι τότε κατευθύνονταν στον Δήμο Λαγκαδίων. Ήταν μια δύσκολη διαδρομή. Οι περισσότεροι εκτιμούσαν ότι το θέμα ήταν άλυτο. Προχώρησα μόνος, το έβγαλα εις πέρας. Αυτή η εμπειρία δεν είναι προσωπική ικανοποίηση. Είναι απόδειξη ότι τα ζητήματα αυτά μπορούν να ρυθμιστούν σωστά, αν τα προσεγγίσει κανείς με σοβαρότητα και επιμονή.</p>
+      <p>Εγώ μίλησα με γνώση, με αυτοψία και με ευθύνη. Ζητώ το ίδιο από όλους όσοι θέλουν να έχουν λόγο σε αυτό το θέμα.</p>
 
-    <p>Τώρα, οι κεραίες βρίσκονται πάνω από τα κεφάλια μας σε απόσταση που προκαλεί εύλογη ανησυχία, και παρ' όλα αυτά λογίζονται ως ανήκουσες σε κοινότητα που απέχει χιλιόμετρα. Αυτό δεν είναι μικρή ανακρίβεια. Και δεν αντιμετωπίζεται με γενικόλογες τοποθετήσεις ή με συστάσεις να «ανέβει κανείς στον Σταυρό», χωρίς πρώτα να έχει μελετήσει το έγγραφο.</p>
+      <div class="article-tags">
+        <span>ΘΕΜΑΤΙΚΕΣ ΕΤΙΚΕΤΕΣ</span> · ΚΕΡΑΙΕΣ · ΟΡΙΑ ΚΟΙΝΟΤΗΤΩΝ · ΑΥΤΟΔΙΟΙΚΗΣΗ · ΣΤΑΥΡΟΔΡΟΜΙ
+      </div>
+      <div class="article-back">
+        ← <a href="reportaz.html">Επιστροφή στην ενότητα «Ρεπορτάζ &amp; Παρεμβάσεις»</a>
+      </div>
 
-    <p>Όποιος θέλει να ασχοληθεί σοβαρά: το έγγραφο της απόφασης βρίσκεται στο αρχείο της Κοινότητας. Υπάρχουν σαφείς περιγραφές και σταθερά σημεία. Υπάρχει η πραγματική θέση των εγκαταστάσεων. Η σύγκριση δεν είναι δύσκολη. Αυτό που χρειάζεται είναι καθαρό μυαλό, διάθεση να διαβαστεί το έγγραφο ολόκληρο και σεβασμός στον τόπο.</p>
+    </article>
+  </section>
 
-    <p>Εγώ μίλησα με γνώση, με αυτοψία και με ευθύνη. Ζητώ το ίδιο από όλους όσοι θέλουν να έχουν λόγο σε αυτό το θέμα.</p>
+  <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
+  <section>
 
-  </div>
+    <div class="right-col-section">
+      <div class="right-label">ΠΑΡΑΤΗΡΗΤΗΡΙΟ ΑΥΤΟΔΙΟΙΚΗΣΗΣ</div>
+      <div class="right-card">
+        <ul class="obs-list">
+          <li class="obs-item">
+            <div>Κεραίες στον Σταυρό – όρια και έσοδα</div>
+            <div class="obs-meta">2023–2026 · <span class="obs-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span></div>
+          </li>
+          <li class="obs-item">
+            <div>Τέλη κοιμητηρίων Σταυροδρομίου</div>
+            <div class="obs-meta">2023–2026 · <span class="obs-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span></div>
+          </li>
+          <li class="obs-item">
+            <div>Τσιμεντόστρωση – τεχνική επίβλεψη</div>
+            <div class="obs-meta">2026 · <span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
+          </li>
+          <li class="obs-item">
+            <div>Υδροδότηση – Πηγή Ζενίκος</div>
+            <div class="obs-meta">2026 · <span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
+          </li>
+        </ul>
+      </div>
+    </div>
 
-  <div class="article-signature">
-    <strong>Μιχαήλ Σωτηρίου Μιχαλακόπουλος</strong>
-    <span>Πρώην Πρόεδρος Κοινότητας Σταυροδρομίου</span>
-  </div>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΡΕΠΟΡΤΑΖ</div>
+      <div class="right-card">
+        <h3><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων και σχολική αυλή</a></h3>
+        <p class="right-card-text">
+          Τέλη χωρίς σαφή κοστολόγηση, τριετής αθροιστική απαίτηση και η απειλή μετατροπής της σχολικής αυλής σε χώρο στάθμευσης.[web:181]
+        </p>
+        <div class="right-card-meta">20 Απριλίου 2026 · Ρεπορτάζ · Αυτοδιοίκηση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο</a></h3>
+        <p class="right-card-text">
+          Πώς αξιολογείται η τοποθέτηση του Προέδρου για τέλη κοιμητηρίων, τσιμεντόστρωση και σχολική αυλή.[web:181]
+        </p>
+        <div class="right-card-meta">21 Απριλίου 2026 · Ρεπορτάζ · Αυτοδιοίκηση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a></h3>
+        <p class="right-card-text">
+          Η πηγή Ζενίκος εκτός δικτύου, το νερό στο ρέμα και ένα χωριό που ζει με τον φόβο της λειψυδρίας.[web:173]
+        </p>
+        <div class="right-card-meta">22 Απριλίου 2026 · Ρεπορτάζ · Ύδρευση</div>
+      </div>
+    </div>
 
-  <a href="reportaz.html" class="back-link">← Επιστροφή στο Ρεπορτάζ &amp; Παρεμβάσεις</a>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΜΕ ΤΟ SITE</div>
+      <div class="right-card">
+        <p class="right-card-text">
+          Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια και τον σεβασμό στον δημόσιο χώρο και χρήμα.[web:174]
+        </p>
+        <div class="right-card-meta">
+          Σταυροδρόμι – Κοινότητα · Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ
+        </div>
+      </div>
+    </div>
+
+  </section>
 
 </main>
 
@@ -415,7 +551,10 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
     <div class="footer-brand">
       <h2>Σταυροδρόμι – Κοινότητα</h2>
       <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
-      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
+      <p>
+        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.
+        Χωρίς κομματικές ή άλλες δεσμεύσεις.
+      </p>
     </div>
     <div class="footer-col">
       <h4>ΕΝΟΤΗΤΕΣ</h4>
@@ -451,27 +590,39 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 </footer>
 
 <script>
+// scroll progress bar
 window.addEventListener('scroll', () => {
   const st  = document.documentElement.scrollTop;
   const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const bar = document.getElementById('progress');
-  if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
+  if (bar && dh > 0) {
+    bar.style.width = (st / dh * 100) + '%';
+  }
 });
 
+// ημερομηνία topbar + masthead
 const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
 const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                 'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
 
 function updateDates() {
-  const d = new Date();
-  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  const d      = new Date();
   const span   = document.getElementById('topbar-date');
   const mdDay  = document.getElementById('mast-day');
   const mdFull = document.getElementById('mast-full');
-  if (span)   span.textContent  = full;
-  if (mdDay)  mdDay.textContent = d.getDate();
-  if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+
+  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+               months[d.getMonth()] + ' ' + d.getFullYear();
+
+  if (span)  span.textContent  = full;
+  if (mdDay) mdDay.textContent = d.getDate();
+  if (mdFull) {
+    mdFull.textContent =
+      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+      months[d.getMonth()] + ' ' + d.getFullYear();
+  }
 }
+
 updateDates();
 setInterval(updateDates, 60000);
 </script>

@@ -186,10 +186,6 @@ nav.primary li a.nav-rep {
 .article-body p:last-child {
   margin-bottom: 0;
 }
-/* ΑΚΥΡΩΣΗ drop cap αν κληρονομείται από αλλού */
-.article-body p:first-child::first-letter {
-  all: unset;
-}
 .article-body h2 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.1rem;
@@ -230,6 +226,17 @@ nav.primary li a.nav-rep {
   border-left: 3px solid var(--rep-lt);
   background: var(--bg-warm);
   font-size: 0.88rem;
+}
+
+/* SIGNATURE */
+.article-signature {
+  margin-top: 20px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  text-align: right;
 }
 
 /* tags / back link */
@@ -468,6 +475,11 @@ footer {
 
       <p>Εγώ μίλησα με γνώση, με αυτοψία και με ευθύνη. Ζητώ το ίδιο από όλους όσοι θέλουν να έχουν λόγο σε αυτό το θέμα.</p>
 
+      <div class="article-signature">
+        Μιχαήλ Σωτηρίου Μιχαλακόπουλος<br>
+        Πρώην Δημαρχιακός Πάρεδρος Δήμου Τροπαίων &amp; Πρόεδρος Τοπικού Συμβουλίου Σταυροδρομίου
+      </div>
+
       <div class="article-tags">
         <span>ΘΕΜΑΤΙΚΕΣ ΕΤΙΚΕΤΕΣ</span> · ΚΕΡΑΙΕΣ · ΟΡΙΑ ΚΟΙΝΟΤΗΤΩΝ · ΑΥΤΟΔΙΟΙΚΗΣΗ · ΣΤΑΥΡΟΔΡΟΜΙ
       </div>
@@ -510,21 +522,21 @@ footer {
       <div class="right-card">
         <h3><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων και σχολική αυλή</a></h3>
         <p class="right-card-text">
-          Τέλη χωρίς σαφή κοστολόγηση, τριετής αθροιστική απαίτηση και η απειλή μετατροπής της σχολικής αυλής σε χώρο στάθμευσης.[web:181]
+          Τέλη χωρίς σαφή κοστολόγηση, τριετής αθροιστική απαίτηση και η απειλή μετατροπής της σχολικής αυλής σε χώρο στάθμευσης.
         </p>
         <div class="right-card-meta">20 Απριλίου 2026 · Ρεπορτάζ · Αυτοδιοίκηση</div>
       </div>
       <div class="right-card" style="margin-top:10px;">
         <h3><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο</a></h3>
         <p class="right-card-text">
-          Πώς αξιολογείται η τοποθέτηση του Προέδρου για τέλη κοιμητηρίων, τσιμεντόστρωση και σχολική αυλή.[web:181]
+          Πώς αξιολογείται η τοποθέτηση του Προέδρου για τέλη κοιμητηρίων, τσιμεντόστρωση και σχολική αυλή.
         </p>
         <div class="right-card-meta">21 Απριλίου 2026 · Ρεπορτάζ · Αυτοδιοίκηση</div>
       </div>
       <div class="right-card" style="margin-top:10px;">
         <h3><a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a></h3>
         <p class="right-card-text">
-          Η πηγή Ζενίκος εκτός δικτύου, το νερό στο ρέμα και ένα χωριό που ζει με τον φόβο της λειψυδρίας.[web:173]
+          Η πηγή Ζενίκος εκτός δικτύου, το νερό στο ρέμα και ένα χωριό που ζει με τον φόβο της λειψυδρίας.
         </p>
         <div class="right-card-meta">22 Απριλίου 2026 · Ρεπορτάζ · Ύδρευση</div>
       </div>
@@ -534,7 +546,7 @@ footer {
       <div class="right-label">ΣΧΕΤΙΚΑ ΜΕ ΤΟ SITE</div>
       <div class="right-card">
         <p class="right-card-text">
-          Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια και τον σεβασμό στον δημόσιο χώρο και χρήμα.[web:174]
+          Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια και τον σεβασμό στον δημόσιο χώρο και χρήμα.
         </p>
         <div class="right-card-meta">
           Σταυροδρόμι – Κοινότητα · Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ

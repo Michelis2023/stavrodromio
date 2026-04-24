@@ -3,425 +3,257 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ιστορία &amp; Μνήμη – Σταυροδρόμι Κοινότητα</title>
-
-<meta name="description" content="Η ιστορική διαδρομή του Σταυροδρομίου Αρκαδίας: από την παλιά Αλβάνιτσα έως τη σημερινή κοινότητα. Χρονολόγιο, μνημεία, απογραφές, πρόσωπα, τοπωνύμια και μνήμη του τόπου.">
-
-<meta property="og:title" content="Ιστορία &amp; Μνήμη – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Χρονολόγιο, τοπωνύμια, κτίρια, πρόσωπα, απογραφές και στοιχεία μνήμης για την ιστορική διαδρομή του Σταυροδρομίου Αρκαδίας.">
+<title>Αυτοδιοίκηση & Κοινωνία – Σταυροδρόμι Κοινότητα</title>
+<meta name="description" content="Ζητήματα αυτοδιοίκησης, κοινωνικής ζωής και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας.">
+<meta name="description" content="Ανοιχτά ζητήματα, έργα, αποφάσεις και παρατηρητήριο αυτοδιοίκησης που αφορούν την κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας.">
+<meta property="og:title" content="Αυτοδιοίκηση & Κοινωνία – Σταυροδρόμι Κοινότητα">
+<meta property="og:description" content="Θέματα Δήμου, αποφάσεις, έργα και κοινωνικά ζητήματα που επηρεάζουν το Σταυροδρόμι.">
+<meta property="og:description" content="Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων για το Σταυροδρόμι Γορτυνίας.">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/autodioikisi.html">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/history.html">
 <meta property="og:locale" content="el_GR">
-<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/history/stavrodromi-plateia.jpg">
-
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/og-image.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
-  --ink: #18191a;
-  --ink-soft: #36393c;
-  --ink-muted: #72777d;
-  --bg: #f5f2ed;
-  --bg-warm: #ede8df;
-  --white: #ffffff;
-  --border: #d4cec4;
-  --mast: #1e2b1f;
-  --mast-mid: #2e4230;
-  --rep: #7a1a1a;
-  --rep-lt: #a82828;
-  --ist: #5a3e10;
-  --ist-lt: #8a5f1e;
-  --lao: #1e4a2e;
-  --aut: #1a2e5a;
+  --ink: #18191a; --ink-soft: #36393c; --ink-muted: #72777d;
+  --bg: #f5f2ed; --bg-warm: #ede8df; --white: #ffffff; --border: #d4cec4;
+  --mast: #1e2b1f; --mast-mid: #2e4230;
+  --mast: #1e2b1f; --mast-mid: #2a3b54;
+  --rep: #7a1a1a; --rep-lt: #a82828; --rep-bg: #fdf4f4;
+  --ist: #5a3e10; --ist-lt: #8a5f1e; --ist-bg: #fdf8f0;
+  --lao: #1e4a2e; --lao-lt: #2e6e44; --lao-bg: #f2faf4;
+  --aut: #1a2e5a; --aut-lt: #2a4a8a; --aut-bg: #f2f6fd;
 }
 html { scroll-behavior: smooth; }
-body {
-  background: var(--bg);
-  color: var(--ink);
-  font-family: 'IBM Plex Sans', system-ui, sans-serif;
-  font-weight: 300;
-  line-height: 1.7;
-}
+body { background: var(--bg); color: var(--ink); font-family: 'IBM Plex Sans', system-ui, sans-serif; font-weight: 300; line-height: 1.65; }
 a { color: inherit; text-decoration: none; }
-#progress {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: var(--ist-lt); width: 0; z-index: 300;
-  transition: width 0.1s linear;
-}
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--aut); width: 0%; z-index: 300; transition: width 0.1s linear; }
+#progress { position: fixed; top: 0; left: 0; height: 3px; background: var(--aut); width: 0; z-index: 300; transition: width 0.1s linear; }
 
 /* TOPBAR */
-.topbar {
-  background: var(--mast);
-  padding: 5px 0;
-  font-size: 0.7rem;
-  color: rgba(255,255,255,0.5);
-  letter-spacing: 0.05em;
-}
-.topbar-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
-}
-.topbar .loc {
-  display: flex; align-items: center; gap: 6px;
-  color: rgba(255,255,255,0.65);
-}
-.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
+.topbar { background: var(--mast); padding: 5px 0; font-size: 0.7rem; color: rgba(255,255,255,0.5); letter-spacing: 0.05em; }
+.topbar-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+.topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: var(--lao-lt); }
 
 /* MASTHEAD */
-.masthead {
-  background: var(--mast);
-  border-bottom: 4px solid var(--mast-mid);
-  box-shadow: 0 3px 20px rgba(0,0,0,0.25);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.mast-brand {
-  max-width: 1200px; margin: 0 auto;
-  padding: 20px 24px 16px;
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
-}
-.site-name h1 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.5rem, 4vw, 2.3rem);
-  font-weight: 900; color: var(--white);
-  letter-spacing: -0.02em; line-height: 1;
-}
+.masthead { background: var(--mast); border-bottom: 4px solid var(--mast-mid); position: sticky; top: 0; z-index: 100; box-shadow: 0 3px 20px rgba(0,0,0,0.25); }
+.mast-brand { max-width: 1200px; margin: 0 auto; padding: 20px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; }
+.site-name h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 5vw, 2.6rem); font-weight: 900; color: var(--white); letter-spacing: -0.02em; line-height: 1; }
 .site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
-.site-name .subtitle {
-  font-size: 0.75rem; color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
-}
-.mast-date {
-  text-align: right;
-}
-.mast-date .md-day {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.7rem; font-weight: 700;
-  color: rgba(255,255,255,0.18); line-height: 1;
-}
-.mast-date .md-full {
-  font-size: 0.68rem; color: rgba(255,255,255,0.35);
-  letter-spacing: 0.06em; margin-top: 3px;
-}
+.site-name .subtitle { font-size: 0.75rem; color: rgba(255,255,255,0.45); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400; }
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; }
+.site-name .subtitle { font-size: 0.72rem; color: rgba(255,255,255,0.4); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 5px; }
+.mast-date { text-align: right; }
+.mast-date .md-day { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 700; color: rgba(255,255,255,0.15); line-height: 1; }
+.mast-date .md-full { font-size: 0.68rem; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; margin-top: 3px; }
 
 /* NAV */
-nav.primary {
-  background: var(--mast-mid);
-  border-top: 1px solid rgba(255,255,255,0.06);
-}
-nav.primary ul {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; list-style: none;
-  overflow-x: auto; scrollbar-width: none;
-}
+nav.primary { background: var(--mast-mid); border-top: 1px solid rgba(255,255,255,0.06); }
+nav.primary ul { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; list-style: none; overflow-x: auto; scrollbar-width: none; }
 nav.primary ul::-webkit-scrollbar { display: none; }
-nav.primary li a {
-  display: flex; align-items: center; gap: 6px;
-  padding: 10px 14px;
-  font-size: 0.74rem; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
-  color: rgba(255,255,255,0.62);
-  white-space: nowrap;
-  border-bottom: 3px solid transparent;
-  transition: color 0.18s, border-color 0.18s;
-}
+nav.primary li a { display: flex; align-items: center; gap: 6px; padding: 11px 16px; font-size: 0.74rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.62); white-space: nowrap; border-bottom: 3px solid transparent; transition: color 0.18s, border-color 0.18s; }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-nav.primary li a.nav-ist {
-  border-bottom-color: var(--ist-lt);
-  color: #ffffff;
-}
+nav.primary li a.nav-aut,
+nav.primary li a.nav-aut.active { border-bottom-color: var(--aut-lt); color: rgba(255,255,255,0.92); }
+nav.primary li a.nav-rep:hover { border-bottom-color: var(--rep-lt); color: white; }
+nav.primary li a.nav-ist:hover { border-bottom-color: var(--ist-lt); color: white; }
+nav.primary li a.nav-lao:hover { border-bottom-color: var(--lao-lt); color: white; }
+
+/* PAGE HERO */
+.page-hero { background: linear-gradient(160deg, var(--aut) 0%, #243664 100%); padding: 48px 24px 40px; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232a4a8a' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+.page-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start; position: relative; }
+.page-hero-main .ph-kicker { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--aut-lt); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.page-hero-main .ph-kicker::before { content: ''; display: inline-block; width: 20px; height: 2px; background: var(--aut-lt); }
+.page-hero-main h2 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 4vw, 2.4rem); font-weight: 900; color: white; line-height: 1.2; margin-bottom: 14px; }
+.page-hero-main .ph-desc { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.97rem; font-style: italic; color: rgba(255,255,255,0.7); line-height: 1.75; margin-bottom: 24px; max-width: 580px; }
+.jump-nav { display: flex; flex-wrap: wrap; gap: 8px; }
+.jump-nav a { display: inline-block; padding: 6px 14px; border: 1px solid rgba(255,255,255,0.2); font-size: 0.72rem; color: rgba(255,255,255,0.7); letter-spacing: 0.05em; text-transform: uppercase; transition: all 0.2s; }
+.jump-nav a:hover { background: var(--aut-lt); border-color: var(--aut-lt); color: white; }
+
+/* HERO ASIDE */
+.page-hero-aside { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12); padding: 0; overflow: hidden; }
+.pha-header { background: rgba(255,255,255,0.1); padding: 10px 16px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.pha-list { list-style: none; padding: 8px 0; }
+.pha-list li { border-bottom: 1px solid rgba(255,255,255,0.06); }
+.pha-list li:last-child { border-bottom: none; }
+.pha-list li a { display: flex; align-items: center; gap: 8px; padding: 10px 16px; font-size: 0.78rem; color: rgba(255,255,255,0.65); transition: all 0.18s; line-height: 1.4; }
+.pha-list li a:hover { color: white; background: rgba(255,255,255,0.07); padding-left: 20px; }
+.pha-list li a .num { font-family: 'Playfair Display', serif; font-size: 0.85rem; font-weight: 700; color: var(--aut-lt); min-width: 18px; flex-shrink: 0; }
+nav.primary li a.nav-aut { border-bottom-color: var(--aut-lt); color: rgba(255,255,255,0.92); }
+
+/* HERO */
+.page-hero { background: linear-gradient(155deg, var(--aut) 0%, #101933 100%); padding: 44px 24px 38px; position: relative; overflow: hidden; }
+.page-hero::before { content: ''; position: absolute; inset: 0; opacity: 0.22;
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/svg%3E"); }
+.page-hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: center; position: relative; z-index: 1; }
+.ph-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--aut-lt); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.ph-label::before { content: ''; width: 18px; height: 2px; background: var(--aut-lt); }
+.page-hero-main h1 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.7rem, 4vw, 2.5rem); font-weight: 800; color: white; line-height: 1.2; margin-bottom: 12px; }
+.page-hero-main p { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.95rem; color: rgba(255,255,255,0.75); line-height: 1.9; margin-bottom: 18px; max-width: 640px; }
+.hero-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-tag { font-size: 0.66rem; border-radius: 999px; border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.8); padding: 4px 10px; text-transform: uppercase; letter-spacing: 0.12em; }
+
+.hero-aside-aut { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); padding: 16px 18px; }
+.hero-aside-aut h3 { font-size: 0.74rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); margin-bottom: 8px; }
+.hero-aside-aut p { font-size: 0.8rem; color: rgba(255,255,255,0.7); line-height: 1.75; }
 
 /* MAIN LAYOUT */
-.main {
-  max-width: 1200px; margin: 32px auto 48px;
-  padding: 0 24px 40px;
-  display: grid;
-  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
-  gap: 40px;
-}
+.page-body { max-width: 1200px; margin: 0 auto; padding: 48px 24px 64px; display: grid; grid-template-columns: 1fr 300px; gap: 56px; align-items: start; }
+.page-body { max-width: 1200px; margin: 0 auto; padding: 44px 24px 64px; display: grid; grid-template-columns: 1.6fr 1fr; gap: 48px; align-items: flex-start; }
 
-/* LEFT COLUMN */
-.section-header {
-  margin-bottom: 22px;
-}
-.section-kicker {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 6px;
-}
-.section-title {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.6rem;
-  margin-bottom: 6px;
-}
-.section-subtitle {
-  font-size: 0.94rem;
-  color: var(--ink-soft);
-  margin-bottom: 10px;
-}
-.section-intro {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-}
+/* SECTIONS */
+.aut-section { margin-bottom: 56px; scroll-margin-top: 100px; }
+.aut-section { margin-bottom: 42px; }
+.aut-section:last-child { margin-bottom: 0; }
+.section-anchor { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.section-anchor .num-badge { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: var(--aut-lt); line-height: 1; min-width: 28px; }
+.section-anchor h3 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.15rem, 2.5vw, 1.5rem); font-weight: 700; color: var(--ink); line-height: 1.3; }
+.section-rule { width: 100%; height: 1px; background: linear-gradient(to right, var(--aut-lt), var(--border), transparent); margin-bottom: 24px; }
+.aut-section p { font-size: 0.97rem; color: var(--ink-soft); line-height: 1.85; margin-bottom: 16px; font-family: 'Libre Baskerville', Georgia, serif; font-weight: 400; }
+.aut-section h4 { font-family: 'IBM Plex Sans', sans-serif; font-size: 0.92rem; font-weight: 600; color: var(--aut); letter-spacing: 0.02em; margin: 28px 0 10px; display: flex; align-items: center; gap: 8px; }
+.aut-section h4::before { content: ''; display: inline-block; width: 14px; height: 2px; background: var(--aut-lt); flex-shrink: 0; }
 
-/* quick navigation */
-.quick-nav {
-  margin: 20px 0 24px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 12px 14px 10px;
-}
-.quick-nav-title {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 8px;
-}
-.quick-nav-list {
-  list-style: none;
-  font-size: 0.84rem;
-}
-.quick-nav-list li {
-  margin-bottom: 4px;
-}
-.quick-nav-list a:hover {
-  text-decoration: underline;
-}
+/* ISSUE CARDS */
+.issue-list { list-style: none; margin-top: 10px; }
+.issue-item { border: 1px solid var(--border); background: var(--white); padding: 14px 16px; margin-bottom: 14px; }
+.issue-label { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--aut); margin-bottom: 4px; }
+.issue-title { font-family: 'Playfair Display', serif; font-size: 0.98rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.issue-meta { font-size: 0.75rem; color: var(--ink-muted); margin-bottom: 6px; }
+.issue-status { display: inline-block; margin-top: 4px; padding: 2px 8px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+.issue-status.open { background: #fef3cd; color: #5a3e10; }
+.issue-status.wait { background: #e8f0fe; color: var(--aut); }
+.issue-status.noans { background: #fde8e8; color: var(--rep); }
+.issue-status.closed { background: #e8faf0; color: #1e6e44; }
+.as-head { margin-bottom: 14px; padding-bottom: 8px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.as-head .as-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-muted); }
+.as-head .as-line { flex: 1; height: 1px; background: var(--border); }
+.aut-section h2 { font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 10px; }
+.aut-section p { font-size: 0.94rem; color: var(--ink-soft); line-height: 1.9; margin-bottom: 14px; font-family: 'Libre Baskerville', Georgia, serif; }
 
-/* history sections */
-.history-section {
-  margin-bottom: 28px;
-  padding-bottom: 18px;
-  border-bottom: 1px solid var(--border);
-}
-.history-section:last-of-type {
-  border-bottom: none;
-}
-.history-label {
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 4px;
-}
-.history-section h3 {
-  font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.15rem;
-  margin-bottom: 6px;
-}
-.history-section p {
-  font-size: 0.9rem;
-  color: var(--ink-soft);
-  margin-bottom: 10px;
-}
-.history-section p:last-child {
-  margin-bottom: 0;
-}
+/* TRACKER TABLE (CARDS) */
+.tracker-table { border: 1px solid var(--border); background: var(--white); }
+.tracker-head { display: grid; grid-template-columns: 1.8fr 0.9fr 0.9fr; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; background: var(--aut-bg); color: var(--ink-muted); padding: 8px 14px; border-bottom: 1px solid var(--border); }
+.tracker-head span:nth-child(2),
+.tracker-head span:nth-child(3) { text-align: center; }
+.tracker-row { display: grid; grid-template-columns: 1.8fr 0.9fr 0.9fr; font-size: 0.8rem; padding: 10px 14px; border-bottom: 1px solid var(--bg-warm); align-items: center; }
+.tracker-row:last-child { border-bottom: none; }
+.tr-col-title { display: flex; flex-direction: column; gap: 3px; }
+.tr-title-main { font-weight: 500; color: var(--ink); }
+.tr-title-meta { font-size: 0.7rem; color: var(--ink-muted); }
+.tr-col-date, .tr-col-status { text-align: center; font-size: 0.78rem; color: var(--ink-muted); }
+.status-pill { display: inline-block; padding: 2px 8px; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 999px; }
+.status-open { background: #fde8e8; color: var(--rep); }
+.status-wait { background: #e8f0fe; color: var(--aut); }
+.status-closed { background: #e8faf0; color: #1e6e44; }
 
-/* timeline blocks */
-.timeline-block {
-  margin-top: 10px;
-}
-.timeline-item {
-  display: grid;
-  grid-template-columns: 100px minmax(0,1fr);
-  gap: 12px;
-  margin-bottom: 12px;
-}
-.timeline-year {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--ink-soft);
-  text-transform: uppercase;
-}
-.timeline-body h4 {
-  font-size: 0.92rem;
-  font-weight: 500;
-  margin-bottom: 3px;
-}
-.timeline-body p {
-  font-size: 0.86rem;
-  color: var(--ink-soft);
-}
+/* LINKS LIST */
+.aut-list { list-style: none; margin-top: 8px; }
+.aut-list li { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.7; padding-left: 14px; position: relative; margin-bottom: 6px; }
+.aut-list li::before { content: '•'; position: absolute; left: 0; top: 0; color: var(--aut-lt); }
 
-/* simple stats */
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 8px;
-  margin-top: 10px;
-}
-.stat-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 8px 10px;
-  font-size: 0.8rem;
-}
-.stat-label {
-  font-size: 0.7rem;
-  color: var(--ink-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-.stat-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.1rem;
-  margin-top: 2px;
-}
+/* PARTICIPATION BOX */
+.participate-box { background: var(--aut-bg); border: 1px solid rgba(27,46,90,0.18); border-left: 4px solid var(--aut-lt); padding: 20px 24px; margin-top: 24px; }
+.participate-box { background: var(--aut-bg); border: 1px solid rgba(26,46,90,0.18); border-left: 4px solid var(--aut-lt); padding: 20px 24px; margin-top: 18px; }
+.participate-box .pb-label { font-size: 0.64rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--aut); margin-bottom: 10px; }
+.participate-box p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-family: 'IBM Plex Sans', sans-serif; font-weight: 300; }
 
-/* callouts */
-.callout {
-  margin-top: 10px;
-  padding: 10px 12px;
-  border-left: 3px solid var(--ist-lt);
-  background: var(--bg-warm);
-  font-size: 0.84rem;
-  color: var(--ink-soft);
-}
-.callout.alert {
-  border-left-color: var(--rep-lt);
-  background: #f2e4e1;
-}
+/* SECTION DIVIDER */
+.section-divider { display: flex; align-items: center; gap: 12px; margin: 48px 0 0; }
+.section-divider .rule { flex: 1; height: 1px; background: var(--border); }
+.section-divider span { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-muted); white-space: nowrap; }
+.participate-box p { font-size: 0.88rem; color: var(--ink-soft); line-height: 1.75; margin-bottom: 0; font-family: 'IBM Plex Sans', sans-serif; }
 
-/* RIGHT COLUMN */
-.right-col-section {
-  margin-bottom: 26px;
-}
-.right-label {
-  font-size: 0.78rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-  margin-bottom: 8px;
-}
-.right-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 14px 16px 16px;
-  font-size: 0.86rem;
-}
-.right-card h3 {
-  font-size: 0.98rem;
-  font-family: 'Playfair Display', Georgia, serif;
-  margin-bottom: 6px;
-}
-.right-card h3 a:hover { text-decoration: underline; }
-.right-card-text {
-  font-size: 0.84rem;
-  color: var(--ink-soft);
-  margin-bottom: 6px;
-}
-.right-card-meta {
-  font-size: 0.76rem;
-  color: var(--ink-muted);
-}
+/* SIDEBAR */
+.sidebar .s-widget { background: var(--white); border: 1px solid var(--border); margin-bottom: 20px; overflow: hidden; }
+.s-widget-head { padding: 9px 14px; font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.85); }
+.s-widget-head.aut { background: var(--aut); }
+.s-widget-head.rep { background: var(--rep); }
+.s-widget-head.mast { background: var(--mast); }
+.s-widget-body { padding: 14px 16px; }
+
+.tracker-list { list-style: none; }
+.tracker-list li { padding: 11px 0; border-bottom: 1px solid var(--bg-warm); display: flex; flex-direction: column; gap: 5px; }
+.tracker-list li:last-child { border-bottom: none; }
+.tl-title { font-size: 0.82rem; color: var(--ink); font-weight: 400; line-height: 1.4; }
+.tl-title a { color: inherit; transition: color 0.15s; }
+.tl-title a:hover { color: var(--aut-lt); }
+.tl-title a { color: inherit; }
+.tl-meta { display: flex; align-items: center; gap: 7px; font-size: 0.67rem; color: var(--ink-muted); flex-wrap: wrap; }
+.status-pill { display: inline-block; padding: 1px 7px; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; border-radius: 2px; }
+.status-pill.noans { background: #fde8e8; color: var(--rep); }
+.status-pill.wait  { background: #e8f0fe; color: var(--aut); }
+.status-pill.closed { background: #e8faf0; color: #1e6e44; }
+
+.s-list { list-style: none; }
+.s-list li { padding: 9px 0; border-bottom: 1px solid var(--bg-warm); font-size: 0.8rem; color: var(--ink-soft); line-height: 1.4; display: flex; gap: 7px; align-items: flex-start; cursor: pointer; transition: color 0.15s; }
+.s-list li:last-child { border-bottom: none; }
+.s-list li::before { content: '›'; flex-shrink: 0; }
+.s-list.aut li::before { color: var(--aut-lt); }
+.s-list.rep li::before { color: var(--rep); }
+.s-list li:hover { color: var(--mast); }
+
+.about-text { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
+.about-text p + p { margin-top: 9px; }
+
+.about-text-side { font-size: 0.8rem; color: var(--ink-soft); line-height: 1.75; }
+.about-text-side p + p { margin-top: 8px; }
+
+.cat-links { list-style: none; }
+.cat-links li { padding: 8px 0; border-bottom: 1px solid var(--bg-warm); display: flex; justify-content: space-between; align-items: center; }
+.cat-links li:last-child { border-bottom: none; }
+.cat-links li a { font-size: 0.8rem; color: var(--ink-soft); display: flex; align-items: center; gap: 7px; transition: color 0.15s; }
+.cat-links li a::before { content: ''; width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+.cat-links li.rep a::before { background: var(--rep); }
+.cat-links li.ist a::before { background: var(--ist); }
+.cat-links li.lao a::before { background: var(--lao); }
+.cat-links li.aut a::before { background: var(--aut); }
+.cat-links li a:hover { color: var(--rep); }
 
 /* FOOTER */
-footer {
-  background: var(--mast);
-  color: rgba(255,255,255,0.45);
-}
-.footer-inner {
-  max-width: 1200px; margin: 0 auto;
-  padding: 40px 24px 28px;
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: 36px;
-}
-.footer-brand h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.08rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.85);
-  margin-bottom: 5px;
-}
-.footer-brand .ft-sub {
-  font-size: 0.66rem;
-  font-style: italic;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 10px;
-}
-.footer-brand p {
-  font-size: 0.74rem;
-  color: rgba(255,255,255,0.35);
-  line-height: 1.65;
-}
-.footer-col h4 {
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.55);
-  padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 12px;
-}
+footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+.footer-inner { max-width: 1200px; margin: 0 auto; padding: 40px 24px 28px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 36px; }
+.footer-brand h2 { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 700; color: rgba(255,255,255,0.85); margin-bottom: 6px; }
+.footer-brand .ft-sub { font-size: 0.7rem; font-style: italic; color: rgba(255,255,255,0.3); margin-bottom: 12px; }
+.footer-brand p { font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.75; }
+.footer-col h4 { font-size: 0.62rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.55); padding-bottom: 8px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 12px; }
 .footer-col ul { list-style: none; }
-.footer-col li {
-  padding: 5px 0;
-  font-size: 0.74rem;
-  color: rgba(255,255,255,0.35);
-  border-bottom: 1px solid rgba(255,255,255,0.04);
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-.footer-col li:last-child { border-bottom: none; }
-.footer-col li::before { content: '›'; opacity: 0.4; }
-.footer-col li a { color: inherit; }
-.footer-col li:hover { color: rgba(255,255,255,0.75); }
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding: 14px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
-  font-size: 0.66rem;
-}
-.footer-bottom .copy {
-  color: rgba(255,255,255,0.25);
-}
-.footer-bottom .independence {
-  font-style: italic;
-  color: rgba(255,255,255,0.22);
-}
+.footer-col ul li { padding: 6px 0; font-size: 0.78rem; color: rgba(255,255,255,0.35); border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: color 0.15s; display: flex; align-items: center; gap: 5px; }
+.footer-col ul li:last-child { border-bottom: none; }
+.footer-col ul li:hover { color: rgba(255,255,255,0.75); }
+.footer-col ul li::before { content: '›'; opacity: 0.4; }
+.footer-col ul li a { color: inherit; }
+.footer-bottom { border-top: 1px solid rgba(255,255,255,0.06); padding: 16px 24px; max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-wrap: wrap; font-size: 0.7rem; }
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
 /* RESPONSIVE */
-@media (max-width: 900px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-  }
+@media (max-width: 980px) {
+  .page-hero-inner { grid-template-columns: 1fr; }
+  .page-hero-aside { display: none; }
+  .page-body { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 640px) {
-  .main {
-    padding: 0 16px 32px;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
-  .stats-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-  .timeline-item {
-    grid-template-columns: 1fr;
-    gap: 4px;
-  }
+@media (max-width: 600px) {
+  .page-hero { padding: 32px 16px 26px; }
+  .page-body { padding: 32px 16px 48px; }
+  .footer-inner { grid-template-columns: 1fr; }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-hero-inner { animation: fadeIn 0.45s ease both; }
+.page-hero-main { animation: fadeIn 0.5s ease both; }
 </style>
 </head>
 <body>
@@ -448,340 +280,339 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
-      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="index.html">Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ & Παρεμβάσεις</a></li>
+      <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία & Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία & Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut active"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση & Κοινωνία</a></li>
+      <li><a href="#">Σχετικά</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
       <li><a href="history.html" class="nav-ist"><span class="nav-dot" style="background:var(--ist-lt)"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       <li><a href="sxetika.html">Σχετικά</a></li>
       <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
 
-<main class="main">
-
-  <section>
-    <div class="section-header">
-      <div class="section-kicker">ΙΣΤΟΡΙΑ &amp; ΜΝΗΜΗ</div>
-      <h2 class="section-title">Το Σταυροδρόμι μέσα στον χρόνο</h2>
-      <p class="section-subtitle">
-        Η ιστορία ενός χωριού δεν γράφεται μόνο από χρονολογίες. Γράφεται από ονόματα που άλλαξαν, από δρόμους που ένωσαν τόπους,
-        από εκκλησίες και σχολεία που στάθηκαν όρθια, από ανθρώπους που έφυγαν, γύρισαν, θυμήθηκαν και κράτησαν μέσα τους ό,τι δεν πέρασε στα χαρτιά.
-      </p>
-      <p class="section-intro">
-        Η σελίδα αυτή επιχειρεί να συγκεντρώσει σε μια πιο καθαρή και οργανωμένη αφήγηση τα βασικά ιστορικά στοιχεία για το Σταυροδρόμι Αρκαδίας:
-        την παλιά Αλβάνιτσα, τη διοικητική του πορεία, τα μνημεία, τις απογραφές, τα πρόσωπα και εκείνα τα ίχνη της συλλογικής μνήμης
-        που αξίζει να σωθούν πριν χαθούν οριστικά.
-      </p>
+<div class="page-hero">
+<section class="page-hero">
+  <div class="page-hero-inner">
+    <div class="page-hero-main">
+      <div class="ph-kicker">Ενότητα · Αυτοδιοίκηση & Κοινωνία</div>
+      <h2>Πώς αποφάσεις και έργα επηρεάζουν την καθημερινότητα στο Σταυροδρόμι</h2>
+      <p class="ph-desc">Καταγραφή ζητημάτων Δήμου, έργων, τελών και κοινωνικών θεμάτων που αφορούν άμεσα ή έμμεσα την κοινότητα. Με στόχο τη διαφάνεια, την τεκμηρίωση και τον σεβασμό στον δημόσιο διάλογο.</p>
+      <div class="jump-nav">
+        <a href="#anoikta-zitimata">Ανοιχτά ζητήματα</a>
+        <a href="#erga">Έργα & υποδομές</a>
+        <a href="#koinonika">Κοινωνική ζωή</a>
+        <a href="#symmetoxi">Συμμετοχή & έλεγχος</a>
+      <div class="ph-label">Αυτοδιοίκηση &amp; Κοινωνία</div>
+      <h1>Παρατηρητήριο αποφάσεων, έργων και ανοιχτών ζητημάτων</h1>
+      <p>Η ενότητα αυτή παρακολουθεί όσα αποφασίζονται, όσα γίνονται και όσα μένουν σε εκκρεμότητα για την κοινότητα Σταυροδρομίου. Δεν αντικαθιστά καμία επίσημη ενημέρωση· επιχειρεί όμως να βάζει σε μια σειρά τα δεδομένα και τα ερωτήματα.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Έργα &amp; υποδομές</span>
+        <span class="hero-tag">Τέλη &amp; οικονομικά</span>
+        <span class="hero-tag">Ανοιχτά ερωτήματα</span>
+      </div>
     </div>
-
-    <nav class="quick-nav">
-      <div class="quick-nav-title">ΓΡΗΓΟΡΗ ΠΛΟΗΓΗΣΗ</div>
-      <ul class="quick-nav-list">
-        <li><a href="#taftotita">01 · Ταυτότητα του τόπου</a></li>
-        <li><a href="#onoma">02 · Όνομα &amp; διοικητική πορεία</a></li>
-        <li><a href="#xronologio">03 · Χρονολόγιο</a></li>
-        <li><a href="#ktiria">04 · Κτίρια &amp; υποδομές</a></li>
-        <li><a href="#katoikoi">05 · Κάτοικοι &amp; απογραφές</a></li>
-        <li><a href="#prosopa">06 · Πρόσωπα</a></li>
-        <li><a href="#mnimi">07 · Μνήμη &amp; λαογραφικό υλικό</a></li>
+    <aside class="page-hero-aside">
+      <div class="pha-header">Περιεχόμενα ενότητας</div>
+      <ul class="pha-list">
+        <li><a href="#anoikta-zitimata"><span class="num">01</span> Ανοιχτά ζητήματα</a></li>
+        <li><a href="#erga"><span class="num">02</span> Έργα & υποδομές</a></li>
+        <li><a href="#koinonika"><span class="num">03</span> Κοινωνική ζωή</a></li>
+        <li><a href="#symmetoxi"><span class="num">04</span> Συμμετοχή & έλεγχος</a></li>
       </ul>
-    </nav>
+    <aside class="hero-aside-aut">
+      <h3>Τι παρακολουθείται εδώ</h3>
+      <p>Εργα, αποφάσεις, εισπράξεις, απαντήσεις (ή η απουσία τους) από τον Δήμο και την Κοινότητα. Κάθε θέμα συνοδεύεται από ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ, όπου υπάρχουν.</p>
+    </aside>
+  </div>
+</div>
+</section>
 
-    <section class="history-section" id="taftotita">
-      <div class="history-label">01 · ΤΑΥΤΟΤΗΤΑ ΤΟΥ ΤΟΠΟΥ</div>
-      <h3>Θέση, τοπίο και χαρακτήρας</h3>
-      <p>
-        Το Σταυροδρόμι είναι ορεινό χωριό της Αρκαδίας, χτισμένο σε υψόμετρο 621 μέτρων, στους πρόποδες του Μαινάλου,
-        σε θέση που από τη φύση της λειτουργεί ως πέρασμα και σημείο σύνδεσης ανάμεσα σε γειτονικούς οικισμούς και δρόμους της Γορτυνίας.
-      </p>
-      <p>
-        Βρίσκεται στη διασταύρωση της εθνικής οδού Τρίπολης–Ολυμπίας και της επαρχιακής οδού Κοντοβάζαινας–Τροπαίων,
-        γεγονός που εξηγεί όχι μόνο το σημερινό του όνομα αλλά και τον παλιότερο ρόλο του ως μικρού εμπορικού και συγκοινωνιακού κέντρου της περιοχής.
-      </p>
-      <p>
-        Το τοπίο γύρω από το χωριό, με τις καλλιεργήσιμες εκτάσεις, τα πρανή και τη ρεματιά της Μαυράδας, μαρτυρεί έναν τόπο που έζησε
-        για πολλά χρόνια δεμένος με το νερό, την εργασία και την αγροτική αυτάρκεια.
-      </p>
-    </section>
+<div class="page-body">
+  <main>
 
-    <section class="history-section" id="onoma">
-      <div class="history-label">02 · ΟΝΟΜΑ &amp; ΔΙΟΙΚΗΤΙΚΗ ΠΟΡΕΙΑ</div>
-      <h3>Από την Αλβάνιτσα στο σημερινό Σταυροδρόμι</h3>
-      <p>
-        Μέχρι τις 20 Αυγούστου 1927 το χωριό ήταν επίσημα γνωστό ως «Αλβάνιτσα», ονομασία που σώζεται τόσο σε παλαιότερες καταγραφές
-        όσο και στη μνήμη των παλιότερων ανθρώπων του τόπου.
-      </p>
-      <p>
-        Η μετονομασία σε «Σταυροδρόμι» δεν ήταν τυχαία· απέδωσε με μεγαλύτερη ακρίβεια τη γεωγραφική του φύση και την καθημερινή του λειτουργία:
-        έναν τόπο διέλευσης, συνάντησης, μετακίνησης και αλλαγής πορείας μέσα στη Γορτυνία.
-      </p>
-      <p>
-        Στη νεότερη διοικητική του πορεία, το χωριό ανήκε μέχρι το 2010 στον Δήμο Τροπαίων, ενώ από το 2011, με τη μεταρρύθμιση του «Καλλικράτη»,
-        εντάχθηκε στον Δήμο Γορτυνίας.
-      </p>
-      <div class="callout">
-        Το όνομα του χωριού είναι από μόνο του μια μικρή περίληψη της ιστορίας του.
+    <!-- 1. ΑΝΟΙΚΤΑ ΖΗΤΗΜΑΤΑ -->
+    <section id="anoikta-zitimata" class="aut-section">
+      <div class="section-anchor">
+        <span class="num-badge">01</span>
+        <h3>Ανοιχτά ζητήματα αυτοδιοίκησης</h3>
+    <section class="aut-section">
+      <div class="as-head">
+        <span class="as-label">Ανοιχτά ζητήματα</span>
+        <div class="as-line"></div>
+      </div>
+      <div class="section-rule"></div>
+      <p>Τα ζητήματα που αφορούν την τοπική αυτοδιοίκηση —από τα τέλη μέχρι τα έργα και τη χρήση δημόσιων χώρων— έχουν άμεσες συνέπειες για τους κατοίκους. Η ενότητα αυτή λειτουργεί ως σημείο συγκέντρωσης και παρακολούθησης τέτοιων θεμάτων.</p>
+
+      <ul class="issue-list">
+        <li class="issue-item">
+          <div class="issue-label">Δήμος Γορτυνίας</div>
+          <div class="issue-title">Τέλη κοιμητηρίων – κοστολόγηση και ανταποδοτικότητα</div>
+          <div class="issue-meta">Περίοδος: 2023–2026 · Σχετικό ρεπορτάζ: άρθρο για κοιμητήρια &amp; σχολική αυλή</div>
+          <p>Ανακύπτει ερώτημα ως προς την κοστολόγηση των τελών χρήσης τάφων, την ανταποδοτικότητα των ποσών και τον τρόπο ενημέρωσης των δημοτών.</p>
+          <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
+        </li>
+
+        <li class="issue-item">
+          <div class="issue-label">Κοινότητα Σταυροδρομίου</div>
+          <div class="issue-title">Τσιμεντόστρωση – τεχνική επίβλεψη &amp; κόστος</div>
+          <div class="issue-meta">Περίοδος: 2026 · Σχετικό ρεπορτάζ: τσιμεντόστρωση στο Σταυροδρόμι</div>
+          <p>Ερωτήματα έχουν τεθεί σχετικά με την τεχνική μελέτη, τον επιβλέποντα μηχανικό, το συμβατικό κόστος και τη διαφάνεια γύρω από την εκτέλεση του έργου.</p>
+          <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
+        </li>
+
+        <li class="issue-item">
+          <div class="issue-label">Σχολική υποδομή</div>
+          <div class="issue-title">Χρήση σχολικής αυλής για στάθμευση οχημάτων</div>
+          <div class="issue-meta">Περίοδος: 2026 · Σχετικό ρεπορτάζ: κοιμητήρια &amp; σχολική αυλή</div>
+          <p>Η πρόθεση χρήσης της σχολικής αυλής ως χώρου στάθμευσης δημοτικών οχημάτων προκάλεσε εύλογες αντιδράσεις. Μετά την παρέμβαση, το συγκεκριμένο θέμα έχει ουσιαστικά κλείσει.</p>
+          <span class="issue-status closed">ΑΠΑΝΤΗΘΗΚΕ</span>
+        </li>
+      </ul>
+      <h2>Σύντομο παρατηρητήριο</h2>
+      <p>Ο παρακάτω πίνακας συγκεντρώνει μερικά από τα βασικά ζητήματα που έχουν τεθεί δημόσια για το Σταυροδρόμι: τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή. Για κάθε υπόθεση σημειώνονται οι βασικές ημερομηνίες και η τρέχουσα κατάσταση.</p>
+
+      <div class="tracker-table">
+        <div class="tracker-head">
+          <span>Θέμα</span>
+          <span>Τελευταία κίνηση</span>
+          <span>Κατάσταση</span>
+        </div>
+
+      <div class="participate-box">
+        <div class="pb-label">Ενημέρωση ανοιχτών ζητημάτων</div>
+        <p>Καθώς προκύπτουν νέες απαντήσεις ή εξελίξεις, η κατάσταση κάθε ζητήματος θα ενημερώνεται. Στόχος δεν είναι η αντιπαράθεση για την αντιπαράθεση, αλλά η τεκμηριωμένη πληροφόρηση.</p>
       </div>
     </section>
-
-    <section class="history-section" id="xronologio">
-      <div class="history-label">03 · ΧΡΟΝΟΛΟΓΙΟ</div>
-      <h3>Σημεία στα οποία μπορεί να σταθεί η αφήγηση</h3>
-      <p>
-        Το χρονολόγιο που ακολουθεί δεν εξαντλεί την ιστορία του Σταυροδρομίου. Δίνει όμως ορισμένα σταθερά σημεία,
-        ώστε ο αναγνώστης να μπορεί να παρακολουθήσει πιο καθαρά την πορεία του χωριού μέσα στον χρόνο.
-      </p>
-
-      <div class="timeline-block">
-        <div class="timeline-item">
-          <div class="timeline-year">19ος αιώνας</div>
-          <div class="timeline-body">
-            <h4>Οι πρώτες σταθερές απογραφικές και διοικητικές μνείες</h4>
-            <p>Στα κατάστιχα και στις απογραφές του 19ου αιώνα εντοπίζονται οι πρώτες σταθερές επίσημες αναφορές του οικισμού, που επιτρέπουν να παρακολουθήσει κανείς την πληθυσμιακή και διοικητική του πορεία.</p>
+        <div class="tracker-row">
+          <div class="tr-col-title">
+            <div class="tr-title-main"><a href="article-apantisi-proedro.html">Απάντηση Προέδρου στα ρεπορτάζ</a></div>
+            <div class="tr-title-meta">Τοποθέτηση για τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή.</div>
+          </div>
+          <div class="tr-col-date">21 Απρ. 2026</div>
+          <div class="tr-col-status">
+            <span class="status-pill status-wait">Σε παρακολούθηση</span>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-year">1896–1910</div>
-          <div class="timeline-body">
-            <h4>Ανέγερση του ενοριακού ναού</h4>
-            <p>Η κύρια φάση κατασκευής του Ιερού Ναού της Κοίμησης της Θεοτόκου τοποθετείται από το 1896 έως το 1910, περίοδος που συμπίπτει με τη διαμόρφωση του βασικού πυρήνα του χωριού όπως τον γνωρίζουμε σήμερα.</p>
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΕΡΓΑ</span>
+      <div class="rule"></div>
+    </div>
+        <div class="tracker-row">
+          <div class="tr-col-title">
+            <div class="tr-title-main"><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση Σταυροδρομίου</a></div>
+            <div class="tr-title-meta">Ερωτήματα για τεχνική μελέτη, επίβλεψη και κόστος.</div>
+          </div>
+          <div class="tr-col-date">19 Απρ. 2026</div>
+          <div class="tr-col-status">
+            <span class="status-pill status-open">Χωρίς απάντηση</span>
           </div>
         </div>
 
-        <div class="timeline-item">
-          <div class="timeline-year">1909</div>
-          <div class="timeline-body">
-            <h4>Το παλιό Δημοτικό Σχολείο</h4>
-            <p>Το πέτρινο δημοτικό σχολείο κτίζεται και λειτουργεί για δεκαετίες ως χώρος μάθησης, συγκέντρωσης, κοινωνικής ζωής και συλλογικής εμπειρίας.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1910</div>
-          <div class="timeline-body">
-            <h4>Ο ναός γίνεται σημείο αναφοράς του χωριού</h4>
-            <p>Ο ναός της Κοίμησης της Θεοτόκου, με τον έντονο αρχιτεκτονικό του χαρακτήρα, παγιώνεται ως το σημαντικότερο θρησκευτικό και αισθητικό σημείο αναφοράς της κοινότητας.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1915</div>
-          <div class="timeline-body">
-            <h4>Το ξυλόγλυπτο τέμπλο</h4>
-            <p>Το τέμπλο του ναού, έργο των αδελφών Ασημακόπουλου από τα Τρόπαια, προσδίδει ιδιαίτερη καλλιτεχνική βαρύτητα στο κτίσμα.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1927</div>
-          <div class="timeline-body">
-            <h4>Η επίσημη μετονομασία</h4>
-            <p>Η ιστορική ονομασία «Αλβάνιτσα» αντικαθίσταται επίσημα από το «Σταυροδρόμι», που αποδίδει τη γεωγραφική λειτουργία του οικισμού.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1940–1950</div>
-          <div class="timeline-body">
-            <h4>Πόλεμος, κατοχή και εμφύλιος</h4>
-            <p>Οι μεγάλες αναταράξεις της εποχής αφήνουν και στο Σταυροδρόμι τα σημάδια τους, όπως σε όλα σχεδόν τα ορεινά χωριά της Πελοποννήσου.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1960–1980</div>
-          <div class="timeline-body">
-            <h4>Η αργή πληθυσμιακή αφαίμαξη</h4>
-            <p>Η μετανάστευση προς τα αστικά κέντρα και το εξωτερικό αλλάζει σταδιακά τη φυσιογνωμία του χωριού, αφήνοντας ολοένα περισσότερα σπίτια κλειστά για το μεγαλύτερο μέρος του χρόνου.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">1989</div>
-          <div class="timeline-body">
-            <h4>Η «Γιορτή του Κρασιού»</h4>
-            <p>Καθιερώνεται μια λαϊκή γιορτή που συνδέθηκε για χρόνια με το χωριό και τη θερινή του ζωή, προβάλλοντας τον κοινωνικό και πολιτιστικό χαρακτήρα της κοινότητας.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">2011</div>
-          <div class="timeline-body">
-            <h4>Νέα διοικητική υπαγωγή</h4>
-            <p>Με τον «Καλλικράτη» το Σταυροδρόμι εντάσσεται στον Δήμο Γορτυνίας, ενώ η απογραφή του ίδιου έτους καταγράφει 96 μόνιμους κατοίκους.</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">2021</div>
-          <div class="timeline-body">
-            <h4>Η πιο πρόσφατη απογραφή</h4>
-            <p>Η απογραφή του 2021 καταγράφει 87 μόνιμους κατοίκους, επιβεβαιώνοντας τη συνεχιζόμενη δημογραφική συρρίκνωση του χωριού.</p>
-          </div>
-        </div>
+    <!-- 2. ΕΡΓΑ & ΥΠΟΔΟΜΕΣ -->
+    <section id="erga" class="aut-section">
+      <div class="section-anchor">
+        <span class="num-badge">02</span>
+        <h3>Έργα και υποδομές στο χωριό</h3>
       </div>
+      <div class="section-rule"></div>
+      <p>Τα έργα υποδομής —όπως τσιμεντοστρώσεις, παρεμβάσεις σε δρόμους, κοινόχρηστους χώρους και κτίρια— επηρεάζουν άμεσα την καθημερινότητα. Η καταγραφή τους βοηθά να κατανοηθεί τι γίνεται, πότε και με ποιους όρους.</p>
+
+      <ul class="issue-list">
+        <li class="issue-item">
+          <div class="issue-label">Έργα</div>
+          <div class="issue-title">Τσιμεντόστρωση δρόμων</div>
+          <div class="issue-meta">Κατηγορία: έργα υποδομής · Σχετικό ρεπορτάζ: τσιμεντόστρωση στο Σταυροδρόμι</div>
+          <p>Το έργο τσιμεντόστρωσης έχει δημιουργήσει ερωτήματα ως προς τη μελέτη, την επίβλεψη, το κόστος και τη συνολική ποιότητα της παρέμβασης.</p>
+          <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
+        </li>
+      </ul>
     </section>
-
-    <section class="history-section" id="ktiria">
-      <div class="history-label">04 · ΚΤΙΡΙΑ &amp; ΥΠΟΔΟΜΕΣ</div>
-      <h3>Μάρτυρες της διαδρομής του χωριού</h3>
-      <p>
-        Τα πιο σταθερά ίχνη της ιστορίας του Σταυροδρομίου σώζονται στα κτίριά του. Ο Ιερός Ναός της Κοίμησης της Θεοτόκου
-        αποτελεί το σημαντικότερο θρησκευτικό και αρχιτεκτονικό μνημείο του χωριού και παραμένει πυρήνας μνήμης και αναφοράς.
-      </p>
-      <p>
-        Δίπλα του, το παλιό δημοτικό σχολείο του 1909 θυμίζει μια εποχή κατά την οποία η παιδεία, η κοινότητα και η κοινωνική ζωή
-        συναντιούνταν μέσα στον ίδιο χώρο. Στην είσοδο του χωριού, ο μεγάλος σταυρός λειτουργεί όχι μόνο ως θρησκευικό σύμβολο
-        αλλά και ως τοπόσημο που συνομιλεί με το ίδιο το όνομα του τόπου.
-      </p>
-      <p>
-        Η ρεματιά της Μαυράδας, με την παλιά βρύση και τον νερόμυλο, κρατά ζωντανή τη μνήμη μιας παλαιότερης καθημερινότητας,
-        όπου το νερό, η χειρωνακτική εργασία και η τοπική αυτάρκεια συνδέονταν οργανικά μεταξύ τους.
-      </p>
-    </section>
-
-    <section class="history-section" id="katoikoi">
-      <div class="history-label">05 · ΚΑΤΟΙΚΟΙ &amp; ΑΠΟΓΡΑΦΕΣ</div>
-      <h3>Αριθμοί που μιλούν για την απουσία</h3>
-      <p>
-        Οι απογραφές δεν λένε όλα όσα χρειάζεται να ξέρει κανείς για ένα χωριό, δίνουν όμως ένα σταθερό σημείο σύγκρισης.
-        Πίσω από κάθε αριθμό κρύβονται οικογένειες, αναχωρήσεις, επιστροφές, κλειστά σπίτια και εποχικές αναβιώσεις του τόπου.
-      </p>
-
-      <div class="stats-grid">
-        <div class="stat-card">
-          <div class="stat-label">2001</div>
-          <div class="stat-value">239</div>
+        <div class="tracker-row">
+          <div class="tr-col-title">
+            <div class="tr-title-main"><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a></div>
+            <div class="tr-title-meta">Αθροιστική τριετής είσπραξη τελών, χρήση σχολικής αυλής.</div>
+          </div>
+          <div class="tr-col-date">20 Απρ. 2026</div>
+          <div class="tr-col-status">
+            <span class="status-pill status-open">Χωρίς απάντηση</span>
+          </div>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">2011</div>
-          <div class="stat-value">96</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">2021</div>
-          <div class="stat-value">87</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-label">ΤΑΣΗ</div>
-          <div class="stat-value">Μείωση</div>
+
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΚΟΙΝΩΝΙΑ</span>
+      <div class="rule"></div>
+    </div>
+        <div class="tracker-row">
+          <div class="tr-col-title">
+            <div class="tr-title-main">Σχολική αυλή – χρήση από οχήματα</div>
+            <div class="tr-title-meta">Μετά τη δημόσια τοποθέτηση, το ζήτημα φαίνεται να έχει κλείσει υπέρ της ασφάλειας των παιδιών.</div>
+          </div>
+          <div class="tr-col-date">21 Απρ. 2026</div>
+          <div class="tr-col-status">
+            <span class="status-pill status-closed">Θετική εξέλιξη</span>
+          </div>
         </div>
       </div>
 
-      <div class="callout">
-        Οι απογραφές καταγράφουν τον μόνιμο πληθυσμό. Η βιωμένη εικόνα του χωριού, ιδιαίτερα τα καλοκαίρια και στις μεγάλες γιορτές,
-        είναι συχνά πυκνότερη από εκείνη που δείχνουν οι επίσημοι αριθμοί.
+    <!-- 3. ΚΟΙΝΩΝΙΚΗ ΖΩΗ -->
+    <section id="koinonika" class="aut-section">
+      <div class="section-anchor">
+        <span class="num-badge">03</span>
+        <h3>Κοινωνική ζωή και δημόσιος χώρος</h3>
+      <div class="participate-box">
+        <div class="pb-label">Συμπλήρωση στοιχείων</div>
+        <p>Αν γνωρίζετε επιπλέον δεδομένα (π.χ. αριθμούς αποφάσεων, ημερομηνίες, έγγραφα) για τα παραπάνω ζητήματα, μπορείτε να τα στείλετε μέσω της σελίδας <a href="epikoinonia.html" style="color:var(--aut); font-weight:500; text-decoration:underline;">Επικοινωνία</a>. Η τεκμηρίωση είναι όσο σημαντική όσο και η κριτική.</p>
       </div>
+      <div class="section-rule"></div>
+      <p>Η αυτοδιοίκηση δεν αφορά μόνο έργα και αποφάσεις. Αφορά και τον τρόπο που χρησιμοποιείται ο δημόσιος χώρος, την πρόσβαση σε υπηρεσίες, την ποιότητα ζωής για κατοίκους και επισκέπτες.</p>
+      <p>Ζητήματα όπως η καθαριότητα, η πρόσβαση σε κοινόχρηστους χώρους, η λειτουργία υπηρεσιών και η αντιμετώπιση της εγκατάλειψης αποτελούν μέρος της εικόνας που διαμορφώνει κανείς για έναν τόπο.</p>
     </section>
 
-    <section class="history-section" id="prosopa">
-      <div class="history-label">06 · ΠΡΟΣΩΠΑ</div>
-      <h3>Οι άνθρωποι πίσω από την ιστορία</h3>
-      <p>
-        Η ιστορία ενός χωριού γράφεται κυρίως από ανθρώπους που σπάνια θα συναντήσει κανείς σε επίσημα βιβλία:
-        δάσκαλοι, ιερείς, αγρότες, τεχνίτες, εργάτες, μετανάστες, πρόεδροι, μητέρες και παππούδες που κράτησαν την καθημερινότητα όρθια.
-      </p>
-      <p>
-        Παράλληλα, ο τόπος συνδέεται και με πρόσωπα που απέκτησαν ευρύτερη δημόσια παρουσία. Η συστηματική καταγραφή τους,
-        με σύντομα βιογραφικά, μαρτυρίες και τεκμηριωμένα στοιχεία, παραμένει ζητούμενο για μια πιο ολοκληρωμένη ιστορική παρουσίαση του χωριού.
-      </p>
-    </section>
+    <div class="section-divider">
+      <div class="rule"></div>
+      <span>ΣΥΜΜΕΤΟΧΗ</span>
+      <div class="rule"></div>
+    </div>
 
-    <section class="history-section" id="mnimi">
-      <div class="history-label">07 · ΜΝΗΜΗ &amp; ΛΑΟΓΡΑΦΙΚΟ ΥΛΙΚΟ</div>
-      <h3>Ό,τι σώζεται — και ό,τι κινδυνεύει να χαθεί</h3>
-      <p>
-        Η μνήμη του Σταυροδρομίου δεν επιβιώνει μόνο στα γραπτά τεκμήρια. Σώζεται σε φωτογραφίες, σε εργαλεία και αντικείμενα καθημερινής χρήσης,
-        σε οικογενειακά αρχεία, σε προφορικές μαρτυρίες, σε γιορτές που έσβησαν ή αραίωσαν και σε χώρους που εξακολουθούν να φέρουν επάνω τους τα ίχνη των ανθρώπων.
-      </p>
-      <p>
-        Ιδιαίτερη σημασία έχει το λαογραφικό υλικό που είχε συνδεθεί με το παλιό δημοτικό σχολείο. Σύμφωνα με τη νεότερη τοπική ενημέρωση,
-        το λαογραφικό μουσείο, με ευθύνη του Πολιτιστικού Συλλόγου «Κοίμησης της Θεοτόκου», μεταφέρθηκε από το παλιό δημοτικό σχολείο
-        στη δεξιά αίθουσα του νέου δημοτικού σχολείου.
-      </p>
-      <p>
-        Εκεί, όμως, παραμένει αναξιοποίητο μέχρι και σήμερα, ενώ ο χρόνος και ο σκόρος καταστρέφουν σταδιακά τα εκθέματα,
-        τα οποία μένουν χωρίς στοιχειώδη συντήρηση. Η φθορά αυτού του υλικού δεν είναι μια ασήμαντη λεπτομέρεια·
-        είναι απώλεια μνήμης για την ίδια την κοινότητα.
-      </p>
-
-      <div class="callout alert">
-        Κάθε αντικείμενο που σαπίζει, σκονίζεται ή τρώγεται από τον χρόνο χωρίς καταγραφή και φροντίδα αφαιρεί ένα ακόμη κομμάτι
-        από την ιστορία του χωριού και από τη δυνατότητα των νεότερων να γνωρίσουν τον τόπο τους όπως πραγματικά υπήρξε.
+    <!-- 4. ΣΥΜΜΕΤΟΧΗ & ΕΛΕΓΧΟΣ -->
+    <section id="symmetoxi" class="aut-section">
+      <div class="section-anchor">
+        <span class="num-badge">04</span>
+        <h3>Συμμετοχή, διαφάνεια και δημόσιος έλεγχος</h3>
+    <section class="aut-section">
+      <div class="as-head">
+        <span class="as-label">Σχέση με τα ρεπορτάζ</span>
+        <div class="as-line"></div>
       </div>
+      <div class="section-rule"></div>
+      <p>Η ενότητα Αυτοδιοίκηση &amp; Κοινωνία δεν φιλοδοξεί να αντικαταστήσει την επίσημη ενημέρωση του Δήμου. Φιλοδοξεί όμως να συγκεντρώσει, όσο γίνεται τεκμηριωμένα, ερωτήματα, απαντήσεις και παρατηρήσεις πολιτών.</p>
+      <h2>Πώς συνδέεται η ενότητα με τα άρθρα</h2>
+      <p>Η ενότητα «Αυτοδιοίκηση &amp; Κοινωνία» δεν επαναλαμβάνει τα ρεπορτάζ· λειτουργεί ως χάρτης. Κάθε υπόθεση έχει το αντίστοιχο αναλυτικό άρθρο, αλλά εδώ φαίνονται συγκεντρωμένα τα βασικά στοιχεία και η πορεία της υπόθεσης.</p>
+      <ul class="aut-list">
+        <li><strong>Τσιμεντόστρωση</strong> – αναλυτική παρουσίαση στο ρεπορτάζ «Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος».</li>
+        <li><strong>Τέλη κοιμητηρίων &amp; σχολική αυλή</strong> – αναλυτικά στο άρθρο «Τέλη κοιμητηρίων χωρίς κοστολόγηση…».</li>
+        <li><strong>Απάντηση Προέδρου</strong> – αξιολόγηση της τοποθέτησης στο άρθρο «Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά».</li>
+      </ul>
     </section>
 
-  </section>
+      <div class="participate-box">
+        <div class="pb-label">Πώς μπορείτε να συμβάλετε</div>
+        <p>Αν έχετε στοιχεία, ερωτήματα ή διορθώσεις για κάποιο από τα ζητήματα που αναφέρονται εδώ, μπορείτε να επικοινωνήσετε με τον συντάκτη. Η δημόσια συζήτηση κερδίζει όταν βασίζεται σε δεδομένα, σεβασμό και διάθεση για λύσεις.</p>
+    <section class="aut-section">
+      <div class="as-head">
+        <span class="as-label">Περιορισμοί &amp; πλαίσιο</span>
+        <div class="as-line"></div>
+      </div>
+      <h2>Τι μπορεί και τι δεν μπορεί να κάνει αυτό το site</h2>
+      <p>Το «Σταυροδρόμι – Κοινότητα» δεν είναι θεσμός ούτε αρχή. Δεν μπορεί να επιβάλει λύσεις, ούτε να αντικαταστήσει την επίσημη ενημέρωση των πολιτών. Μπορεί όμως να συγκεντρώνει πληροφορίες, να θέτει ερωτήματα και να κρατά ζωντανή τη συζήτηση γύρω από τις αποφάσεις που επηρεάζουν το χωριό.</p>
+      <p>Οι παρατηρήσεις και τα σχόλια γίνονται με σεβασμό σε πρόσωπα και ιδιότητες, αλλά χωρίς εκπτώσεις στην κριτική για πράξεις, παραλείψεις και επιλογές.</p>
+    </section>
 
-  <section>
+  </main>
 
-    <div class="right-col-section">
-      <div class="right-label">ΓΙΑ ΤΗΝ ΕΝΟΤΗΤΑ</div>
-      <div class="right-card">
-        <h3>Ιστορία &amp; Μνήμη</h3>
-        <p class="right-card-text">
-          Προσπάθεια συγκέντρωσης και τεκμηρίωσης της ιστορικής διαδρομής του Σταυροδρομίου, με σεβασμό στην προφορική παράδοση,
-          στα σωζόμενα τεκμήρια και στην ανάγκη να μη χαθεί η μνήμη του τόπου.
-        </p>
-        <div class="right-card-meta">Αρχείο Κοινότητας · Σε εξέλιξη</div>
+  <aside class="sidebar">
+
+    <div class="s-widget">
+      <div class="s-widget-head aut">Παρατηρητήριο Αυτοδιοίκησης</div>
+      <div class="s-widget-head aut">Γρήγορη εικόνα</div>
+      <div class="s-widget-body">
+        <ul class="tracker-list">
+          <li>
+            <div class="tl-title"><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο – ανοιχτά ερωτήματα</a></div>
+            <div class="tl-meta">21 Απρ. 2026 <span class="status-pill wait">Σε παρακολούθηση</span></div>
+            <div class="tl-title"><a href="article-apantisi-proedro.html">Απάντηση Προέδρου – σε παρακολούθηση</a></div>
+            <div class="tl-meta">21 Απρ. 2026 <span class="status-pill status-wait">Σε παρακολούθηση</span></div>
+          </li>
+          <li>
+            <div class="tl-title"><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων – σχολική αυλή</a></div>
+            <div class="tl-meta">2023–2026 <span class="status-pill noans">Χωρίς απάντηση</span></div>
+            <div class="tl-title"><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων – ανταποδοτικότητα</a></div>
+            <div class="tl-meta">2023–2026 <span class="status-pill status-open">Χωρίς απάντηση</span></div>
+          </li>
+          <li>
+            <div class="tl-title"><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση – τεχνική επίβλεψη</a></div>
+            <div class="tl-meta">19 Απρ. 2026 <span class="status-pill noans">Χωρίς απάντηση</span></div>
+            <div class="tl-meta">19 Απρ. 2026 <span class="status-pill status-open">Χωρίς απάντηση</span></div>
+          </li>
+        </ul>
       </div>
     </div>
 
-    <div class="right-col-section">
-      <div class="right-label">ΣΥΝΤΟΜΗ ΤΑΥΤΟΤΗΤΑ</div>
-      <div class="right-card">
-        <h3>Βασικά στοιχεία</h3>
-        <p class="right-card-text">
-          Παλιά ονομασία: Αλβάνιτσα · Υψόμετρο: 621 μ. · Δήμος Γορτυνίας από το 2011 · Απογραφή 2021: 87 μόνιμοι κάτοικοι.
-        </p>
-        <div class="right-card-meta">Τόπος · Διοίκηση · Πληθυσμός</div>
+    <div class="s-widget">
+      <div class="s-widget-head mast">Ενότητες</div>
+      <div class="s-widget-body">
+        <ul class="s-list aut">
+          <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+          <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+          <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+          <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        </ul>
       </div>
     </div>
 
-    <div class="right-col-section">
-      <div class="right-label">ΜΝΗΜΗ ΣΕ ΚΙΝΔΥΝΟ</div>
-      <div class="right-card">
-        <h3>Το λαογραφικό υλικό ζητά φροντίδα</h3>
-        <p class="right-card-text">
-          Τα εκθέματα που μεταφέρθηκαν στο νέο δημοτικό σχολείο παραμένουν χωρίς ουσιαστική αξιοποίηση και συντήρηση,
-          με αποτέλεσμα η φθορά να απειλεί πλέον την ίδια την υλική μνήμη του χωριού.
-        </p>
-        <div class="right-card-meta">Λαογραφικό αρχείο · Συντήρηση · Ευθύνη κοινότητας</div>
+    <div class="s-widget">
+      <div class="s-widget-head rep">Σχετικά ρεπορτάζ</div>
+      <div class="s-widget-head mast">Πλοήγηση site</div>
+      <div class="s-widget-body">
+        <ul class="s-list rep">
+          <li><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</a></li>
+          <li><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων και σχολική αυλή</a></li>
+          <li><a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι</a></li>
+        <ul class="cat-links">
+          <li class="rep"><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+          <li class="ist"><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+          <li class="lao"><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+          <li class="aut"><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        </ul>
       </div>
     </div>
 
-    <div class="right-col-section">
-      <div class="right-label">ΣΥΜΜΕΤΟΧΗ</div>
-      <div class="right-card">
-        <p class="right-card-text">
-          Αν διαθέτετε έγγραφα, παλιές φωτογραφίες, οικογενειακές μαρτυρίες, τοπωνύμια ή στοιχεία για πρόσωπα και κτίρια του χωριού,
-          μπορείτε να συμβάλετε στον εμπλουτισμό της ενότητας.
-        </p>
-        <div class="right-card-meta">
-          Επικοινωνία: <a href="epikoinonia.html">φόρμα &amp; στοιχεία επικοινωνίας</a>
+    <div class="s-widget">
+      <div class="s-widget-head mast">Σχετικά με το site</div>
+      <div class="s-widget-head rep">Πολιτική κριτικής</div>
+      <div class="s-widget-body">
+        <div class="about-text">
+          <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με σεβασμό στους κατοίκους και την ιστορία του τόπου.</p>
+          <p>Τα κείμενα της ενότητας Αυτοδιοίκηση &amp; Κοινωνία στοχεύουν στην ενημέρωση και τον ουσιαστικό διάλογο, όχι στην προσωπική στοχοποίηση.</p>
+        <div class="about-text-side">
+          <p>Η κριτική ασκείται σε πράξεις και αποφάσεις, όχι σε πρόσωπα ως χαρακτήρες. Όπου διαπιστώνεται λάθος, γίνεται διόρθωση με σχετική σημείωση.</p>
+          <p>Ο οποιοσδήποτε έχει δικαίωμα απάντησης και σχολιασμού· εφόσον η απάντηση είναι σαφής και τεκμηριωμένη, θα δημοσιεύεται ή θα συνοψίζεται αναλόγως.</p>
         </div>
       </div>
     </div>
 
-  </section>
-
-</main>
+  </aside>
+</div>
 
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
+      <div style="display:flex; gap:4px; margin-bottom:10px;">
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--rep-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--ist-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--lao-lt);"></div>
+        <div style="width:18px;height:4px;border-radius:2px;background:var(--aut-lt);"></div>
+      </div>
       <h2>Σταυροδρόμι – Κοινότητα</h2>
       <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
-      <p>
-        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.
-        Χωρίς κομματικές ή άλλες δεσμεύσεις.
-      </p>
+      <p>Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.</p>
     </div>
     <div class="footer-col">
-      <h4>ΕΝΟΤΗΤΕΣ</h4>
+      <h4>Ενότητες</h4>
       <ul>
+        <li><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία & Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία & Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση & Κοινωνία</a></li>
         <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
         <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
         <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
@@ -789,18 +620,21 @@ footer {
       </ul>
     </div>
     <div class="footer-col">
-      <h4>ΑΡΧΕΙΟ</h4>
+      <h4>Παρατηρητήριο</h4>
       <ul>
-        <li>Τοπωνύμια &amp; μαρτυρίες</li>
-        <li>Απογραφές πληθυσμού</li>
-        <li>Ιστορικά κτίσματα</li>
-        <li>Λαογραφικό υλικό</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
     <div class="footer-col">
-      <h4>ΣΕΛΙΔΕΣ</h4>
+      <h4>Σελίδες</h4>
       <ul>
         <li><a href="index.html">Αρχική</a></li>
+        <li>Σχετικά</li>
+        <li>Αρχείο κειμένων</li>
+        <li>Επικοινωνία</li>
         <li><a href="sxetika.html">Σχετικά</a></li>
         <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
@@ -813,42 +647,36 @@ footer {
 </footer>
 
 <script>
-// scroll progress bar
-window.addEventListener('scroll', () => {
-  const st  = document.documentElement.scrollTop;
-  const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-  const bar = document.getElementById('progress');
-  if (bar && dh > 0) {
-    bar.style.width = (st / dh * 100) + '%';
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const dh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('progress').style.width = (st / dh * 100) + '%';
+  });
+
+  // Dates
+  const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                  'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+  function updateDates() {
+    const d = new Date();
+    const dateStr = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    const span = document.getElementById('topbar-date');
+    if (span) span.textContent = dateStr;
+    const mdDay  = document.getElementById('mast-day');
+    const mdFull = document.getElementById('mast-full');
+    if (mdDay)  mdDay.textContent = d.getDate();
+    if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    if (span) span.textContent =
+      days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+    document.getElementById('mast-day').textContent  = d.getDate();
+    document.getElementById('mast-full').textContent =
+      days[d.getDay()] + ' · ' + months[d.getMonth()] + ' ' + d.getFullYear();
   }
-});
 
-// ημερομηνία topbar + masthead
-const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
-const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
-                'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
-
-function updateDates() {
-  const d      = new Date();
-  const span   = document.getElementById('topbar-date');
-  const mdDay  = document.getElementById('mast-day');
-  const mdFull = document.getElementById('mast-full');
-
-  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
-               months[d.getMonth()] + ' ' + d.getFullYear();
-
-  if (span)  span.textContent  = full;
-  if (mdDay) mdDay.textContent = d.getDate();
-  if (mdFull) {
-    mdFull.textContent =
-      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
-      months[d.getMonth()] + ' ' + d.getFullYear();
-  }
-}
-
-updateDates();
-setInterval(updateDates, 60000);
+  updateDates();
+  setInterval(updateDates, 60000);
 </script>
-
 </body>
 </html>

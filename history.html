@@ -5,22 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ιστορία &amp; Μνήμη – Σταυροδρόμι Κοινότητα</title>
 
-<meta name="description" content="Η ιστορία του Σταυροδρομίου Αρκαδίας: από την παλιά Αλβάνιτσα έως τη σημερινή κοινότητα. Χρονολόγιο, μνημεία, απογραφές, πρόσωπα, λαογραφία και μνήμη του τόπου.">
+<meta name="description" content="Το Σταυροδρόμι μέσα στον χρόνο: όνομα και τοπωνύμια, χρονολόγιο, κτίρια, κάτοικοι και πρόσωπα που σφράγισαν την ιστορία του χωριού.">
 
 <meta property="og:title" content="Ιστορία &amp; Μνήμη – Σταυροδρόμι Κοινότητα">
-<meta property="og:description" content="Χρονολόγιο, τοπωνύμια, κτίρια, πρόσωπα, απογραφές και στοιχεία μνήμης για την ιστορική διαδρομή του Σταυροδρομίου Αρκαδίας.">
+<meta property="og:description" content="Σκόρπια τεκμήρια, προφορικές μαρτυρίες και αριθμοί απογραφών συνθέτουν την ιστορική διαδρομή του Σταυροδρομίου.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://michelis2023.github.io/stavrodromio/history.html">
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/history/stavrodromi-plateia.jpg">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --ink: #18191a;
   --ink-soft: #36393c;
@@ -31,33 +28,25 @@
   --border: #d4cec4;
   --mast: #1e2b1f;
   --mast-mid: #2e4230;
+  --rep: #7a1a1a;
+  --rep-lt: #a82828;
   --ist: #5a3e10;
   --ist-lt: #8a5f1e;
-  --warn: #7a1a1a;
-  --warn-bg: #f3e1df;
-  --accent-soft: #f1ece4;
+  --lao: #1e4a2e;
+  --aut: #1a2e5a;
 }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--bg);
   color: var(--ink);
   font-family: 'IBM Plex Sans', system-ui, sans-serif;
   font-weight: 300;
-  line-height: 1.72;
+  line-height: 1.7;
 }
-
 a { color: inherit; text-decoration: none; }
-
 #progress {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 3px;
-  background: var(--ist-lt);
-  width: 0;
-  z-index: 300;
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--ist-lt); width: 0; z-index: 300;
   transition: width 0.1s linear;
 }
 
@@ -65,29 +54,19 @@ a { color: inherit; text-decoration: none; }
 .topbar {
   background: var(--mast);
   padding: 5px 0;
-  font-size: 0.72rem;
+  font-size: 0.7rem;
   color: rgba(255,255,255,0.5);
   letter-spacing: 0.05em;
 }
 .topbar-inner {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
 }
 .topbar .loc {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 6px;
   color: rgba(255,255,255,0.65);
 }
-.topbar .loc::before {
-  content: '◉';
-  font-size: 0.55rem;
-  color: #2e6e44;
-}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
 
 /* MASTHEAD */
 .masthead {
@@ -99,49 +78,32 @@ a { color: inherit; text-decoration: none; }
   z-index: 100;
 }
 .mast-brand {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; margin: 0 auto;
   padding: 20px 24px 16px;
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 24px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
 }
 .site-name h1 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.5rem, 4vw, 2.3rem);
-  font-weight: 900;
-  color: var(--white);
-  letter-spacing: -0.02em;
-  line-height: 1;
+  font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; line-height: 1;
 }
-.site-name h1 .cross {
-  color: rgba(255,255,255,0.35);
-  font-weight: 300;
-  font-style: italic;
-  margin: 0 2px;
-}
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
 .site-name .subtitle {
-  font-size: 0.75rem;
-  color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  margin-top: 6px;
-  font-weight: 400;
+  font-size: 0.75rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
-.mast-date { text-align: right; }
+.mast-date {
+  text-align: right;
+}
 .mast-date .md-day {
   font-family: 'Playfair Display', serif;
-  font-size: 1.7rem;
-  font-weight: 700;
-  color: rgba(255,255,255,0.18);
-  line-height: 1;
+  font-size: 1.7rem; font-weight: 700;
+  color: rgba(255,255,255,0.18); line-height: 1;
 }
 .mast-date .md-full {
-  font-size: 0.68rem;
-  color: rgba(255,255,255,0.35);
-  letter-spacing: 0.06em;
-  margin-top: 3px;
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em; margin-top: 3px;
 }
 
 /* NAV */
@@ -150,76 +112,63 @@ nav.primary {
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 nav.primary ul {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  list-style: none;
-  overflow-x: auto;
-  scrollbar-width: none;
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; list-style: none;
+  overflow-x: auto; scrollbar-width: none;
 }
 nav.primary ul::-webkit-scrollbar { display: none; }
 nav.primary li a {
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  display: flex; align-items: center; gap: 6px;
   padding: 10px 14px;
-  font-size: 0.74rem;
-  font-weight: 500;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
   color: rgba(255,255,255,0.62);
   white-space: nowrap;
   border-bottom: 3px solid transparent;
   transition: color 0.18s, border-color 0.18s;
 }
-nav.primary li a .nav-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
 nav.primary li a.nav-ist {
   border-bottom-color: var(--ist-lt);
   color: #ffffff;
 }
 
-/* MAIN */
+/* MAIN LAYOUT */
 .main {
-  max-width: 1200px;
-  margin: 32px auto 48px;
+  max-width: 1200px; margin: 32px auto 48px;
   padding: 0 24px 40px;
   display: grid;
-  grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
   gap: 40px;
 }
 
-.section-header { margin-bottom: 22px; }
+/* LEFT COLUMN */
+.section-header {
+  margin-bottom: 22px;
+}
 .section-kicker {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
   color: var(--ink-muted);
   margin-bottom: 6px;
 }
 .section-title {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.78rem;
-  margin-bottom: 8px;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
 }
 .section-subtitle {
-  font-size: 0.97rem;
+  font-size: 0.94rem;
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
 .section-intro {
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   color: var(--ink-soft);
 }
 
-/* quick nav */
+/* quick navigation */
 .quick-nav {
   margin: 20px 0 24px;
   background: var(--white);
@@ -238,17 +187,22 @@ nav.primary li a.nav-ist {
   list-style: none;
   font-size: 0.84rem;
 }
-.quick-nav-list li { margin-bottom: 4px; }
-.quick-nav-list a:hover { text-decoration: underline; }
+.quick-nav-list li {
+  margin-bottom: 4px;
+}
+.quick-nav-list a:hover {
+  text-decoration: underline;
+}
 
-/* sections */
+/* history sections */
 .history-section {
-  margin-bottom: 30px;
-  padding-bottom: 20px;
+  margin-bottom: 28px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
 }
-.history-section:last-of-type { border-bottom: none; }
-
+.history-section:last-of-type {
+  border-bottom: none;
+}
 .history-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -259,47 +213,27 @@ nav.primary li a.nav-ist {
 }
 .history-section h3 {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: 1.2rem;
-  margin-bottom: 8px;
+  font-size: 1.15rem;
+  margin-bottom: 6px;
 }
 .history-section p {
-  font-size: 0.91rem;
+  font-size: 0.9rem;
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
-.history-section p:last-child { margin-bottom: 0; }
-
-/* info cards */
-.info-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 10px;
-  margin-top: 12px;
-}
-.info-card {
-  background: var(--white);
-  border: 1px solid var(--border);
-  padding: 10px 12px;
-}
-.info-card .mini-label {
-  font-size: 0.68rem;
-  color: var(--ink-muted);
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-}
-.info-card .mini-value {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.07rem;
-  margin-top: 3px;
+.history-section p:last-child {
+  margin-bottom: 0;
 }
 
-/* timeline */
-.timeline-block { margin-top: 12px; }
+/* timeline blocks */
+.timeline-block {
+  margin-top: 10px;
+}
 .timeline-item {
   display: grid;
-  grid-template-columns: 108px minmax(0,1fr);
-  gap: 14px;
-  margin-bottom: 14px;
+  grid-template-columns: 95px minmax(0,1fr);
+  gap: 12px;
+  margin-bottom: 12px;
 }
 .timeline-year {
   font-size: 0.8rem;
@@ -308,8 +242,8 @@ nav.primary li a.nav-ist {
   text-transform: uppercase;
 }
 .timeline-body h4 {
-  font-size: 0.93rem;
-  font-weight: 600;
+  font-size: 0.92rem;
+  font-weight: 500;
   margin-bottom: 3px;
 }
 .timeline-body p {
@@ -317,44 +251,68 @@ nav.primary li a.nav-ist {
   color: var(--ink-soft);
 }
 
-/* callouts */
+/* callout */
 .callout {
-  margin-top: 12px;
-  padding: 11px 13px;
+  margin-top: 10px;
+  padding: 10px 12px;
   border-left: 3px solid var(--ist-lt);
   background: var(--bg-warm);
-  font-size: 0.85rem;
+  font-size: 0.84rem;
   color: var(--ink-soft);
 }
-.callout.warning {
-  border-left-color: var(--warn);
-  background: var(--warn-bg);
+.callout.alert {
+  border-left-color: var(--rep-lt);
+  background: #f1e0de;
 }
-.callout.note {
-  background: var(--accent-soft);
+
+/* simple stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4,minmax(0,1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.stat-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 8px 10px;
+  font-size: 0.8rem;
+}
+.stat-label {
+  font-size: 0.7rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.stat-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  margin-top: 2px;
 }
 
 /* lists */
-.memory-list {
+.info-list {
   list-style: none;
   margin-top: 10px;
 }
-.memory-list li {
+.info-list li {
   font-size: 0.88rem;
   color: var(--ink-soft);
   margin-bottom: 8px;
-  padding-left: 16px;
+  padding-left: 14px;
   position: relative;
 }
-.memory-list li::before {
+.info-list li::before {
   content: '—';
   position: absolute;
   left: 0;
   color: var(--ist-lt);
 }
 
-/* right column */
-.right-col-section { margin-bottom: 26px; }
+/* RIGHT COLUMN */
+.right-col-section {
+  margin-bottom: 26px;
+}
 .right-label {
   font-size: 0.78rem;
   font-weight: 600;
@@ -370,7 +328,7 @@ nav.primary li a.nav-ist {
   font-size: 0.86rem;
 }
 .right-card h3 {
-  font-size: 1rem;
+  font-size: 0.98rem;
   font-family: 'Playfair Display', Georgia, serif;
   margin-bottom: 6px;
 }
@@ -385,14 +343,13 @@ nav.primary li a.nav-ist {
   color: var(--ink-muted);
 }
 
-/* footer */
+/* FOOTER */
 footer {
   background: var(--mast);
   color: rgba(255,255,255,0.45);
 }
 .footer-inner {
-  max-width: 1200px;
-  margin: 0 auto;
+  max-width: 1200px; margin: 0 auto;
   padding: 40px 24px 28px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -400,14 +357,12 @@ footer {
 }
 .footer-brand h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.2rem; font-weight: 700;
   color: rgba(255,255,255,0.85);
   margin-bottom: 6px;
 }
 .footer-brand .ft-sub {
-  font-size: 0.7rem;
-  font-style: italic;
+  font-size: 0.7rem; font-style: italic;
   color: rgba(255,255,255,0.3);
   margin-bottom: 12px;
 }
@@ -417,10 +372,8 @@ footer {
   line-height: 1.7;
 }
 .footer-col h4 {
-  font-size: 0.62rem;
-  font-weight: 600;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
   color: rgba(255,255,255,0.55);
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -432,9 +385,8 @@ footer {
   font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  display: flex;
-  gap: 5px;
-  align-items: center;
+  cursor: pointer;
+  display: flex; gap: 5px; align-items: center;
 }
 .footer-col li:last-child { border-bottom: none; }
 .footer-col li::before { content: '›'; opacity: 0.4; }
@@ -443,31 +395,38 @@ footer {
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 16px 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 16px;
-  flex-wrap: wrap;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px; flex-wrap: wrap;
   font-size: 0.7rem;
 }
-.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .copy {
+  color: rgba(255,255,255,0.25);
+}
 .footer-bottom .independence {
   font-style: italic;
   color: rgba(255,255,255,0.22);
 }
 
-/* responsive */
-@media (max-width: 950px) {
-  .main { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
-@media (max-width: 680px) {
-  .main { padding: 0 16px 32px; }
-  .footer-inner { grid-template-columns: 1fr; }
-  .info-grid { grid-template-columns: 1fr; }
-  .timeline-item { grid-template-columns: 1fr; gap: 4px; }
+@media (max-width: 600px) {
+  .main {
+    padding: 0 16px 32px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 </style>
 </head>
@@ -508,18 +467,18 @@ footer {
 
 <main class="main">
 
+  <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ -->
   <section>
     <div class="section-header">
       <div class="section-kicker">ΙΣΤΟΡΙΑ &amp; ΜΝΗΜΗ</div>
       <h2 class="section-title">Το Σταυροδρόμι μέσα στον χρόνο</h2>
       <p class="section-subtitle">
-        Η ιστορία ενός ορεινού γορτυνιακού χωριού δεν γράφεται μόνο από ημερομηνίες και απογραφές, αλλά και από τα τοπωνύμιά του,
-        τα κτίριά του, τα πρόσωπά του, τα πανηγύρια του και τα ίχνη που αφήνει η καθημερινή ζωή στον χρόνο.
+        Σκόρπια τεκμήρια, παλιές ονομασίες, διοικητικές μεταβολές, μνήμες κατοίκων και αριθμοί απογραφών
+        προσπαθούν να σχηματίσουν μια καθαρότερη εικόνα για το πώς γεννήθηκε, μεγάλωσε και άλλαξε το χωριό.
       </p>
       <p class="section-intro">
-        Η ενότητα αυτή επιχειρεί να συγκεντρώσει σε μία ενιαία αφήγηση τα βασικά τεκμήρια για την πορεία του Σταυροδρομίου:
-        από την παλιά Αλβάνιτσα και τη Μαυράδα έως τη σημερινή πληθυσμιακή εικόνα, την πολιτιστική μνήμη και τις εκκρεμότητες
-        που εξακολουθούν να βαραίνουν το χωριό.
+        Η σελίδα αυτή λειτουργεί ως ανοιχτό αρχείο. Εμπλουτίζεται όσο συγκεντρώνονται νέα στοιχεία, ιστορίες,
+        φωτογραφίες και τεκμήρια που βοηθούν να σωθεί η μνήμη του τόπου με τάξη, σοβαρότητα και σεβασμό.
       </p>
     </div>
 
@@ -529,59 +488,45 @@ footer {
         <li><a href="#taftotita">01 · Ταυτότητα του τόπου</a></li>
         <li><a href="#onoma">02 · Όνομα &amp; διοικητική πορεία</a></li>
         <li><a href="#xronologio">03 · Χρονολόγιο</a></li>
-        <li><a href="#ktiria">04 · Κτίρια &amp; μνημεία</a></li>
+        <li><a href="#ktiria">04 · Κτίρια &amp; υποδομές</a></li>
         <li><a href="#katoikoi">05 · Κάτοικοι &amp; απογραφές</a></li>
-        <li><a href="#prosopa">06 · Πρόσωπα του τόπου</a></li>
-        <li><a href="#mnimi">07 · Λαογραφία, μνήμη &amp; εκκρεμότητες</a></li>
+        <li><a href="#prosopa">06 · Πρόσωπα</a></li>
+        <li><a href="#mnimi">07 · Λαογραφία &amp; μνήμη</a></li>
       </ul>
     </nav>
 
     <section class="history-section" id="taftotita">
       <div class="history-label">01 · ΤΑΥΤΟΤΗΤΑ ΤΟΥ ΤΟΠΟΥ</div>
-      <h3>Θέση, χαρακτήρας και φυσικό ανάγλυφο</h3>
+      <h3>Θέση, χαρακτήρας και φυσικό πλαίσιο</h3>
       <p>
-        Το Σταυροδρόμι είναι ορεινό χωριό της Αρκαδίας, σε υψόμετρο 621 μέτρων, και βρίσκεται σε κομβική θέση πάνω στη διασταύρωση
-        της εθνικής οδού Τρίπολης–Ολυμπίας και της επαρχιακής οδού Κοντοβάζαινας–Τροπαίων, στοιχείο που εξηγεί και το σημερινό του όνομα. [web:6]
+        Το Σταυροδρόμι είναι χωριό της Αρκαδίας και ανήκει σήμερα στον Δήμο Γορτυνίας. Βρίσκεται σε κομβική θέση,
+        στη διασταύρωση της εθνικής οδού Τρίπολης–Ολυμπίας και της επαρχιακής οδού Κοντοβάζαινας–Τροπαίων,
+        στοιχείο που συνδέεται άμεσα και με τη σημερινή του ονομασία. [web:6]
       </p>
       <p>
-        Στο παρελθόν το χωριό λειτούργησε ως μικρό εμπορικό κέντρο της περιοχής, ακριβώς επειδή βρισκόταν σε σημείο διέλευσης
-        και επικοινωνίας ανάμεσα σε γειτονικούς οικισμούς και οδικούς άξονες. [web:43]
+        Το χωριό βρίσκεται σε υψόμετρο περίπου 621 μέτρων, ενώ στο παρελθόν υπήρξε εμπορικό κέντρο της περιοχής,
+        λόγω ακριβώς της θέσης του ως σημείου διέλευσης και συνάντησης. [web:6][web:43]
       </p>
       <p>
-        Η ρεματιά της Μαυράδας αποτελεί ένα από τα πιο χαρακτηριστικά φυσικά και ιστορικά τοπία του οικισμού, καθώς συνδέεται
-        με παλιότερες μορφές υδροδότησης, παραγωγής και καθημερινής ζωής. [web:43]
+        Σημαντικό φυσικό και ιστορικό σημείο αναφοράς αποτελεί και η ρεματιά της Μαυράδας, που συνδέεται με παλιότερες
+        μορφές ζωής, παραγωγής και καθημερινότητας του χωριού. [web:6][web:43]
       </p>
-
-      <div class="info-grid">
-        <div class="info-card">
-          <div class="mini-label">Υψόμετρο</div>
-          <div class="mini-value">621 μ.</div>
-        </div>
-        <div class="info-card">
-          <div class="mini-label">Παλιά ονομασία</div>
-          <div class="mini-value">Αλβάνιτσα</div>
-        </div>
-        <div class="info-card">
-          <div class="mini-label">Σημερινός Δήμος</div>
-          <div class="mini-value">Γορτυνίας</div>
-        </div>
-      </div>
     </section>
 
     <section class="history-section" id="onoma">
       <div class="history-label">02 · ΟΝΟΜΑ &amp; ΔΙΟΙΚΗΤΙΚΗ ΠΟΡΕΙΑ</div>
       <h3>Από την Αλβάνιτσα στο Σταυροδρόμι</h3>
       <p>
-        Μέχρι τις 20 Αυγούστου 1927 το χωριό ήταν γνωστό ως «Αλβάνιτσα», ενώ στη συνέχεια μετονομάστηκε επισήμως σε «Σταυροδρόμι»,
-        ονομασία που αποτύπωσε με ακρίβεια τη γεωγραφική και λειτουργική του θέση μέσα στην περιοχή. [web:6]
+        Μέχρι τις 20 Αυγούστου 1927 το χωριό ονομαζόταν «Αλβάνιτσα». Η μετονομασία του σε «Σταυροδρόμι»
+        αποτύπωσε πιο καθαρά τον γεωγραφικό και λειτουργικό του χαρακτήρα ως τόπου διέλευσης. [web:6]
       </p>
       <p>
-        Σε διοικητικό επίπεδο, το Σταυροδρόμι ανήκε παλαιότερα στον Δήμο Τροπαίων και από το 2011, με τη μεταρρύθμιση του «Καλλικράτη»,
-        υπάγεται στον Δήμο Γορτυνίας. [web:6]
+        Σε διοικητικό επίπεδο, το χωριό ανήκε παλαιότερα στον Δήμο Τροπαίων και από το 2011, με τη μεταρρύθμιση
+        του «Καλλικράτη», υπάγεται στον Δήμο Γορτυνίας. [web:6][web:9]
       </p>
       <div class="callout">
-        Το όνομα «Σταυροδρόμι» δεν λειτουργεί μόνο ως γεωγραφικός προσδιορισμός· συμπυκνώνει την ταυτότητα του τόπου ως σημείου διέλευσης,
-        σύνδεσης και συνάντησης ανθρώπων, εμπορίου και μνήμης.
+        Το ίδιο το όνομα του χωριού συνοψίζει την ιστορία του: πέρασμα, συνάντηση, μετακίνηση και διαρκής σχέση
+        με τους δρόμους της Γορτυνίας.
       </div>
     </section>
 
@@ -589,17 +534,17 @@ footer {
       <div class="history-label">03 · ΧΡΟΝΟΛΟΓΙΟ</div>
       <h3>Βασικά σημεία της ιστορικής διαδρομής</h3>
       <p>
-        Το παρακάτω χρονολόγιο οργανώνει σε μία λογική σειρά τα βασικά γνωστά στοιχεία, ώστε ο αναγνώστης να παρακολουθεί πιο εύκολα
-        τη διαδρομή του χωριού μέσα στον χρόνο.
+        Τα παρακάτω χρόνια δεν συνθέτουν ολόκληρη την ιστορία του χωριού. Αποτελούν όμως σταθερά σημεία
+        που επιτρέπουν μια πιο οργανωμένη ανάγνωση της πορείας του Σταυροδρομίου.
       </p>
 
       <div class="timeline-block">
         <div class="timeline-item">
           <div class="timeline-year">19ος αιώνας</div>
           <div class="timeline-body">
-            <h4>Οι πρώτες σταθερές απογραφικές και διοικητικές μνείες</h4>
-            <p>Οι απογραφές και τα διοικητικά έγγραφα του 19ου αιώνα αποτελούν τα πρώτα σταθερά σημεία από τα οποία
-            μπορεί να παρακολουθηθεί η νεότερη πορεία του οικισμού. [web:6]</p>
+            <h4>Πρώτες σταθερές απογραφικές μνείες</h4>
+            <p>Οι απογραφές και τα διοικητικά έγγραφα του 19ου αιώνα αποτελούν τα πρώτα σταθερά σημεία
+            από τα οποία μπορούμε να παρακολουθήσουμε τη νεότερη ιστορική διαδρομή του χωριού. [web:6]</p>
           </div>
         </div>
 
@@ -607,8 +552,8 @@ footer {
           <div class="timeline-year">1909</div>
           <div class="timeline-body">
             <h4>Το παλιό Δημοτικό Σχολείο</h4>
-            <p>Το παλιό Δημοτικό Σχολείο του Σταυροδρομίου χρονολογείται στο 1909 και υπήρξε για δεκαετίες χώρος παιδείας,
-            μνήμης και κοινοτικής αναφοράς. [web:43]</p>
+            <p>Το παλιό Δημοτικό Σχολείο του Σταυροδρομίου χρονολογείται στο 1909 και υπήρξε για δεκαετίες
+            χώρος μάθησης, κοινοτικής ζωής και μεταγενέστερα σημείο αναφοράς για το λαογραφικό υλικό του χωριού. [web:43]</p>
           </div>
         </div>
 
@@ -616,43 +561,34 @@ footer {
           <div class="timeline-year">1910</div>
           <div class="timeline-body">
             <h4>Η εκκλησία της Κοίμησης</h4>
-            <p>Η εκκλησία της Κοίμησης αναφέρεται ως βασικό μνημείο του χωριού και χρονολογείται στο 1910,
-            αποτελώντας έναν από τους σημαντικότερους σταθερούς ιστορικούς πυρήνες του οικισμού. [web:43]</p>
+            <p>Η εκκλησία της Κοίμησης, χρονολογημένη στο 1910, αποτελεί ένα από τα πιο αναγνωρίσιμα
+            κτίσματα και έναν από τους πιο σταθερούς ιστορικούς άξονες του οικισμού. [web:1][web:43]</p>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-year">1927</div>
           <div class="timeline-body">
-            <h4>Μετονομασία</h4>
-            <p>Η παλιά ονομασία «Αλβάνιτσα» αντικαθίσταται επίσημα από το «Σταυροδρόμι». [web:6]</p>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year">Μεσοπόλεμος–μεταπολεμικά</div>
-          <div class="timeline-body">
-            <h4>Αλλαγές στην κοινωνική και οικονομική ζωή</h4>
-            <p>Όπως στα περισσότερα χωριά της Γορτυνίας, οι πόλεμοι, η μετανάστευση και η σταδιακή απομάκρυνση
-            προς τα αστικά κέντρα επηρέασαν καθοριστικά τη δημογραφική και κοινωνική φυσιογνωμία του χωριού.</p>
+            <h4>Επίσημη μετονομασία</h4>
+            <p>Η ονομασία «Αλβάνιτσα» αντικαθίσταται επίσημα από το «Σταυροδρόμι». [web:6]</p>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-year">1989</div>
           <div class="timeline-body">
-            <h4>Η «Γιορτή του Κρασιού»</h4>
-            <p>Από το 1989 καθιερώθηκε στο χωριό η «Γιορτή του Κρασιού», η οποία αποτέλεσε σημείο λαϊκής συνάντησης,
-            μνήμης και πολιτιστικής δραστηριότητας, αν και τα τελευταία χρόνια δεν πραγματοποιείται. [web:6]</p>
+            <h4>Καθιέρωση της «Γιορτής του Κρασιού»</h4>
+            <p>Από το 1989 οργανωνόταν στο χωριό η «Γιορτή του Κρασιού», ένα τοπικό πολιτιστικό γεγονός
+            που συνδεόταν με τη μνήμη, την κοινωνικότητα και την τοπική παράδοση. [web:6]</p>
           </div>
         </div>
 
         <div class="timeline-item">
           <div class="timeline-year">2011</div>
           <div class="timeline-body">
-            <h4>Δήμος Γορτυνίας και απογραφή</h4>
-            <p>Με τον «Καλλικράτη» το Σταυροδρόμι εντάσσεται στον Δήμο Γορτυνίας, ενώ η απογραφή του 2011 καταγράφει
-            96 μόνιμους κατοίκους. [web:6][web:43]</p>
+            <h4>Διοικητική αλλαγή και απογραφή</h4>
+            <p>Με τον «Καλλικράτη» το Σταυροδρόμι εντάσσεται στον Δήμο Γορτυνίας. Την ίδια χρονιά η απογραφή
+            καταγράφει 96 μόνιμους κατοίκους. [web:6][web:43][web:17]</p>
           </div>
         </div>
 
@@ -660,126 +596,132 @@ footer {
           <div class="timeline-year">2021</div>
           <div class="timeline-body">
             <h4>Νέα απογραφή</h4>
-            <p>Η απογραφή του 2021 καταγράφει 87 μόνιμους κατοίκους στο Σταυροδρόμι, επιβεβαιώνοντας τη συνεχιζόμενη
-            δημογραφική συρρίκνωση. [web:6]</p>
+            <p>Η απογραφή του 2021 καταγράφει 87 μόνιμους κατοίκους, επιβεβαιώνοντας τη συνεχιζόμενη
+            πληθυσμιακή μείωση του χωριού. [web:9]</p>
           </div>
         </div>
       </div>
     </section>
 
     <section class="history-section" id="ktiria">
-      <div class="history-label">04 · ΚΤΙΡΙΑ &amp; ΜΝΗΜΕΙΑ</div>
-      <h3>Εκκλησία, σχολείο, μουσείο, Μαυράδα</h3>
+      <div class="history-label">04 · ΚΤΙΡΙΑ &amp; ΥΠΟΔΟΜΕΣ</div>
+      <h3>Εκκλησία, σχολείο, Μαυράδα, δημόσιος χώρος</h3>
       <p>
-        Τα πιο χαρακτηριστικά στοιχεία της υλικής μνήμης του Σταυροδρομίου είναι η εκκλησία της Κοίμησης, το παλιό Δημοτικό Σχολείο
-        και η ρεματιά της Μαυράδας, που λειτουργούν ως σταθεροί μάρτυρες της ιστορικής συνέχειας του τόπου. [web:43]
+        Τα κτίρια ενός χωριού είναι συχνά οι πιο σταθεροί μάρτυρες της ιστορίας του. Στο Σταυροδρόμι,
+        η εκκλησία της Κοίμησης, το παλιό Δημοτικό Σχολείο και η ρεματιά της Μαυράδας σχηματίζουν
+        βασικούς άξονες της ιστορικής του ταυτότητας. [web:1][web:43]
       </p>
       <p>
-        Το παλιό σχολείο είχε συνδεθεί και με τη λειτουργία μουσείου λαϊκής τέχνης, γεγονός που αποτυπώνεται και σε δημόσιες αναφορές
-        για το χωριό. [web:43][web:147]
+        Το παλιό σχολείο δεν υπήρξε μόνο εκπαιδευτικός χώρος· συνδέθηκε και με τη μεταγενέστερη συγκέντρωση
+        λαογραφικού υλικού, όπως καταγράφεται σε δημόσιες αναφορές για το χωριό. [web:43][web:147]
       </p>
 
-      <ul class="memory-list">
-        <li><strong>Ιερός Ναός Κοίμησης:</strong> βασικό θρησκευτικό και ιστορικό σημείο αναφοράς του χωριού. [web:43]</li>
-        <li><strong>Παλιό Δημοτικό Σχολείο (1909):</strong> κτίριο με έντονο εκπαιδευτικό και συμβολικό αποτύπωμα στη ζωή της κοινότητας. [web:43]</li>
-        <li><strong>Μουσείο λαϊκής τέχνης / λαογραφικό υλικό:</strong> συνδεδεμένο ιστορικά με το παλιό σχολείο. [web:43][web:147]</li>
-        <li><strong>Ρεματιά της Μαυράδας:</strong> φυσικό και ιστορικό σημείο που διασώζει παλιότερες όψεις της καθημερινότητας και της παραγωγής. [web:43]</li>
+      <ul class="info-list">
+        <li><strong>Εκκλησία της Κοίμησης (1910):</strong> βασικό θρησκευτικό και ιστορικό σημείο αναφοράς. [web:1][web:43]</li>
+        <li><strong>Παλιό Δημοτικό Σχολείο (1909):</strong> χώρος εκπαίδευσης, μνήμης και λαογραφικής αναφοράς. [web:43]</li>
+        <li><strong>Ρεματιά της Μαυράδας:</strong> τοπίο με ισχυρό αποτύπωμα στην καθημερινή ζωή και στην προφορική μνήμη. [web:6][web:43]</li>
       </ul>
     </section>
 
     <section class="history-section" id="katoikoi">
       <div class="history-label">05 · ΚΑΤΟΙΚΟΙ &amp; ΑΠΟΓΡΑΦΕΣ</div>
-      <h3>Οι αριθμοί και όσα κρύβουν πίσω τους</h3>
+      <h3>Κάτοικοι &amp; απογραφές</h3>
       <p>
-        Οι απογραφές δεν εξαντλούν την αλήθεια ενός χωριού, αλλά προσφέρουν ασφαλές μέτρο σύγκρισης για τη δημογραφική του πορεία. [web:6][web:43]
+        Οι απογραφές προσφέρουν ένα σταθερό μέτρο για να παρακολουθήσουμε τις μεταβολές του χωριού.
+        Πίσω από κάθε αριθμό κρύβονται οικογένειες, επιστροφές, φυγές και η σταδιακή αλλαγή του τρόπου ζωής. [web:43][web:9]
       </p>
 
-      <div class="info-grid">
-        <div class="info-card">
-          <div class="mini-label">Απογραφή 2001</div>
-          <div class="mini-value">239</div>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-label">2001</div>
+          <div class="stat-value">239</div>
         </div>
-        <div class="info-card">
-          <div class="mini-label">Απογραφή 2011</div>
-          <div class="mini-value">96</div>
+        <div class="stat-card">
+          <div class="stat-label">2011</div>
+          <div class="stat-value">96</div>
         </div>
-        <div class="info-card">
-          <div class="mini-label">Απογραφή 2021</div>
-          <div class="mini-value">87</div>
+        <div class="stat-card">
+          <div class="stat-label">2021</div>
+          <div class="stat-value">87</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Μεταβολή 2011–2021</div>
+          <div class="stat-value">−9</div>
         </div>
       </div>
 
-      <p style="margin-top:12px;">
-        Η εικόνα αυτή δείχνει τη μεγάλη μεταβολή που γνώρισε το Σταυροδρόμι μέσα σε δύο δεκαετίες, από έναν οικισμό με σαφώς μεγαλύτερη
-        παρουσία στις αρχές του 21ου αιώνα σε μια κοινότητα με αισθητά περιορισμένο μόνιμο πληθυσμό. [web:43][web:6]
-      </p>
-
-      <div class="callout note">
-        Οι αριθμοί αφορούν τον μόνιμο πληθυσμό. Η βιωματική εικόνα του χωριού σε καλοκαίρια, εορτές και περιόδους επιστροφής των αποδήμων
-        είναι συχνά μεγαλύτερη από εκείνη που αποτυπώνεται στους επίσημους πίνακες.
+      <div class="callout">
+        Οι αριθμοί αποτυπώνουν τον μόνιμο πληθυσμό. Η εικόνα του χωριού σε γιορτές, καλοκαίρια και περιόδους
+        επιστροφής των αποδήμων είναι συχνά μεγαλύτερη από εκείνη που καταγράφουν οι επίσημοι πίνακες.
       </div>
     </section>
 
     <section class="history-section" id="prosopa">
-      <div class="history-label">06 · ΠΡΟΣΩΠΑ ΤΟΥ ΤΟΠΟΥ</div>
-      <h3>Επώνυμες παρουσίες και ανθρώπινα ίχνη</h3>
+      <div class="history-label">06 · ΠΡΟΣΩΠΑ</div>
+      <h3>Πρόσωπα του τόπου</h3>
       <p>
-        Η ιστορία ενός χωριού γράφεται κυρίως από τους ανθρώπους του: δασκάλους, ιερείς, αγρότες, μετανάστες, τεχνίτες, οικογενειάρχες,
-        αλλά και πρόσωπα που απέκτησαν ευρύτερη δημόσια παρουσία και συνδέθηκαν με το Σταυροδρόμι. 
+        Η ιστορία ενός χωριού γράφεται κυρίως από τους ανθρώπους του: δασκάλους, ιερείς, εργάτες, αγρότες,
+        μετανάστες, οικογένειες και κοινοτικούς παράγοντες. Δίπλα σε αυτούς, υπάρχουν και πρόσωπα που
+        αναφέρονται δημόσια ως καταγόμενα από το Σταυροδρόμι ή συνδεδεμένα με αυτό. [web:6]
       </p>
 
-      <ul class="memory-list">
-        <li><strong>Βασίλειος Πλιώτας</strong> – αναφέρεται ως καταγόμενος από το Σταυροδρόμι και γνωστό πρόσωπο της δημόσιας ζωής. [web:6]</li>
-        <li><strong>Γιάννης Πλιώτας</strong> – αναφέρεται στις σχετικές δημόσιες καταγραφές για το χωριό. [web:6]</li>
-        <li><strong>Πρόσωπα της καθημερινής ζωής</strong> – οι αφανείς κάτοικοι του τόπου αποτελούν τον κύριο κορμό της ιστορίας που δεν αποτυπώνεται πάντοτε σε επίσημες καταγραφές.</li>
+      <ul class="info-list">
+        <li><strong>Βασίλειος Πλιώτας</strong> – συγκαταλέγεται στα γνωστά πρόσωπα που αναφέρονται για το χωριό. [web:6]</li>
+        <li><strong>Γιάννης Πλιώτας</strong> – επίσης μνημονεύεται στις διαθέσιμες δημόσιες αναφορές για το Σταυροδρόμι. [web:6]</li>
+        <li><strong>Οι αφανείς κάτοικοι του τόπου</strong> – αποτελούν το ουσιαστικό ανθρώπινο υπόβαθρο κάθε πραγματικής ιστορίας του χωριού.</li>
       </ul>
 
       <div class="callout">
-        Η ενότητα αυτή μπορεί να εμπλουτιστεί ιδιαίτερα με οικογενειακά αρχεία, φωτογραφίες, βιογραφικά σημειώματα και προφορικές μαρτυρίες,
-        ώστε η μνήμη να περάσει από το γενικό στο συγκεκριμένο.
+        Η ενότητα αυτή μπορεί να εμπλουτιστεί στο μέλλον με φωτογραφίες, οικογενειακά αρχεία, βιογραφικά σημειώματα
+        και μικρές μαρτυρίες που θα δώσουν πιο συγκεκριμένο ανθρώπινο βάθος στην ιστορική αφήγηση.
       </div>
     </section>
 
     <section class="history-section" id="mnimi">
-      <div class="history-label">07 · ΛΑΟΓΡΑΦΙΑ, ΜΝΗΜΗ &amp; ΕΚΚΡΕΜΟΤΗΤΕΣ</div>
+      <div class="history-label">07 · ΛΑΟΓΡΑΦΙΑ &amp; ΜΝΗΜΗ</div>
       <h3>Ό,τι σώθηκε — και ό,τι κινδυνεύει να χαθεί</h3>
       <p>
-        Η λαογραφική μνήμη του Σταυροδρομίου δεν περιορίζεται στα κτίρια ή στις απογραφές. Ζει στα παλιά αντικείμενα, στα εργαλεία,
-        στις φωτογραφίες, στις αφηγήσεις των μεγαλύτερων και στα τοπικά έθιμα που ένωναν την κοινότητα με τον χρόνο και τον κόπο της ζωής.
+        Η λαογραφική μνήμη του Σταυροδρομίου δεν βρίσκεται μόνο στα κτίρια ή στα χαρτιά των απογραφών.
+        Βρίσκεται και στα αντικείμενα, στις φωτογραφίες, στα εργαλεία, στις οικογενειακές αφηγήσεις
+        και στα μικρά τεκμήρια της καθημερινής ζωής. Η δημόσια αναφορά σε μουσείο λαϊκής τέχνης στο παλιό σχολείο
+        δείχνει ότι υπήρξε προσπάθεια συγκέντρωσης αυτού του υλικού. [web:43][web:147]
       </p>
       <p>
-        Δημόσιες αναφορές για το χωριό μνημονεύουν ότι στο παλιό Δημοτικό Σχολείο στεγαζόταν λαογραφικό ή μουσείο λαϊκής τέχνης,
-        στοιχείο που φανερώνει πως υπήρξε κάποτε οργανωμένη προσπάθεια συγκέντρωσης και προβολής υλικού μνήμης. [web:43][web:147]
-      </p>
-      <p>
-        Σήμερα, σύμφωνα με τη νεότερη τοπική ενημέρωση που εσύ προσθέτεις στην ιστορική αφήγηση της κοινότητας, το λαογραφικό μουσείο,
-        με ευθύνη του Πολιτιστικού Συλλόγου «Κοίμησης της Θεοτόκου», μεταφέρθηκε από το παλιό Δημοτικό Σχολείο στη δεξιά αίθουσα
-        του νέου Δημοτικού Σχολείου. Εκεί, όμως, παραμένει αναξιοποίητο μέχρι σήμερα, ενώ ο χρόνος και ο σκόρος καταστρέφουν σταδιακά
-        τα εκθέματα, τα οποία μένουν χωρίς καμία στοιχειώδη συντήρηση.
+        Σύμφωνα με τη νεότερη τοπική ενημέρωση, το λαογραφικό μουσείο, με ευθύνη του Πολιτιστικού Συλλόγου
+        «Κοίμησης της Θεοτόκου», μεταφέρθηκε από το παλιό Δημοτικό Σχολείο στη δεξιά αίθουσα του νέου
+        Δημοτικού Σχολείου. Εκεί όμως παραμένει αναξιοποίητο μέχρι και σήμερα, ενώ ο χρόνος και ο σκόρος
+        καταστρέφουν σταδιακά τα εκθέματα, τα οποία μένουν χωρίς καμία στοιχειώδη συντήρηση.
       </p>
 
-      <div class="callout warning">
-        Η εγκατάλειψη ενός λαογραφικού αρχείου δεν είναι απλώς πρόβλημα χώρου ή αποθήκευσης. Είναι απώλεια ιστορικής συνέχειας.
-        Κάθε αντικείμενο που φθείρεται χωρίς φροντίδα αφαιρεί ένα ακόμη κομμάτι από τη συλλογική μνήμη του χωριού.
+      <div class="callout alert">
+        Η εγκατάλειψη ενός λαογραφικού αρχείου δεν είναι απλώς πρόβλημα αποθήκευσης. Είναι απώλεια μνήμης.
+        Κάθε αντικείμενο που φθείρεται χωρίς προστασία αφαιρεί ένα ακόμη μικρό κομμάτι από την ιστορία
+        και την αυτογνωσία της κοινότητας.
       </div>
 
-      <p style="margin-top:12px;">
-        Η διατήρηση του λαογραφικού υλικού, η τεκμηρίωσή του και η δημόσια αξιοποίησή του θα μπορούσαν να αποτελέσουν στο μέλλον
-        έναν από τους πιο ουσιαστικούς άξονες αναγέννησης της ιστορικής ταυτότητας του Σταυροδρομίου.
+      <p>
+        Αν η ιστορία ενός χωριού αξίζει να σωθεί, τότε αξίζει να σωθούν και τα υλικά ίχνη που τη συνοδεύουν.
+        Η καταγραφή, η ταξινόμηση και η στοιχειώδης συντήρηση αυτού του υλικού είναι προϋπόθεση για κάθε σοβαρή
+        προσπάθεια διάσωσης της μνήμης του Σταυροδρομίου.
       </p>
     </section>
 
   </section>
 
+  <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
   <section>
+
     <div class="right-col-section">
       <div class="right-label">ΓΙΑ ΤΗΝ ΕΝΟΤΗΤΑ</div>
       <div class="right-card">
         <h3>Ιστορία &amp; Μνήμη</h3>
         <p class="right-card-text">
-          Μια ενότητα αφιερωμένη στην ιστορική διαδρομή, την τοπική μνήμη, τα πρόσωπα, τα κτίρια και τα τεκμήρια του Σταυροδρομίου.
+          Προσπάθεια συγκέντρωσης και τεκμηρίωσης της ιστορικής διαδρομής του Σταυροδρομίου, με σεβασμό
+          στην προφορική παράδοση, στα λίγα γραπτά ίχνη και στα επίσημα στοιχεία των απογραφών.
         </p>
-        <div class="right-card-meta">Αρχείο Κοινότητας · Σε διαρκή εμπλουτισμό</div>
+        <div class="right-card-meta">
+          Αρχείο Κοινότητας · Σε εξέλιξη
+        </div>
       </div>
     </div>
 
@@ -797,12 +739,13 @@ footer {
     <div class="right-col-section">
       <div class="right-label">ΣΥΜΜΕΤΟΧΗ</div>
       <div class="right-card">
-        <h3>Υλικό για το αρχείο</h3>
         <p class="right-card-text">
-          Αν διαθέτετε φωτογραφίες, έγγραφα, αφηγήσεις, παλιά αντικείμενα ή πληροφορίες για πρόσωπα και κτίρια του χωριού,
-          μπορείτε να συμβάλετε στον εμπλουτισμό της ιστορικής ενότητας.
+          Αν έχετε έγγραφα, παλιές φωτογραφίες ή μαρτυρίες που αφορούν την ιστορία του χωριού, μπορείτε να συμβάλετε
+          στην εμπλουτισμένη καταγραφή της μνήμης.
         </p>
-        <div class="right-card-meta">Επικοινωνία: <a href="epikoinonia.html">φόρμα &amp; στοιχεία επικοινωνίας</a></div>
+        <div class="right-card-meta">
+          Επικοινωνία: <a href="epikoinonia.html">φόρμα &amp; στοιχεία επικοινωνίας</a>
+        </div>
       </div>
     </div>
 
@@ -812,11 +755,12 @@ footer {
         <h3>Το λαογραφικό υλικό χρειάζεται φροντίδα</h3>
         <p class="right-card-text">
           Το υλικό που μεταφέρθηκε στο νέο σχολείο παραμένει χωρίς ουσιαστική αξιοποίηση και συντήρηση.
-          Η προστασία του δεν είναι πολυτέλεια αλλά υποχρέωση απέναντι στην ιστορία της κοινότητας.
+          Η προστασία του δεν είναι πολυτέλεια αλλά χρέος απέναντι στην ιστορία του τόπου.
         </p>
         <div class="right-card-meta">Λαογραφικό αρχείο · Συντήρηση · Ευθύνη κοινότητας</div>
       </div>
     </div>
+
   </section>
 
 </main>
@@ -827,11 +771,10 @@ footer {
       <h2>Σταυροδρόμι – Κοινότητα</h2>
       <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
       <p>
-        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου,
-        με στόχο τη διάσωση τεκμηρίων και την ενίσχυση της συλλογικής συνείδησης του τόπου.
+        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου.
+        Χωρίς κομματικές ή άλλες δεσμεύσεις.
       </p>
     </div>
-
     <div class="footer-col">
       <h4>ΕΝΟΤΗΤΕΣ</h4>
       <ul>
@@ -841,17 +784,15 @@ footer {
         <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
-
     <div class="footer-col">
-      <h4>ΤΕΚΜΗΡΙΑ</h4>
+      <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
       <ul>
-        <li>Απογραφές πληθυσμού</li>
-        <li>Τοπικές μαρτυρίες</li>
-        <li>Φωτογραφικά αρχεία</li>
-        <li>Λαογραφικό υλικό</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
-
     <div class="footer-col">
       <h4>ΣΕΛΙΔΕΣ</h4>
       <ul>
@@ -861,7 +802,6 @@ footer {
       </ul>
     </div>
   </div>
-
   <div class="footer-bottom">
     <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
     <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
@@ -869,6 +809,7 @@ footer {
 </footer>
 
 <script>
+// scroll progress bar
 window.addEventListener('scroll', () => {
   const st  = document.documentElement.scrollTop;
   const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
@@ -878,6 +819,7 @@ window.addEventListener('scroll', () => {
   }
 });
 
+// ημερομηνία topbar + masthead
 const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
 const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
                 'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
@@ -891,7 +833,7 @@ function updateDates() {
   const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
                months[d.getMonth()] + ' ' + d.getFullYear();
 
-  if (span) span.textContent = full;
+  if (span)  span.textContent  = full;
   if (mdDay) mdDay.textContent = d.getDate();
   if (mdFull) {
     mdFull.textContent =

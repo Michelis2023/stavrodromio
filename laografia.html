@@ -14,7 +14,7 @@
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/laografia/plateia-kai-giorti.jpg">
 
-//fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -94,9 +94,7 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.75rem; color: rgba(255,255,255,0.45);
   letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
-.mast-date {
-  text-align: right;
-}
+.mast-date { text-align: right; }
 .mast-date .md-day {
   font-family: 'Playfair Display', serif;
   font-size: 1.7rem; font-weight: 700;
@@ -130,7 +128,6 @@ nav.primary li a {
 }
 nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
 nav.primary li a:hover { color: var(--white); }
-/* ενεργή ενότητα */
 nav.primary li a.nav-lao {
   border-bottom-color: var(--lao-lt);
   color: #ffffff;
@@ -146,9 +143,7 @@ nav.primary li a.nav-lao {
 }
 
 /* LEFT COLUMN – CONTENT */
-.section-header {
-  margin-bottom: 22px;
-}
+.section-header { margin-bottom: 22px; }
 .section-kicker {
   font-size: 0.72rem; font-weight: 600;
   letter-spacing: 0.16em; text-transform: uppercase;
@@ -176,9 +171,7 @@ nav.primary li a.nav-lao {
   padding-bottom: 18px;
   border-bottom: 1px solid var(--border);
 }
-.lao-section:last-of-type {
-  border-bottom: none;
-}
+.lao-section:last-of-type { border-bottom: none; }
 .lao-label {
   font-size: 0.7rem;
   font-weight: 600;
@@ -197,9 +190,7 @@ nav.primary li a.nav-lao {
   color: var(--ink-soft);
   margin-bottom: 10px;
 }
-.lao-section p:last-child {
-  margin-bottom: 0;
-}
+.lao-section p:last-child { margin-bottom: 0; }
 
 /* small blocks */
 .lao-block-title {
@@ -214,9 +205,7 @@ nav.primary li a.nav-lao {
 }
 
 /* RIGHT COLUMN */
-.right-col-section {
-  margin-bottom: 26px;
-}
+.right-col-section { margin-bottom: 26px; }
 .right-label {
   font-size: 0.78rem;
   font-weight: 600;
@@ -289,7 +278,6 @@ footer {
   font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer;
   display: flex; gap: 5px; align-items: center;
 }
 .footer-col li:last-child { border-bottom: none; }
@@ -314,20 +302,12 @@ footer {
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .main {
-    grid-template-columns: 1fr;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr 1fr;
-  }
+  .main { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
 }
 @media (max-width: 600px) {
-  .main {
-    padding: 0 16px 32px;
-  }
-  .footer-inner {
-    grid-template-columns: 1fr;
-  }
+  .main { padding: 0 16px 32px; }
+  .footer-inner { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -355,13 +335,13 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      ><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
-      ><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      ><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      ><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      ><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-      ><a href="sxetika.html">Σχετικά</a></li>
-      ><a href="epikoinonia.html">Επικοινωνία</a></li>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html" class="nav-lao"><span class="nav-dot" style="background:var(--lao-lt)"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -447,7 +427,7 @@ footer {
         Ξεχωριστή θέση στο πρόσφατο παρελθόν του χωριού είχε η «Γιορτή του Κρασιού», που καθιερώθηκε στα τέλη της δεκαετίας του 1980
         ως ευχαριστήρια γιορτή για τη φύση και τα προϊόντα της, αλλά και ως προσπάθεια αναβίωσης παλαιών συνηθειών γύρω από τον τρύγο
         και το κρασί. Η γιορτή αυτή –με μουσική, φαγητό, κρασί και πολύ κόσμο– λειτούργησε για χρόνια ως σημείο αναφοράς
-        για τους μόνιμους κατοίκους και τους απόδημους, πριν διακοπεί τα πιο πρόσφατα χρόνια.<!-- [web:64] -->
+        για τους μόνιμους κατοίκους και τους απόδημους, πριν διακοπεί τα πιο πρόσφατα χρόνια.
       </p>
       <p>
         Η συστηματική καταγραφή της διαδρομής της (πότε ξεκίνησε, ποιοι τη στήριξαν, πώς οργανωνόταν) αποτελεί ανοιχτό ζητούμενο
@@ -489,7 +469,7 @@ footer {
       <p>
         Η ρεματιά της Μαυράδας, με την παλιά βρύση και τον ερειπωμένο νερόμυλο, δεν είναι απλώς ένα τοπωνύμιο της ιστορικής σελίδας.
         Είναι ένας χώρος όπου για χρόνια ακούγονταν φωνές, τριξίματα μυλόπετρας και νερό που έτρεχε ασταμάτητα – ένα σημείο
-        όπου η εργασία και η καθημερινή ζωή είχαν τον δικό τους ρυθμό.[web:2]
+        όπου η εργασία και η καθημερινή ζωή είχαν τον δικό τους ρυθμό.
       </p>
       <p>
         Το παλιό Δημοτικό Σχολείο του 1909, πέρα από κτίριο εκπαίδευσης, λειτούργησε για χρόνια ως χώρος συνάντησης, γιορτών,
@@ -601,36 +581,37 @@ footer {
         Χωρίς κομματικές ή άλλες δεσμεύσεις.
       </p>
     </div>
+
     <div class="footer-col">
       <h4>ΕΝΟΤΗΤΕΣ</h4>
-      <u
       <ul>
-        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></l/li>
-        ><a href="history.html">Ιστορία &amp; Μνήμη</a></l/li>
-        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></l/li>
-        ><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
-      <u
       <ul>
-        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></l/li>
-        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></l/li>
-        >Αποφάσεις Δήμου</l/li>
-        >Αναπάντητα ερωτήματα</li>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li>Αποφάσεις Δήμου</li>
+        <li>Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
+
     <div class="footer-col">
       <h4>ΣΕΛΙΔΕΣ</h4>
-      <u
       <ul>
-        ><a href="index.html">Αρχική</a></l/li>
-        ><a href="sxetika.html">Σχετικά</a></l/li>
-        ><a href="epikoinonia.html">Επικοινωνία</a></li>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>
+
   <div class="footer-bottom">
     <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
     <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>

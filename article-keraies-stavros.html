@@ -72,7 +72,9 @@ a { color: inherit; text-decoration: none; }
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
   box-shadow: 0 3px 20px rgba(0,0,0,0.25);
-  position: sticky; top: 0; z-index: 100;
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 .mast-brand {
   max-width: 1200px; margin: 0 auto;
@@ -90,7 +92,9 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.75rem; color: rgba(255,255,255,0.45);
   letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
 }
-.mast-date { text-align: right; }
+.mast-date {
+  text-align: right;
+}
 .mast-date .md-day {
   font-family: 'Playfair Display', serif;
   font-size: 1.7rem; font-weight: 700;
@@ -100,6 +104,8 @@ a { color: inherit; text-decoration: none; }
   font-size: 0.68rem; color: rgba(255,255,255,0.35);
   letter-spacing: 0.06em; margin-top: 3px;
 }
+
+/* NAV */
 nav.primary {
   background: var(--mast-mid);
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -127,71 +133,83 @@ nav.primary li a.nav-rep {
   color: #ffffff;
 }
 
-/* ARTICLE LAYOUT */
-.article-wrap {
-  max-width: 1200px; margin: 36px auto 56px;
-  padding: 0 24px;
+/* MAIN LAYOUT */
+.main {
+  max-width: 1200px; margin: 32px auto 48px;
+  padding: 0 24px 40px;
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-  gap: 48px;
+  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+  gap: 40px;
 }
 
-/* ARTICLE MAIN */
-.article-main {}
-
-.article-category {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.2em; text-transform: uppercase;
-  color: var(--aut); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
+/* BREADCRUMBS */
+.breadcrumbs {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-bottom: 10px;
 }
-.article-category::before {
-  content: ''; display: inline-block;
-  width: 18px; height: 2px; background: var(--aut);
-}
+.breadcrumbs a { text-decoration: none; }
+.breadcrumbs a:hover { text-decoration: underline; }
 
-.article-headline {
+/* ARTICLE HEADER */
+.article-header {
+  margin-bottom: 18px;
+}
+.article-kicker {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+.article-title-main {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.5rem, 3.5vw, 2.1rem);
-  font-weight: 900; line-height: 1.2;
+  font-weight: 900;
+  line-height: 1.2;
   letter-spacing: -0.01em;
-  margin-bottom: 14px;
+  margin-bottom: 10px;
   color: var(--ink);
 }
-
 .article-deck {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.05rem; line-height: 1.65;
+  font-size: 1.02rem; line-height: 1.65;
   color: var(--ink-soft);
   border-left: 3px solid var(--aut);
   padding-left: 16px;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
 }
-
-.article-meta {
-  display: flex; flex-wrap: wrap; gap: 14px;
+.article-meta-bar {
+  display: flex; flex-wrap: wrap; gap: 12px;
   font-size: 0.74rem; color: var(--ink-muted);
   letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 12px 0;
+  padding: 10px 0;
   border-top: 1px solid var(--border);
   border-bottom: 1px solid var(--border);
-  margin-bottom: 26px;
+  margin-bottom: 22px;
 }
-.article-meta span { display: flex; align-items: center; gap: 5px; }
-.article-meta .status-badge {
+.article-meta-bar span { display: flex; align-items: center; gap: 5px; }
+.status-badge {
   background: #fdecea; color: var(--rep);
   padding: 2px 8px; font-size: 0.68rem; font-weight: 700;
   letter-spacing: 0.14em; text-transform: uppercase;
   border: 1px solid #e8a0a0;
 }
 
-/* BODY TEXT */
+/* ARTICLE BODY */
 .article-body {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 0.98rem; line-height: 1.85;
+  font-size: 0.97rem;
+  line-height: 1.85;
   color: var(--ink);
 }
-.article-body p { margin-bottom: 1.3em; }
+.article-body p {
+  margin-bottom: 1.3em;
+}
+.article-body p:last-child {
+  margin-bottom: 0;
+}
 .article-body h2 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: 1.2rem; font-weight: 700;
@@ -220,6 +238,12 @@ nav.primary li a.nav-rep {
   font-size: 0.78rem; font-style: normal;
   color: var(--ink-muted); letter-spacing: 0.06em;
 }
+.article-body ul {
+  margin: 8px 0 12px 20px;
+}
+.article-body li {
+  margin-bottom: 7px;
+}
 
 /* hero photo */
 .article-hero {
@@ -237,14 +261,22 @@ nav.primary li a.nav-rep {
   padding-top: 5px; line-height: 1.5;
 }
 
-/* highlight / emphasis box */
+/* emphasis blocks */
+.block-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin: 10px 0 4px;
+}
 .highlight-box {
+  margin: 6px 0 10px;
+  padding: 10px 12px;
   border-left: 3px solid var(--rep-lt);
-  padding: 12px 18px;
-  margin: 1.6em 0;
   background: var(--bg-warm);
   font-family: 'IBM Plex Sans', sans-serif;
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   color: var(--ink-soft);
 }
 
@@ -276,89 +308,84 @@ nav.primary li a.nav-rep {
   line-height: 1.6;
 }
 
-/* TAGS FOOTER */
-.article-tags-footer {
-  margin-top: 32px; padding-top: 16px;
-  border-top: 1px solid var(--border);
-  display: flex; flex-wrap: wrap; gap: 8px;
-}
-.tag-chip {
-  font-size: 0.68rem; letter-spacing: 0.14em;
-  text-transform: uppercase; font-weight: 600;
-  padding: 4px 10px;
-  border: 1px solid var(--border);
+/* tags */
+.article-tags {
+  font-size: 0.78rem;
+  margin-top: 14px;
   color: var(--ink-muted);
-  background: var(--white);
 }
+.article-tags span {
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 0.7rem;
+}
+.article-back {
+  margin-top: 10px;
+  font-size: 0.8rem;
+}
+.article-back a { text-decoration: underline; }
 
-/* BACK LINK */
-.back-link {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 0.75rem; letter-spacing: 0.14em;
-  text-transform: uppercase; color: var(--rep);
-  margin-bottom: 24px;
-  font-weight: 500;
+/* RIGHT COLUMN */
+.right-col-section {
+  margin-bottom: 26px;
 }
-.back-link:hover { text-decoration: underline; }
-
-/* RIGHT SIDEBAR */
-.article-sidebar {}
-.sidebar-block { margin-bottom: 28px; }
-.sidebar-label {
-  font-size: 0.7rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
-  color: var(--ink-muted); margin-bottom: 10px;
-  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+.right-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
 }
-.sidebar-card {
+.right-card {
   background: var(--white);
   border: 1px solid var(--border);
-  padding: 14px 16px;
-  font-size: 0.84rem; color: var(--ink-soft);
-  line-height: 1.65;
+  padding: 14px 16px 16px;
+  font-size: 0.86rem;
 }
-.sidebar-card h4 {
-  font-family: 'Playfair Display', serif;
-  font-size: 0.98rem; color: var(--ink);
+.right-card h3 {
+  font-size: 0.98rem;
+  font-family: 'Playfair Display', Georgia, serif;
   margin-bottom: 6px;
 }
-.sidebar-card h4 a:hover { text-decoration: underline; }
-.sidebar-card p { margin-bottom: 8px; }
-.sidebar-card .s-meta {
-  font-size: 0.72rem; color: var(--ink-muted);
-  letter-spacing: 0.06em; text-transform: uppercase;
+.right-card h3 a:hover { text-decoration: underline; }
+.right-card-text {
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
 }
-.sidebar-status-list { list-style: none; }
-.sidebar-status-list li {
+.right-card-meta {
+  font-size: 0.76rem;
+  color: var(--ink-muted);
+}
+.obs-list {
+  list-style: none;
+}
+.obs-item {
   padding: 8px 0;
   border-bottom: 1px solid var(--bg-warm);
   font-size: 0.8rem;
 }
-.sidebar-status-list li:last-child { border-bottom: none; }
-.s-badge {
-  font-size: 0.65rem; font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.12em;
-  padding: 2px 6px;
+.obs-item:last-child { border-bottom: none; }
+.obs-meta {
+  font-size: 0.72rem;
+  color: var(--ink-muted);
 }
-.s-badge.open { background: #fff3e0; color: #8a5f1e; border: 1px solid #d4a84b; }
-.s-badge.noans { background: #fdecea; color: var(--rep); border: 1px solid #e8a0a0; }
-.s-badge.answered { background: #e8f5ec; color: #1e4a2e; border: 1px solid #8ec4a0; }
-
-.related-list { list-style: none; }
-.related-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--bg-warm);
-  font-size: 0.82rem;
+.obs-status {
+  font-size: 0.68rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
 }
-.related-list li:last-child { border-bottom: none; }
-.related-list a:hover { text-decoration: underline; }
-.related-list .r-meta {
-  font-size: 0.7rem; color: var(--ink-muted);
-  text-transform: uppercase; letter-spacing: 0.08em;
-}
+.obs-status.open { color: #8a5f1e; }
+.obs-status.noans { color: var(--rep); }
+.obs-status.answered { color: #1e4a2e; }
 
 /* FOOTER */
-footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+footer {
+  background: var(--mast);
+  color: rgba(255,255,255,0.45);
+}
 .footer-inner {
   max-width: 1200px; margin: 0 auto;
   padding: 40px 24px 28px;
@@ -369,14 +396,18 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-brand h2 {
   font-family: 'Playfair Display', serif;
   font-size: 1.2rem; font-weight: 700;
-  color: rgba(255,255,255,0.85); margin-bottom: 6px;
+  color: rgba(255,255,255,0.85);
+  margin-bottom: 6px;
 }
 .footer-brand .ft-sub {
   font-size: 0.7rem; font-style: italic;
-  color: rgba(255,255,255,0.3); margin-bottom: 12px;
+  color: rgba(255,255,255,0.3);
+  margin-bottom: 12px;
 }
 .footer-brand p {
-  font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.7;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  line-height: 1.7;
 }
 .footer-col h4 {
   font-size: 0.62rem; font-weight: 600;
@@ -388,10 +419,12 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 }
 .footer-col ul { list-style: none; }
 .footer-col li {
-  padding: 6px 0; font-size: 0.78rem;
+  padding: 6px 0;
+  font-size: 0.78rem;
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
-  cursor: pointer; display: flex; gap: 5px; align-items: center;
+  cursor: pointer;
+  display: flex; gap: 5px; align-items: center;
 }
 .footer-col li:last-child { border-bottom: none; }
 .footer-col li::before { content: '›'; opacity: 0.4; }
@@ -405,17 +438,30 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   align-items: center; gap: 16px; flex-wrap: wrap;
   font-size: 0.7rem;
 }
-.footer-bottom .copy { color: rgba(255,255,255,0.25); }
-.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+.footer-bottom .copy {
+  color: rgba(255,255,255,0.25);
+}
+.footer-bottom .independence {
+  font-style: italic;
+  color: rgba(255,255,255,0.22);
+}
 
 /* RESPONSIVE */
 @media (max-width: 900px) {
-  .article-wrap { grid-template-columns: 1fr; }
-  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .main {
+    grid-template-columns: 1fr;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 @media (max-width: 600px) {
-  .article-wrap { padding: 0 16px 32px; }
-  .footer-inner { grid-template-columns: 1fr; }
+  .main {
+    padding: 0 16px 32px;
+  }
+  .footer-inner {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
 </head>
@@ -454,30 +500,30 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
   </nav>
 </header>
 
-<div class="article-wrap">
+<main class="main">
 
-  <!-- ΚΥΡΙΟ ΑΡΘΡΟ -->
-  <article class="article-main">
-
-    <a href="reportaz.html" class="back-link">← Ρεπορτάζ &amp; Παρεμβάσεις</a>
-
-    <div class="article-category">Ρεπορτάζ &amp; Αυτοδιοίκηση</div>
-
-    <h1 class="article-headline">
-      Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα
-    </h1>
-
-    <p class="article-deck">
-      Μια παλιά υπόθεση που παραμένει ανοιχτή: τι λέει η απόφαση του Ειρηνοδικείου, τι αποκάλυψε η επιτόπια αυτοψία και πού κατευθύνονταν για χρόνια τα έσοδα από τις κεραίες στον Σταυρό — που βρίσκονται ακριβώς πάνω από τα κεφάλια της κοινότητας Σταυροδρομίου.
-    </p>
-
-    <div class="article-meta">
-      <span>23 Απριλίου 2026</span>
-      <span>Αυτοδιοίκηση · Κεραίες · Όρια Κοινοτήτων</span>
-      <span class="status-badge">ΑΝΑΜΕΝΕΤΑΙ ΑΠΑΝΤΗΣΗ ΔΗΜΟΥ</span>
+  <!-- ΑΡΙΣΤΕΡΗ ΣΤΗΛΗ: ΑΡΘΡΟ -->
+  <section>
+    <div class="breadcrumbs">
+      <a href="index.html">Αρχική</a> ›
+      <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a> ›
+      Αυτοδιοίκηση &amp; Κοινωνία
     </div>
 
-    <div class="article-body">
+    <header class="article-header">
+      <div class="article-kicker">ΡΕΠΟΡΤΑΖ · ΑΥΤΟΔΙΟΙΚΗΣΗ</div>
+      <h1 class="article-title-main">Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα</h1>
+      <p class="article-deck">
+        Μια παλιά υπόθεση που παραμένει ανοιχτή: τι λέει η απόφαση του Ειρηνοδικείου, τι αποκάλυψε η επιτόπια αυτοψία και πού κατευθύνονταν για χρόνια τα έσοδα από τις κεραίες στον Σταυρό — που βρίσκονται ακριβώς πάνω από τα κεφάλια της κοινότητας Σταυροδρομίου.
+      </p>
+      <div class="article-meta-bar">
+        <span>23 Απριλίου 2026</span>
+        <span>Αυτοδιοίκηση · Κεραίες · Όρια Κοινοτήτων</span>
+        <span class="status-badge">ΑΝΑΜΕΝΕΤΑΙ ΑΠΑΝΤΗΣΗ ΔΗΜΟΥ</span>
+      </div>
+    </header>
+
+    <article class="article-body">
 
       <div class="article-hero">
         <figure>
@@ -526,80 +572,90 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
         Πρώην Δημαρχιακός Πάρεδρος Δήμου Τροπαίων &amp; Πρόεδρος Τοπικού Συμβουλίου Σταυροδρομίου
       </div>
 
-      <div class="article-tags-footer">
-        <span class="tag-chip">Κεραίες</span>
-        <span class="tag-chip">Όρια Κοινοτήτων</span>
-        <span class="tag-chip">Αυτοδιοίκηση</span>
-        <span class="tag-chip">Σταυροδρόμι</span>
-        <span class="tag-chip">Ειρηνοδικείο</span>
-        <span class="tag-chip">Δήμος Γορτυνίας</span>
+      <div class="article-tags">
+        <span>ΘΕΜΑΤΙΚΕΣ ΕΤΙΚΕΤΕΣ</span> · ΚΕΡΑΙΕΣ · ΟΡΙΑ ΚΟΙΝΟΤΗΤΩΝ · ΑΥΤΟΔΙΟΙΚΗΣΗ · ΣΤΑΥΡΟΔΡΟΜΙ · ΕΙΡΗΝΟΔΙΚΕΙΟ · ΔΗΜΟΣ ΓΟΡΤΥΝΙΑΣ
+      </div>
+      <div class="article-back">
+        ← <a href="reportaz.html">Επιστροφή στην ενότητα «Ρεπορτάζ &amp; Παρεμβάσεις»</a>
       </div>
 
-    </div>
-  </article>
+    </article>
+  </section>
 
-  <!-- SIDEBAR -->
-  <aside class="article-sidebar">
+  <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
+  <section>
 
-    <div class="sidebar-block">
-      <div class="sidebar-label">Παρατηρητήριο Αυτοδιοίκησης</div>
-      <div class="sidebar-card">
-        <ul class="sidebar-status-list">
-          <li>
-            Κεραίες στον Σταυρό – όρια και έσοδα
-            <br><span class="s-badge noans">Χωρίς απάντηση</span>
+    <div class="right-col-section">
+      <div class="right-label">ΠΑΡΑΤΗΡΗΤΗΡΙΟ ΑΥΤΟΔΙΟΙΚΗΣΗΣ</div>
+      <div class="right-card">
+        <ul class="obs-list">
+          <li class="obs-item">
+            <div>Κεραίες στον Σταυρό – όρια και έσοδα</div>
+            <div class="obs-meta"><span class="obs-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span></div>
           </li>
-          <li>
-            Τέλη κοιμητηρίων Σταυροδρομίου
-            <br><span class="s-badge noans">Χωρίς απάντηση</span>
+          <li class="obs-item">
+            <div>Τέλη κοιμητηρίων Σταυροδρομίου</div>
+            <div class="obs-meta"><span class="obs-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span></div>
           </li>
-          <li>
-            Τσιμεντόστρωση – τεχνική επίβλεψη
-            <br><span class="s-badge open">Σε παρακολούθηση</span>
+          <li class="obs-item">
+            <div>Τσιμεντόστρωση – τεχνική επίβλεψη</div>
+            <div class="obs-meta"><span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
           </li>
-          <li>
-            Υδροδότηση – Πηγή Ζενίκος
-            <br><span class="s-badge open">Σε παρακολούθηση</span>
+          <li class="obs-item">
+            <div>Υδροδότηση – Πηγή Ζενίκος</div>
+            <div class="obs-meta"><span class="obs-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span></div>
           </li>
         </ul>
       </div>
     </div>
 
-    <div class="sidebar-block">
-      <div class="sidebar-label">Σχετικά ρεπορτάζ</div>
-      <div class="sidebar-card">
-        <ul class="related-list">
-          <li>
-            <a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ανοιχτά ερωτήματα</a>
-            <div class="r-meta">21 Απρ. 2026 · Αυτοδιοίκηση</div>
-          </li>
-          <li>
-            <a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a>
-            <div class="r-meta">22 Απρ. 2026 · Ύδρευση</div>
-          </li>
-          <li>
-            <a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a>
-            <div class="r-meta">20 Απρ. 2026 · Αυτοδιοίκηση</div>
-          </li>
-          <li>
-            <a href="article-laografiko-mouseio-syllogos.html">Λαογραφικό υλικό &amp; Σύλλογος Αθηνών</a>
-            <div class="r-meta">25 Απρ. 2026 · Λαογραφία &amp; Μνήμη</div>
-          </li>
-        </ul>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΡΕΠΟΡΤΑΖ</div>
+      <div class="right-card">
+        <h3><a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ανοιχτά ερωτήματα</a></h3>
+        <p class="right-card-text">
+          Ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά μετά την τοποθέτηση του Προέδρου.
+        </p>
+        <div class="right-card-meta">21 Απρ. 2026 · Αυτοδιοίκηση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a></h3>
+        <p class="right-card-text">
+          Η πηγή Ζενίκος εκτός δικτύου, η κοινότητα σε εφεδρική παροχή με κίνδυνο λειψυδρίας.
+        </p>
+        <div class="right-card-meta">22 Απρ. 2026 · Ύδρευση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a></h3>
+        <p class="right-card-text">
+          Τριετή τέλη χωρίς κοστολόγηση υπηρεσιών και ερωτήματα για τη χρήση της σχολικής αυλής.
+        </p>
+        <div class="right-card-meta">20 Απρ. 2026 · Αυτοδιοίκηση</div>
+      </div>
+      <div class="right-card" style="margin-top:10px;">
+        <h3><a href="article-laografiko-mouseio-syllogos.html">Λαογραφικό υλικό &amp; Σύλλογος Αθηνών</a></h3>
+        <p class="right-card-text">
+          Η τύχη του λαογραφικού υλικού και η σχέση με τον Σύλλογο Σταυροδρομιτών Αθηνών.
+        </p>
+        <div class="right-card-meta">25 Απρ. 2026 · Λαογραφία &amp; Μνήμη</div>
       </div>
     </div>
 
-    <div class="sidebar-block">
-      <div class="sidebar-label">Σχετικά με το site</div>
-      <div class="sidebar-card">
-        <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια, τον σεβασμό στον δημόσιο χώρο και χρήμα, και την ανάδειξη ανοιχτών ζητημάτων.</p>
-        <div class="s-meta">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας</div>
+    <div class="right-col-section">
+      <div class="right-label">ΣΧΕΤΙΚΑ ΜΕ ΤΟ SITE</div>
+      <div class="right-card">
+        <p class="right-card-text">
+          Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια, τον σεβασμό στον δημόσιο χώρο και χρήμα, και την ανάδειξη ανοιχτών ζητημάτων.
+        </p>
+        <div class="right-card-meta">
+          Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας
+        </div>
       </div>
     </div>
 
-  </aside>
+  </section>
 
-</div>
+</main>
 
 <footer>
   <div class="footer-inner">
@@ -649,7 +705,9 @@ window.addEventListener('scroll', () => {
   const st  = document.documentElement.scrollTop;
   const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
   const bar = document.getElementById('progress');
-  if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
+  if (bar && dh > 0) {
+    bar.style.width = (st / dh * 100) + '%';
+  }
 });
 
 const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
@@ -661,13 +719,19 @@ function updateDates() {
   const span   = document.getElementById('topbar-date');
   const mdDay  = document.getElementById('mast-day');
   const mdFull = document.getElementById('mast-full');
-  const full   = days[d.getDay()] + ', ' + d.getDate() + ' ' +
-                 months[d.getMonth()] + ' ' + d.getFullYear();
-  if (span)   span.textContent  = full;
-  if (mdDay)  mdDay.textContent = d.getDate();
-  if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' +
-                                   months[d.getMonth()] + ' ' + d.getFullYear();
+
+  const full = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+               months[d.getMonth()] + ' ' + d.getFullYear();
+
+  if (span)  span.textContent  = full;
+  if (mdDay) mdDay.textContent = d.getDate();
+  if (mdFull) {
+    mdFull.textContent =
+      days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+      months[d.getMonth()] + ' ' + d.getFullYear();
+  }
 }
+
 updateDates();
 setInterval(updateDates, 60000);
 </script>

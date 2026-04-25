@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="el">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Μια μνήμη που φθείρεται: το λαογραφικό υλικό του Σταυροδρομίου – Σταυροδρόμι Κοινότητα</title>
+
+<meta name="description" content="Αντικείμενα του λαογραφικού υλικού του Σταυροδρομίου φυλάσσονται σε αίθουσα του δημοτικού σχολείου χωρίς καταγραφή και μέριμνα. Ποιος είναι υπεύθυνος και τι ζητούν οι κάτοικοι;">
+
+<meta property="og:title" content="Μια μνήμη που φθείρεται: το λαογραφικό υλικό του Σταυροδρομίου">
+<meta property="og:description" content="Το λαογραφικό υλικό της κοινότητας Σταυροδρομίου αναζητά φορέα, θεσμική στέγη και τεκμηρίωση. Ρεπορτάζ για τον Σύλλογο Αθήνας, το σχολείο και τις αναπάντητες ευθύνες.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://michelis2023.github.io/stavrodromio/article-laografiko-mouseio-syllogos.html">
+<meta property="og:locale" content="el_GR">
+<meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg">
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #18191a;
+  --ink-soft: #36393c;
+  --ink-muted: #72777d;
+  --bg: #f5f2ed;
+  --bg-warm: #ede8df;
+  --white: #ffffff;
+  --border: #d4cec4;
+  --mast: #1e2b1f;
+  --mast-mid: #2e4230;
+  --rep: #7a1a1a;
+  --rep-lt: #a82828;
+  --lao: #1e4a2e;
+}
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'IBM Plex Sans', system-ui, sans-serif;
+  font-weight: 300;
+  line-height: 1.7;
+}
+a { color: inherit; text-decoration: none; }
+#progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--rep); width: 0; z-index: 300;
+  transition: width 0.1s linear;
+}
+
+/* TOPBAR */
+.topbar {
+  background: var(--mast);
+  padding: 5px 0;
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+}
+.topbar-inner {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.topbar .loc {
+  display: flex; align-items: center; gap: 6px;
+  color: rgba(255,255,255,0.65);
+}
+.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
+
+/* MASTHEAD */
+.masthead {
+  background: var(--mast);
+  border-bottom: 4px solid var(--mast-mid);
+  box-shadow: 0 3px 20px rgba(0,0,0,0.25);
+  position: sticky; top: 0; z-index: 100;
+}
+.mast-brand {
+  max-width: 1200px; margin: 0 auto;
+  padding: 20px 24px 16px;
+  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+}
+.site-name h1 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 4vw, 2.3rem);
+  font-weight: 900; color: var(--white);
+  letter-spacing: -0.02em; line-height: 1;
+}
+.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+.site-name .subtitle {
+  font-size: 0.75rem; color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
+}
+.mast-date { text-align: right; }
+.mast-date .md-day {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.7rem; font-weight: 700;
+  color: rgba(255,255,255,0.18); line-height: 1;
+}
+.mast-date .md-full {
+  font-size: 0.68rem; color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em; margin-top: 3px;
+}
+nav.primary {
+  background: var(--mast-mid);
+  border-top: 1px solid rgba(255,255,255,0.06);
+}
+nav.primary ul {
+  max-width: 1200px; margin: 0 auto; padding: 0 24px;
+  display: flex; list-style: none;
+  overflow-x: auto; scrollbar-width: none;
+}
+nav.primary ul::-webkit-scrollbar { display: none; }
+nav.primary li a {
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 14px;
+  font-size: 0.74rem; font-weight: 500;
+  letter-spacing: 0.05em; text-transform: uppercase;
+  color: rgba(255,255,255,0.62);
+  white-space: nowrap;
+  border-bottom: 3px solid transparent;
+  transition: color 0.18s, border-color 0.18s;
+}
+nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a:hover { color: var(--white); }
+nav.primary li a.nav-rep {
+  border-bottom-color: var(--rep-lt);
+  color: #ffffff;
+}
+
+/* ARTICLE LAYOUT */
+.article-wrap {
+  max-width: 1200px; margin: 36px auto 56px;
+  padding: 0 24px;
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 48px;
+}
+
+/* ARTICLE BODY */
+.article-main {}
+
+.article-category {
+  font-size: 0.72rem; font-weight: 600;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--lao); margin-bottom: 10px;
+  display: flex; align-items: center; gap: 8px;
+}
+.article-category::before {
+  content: ''; display: inline-block;
+  width: 18px; height: 2px; background: var(--lao);
+}
+
+.article-headline {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: clamp(1.5rem, 3.5vw, 2.1rem);
+  font-weight: 900; line-height: 1.2;
+  letter-spacing: -0.01em;
+  margin-bottom: 14px;
+  color: var(--ink);
+}
+
+.article-deck {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.05rem; line-height: 1.65;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--lao);
+  padding-left: 16px;
+  margin-bottom: 20px;
+}
+
+.article-meta {
+  display: flex; flex-wrap: wrap; gap: 14px;
+  font-size: 0.74rem; color: var(--ink-muted);
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 26px;
+}
+.article-meta span { display: flex; align-items: center; gap: 5px; }
+.article-meta .status-badge {
+  background: #fff3e0; color: #8a5f1e;
+  padding: 2px 8px; font-size: 0.68rem; font-weight: 700;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  border: 1px solid #d4a84b;
+}
+
+/* BODY TEXT */
+.article-body {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.98rem; line-height: 1.85;
+  color: var(--ink);
+}
+.article-body p {
+  margin-bottom: 1.3em;
+}
+.article-body h2 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.2rem; font-weight: 700;
+  margin: 2em 0 0.7em;
+  color: var(--ink);
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+.article-body h3 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.8rem; font-weight: 600;
+  letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--lao); margin: 1.8em 0 0.6em;
+}
+.article-body blockquote {
+  border-left: 3px solid var(--rep);
+  padding: 12px 18px;
+  margin: 1.6em 0;
+  background: var(--bg-warm);
+  font-style: italic;
+  font-size: 0.94rem;
+  color: var(--ink-soft);
+}
+.article-body blockquote cite {
+  display: block; margin-top: 8px;
+  font-size: 0.78rem; font-style: normal;
+  color: var(--ink-muted); letter-spacing: 0.06em;
+}
+.article-body .note-box {
+  background: #f0f4f0;
+  border: 1px solid #c2d4c5;
+  border-left: 4px solid var(--lao);
+  padding: 14px 18px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+  margin: 1.8em 0;
+  line-height: 1.6;
+}
+.article-body .note-box strong {
+  display: block; margin-bottom: 4px;
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--lao);
+}
+.article-body .legal-note {
+  background: #fdf6ec;
+  border: 1px solid #e0c880;
+  border-left: 4px solid #c8960a;
+  padding: 14px 18px;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.82rem;
+  color: #4a3a08;
+  margin: 1.8em 0;
+  line-height: 1.6;
+}
+.article-body .legal-note strong {
+  display: block; margin-bottom: 4px;
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: #8a6a00;
+}
+.article-body .open-question {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-left: 4px solid var(--rep);
+  padding: 14px 18px;
+  margin: 1.4em 0;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.84rem; line-height: 1.6;
+  color: var(--ink-soft);
+}
+.article-body .open-question strong {
+  display: block; margin-bottom: 6px;
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--rep);
+}
+.article-body .open-question ul {
+  padding-left: 18px; margin: 0;
+}
+.article-body .open-question ul li {
+  margin-bottom: 4px;
+}
+
+/* TAGS */
+.article-tags-footer {
+  margin-top: 32px; padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.tag-chip {
+  font-size: 0.68rem; letter-spacing: 0.14em;
+  text-transform: uppercase; font-weight: 600;
+  padding: 4px 10px;
+  border: 1px solid var(--border);
+  color: var(--ink-muted);
+  background: var(--white);
+}
+
+/* BACK LINK */
+.back-link {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 0.75rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--rep);
+  margin-bottom: 24px;
+  font-weight: 500;
+}
+.back-link:hover { text-decoration: underline; }
+
+/* RIGHT SIDEBAR */
+.article-sidebar {}
+.sidebar-block {
+  margin-bottom: 28px;
+}
+.sidebar-label {
+  font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-muted); margin-bottom: 10px;
+  padding-bottom: 6px; border-bottom: 1px solid var(--border);
+}
+.sidebar-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 14px 16px;
+  font-size: 0.84rem; color: var(--ink-soft);
+  line-height: 1.65;
+}
+.sidebar-card h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.98rem; color: var(--ink);
+  margin-bottom: 6px;
+}
+.sidebar-card p { margin-bottom: 8px; }
+.sidebar-card .s-meta {
+  font-size: 0.72rem; color: var(--ink-muted);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.sidebar-status-list { list-style: none; }
+.sidebar-status-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.8rem;
+}
+.sidebar-status-list li:last-child { border-bottom: none; }
+.s-badge {
+  font-size: 0.65rem; font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.12em;
+  padding: 2px 6px;
+}
+.s-badge.open { background: #fff3e0; color: #8a5f1e; border: 1px solid #d4a84b; }
+.s-badge.noans { background: #fdecea; color: var(--rep); border: 1px solid #e8a0a0; }
+.s-badge.answered { background: #e8f5ec; color: #1e4a2e; border: 1px solid #8ec4a0; }
+
+.related-list { list-style: none; }
+.related-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--bg-warm);
+  font-size: 0.82rem;
+}
+.related-list li:last-child { border-bottom: none; }
+.related-list a:hover { text-decoration: underline; }
+.related-list .r-meta {
+  font-size: 0.7rem; color: var(--ink-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* FOOTER */
+footer { background: var(--mast); color: rgba(255,255,255,0.45); }
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  padding: 40px 24px 28px;
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 36px;
+}
+.footer-brand h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.2rem; font-weight: 700;
+  color: rgba(255,255,255,0.85); margin-bottom: 6px;
+}
+.footer-brand .ft-sub {
+  font-size: 0.7rem; font-style: italic;
+  color: rgba(255,255,255,0.3); margin-bottom: 12px;
+}
+.footer-brand p {
+  font-size: 0.78rem; color: rgba(255,255,255,0.35); line-height: 1.7;
+}
+.footer-col h4 {
+  font-size: 0.62rem; font-weight: 600;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 12px;
+}
+.footer-col ul { list-style: none; }
+.footer-col li {
+  padding: 6px 0; font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+  cursor: pointer; display: flex; gap: 5px; align-items: center;
+}
+.footer-col li:last-child { border-bottom: none; }
+.footer-col li::before { content: '›'; opacity: 0.4; }
+.footer-col li a { color: inherit; }
+.footer-col li:hover { color: rgba(255,255,255,0.75); }
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 16px 24px;
+  max-width: 1200px; margin: 0 auto;
+  display: flex; justify-content: space-between;
+  align-items: center; gap: 16px; flex-wrap: wrap;
+  font-size: 0.7rem;
+}
+.footer-bottom .copy { color: rgba(255,255,255,0.25); }
+.footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .article-wrap { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .article-wrap { padding: 0 16px 32px; }
+  .footer-inner { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <span class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</span>
+    <span id="topbar-date"></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="mast-brand">
+    <div class="site-name">
+      <h1><a href="index.html">Σταυροδρόμι<span class="cross"> · </span>Κοινότητα</a></h1>
+      <div class="subtitle">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+    </div>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
+  </div>
+  <nav class="primary">
+    <ul>
+      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      <li><a href="reportaz.html" class="nav-rep"><span class="nav-dot" style="background:var(--rep-lt)"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
+      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      <li><a href="autodioikisi.html"><span class="nav-dot"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      <li><a href="sxetika.html">Σχετικά</a></li>
+      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="article-wrap">
+
+  <!-- ΚΥΡΙΟ ΑΡΘΡΟ -->
+  <article class="article-main">
+
+    <a href="reportaz.html" class="back-link">← Ρεπορτάζ &amp; Παρεμβάσεις</a>
+
+    <div class="article-category">Λαογραφία &amp; Κοινοτική Μνήμη</div>
+
+    <h1 class="article-headline">
+      Μια μνήμη που φθείρεται: το λαογραφικό υλικό του Σταυροδρομίου και το αίτημα επανενεργοποίησης του Συλλόγου
+    </h1>
+
+    <p class="article-deck">
+      Αντικείμενα της καθημερινής ζωής των παλαιότερων γενεών, εργαλεία, υφαντά και οικιακά σκεύη παραμένουν, σύμφωνα με τοπικές μαρτυρίες, σε αίθουσα του νέου δημοτικού σχολείου Σταυροδρομίου, χωρίς συστηματική καταγραφή, χωρίς συντήρηση και χωρίς σαφή θεσμικό φορέα που να αναλαμβάνει την ευθύνη τους. Παράλληλα, φωνές κατοίκων — εντός και εκτός χωριού — ζητούν ανοιχτά να επανέλθει στη ζωή ο Πολιτιστικός Σύλλογος Σταυροδρομιτών Αθηνών.
+    </p>
+
+    <div class="article-meta">
+      <span>25 Απριλίου 2026</span>
+      <span>Λαογραφία · Σύλλογος · Μνήμη</span>
+      <span class="status-badge">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span>
+    </div>
+
+    <div class="article-body">
+
+      <p>
+        Σε κάθε ορεινή κοινότητα της Γορτυνίας που κατάφερε να κρατήσει ζωντανή τη μνήμη της, υπήρχε πάντα κάποιος — ένας σύλλογος, μια επιτροπή, ένας άνθρωπος — που ανέλαβε τον ρόλο αυτό με επίγνωση. Στο Σταυροδρόμι, η κληρονομιά αυτή εξακολουθεί να υπάρχει υλικά: σε αντικείμενα, εργαλεία, υφαντά και σκεύη που θυμούνται χέρια και εποχές. Το ερώτημα σήμερα δεν είναι αν αξίζει να διαφυλαχθεί αυτή η μνήμη, αλλά ποιος — και με ποιον τρόπο — θα το αναλάβει.
+      </p>
+
+      <h2>Το λαογραφικό υλικό: που βρίσκεται και σε ποια κατάσταση</h2>
+
+      <p>
+        Σύμφωνα με μαρτυρίες κατοίκων, μέρος του λαογραφικού υλικού της κοινότητας φυλάσσεται σε αίθουσα του νέου δημοτικού σχολείου Σταυροδρομίου. Ωστόσο δεν είναι δημοσίως γνωστό εάν υπάρχει επίσημη καταγραφή των αντικειμένων αυτών, εάν έχει διεξαχθεί έστω και στοιχειώδης αποτίμηση της κατάστασης διατήρησής τους ή εάν ο Δήμος Γορτυνίας γνωρίζει επίσημα για τον φύλακα χώρο και τη χρήση της συγκεκριμένης αίθουσας.
+      </p>
+
+      <p>
+        Ο χώρος ενός σχολείου, όσο κι αν είναι ευπρόσδεκτος ως προσωρινή στέγη, δεν αποτελεί από μόνος του λύση: ένα λαογραφικό υλικό χρειάζεται θεσμικό φορέα, ευθύνη τεκμηρίωσης, πρόσβαση από την κοινότητα και — κυρίως — πρόθεση να ζήσει, όχι απλώς να αποθηκεύεται.
+      </p>
+
+      <div class="note-box">
+        <strong>Σημείωση τεκμηρίωσης</strong>
+        Η κατάσταση του υλικού και η ακριβής του τοποθέτηση βασίζονται σε τοπικές μαρτυρίες. Δεν έχουν επιβεβαιωθεί από επίσημη ανακοίνωση του Δήμου Γορτυνίας ή της Σχολικής Επιτροπής. Αναμένεται επικοινωνία με τους αρμόδιους φορείς.
+      </div>
+
+      <h2>Η Γιορτή του Κρασιού και ο Σύλλογος που την έφερε στη ζωή</h2>
+
+      <p>
+        Το Σταυροδρόμι είχε ζωντανή παρουσία στον πολιτιστικό χάρτη της Γορτυνίας. Από το 1989 είχε καθιερωθεί η <strong>Γιορτή του Κρασιού</strong>, μια ετήσια εκδήλωση που συγκέντρωνε κατοίκους, αποδήμους και επισκέπτες. Η ευθύνη διοργάνωσής της ανήκε στον <strong>Πολιτιστικό Σύλλογο Σταυροδομιτών Τρίπολης</strong> — φορέα διαφορετικό από τον Σύλλογο Αθηνών — ο οποίος για χρόνια αποτελούσε τον κύριο πυλώνα της συλλογικής δράσης.
+      </p>
+
+      <p>
+        Τα τελευταία χρόνια η γιορτή αυτή δεν πραγματοποιείται. Η σιωπή αυτή δεν αποτελεί μόνο πολιτιστική απώλεια· είναι και ένδειξη αδράνειας που θίγει ευρύτερα ερωτήματα για τη βιωσιμότητα των συλλογικών θεσμών σε συρρικνούμενες κοινότητες.
+      </p>
+
+      <h2>Ο Πολιτιστικός Σύλλογος Σταυροδρομιτών Αθηνών: ιστορία και σιωπή</h2>
+
+      <p>
+        Παράλληλα με τον Σύλλογο Τρίπολης, λειτουργούσε επί σειρά ετών και ο <strong>Πολιτιστικός Σύλλογος Σταυροδρομιτών Αθηνών</strong>, ο οποίος συνέδεε τους αποδήμους με τον τόπο καταγωγής τους και συμμετείχε στις κοινοτικές δράσεις. Σύμφωνα με πληροφορίες που κυκλοφορούν στην κοινότητα, ο Σύλλογος αυτός εδώ και χρόνια δεν παρουσιάζει δημόσια δραστηριότητα.
+      </p>
+
+      <p>
+        Δεν γνωρίζουμε δημοσίως εάν ο Σύλλογος έχει διαλυθεί επίσημα, εάν βρίσκεται σε αδράνεια χωρίς τυπική λύση, ή εάν κάποιο Διοικητικό Συμβούλιο εξακολουθεί να φέρει νομικά και θεσμικά την ευθύνη για τη λειτουργία του. Αυτή η ασάφεια δεν είναι ζήτημα τυπικότητας: αποτελεί πρακτικό εμπόδιο για οποιαδήποτε πρωτοβουλία επανεκκίνησης.
+      </p>
+
+      <div class="legal-note">
+        <strong>Νομική επισήμανση</strong>
+        Κατά το ελληνικό δίκαιο (Ν. 281/1914 περί σωματείων, όπως ισχύει, και αντίστοιχες διατάξεις του Αστικού Κώδικα), τα μέλη ενός Διοικητικού Συμβουλίου σωματείου φέρουν νομική υποχρέωση για τη διαχείριση της περιουσίας του και για τη σύγκληση Γενικής Συνέλευσης, εφόσον το σωματείο δεν έχει τυπικά λυθεί. Η παράλειψη αυτών των υποχρεώσεων δεν εξαλείφεται από μόνη της με την παρέλευση του χρόνου. Στο παρόν άρθρο δεν αποδίδεται καμία συγκεκριμένη ευθύνη σε πρόσωπα, δεδομένου ότι δεν γνωρίζουμε τη νομική κατάσταση του Συλλόγου, τον κατάλογο μελών του ή τα πρακτικά της τελευταίας Γενικής Συνέλευσης. Η επισήμανση αυτή έχει σκοπό να αναδείξει το πλαίσιο ευθύνης, όχι να στοχοποιήσει πρόσωπα.
+      </div>
+
+      <h2>Τι ζητούν οι κάτοικοι</h2>
+
+      <p>
+        Ανεπίσημη επιτροπή κατοίκων — εντός του χωριού αλλά και αποδήμων — έχει εκφράσει δημόσια την επιθυμία να διερευνηθεί η <strong>επανενεργοποίηση του Συλλόγου Αθηνών</strong>. Το αίτημα αυτό συνοδεύεται από συγκεκριμένες ανάγκες:
+      </p>
+
+      <div class="open-question">
+        <strong>Αιτήματα κατοίκων — όπως εκφράστηκαν</strong>
+        <ul>
+          <li>Συστηματική καταγραφή και τεκμηρίωση του λαογραφικού υλικού που βρίσκεται στο σχολείο.</li>
+          <li>Εξεύρεση μόνιμης, προσβάσιμης στέγης για τη συλλογή — κατά προτίμηση στο χωριό.</li>
+          <li>Σύγκληση Γενικής Συνέλευσης του Συλλόγου ή νομική τακτοποίηση της κατάστασής του, ώστε η οποιαδήποτε επανεκκίνηση να έχει νομική υπόσταση.</li>
+          <li>Συνεργασία με τον Δήμο Γορτυνίας για την ένταξη της διάσωσης του υλικού σε πρόγραμμα τεκμηρίωσης ή χρηματοδότησης.</li>
+        </ul>
+      </div>
+
+      <h2>Γιατί αφορά και τους αποδήμους</h2>
+
+      <p>
+        Το Σταυροδρόμι είναι ένα χωριό που διατηρεί ισχυρό απόδημο δεσμό. Πολλές οικογένειες που έφυγαν δεκαετίες πριν εξακολουθούν να επιστρέφουν τα καλοκαίρια, να ψάχνουν τα σπίτια τους, να ρωτούν για τους γονείς και τους παππούδες τους. Γι' αυτούς, ένα λαογραφικό υλικό καλά φυλαγμένο και καταγεγραμμένο δεν είναι απλώς «έκθεμα»· είναι απόδειξη ότι αυτό που αφήσαν πίσω τους είχε αξία και δεν ξεχάστηκε.
+      </p>
+
+      <blockquote>
+        «Ένα χωριό που δεν φυλάει τα αντικείμενά του, σύντομα σταματάει να φυλάει και τις ιστορίες τους.»
+        <cite>— Από συζήτηση με κάτοικο της κοινότητας</cite>
+      </blockquote>
+
+      <h2>Τι μένει ανοιχτό</h2>
+
+      <p>
+        Το ρεπορτάζ αυτό δεν έχει απαντήσεις να δώσει· έχει ερωτήματα να θέσει. Σε ποια κατάσταση νομικά βρίσκεται σήμερα ο Πολιτιστικός Σύλλογος Σταυροδρομιτών Αθηνών; Ποιος φέρει την ευθύνη για το λαογραφικό υλικό που φυλάσσεται στο σχολείο; Υπάρχει βούληση — από τον Δήμο, από κατοίκους, από αποδήμους — για μια οργανωμένη προσπάθεια διάσωσης;
+      </p>
+
+      <p>
+        Η επόμενη κίνηση δεν είναι δύσκολη. Είναι μια συνάντηση, μια Γενική Συνέλευση, μια λίστα αντικειμένων γραμμένη σε ένα τετράδιο. Αρκεί κάποιος να κάνει το πρώτο βήμα — και αρκεί η κοινότητα να ζητήσει δυνατά να γίνει αυτό το βήμα, τώρα.
+      </p>
+
+      <div class="open-question">
+        <strong>Ανοιχτά ερωτήματα — αναμένονται απαντήσεις</strong>
+        <ul>
+          <li>Ποια είναι η νομική κατάσταση του Π.Σ. Σταυροδρομιτών Αθηνών σήμερα (ενεργός, σε αδράνεια, λελυμένος);
+          </li>
+          <li>Υπάρχει καταγεγραμμένο Δ.Σ. που φέρει νομικά υποχρεώσεις;</li>
+          <li>Έχει ενημερωθεί ο Δήμος Γορτυνίας για τη φύλαξη του λαογραφικού υλικού στο σχολείο;</li>
+          <li>Υπάρχει τυπική απόφαση παραχώρησης χώρου από τη Σχολική Επιτροπή;</li>
+        </ul>
+      </div>
+
+      <div class="article-tags-footer">
+        <span class="tag-chip">Λαογραφία</span>
+        <span class="tag-chip">Μνήμη</span>
+        <span class="tag-chip">Σύλλογος Αθηνών</span>
+        <span class="tag-chip">Κοινότητα</span>
+        <span class="tag-chip">Αυτοδιοίκηση</span>
+        <span class="tag-chip">Απόδημοι</span>
+        <span class="tag-chip">Δήμος Γορτυνίας</span>
+      </div>
+
+    </div>
+  </article>
+
+  <!-- SIDEBAR -->
+  <aside class="article-sidebar">
+
+    <div class="sidebar-block">
+      <div class="sidebar-label">Κατάσταση ρεπορτάζ</div>
+      <div class="sidebar-card">
+        <ul class="sidebar-status-list">
+          <li>
+            Νομική κατάσταση Συλλόγου Αθηνών
+            <br><span class="s-badge noans">Χωρίς επίσημη πληροφορία</span>
+          </li>
+          <li>
+            Κατάσταση λαογραφικού υλικού
+            <br><span class="s-badge open">Σε παρακολούθηση</span>
+          </li>
+          <li>
+            Απάντηση Δήμου Γορτυνίας
+            <br><span class="s-badge noans">Αναμένεται</span>
+          </li>
+          <li>
+            Σχολική Επιτροπή – χρήση αίθουσας
+            <br><span class="s-badge noans">Αναμένεται</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-label">Ιστορικό πλαίσιο</div>
+      <div class="sidebar-card">
+        <h4>Γιορτή του Κρασιού (1989–)</h4>
+        <p>
+          Καθιερώθηκε στο Σταυροδρόμι από το 1989. Διοργανωτής ήταν ο <strong>Πολιτιστικός Σύλλογος Σταυροδομιτών Τρίπολης</strong>. Τα τελευταία χρόνια δεν πραγματοποιείται.
+        </p>
+        <div class="s-meta">Πηγή: e-gortynia.gr · Πολιτιστικές εκδηλώσεις Γορτυνίας</div>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-label">Σχετικά ρεπορτάζ</div>
+      <div class="sidebar-card">
+        <ul class="related-list">
+          <li>
+            <a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a>
+            <div class="r-meta">22 Απρ. 2026 · Ύδρευση</div>
+          </li>
+          <li>
+            <a href="article-keraies-stavros.html">Κεραίες στον Σταυρό: χρειάζονται γεγονότα</a>
+            <div class="r-meta">23 Απρ. 2026 · Αυτοδιοίκηση</div>
+          </li>
+          <li>
+            <a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ανοιχτά ερωτήματα</a>
+            <div class="r-meta">21 Απρ. 2026 · Αυτοδιοίκηση</div>
+          </li>
+          <li>
+            <a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων &amp; σχολική αυλή</a>
+            <div class="r-meta">20 Απρ. 2026 · Τέλη</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="sidebar-block">
+      <div class="sidebar-label">Σχετικά με το site</div>
+      <div class="sidebar-card">
+        <p>Ανεξάρτητος χώρος τεκμηρίωσης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου, με έμφαση στη διαφάνεια, τη μνήμη του τόπου και τον σεβασμό προς τον αναγνώστη.</p>
+        <div class="s-meta">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας</div>
+      </div>
+    </div>
+
+  </aside>
+
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h2>Σταυροδρόμι – Κοινότητα</h2>
+      <div class="ft-sub">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
+      <p>
+        Ανεξάρτητος χώρος καταγραφής, μνήμης και δημόσιου λόγου για την κοινότητα Σταυροδρομίου. Χωρίς κομματικές ή άλλες δεσμεύσεις.
+      </p>
+    </div>
+    <div class="footer-col">
+      <h4>ΕΝΟΤΗΤΕΣ</h4>
+      <ul>
+        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
+        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
+        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
+      <ul>
+        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
+        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
+        <li><a href="article-laografiko-mouseio-syllogos.html">Μνήμη &amp; λαογραφικό υλικό</a></li>
+        <li>Αναπάντητα ερωτήματα</li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>ΣΕΛΙΔΕΣ</h4>
+      <ul>
+        <li><a href="index.html">Αρχική</a></li>
+        <li><a href="sxetika.html">Σχετικά</a></li>
+        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="copy">© 2026 Σταυροδρόμι – Κοινότητα · Κοινότητα Σταυροδρομίου, Δήμος Γορτυνίας</span>
+    <span class="independence">Ανεξάρτητο · Αδέσμευτο</span>
+  </div>
+</footer>
+
+<script>
+window.addEventListener('scroll', () => {
+  const st  = document.documentElement.scrollTop;
+  const dh  = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+  const bar = document.getElementById('progress');
+  if (bar && dh > 0) bar.style.width = (st / dh * 100) + '%';
+});
+
+const days   = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου',
+                'Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+
+function updateDates() {
+  const d      = new Date();
+  const span   = document.getElementById('topbar-date');
+  const mdDay  = document.getElementById('mast-day');
+  const mdFull = document.getElementById('mast-full');
+  const full   = days[d.getDay()] + ', ' + d.getDate() + ' ' +
+                 months[d.getMonth()] + ' ' + d.getFullYear();
+  if (span)   span.textContent  = full;
+  if (mdDay)  mdDay.textContent = d.getDate();
+  if (mdFull) mdFull.textContent = days[d.getDay()] + ' · ' + d.getDate() + ' ' +
+                                   months[d.getMonth()] + ' ' + d.getFullYear();
+}
+updateDates();
+setInterval(updateDates, 60000);
+</script>
+
+</body>
+</html>

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Αυτοδιοίκηση &amp; Κοινωνία – Σταυροδρόμι Κοινότητα</title>
 
-<meta name="description" content="Παρατηρητήριο αποφάσεων, έργων, ύδρευσης και βασικών ζητημάτων για την κοινότητα Σταυροδρομίου. Συγκεντρωμένα στοιχεία, ημερομηνίες και σύνδεση με τα αντίστοιχα ρεπορτάζ.">
+<meta name="description" content="Παρατηρητήριο αποφάσεων, έργων, ύδρευσης και βασικών ζητημάτων για την κοινότητα Σταυροδρομίου. Συγκεντρωμένα στοιχεία, ημερομηνίες, δημόσια ερωτήματα και σύνδεση με τα αντίστοιχα ρεπορτάζ.">
 
 <meta property="og:title" content="Αυτοδιοίκηση &amp; Κοινωνία – Σταυροδρόμι Κοινότητα">
 <meta property="og:description" content="Έργα, τέλη, αποφάσεις, ύδρευση, κεραίες και βασικά ζητήματα για την κοινότητα Σταυροδρομίου, με σύνδεση στα ρεπορτάζ.">
@@ -14,10 +14,13 @@
 <meta property="og:locale" content="el_GR">
 <meta property="og:image" content="https://michelis2023.github.io/stavrodromio/images/nero/IMG_20260420_181010.jpg">
 
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+//fonts.googleapis.com">
+//fonts.gstatic.com" crossorigin>
+//fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,900;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
 :root {
   --ink: #18191a;
   --ink-soft: #36393c;
@@ -36,8 +39,11 @@
   --lao-lt: #2e6e44;
   --aut: #1a2e5a;
   --aut-lt: #2a4a8a;
+  --aut-soft: #dfe6f5;
 }
+
 html { scroll-behavior: smooth; }
+
 body {
   background: var(--bg);
   color: var(--ink);
@@ -45,10 +51,17 @@ body {
   font-weight: 300;
   line-height: 1.7;
 }
+
 a { color: inherit; text-decoration: none; }
+
 #progress {
-  position: fixed; top: 0; left: 0; height: 3px;
-  background: var(--aut-lt); width: 0; z-index: 300;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: var(--aut-lt);
+  width: 0;
+  z-index: 300;
   transition: width 0.1s linear;
 }
 
@@ -61,14 +74,24 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: 0.05em;
 }
 .topbar-inner {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; justify-content: space-between; align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .topbar .loc {
-  display: flex; align-items: center; gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   color: rgba(255,255,255,0.65);
 }
-.topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
+.topbar .loc::before {
+  content: '◉';
+  font-size: 0.55rem;
+  color: #2e6e44;
+}
 
 /* MASTHEAD */
 .masthead {
@@ -80,32 +103,51 @@ a { color: inherit; text-decoration: none; }
   z-index: 100;
 }
 .mast-brand {
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 20px 24px 16px;
-  display: flex; align-items: flex-end; justify-content: space-between; gap: 24px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
 }
 .site-name h1 {
   font-family: 'Playfair Display', Georgia, serif;
   font-size: clamp(1.5rem, 4vw, 2.3rem);
-  font-weight: 900; color: var(--white);
-  letter-spacing: -0.02em; line-height: 1;
+  font-weight: 900;
+  color: var(--white);
+  letter-spacing: -0.02em;
+  line-height: 1;
 }
-.site-name h1 .cross { color: rgba(255,255,255,0.35); font-weight: 300; font-style: italic; margin: 0 2px; }
+.site-name h1 .cross {
+  color: rgba(255,255,255,0.35);
+  font-weight: 300;
+  font-style: italic;
+  margin: 0 2px;
+}
 .site-name .subtitle {
-  font-size: 0.75rem; color: rgba(255,255,255,0.45);
-  letter-spacing: 0.12em; text-transform: uppercase; margin-top: 6px; font-weight: 400;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.45);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-top: 6px;
+  font-weight: 400;
 }
 .mast-date {
   text-align: right;
 }
 .mast-date .md-day {
   font-family: 'Playfair Display', serif;
-  font-size: 1.7rem; font-weight: 700;
-  color: rgba(255,255,255,0.18); line-height: 1;
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: rgba(255,255,255,0.18);
+  line-height: 1;
 }
 .mast-date .md-full {
-  font-size: 0.68rem; color: rgba(255,255,255,0.35);
-  letter-spacing: 0.06em; margin-top: 3px;
+  font-size: 0.68rem;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  margin-top: 3px;
 }
 
 /* NAV */
@@ -114,44 +156,60 @@ nav.primary {
   border-top: 1px solid rgba(255,255,255,0.06);
 }
 nav.primary ul {
-  max-width: 1200px; margin: 0 auto; padding: 0 24px;
-  display: flex; list-style: none;
-  overflow-x: auto; scrollbar-width: none;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  list-style: none;
+  overflow-x: auto;
+  scrollbar-width: none;
 }
 nav.primary ul::-webkit-scrollbar { display: none; }
 nav.primary li a {
-  display: flex; align-items: center; gap: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
   padding: 10px 14px;
-  font-size: 0.74rem; font-weight: 500;
-  letter-spacing: 0.05em; text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   color: rgba(255,255,255,0.62);
   white-space: nowrap;
   border-bottom: 3px solid transparent;
   transition: color 0.18s, border-color 0.18s;
 }
-nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+nav.primary li a .nav-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
 nav.primary li a:hover { color: var(--white); }
 nav.primary li a.nav-aut {
   border-bottom-color: var(--aut-lt);
   color: #ffffff;
 }
 
-/* MAIN LAYOUT */
+/* MAIN */
 .main {
-  max-width: 1200px; margin: 32px auto 48px;
+  max-width: 1200px;
+  margin: 32px auto 48px;
   padding: 0 24px 40px;
   display: grid;
-  grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 2.05fr) minmax(0, 1.05fr);
   gap: 40px;
 }
 
-/* LEFT COLUMN – CONTENT */
+/* LEFT COLUMN */
 .section-header {
   margin-bottom: 22px;
 }
 .section-kicker {
-  font-size: 0.72rem; font-weight: 600;
-  letter-spacing: 0.16em; text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
   color: var(--ink-muted);
   margin-bottom: 6px;
 }
@@ -170,7 +228,31 @@ nav.primary li a.nav-aut {
   color: var(--ink-soft);
 }
 
-/* blocks */
+/* QUICK NAV */
+.quick-nav {
+  margin: 20px 0 24px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 12px 14px 10px;
+}
+.quick-nav-title {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
+}
+.quick-nav-list {
+  list-style: none;
+  font-size: 0.84rem;
+}
+.quick-nav-list li {
+  margin-bottom: 4px;
+}
+.quick-nav-list a:hover { text-decoration: underline; }
+
+/* BLOCKS */
 .auto-section {
   margin-bottom: 28px;
   padding-bottom: 18px;
@@ -201,24 +283,55 @@ nav.primary li a.nav-aut {
   margin-bottom: 0;
 }
 
-/* mini table / list */
+/* OVERVIEW GRID */
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0,1fr));
+  gap: 8px;
+  margin-top: 10px;
+}
+.overview-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  padding: 9px 10px;
+}
+.overview-label {
+  font-size: 0.68rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+}
+.overview-value {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  margin-top: 2px;
+}
+
+/* ISSUE LIST */
 .issue-list {
   margin-top: 8px;
 }
 .issue-item {
   background: var(--white);
   border: 1px solid var(--border);
-  padding: 10px 12px;
+  padding: 12px 13px;
   margin-bottom: 10px;
   font-size: 0.86rem;
 }
 .issue-title a,
-.issue-title span { font-weight: 500; }
+.issue-title span {
+  font-weight: 600;
+}
 .issue-title a:hover { text-decoration: underline; }
 .issue-meta {
   font-size: 0.78rem;
   color: var(--ink-muted);
   margin-top: 4px;
+}
+.issue-text {
+  margin-top: 7px;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
 }
 .issue-status {
   font-size: 0.7rem;
@@ -229,6 +342,16 @@ nav.primary li a.nav-aut {
 .issue-status.noans { color: var(--rep); }
 .issue-status.open { color: #8a5f1e; }
 .issue-status.positive { color: #1e4a2e; }
+
+/* CALLOUT */
+.callout {
+  margin-top: 10px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--aut-lt);
+  background: var(--aut-soft);
+  font-size: 0.84rem;
+  color: var(--ink-soft);
+}
 
 /* RIGHT COLUMN */
 .right-col-section {
@@ -270,7 +393,8 @@ footer {
   color: rgba(255,255,255,0.45);
 }
 .footer-inner {
-  max-width: 1200px; margin: 0 auto;
+  max-width: 1200px;
+  margin: 0 auto;
   padding: 40px 24px 28px;
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
@@ -278,12 +402,14 @@ footer {
 }
 .footer-brand h2 {
   font-family: 'Playfair Display', serif;
-  font-size: 1.2rem; font-weight: 700;
+  font-size: 1.2rem;
+  font-weight: 700;
   color: rgba(255,255,255,0.85);
   margin-bottom: 6px;
 }
 .footer-brand .ft-sub {
-  font-size: 0.7rem; font-style: italic;
+  font-size: 0.7rem;
+  font-style: italic;
   color: rgba(255,255,255,0.3);
   margin-bottom: 12px;
 }
@@ -293,8 +419,10 @@ footer {
   line-height: 1.7;
 }
 .footer-col h4 {
-  font-size: 0.62rem; font-weight: 600;
-  letter-spacing: 0.18em; text-transform: uppercase;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
   color: rgba(255,255,255,0.55);
   padding-bottom: 8px;
   border-bottom: 1px solid rgba(255,255,255,0.08);
@@ -307,7 +435,9 @@ footer {
   color: rgba(255,255,255,0.35);
   border-bottom: 1px solid rgba(255,255,255,0.04);
   cursor: pointer;
-  display: flex; gap: 5px; align-items: center;
+  display: flex;
+  gap: 5px;
+  align-items: center;
 }
 .footer-col li:last-child { border-bottom: none; }
 .footer-col li::before { content: '›'; opacity: 0.4; }
@@ -316,9 +446,13 @@ footer {
 .footer-bottom {
   border-top: 1px solid rgba(255,255,255,0.06);
   padding: 16px 24px;
-  max-width: 1200px; margin: 0 auto;
-  display: flex; justify-content: space-between;
-  align-items: center; gap: 16px; flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
   font-size: 0.7rem;
 }
 .footer-bottom .copy {
@@ -338,11 +472,14 @@ footer {
     grid-template-columns: 1fr 1fr;
   }
 }
-@media (max-width: 600px) {
+@media (max-width: 640px) {
   .main {
     padding: 0 16px 32px;
   }
   .footer-inner {
+    grid-template-columns: 1fr;
+  }
+  .overview-grid {
     grid-template-columns: 1fr;
   }
 }
@@ -372,13 +509,13 @@ footer {
   </div>
   <nav class="primary">
     <ul>
-      <li><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
-      <li><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-      <li><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
-      <li><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
-      <li><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
-      <li><a href="sxetika.html">Σχετικά</a></li>
-      <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+      ><a href="index.html"><span class="nav-dot"></span> Αρχική</a></li>
+      ><a href="reportaz.html"><span class="nav-dot"></span> Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
+      ><a href="history.html"><span class="nav-dot"></span> Ιστορία &amp; Μνήμη</a></li>
+      ><a href="laografia.html"><span class="nav-dot"></span> Λαογραφία &amp; Πολιτισμός</a></li>
+      ><a href="autodioikisi.html" class="nav-aut"><span class="nav-dot" style="background:var(--aut-lt)"></span> Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+      ><a href="sxetika.html">Σχετικά</a></li>
+      ><a href="epikoinonia.html">Επικοινωνία</a></li>
     </ul>
   </nav>
 </header>
@@ -393,27 +530,72 @@ footer {
         Εδώ συγκεντρώνονται όσα αποφασίζονται, όσα γίνονται και όσα παραμένουν ανοιχτά για την κοινότητα Σταυροδρομίου.
       </p>
       <p class="section-intro">
-        Η ενότητα αυτή δεν αντικαθιστά την επίσημη ενημέρωση. Επιχειρεί όμως να βάζει σε μια τάξη τα δεδομένα,
-        τις ημερομηνίες και τα ερωτήματα, με σύνδεση προς τα αντίστοιχα ρεπορτάζ.
+        Η ενότητα αυτή δεν αντικαθιστά την επίσημη ενημέρωση. Επιχειρεί όμως να βάζει σε τάξη τα δεδομένα,
+        τις ημερομηνίες, τις δημόσιες τοποθετήσεις και τα ερωτήματα που επηρεάζουν άμεσα την καθημερινότητα του χωριού,
+        με σύνδεση προς τα αντίστοιχα ρεπορτάζ.
       </p>
     </div>
 
+    <nav class="quick-nav">
+      <div class="quick-nav-title">ΓΡΗΓΟΡΗ ΠΛΟΗΓΗΣΗ</div>
+      <ul class="quick-nav-listst">
+        ><a href="#ti-parakolouthei">01 · Τι παρακολουθείται εδώ</a></l/li>
+        ><a href="#geniki-eikona">02 · Γενική εικόνα</a></l/li>
+        ><a href="#anoikta">03 · Ανοιχτά ζητήματα</a></l/li>
+        ><a href="#sxesi-reportaz">04 · Σχέση με τα ρεπορτάζ</a></l/li>
+        ><a href="#periorismoi">05 · Πλαίσιο και όρια</a></li>
+      </ul>
+    </nav>
+
     <section class="auto-section" id="ti-parakolouthei">
       <div class="auto-label">01 · ΤΙ ΠΑΡΑΚΟΛΟΥΘΕΙΤΑΙ ΕΔΩ</div>
-      <h3>Έργα, αποφάσεις, εισπράξεις και απαντήσεις</h3>
+      <h3>Έργα, αποφάσεις, εισπράξεις, ευθύνες και απαντήσεις</h3>
       <p>
-        Στην ενότητα αυτή καταγράφονται έργα, αποφάσεις, εισπράξεις, καθώς και οι απαντήσεις — ή η απουσία τους —
-        από τον Δήμο Γορτυνίας και την Κοινότητα Σταυροδρομίου. Κάθε ζήτημα συνδέεται, όπου υπάρχει, με αναλυτικό ρεπορτάζ.
+        Στην ενότητα αυτή καταγράφονται έργα, αποφάσεις, εισπράξεις, ζητήματα καθημερινότητας και οι απαντήσεις — ή η απουσία τους —
+        από τον Δήμο Γορτυνίας και την Κοινότητα Σταυροδρομίου.
+      </p>
+      <p>
+        Στόχος δεν είναι η συσσώρευση παραπόνων, αλλά η συγκροτημένη παρακολούθηση της τοπικής διοίκησης:
+        τι αποφασίστηκε, τι εκτελέστηκε, τι παραμένει ασαφές και ποια ερωτήματα εξακολουθούν να ζητούν σαφείς, τεκμηριωμένες απαντήσεις.
       </p>
     </section>
 
+    <section class="auto-section" id="geniki-eikona">
+      <div class="auto-label">02 · ΓΕΝΙΚΗ ΕΙΚΟΝΑ</div>
+      <h3>Μια σύντομη αποτύπωση της κατάστασης</h3>
+      <p>
+        Η εικόνα της κοινότητας, όπως καταγράφεται στα πρόσφατα ρεπορτάζ και στις δημόσιες τοποθετήσεις, δείχνει ένα χωριό
+        όπου συνυπάρχουν η ανάγκη για στοιχειώδη καθημερινή φροντίδα, η απαίτηση για λογοδοσία και η γνωστή παθογένεια
+        της αποσπασματικής ή καθυστερημένης ενημέρωσης.
+      </p>
+
+      <div class="overview-grid">
+        <div class="overview-card">
+          <div class="overview-label">Κεντρικό θέμα</div>
+          <div class="overview-value">Ύδρευση</div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-label">Σε εκκρεμότητα</div>
+          <div class="overview-value">Κεραίες</div>
+        </div>
+        <div class="overview-card">
+          <div class="overview-label">Με ερωτήματα</div>
+          <div class="overview-value">Έργα &amp; τέλη</div>
+        </div>
+      </div>
+
+      <div class="callout">
+        Η ουσία της ενότητας είναι απλή: να μη χάνονται οι υποθέσεις μέσα στον χρόνο και να μην ξεχνιέται τι ζητήθηκε,
+        τι απαντήθηκε και τι έμεινε μετέωρο.
+      </div>
+    </section>
+
     <section class="auto-section" id="anoikta">
-      <div class="auto-label">02 · ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ</div>
-      <h3>Σύντομο παρατηρητήριο</h3>
+      <div class="auto-label">03 · ΑΝΟΙΧΤΑ ΖΗΤΗΜΑΤΑ</div>
+      <h3>Σύντομο παρατηρητήριο υποθέσεων</h3>
       <p>
         Παρακάτω συγκεντρώνονται ορισμένα από τα βασικά ζητήματα που έχουν τεθεί δημόσια για το Σταυροδρόμι:
-        τσιμεντόστρωση, τέλη κοιμητηρίων, ύδρευση και κεραίες στον Σταυρό. Η σχολική αυλή καταγράφεται χωριστά,
-        καθώς εμφανίζει θετική εξέλιξη.
+        τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή, ύδρευση και κεραίες στον Σταυρό.
       </p>
 
       <div class="issue-list">
@@ -423,12 +605,13 @@ footer {
             <a href="article-apantisi-proedro.html">Απάντηση Προέδρου στα ρεπορτάζ</a>
           </div>
           <div class="issue-meta">
-            Τελευταία κίνηση: 22 Απρ. 2026 ·
+            Τελευταία κίνηση: 22 Απριλίου 2026 ·
             <span class="issue-status open">ΣΕ ΠΑΡΑΚΟΛΟΥΘΗΣΗ</span>
           </div>
           <p class="issue-text">
             Δημόσια τοποθέτηση του Προέδρου για τσιμεντόστρωση, τέλη κοιμητηρίων, σχολική αυλή και, στη συζήτηση της 22ας Απριλίου,
-            για το θέμα των κεραιών στον Σταυρό. Η σχολική αυλή φαίνεται να κλείνει, ενώ τα υπόλοιπα ζητήματα παραμένουν χωρίς πλήρη τεκμηρίωση.
+            για το θέμα των κεραιών στον Σταυρό. Η υπόθεση της σχολικής αυλής φαίνεται να κλείνει θετικά, ενώ τα υπόλοιπα ζητήματα
+            παραμένουν χωρίς πλήρη τεκμηρίωση ή χωρίς να έχουν απαντηθεί σε όλο τους το εύρος.
           </p>
         </div>
 
@@ -437,12 +620,13 @@ footer {
             <a href="article-tsimeniostrosi.html">Τσιμεντόστρωση Σταυροδρομίου</a>
           </div>
           <div class="issue-meta">
-            Τελευταία κίνηση: 19 Απρ. 2026 ·
+            Τελευταία κίνηση: 19 Απριλίου 2026 ·
             <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
           </div>
           <p class="issue-text">
-            Ερωτήματα για την τεχνική μελέτη, την επίβλεψη, το συμβατικό κόστος και την ποιότητα εκτέλεσης.
-            Αναμένονται δημοσιοποιημένα στοιχεία και επίσημες απαντήσεις.
+            Ερωτήματα για την τεχνική μελέτη, την επίβλεψη, το συμβατικό κόστος και την ποιότητα εκτέλεσης του έργου.
+            Το ζήτημα παραμένει ανοιχτό, καθώς δεν έχουν δημοσιοποιηθεί με πληρότητα όλα τα απαραίτητα στοιχεία που θα επέτρεπαν
+            έναν καθαρό έλεγχο της διαδικασίας και του αποτελέσματος.
           </p>
         </div>
 
@@ -455,8 +639,8 @@ footer {
             <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
           </div>
           <p class="issue-text">
-            Αθροιστική τριετής είσπραξη τελών χωρίς σαφή κοστολόγηση των υπηρεσιών συντήρησης που παρέχει ο Δήμος Γορτυνίας
-            στα κοιμητήρια της κοινότητας.
+            Αθροιστική τριετής είσπραξη τελών χωρίς σαφή και αναλυτική κοστολόγηση των υπηρεσιών συντήρησης που πράγματι
+            παρέχονται από τον Δήμο Γορτυνίας στα κοιμητήρια της κοινότητας. Το ζήτημα αγγίζει άμεσα το θέμα της ανταποδοτικότητας.
           </p>
         </div>
 
@@ -465,12 +649,12 @@ footer {
             <span>Σχολική αυλή – χρήση από οχήματα</span>
           </div>
           <div class="issue-meta">
-            Τελευταία κίνηση: 21 Απρ. 2026 ·
+            Τελευταία κίνηση: 21 Απριλίου 2026 ·
             <span class="issue-status positive">ΘΕΤΙΚΗ ΕΞΕΛΙΞΗ</span>
           </div>
           <p class="issue-text">
-            Μετά τη δημόσια τοποθέτηση του Προέδρου, το ζήτημα φαίνεται να έχει κλείσει υπέρ της διατήρησης της αυλής
-            ως χώρου για παιδιά και κατοίκους.
+            Μετά τη δημόσια τοποθέτηση του Προέδρου, το ζήτημα φαίνεται να έχει κλείσει υπέρ της διατήρησης της σχολικής αυλής
+            ως χώρου για παιδιά και κατοίκους και όχι ως πρόχειρου χώρου στάθμευσης ή διευκόλυνσης οχημάτων.
           </p>
         </div>
 
@@ -479,12 +663,13 @@ footer {
             <a href="article-nero-zenikos.html">Υδροδότηση Σταυροδρομίου – Πηγή Ζενίκος</a>
           </div>
           <div class="issue-meta">
-            Τελευταία κίνηση: 22 Απρ. 2026 ·
+            Τελευταία κίνηση: 22 Απριλίου 2026 ·
             <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
           </div>
           <p class="issue-text">
             Η πηγή Ζενίκος έχει αποσυνδεθεί από την κεντρική δεξαμενή, το νερό καταλήγει στο ρέμα και το χωριό υδροδοτείται από εφεδρική
-            παροχή του Λάδωνα, με ορατό κίνδυνο λειψυδρίας το καλοκαίρι.
+            παροχή του Λάδωνα, με ορατό κίνδυνο λειψυδρίας κατά τους θερινούς μήνες. Πρόκειται για ζήτημα πρώτης γραμμής,
+            με διοικητική αλλά και ουσιαστική κοινωνική βαρύτητα.
           </p>
         </div>
 
@@ -497,52 +682,59 @@ footer {
             <span class="issue-status noans">ΧΩΡΙΣ ΑΠΑΝΤΗΣΗ</span>
           </div>
           <p class="issue-text">
-            Παλιά υπόθεση με νέα επικαιρότητα: θέση των εγκαταστάσεων, όρια κοινοτήτων και ποια κοινότητα λαμβάνει τα ανταποδοτικά έσοδα.
-            Παραμένει ζητούμενη η πλήρης και μη αποσπασματική ερμηνεία της απόφασης του Ειρηνοδικείου.
+            Παλιά υπόθεση με νέα επικαιρότητα: η ακριβής θέση των εγκαταστάσεων, τα διοικητικά όρια των κοινοτήτων και το ποια κοινότητα
+            λαμβάνει τα ανταποδοτικά έσοδα. Παραμένει ζητούμενη μια πλήρης και μη αποσπασματική ερμηνεία της απόφασης του Ειρηνοδικείου,
+            χωρίς υπονοήσεις και χωρίς βεβαιότητες που δεν πατούν σε δημοσιοποιημένα στοιχεία.
           </p>
         </div>
 
       </div>
 
       <p>
-        Αν γνωρίζετε επιπλέον δεδομένα, όπως αριθμούς αποφάσεων, ημερομηνίες ή έγγραφα, μπορείτε να τα στείλετε μέσω της
+        Αν γνωρίζετε επιπλέον δεδομένα, όπως αριθμούς αποφάσεων, ημερομηνίες, έγγραφα ή πρακτικά, μπορείτε να τα στείλετε μέσω της
         σελίδας <a href="epikoinonia.html">Επικοινωνία</a>. Η τεκμηρίωση είναι εξίσου σημαντική με την κριτική.
       </p>
     </section>
 
     <section class="auto-section" id="sxesi-reportaz">
-      <div class="auto-label">03 · ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ</div>
-      <h3>Πώς συνδέεται η ενότητα με τα άρθρα</h3>
+      <div class="auto-label">04 · ΣΧΕΣΗ ΜΕ ΤΑ ΡΕΠΟΡΤΑΖ</div>
+      <h3>Πώς διαβάζεται αυτή η ενότητα</h3>
       <p>
         Η «Αυτοδιοίκηση &amp; Κοινωνία» δεν επαναλαμβάνει τα ρεπορτάζ· λειτουργεί ως χάρτης.
-        Κάθε υπόθεση έχει το αντίστοιχο αναλυτικό άρθρο, ενώ εδώ παρουσιάζονται συγκεντρωμένα τα βασικά στοιχεία και η πορεία της.
+        Κάθε υπόθεση έχει το δικό της αναλυτικό άρθρο, ενώ εδώ παρουσιάζονται συγκεντρωμένα η πορεία, η κατάσταση
+        και το βασικό πλαίσιο μέσα στο οποίο εντάσσεται.
       </p>
       <p>
-        • <strong>Τσιμεντόστρωση</strong>: αναλυτική παρουσίαση στο ρεπορτάζ
+        • <strong>Τσιμεντόστρωση</strong>: στο ρεπορτάζ
         «<a href="article-tsimeniostrosi.html">Τσιμεντόστρωση στο Σταυροδρόμι: ερωτήματα για εκτέλεση, επίβλεψη και κόστος</a>».<br>
-        • <strong>Τέλη κοιμητηρίων</strong>: αναλυτικά στο άρθρο
+        • <strong>Τέλη κοιμητηρίων</strong>: στο άρθρο
         «<a href="article-koimitiria-sxoleio.html">Τέλη κοιμητηρίων χωρίς κοστολόγηση και η απειλή στη σχολική αυλή</a>».<br>
-        • <strong>Απάντηση Προέδρου</strong>: αποτίμηση της δημόσιας τοποθέτησης στο άρθρο
+        • <strong>Απάντηση Προέδρου</strong>: στο άρθρο
         «<a href="article-apantisi-proedro.html">Απάντηση στον Πρόεδρο: ποια ερωτήματα έκλεισαν και ποια παραμένουν ανοιχτά</a>».<br>
-        • <strong>Ύδρευση – Πηγή Ζενίκος</strong>: αναλυτικά στο ρεπορτάζ
+        • <strong>Ύδρευση – Πηγή Ζενίκος</strong>: στο ρεπορτάζ
         «<a href="article-nero-zenikos.html">Το νερό χύνεται στο ρέμα, η ευθύνη όχι</a>».<br>
-        • <strong>Κεραίες στον Σταυρό</strong>: πλήρης τοποθέτηση για όρια, απόφαση Ειρηνοδικείου και ανταποδοτικά έσοδα στο άρθρο
+        • <strong>Κεραίες στον Σταυρό</strong>: στο άρθρο
         «<a href="article-keraies-stavros.html">Κεραίες στον Σταυρό: χρειάζονται γεγονότα, όχι βεβαιότητες του αέρα</a>».
       </p>
     </section>
 
     <section class="auto-section" id="periorismoi">
-      <div class="auto-label">04 · ΠΕΡΙΟΡΙΣΜΟΙ &amp; ΠΛΑΙΣΙΟ</div>
+      <div class="auto-label">05 · ΠΛΑΙΣΙΟ &amp; ΟΡΙΑ</div>
       <h3>Τι μπορεί και τι δεν μπορεί να κάνει αυτό το site</h3>
       <p>
-        Το «Σταυροδρόμι – Κοινότητα» δεν είναι θεσμός ούτε αρχή. Δεν μπορεί να επιβάλει λύσεις ούτε να αντικαταστήσει
-        την επίσημη ενημέρωση των πολιτών. Μπορεί όμως να συγκεντρώνει πληροφορίες, να θέτει ερωτήματα και να κρατά ζωντανή
-        τη συζήτηση γύρω από τις αποφάσεις που επηρεάζουν το χωριό.
+        Το «Σταυροδρόμι – Κοινότητα» δεν είναι θεσμός ούτε διοικητική αρχή. Δεν μπορεί να επιβάλει λύσεις,
+        να αντικαταστήσει την επίσημη ενημέρωση ή να ασκήσει θεσμικό έλεγχο.
       </p>
       <p>
-        Η κριτική ασκείται σε πράξεις και αποφάσεις, όχι σε πρόσωπα ως χαρακτήρες. Όπου διαπιστώνεται λάθος, γίνεται διόρθωση
-        με σχετική σημείωση. Κάθε πολίτης ή αιρετός έχει δικαίωμα απάντησης· εφόσον αυτή είναι σαφής και τεκμηριωμένη,
-        θα δημοσιεύεται ή θα συνοψίζεται αναλόγως.
+        Μπορεί όμως να καταγράφει με συνέπεια, να συγκεντρώνει πληροφορίες, να συγκρίνει δημόσιες τοποθετήσεις,
+        να διατυπώνει καθαρά ερωτήματα και να εμποδίζει τη λήθη που συχνά καλύπτει τις μικρές αλλά κρίσιμες υποθέσεις
+        της τοπικής ζωής.
+      </p>
+      <p>
+        Η κριτική εδώ ασκείται σε πράξεις, παραλείψεις και αποφάσεις — όχι σε πρόσωπα ως χαρακτήρες.
+        Όπου διαπιστώνεται σφάλμα, οφείλει να γίνεται διόρθωση με σχετική σημείωση. Κάθε πολίτης ή αιρετός
+        έχει δικαίωμα απάντησης· εφόσον αυτή είναι σαφής, τεκμηριωμένη και ουσιαστική, μπορεί να δημοσιεύεται
+        ή να συνοψίζεται αναλόγως.
       </p>
     </section>
 
@@ -591,7 +783,7 @@ footer {
       <div class="right-card">
         <h3><a href="article-nero-zenikos.html">Ύδρευση – Πηγή Ζενίκος</a></h3>
         <p class="right-card-text">
-          Το νερό της πηγής χύνεται στο ρέμα, ενώ το χωριό υδροδοτείται από εφεδρική παροχή. Ζήτημα δημόσιας υγείας και διοικητικής ευθύνης.
+          Το νερό της πηγής χύνεται στο ρέμα, ενώ το χωριό υδροδοτείται από εφεδρική παροχή. Ζήτημα δημόσιας ανάγκης και διοικητικής ευθύνης.
         </p>
         <div class="right-card-meta">22 Απριλίου 2026 · Ρεπορτάζ · Ύδρευση</div>
       </div>
@@ -600,10 +792,10 @@ footer {
     <div class="right-col-section">
       <div class="right-label">ΠΛΑΙΣΙΟ ΚΡΙΤΙΚΗΣ</div>
       <div class="right-card">
-        <h3>Πολιτική κριτικής</h3>
+        <h3>Πολιτική δημοσίου λόγου</h3>
         <p class="right-card-text">
           Οι παρατηρήσεις και τα σχόλια γίνονται με σεβασμό σε πρόσωπα και ιδιότητες, αλλά χωρίς εκπτώσεις στην κριτική
-          για πράξεις, παραλείψεις και επιλογές.
+          για πράξεις, παραλείψεις και επιλογές που επηρεάζουν το χωριό.
         </p>
         <div class="right-card-meta">
           Κάθε απάντηση που είναι σαφής και τεκμηριωμένη μπορεί να δημοσιευτεί.
@@ -627,28 +819,31 @@ footer {
     </div>
     <div class="footer-col">
       <h4>ΕΝΟΤΗΤΕΣ</h4>
+      <u
       <ul>
-        <li><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></li>
-        <li><a href="history.html">Ιστορία &amp; Μνήμη</a></li>
-        <li><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></li>
-        <li><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
+        ><a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a></l/li>
+        ><a href="history.html">Ιστορία &amp; Μνήμη</a></l/li>
+        ><a href="laografia.html">Λαογραφία &amp; Πολιτισμός</a></l/li>
+        ><a href="autodioikisi.html">Αυτοδιοίκηση &amp; Κοινωνία</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>ΠΑΡΑΤΗΡΗΤΗΡΙΟ</h4>
+      <u
       <ul>
-        <li><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></li>
-        <li><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></li>
-        <li>Αποφάσεις Δήμου</li>
-        <li>Αναπάντητα ερωτήματα</li>
+        ><a href="article-apantisi-proedro.html">Ανοιχτά ζητήματα</a></l/li>
+        ><a href="article-tsimeniostrosi.html">Έργα σε εξέλιξη</a></l/li>
+        >Αποφάσεις Δήμου</l/li>
+        >Αναπάντητα ερωτήματα</li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>ΣΕΛΙΔΕΣ</h4>
+      <u
       <ul>
-        <li><a href="index.html">Αρχική</a></li>
-        <li><a href="sxetika.html">Σχετικά</a></li>
-        <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+        ><a href="index.html">Αρχική</a></l/li>
+        ><a href="sxetika.html">Σχετικά</a></l/li>
+        ><a href="epikoinonia.html">Επικοινωνία</a></li>
       </ul>
     </div>
   </div>

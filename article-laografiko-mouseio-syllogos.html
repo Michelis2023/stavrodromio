@@ -10,6 +10,7 @@
 <meta name="author" content="Μιχαήλ Σωτηρίου Μιχαλακόπουλος">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://michelis2023.github.io/stavrodromio/article-laografiko-mouseio-syllogos.html">
+<meta name="image" content="https://michelis2023.github.io/stavrodromio/images/sxoleio/sxoleio-stavrodromio-2026.jpg">
 
 <!-- Open Graph / Facebook -->
 <meta property="og:title" content="Μια μνήμη που φθείρεται: το λαογραφικό υλικό του Σταυροδρομίου και το αίτημα επανενεργοποίησης του Συλλόγου">
@@ -69,6 +70,7 @@ a { color: inherit; text-decoration: none; }
   z-index: 300; transition: width 0.1s linear;
 }
 
+/* TOP STRIP */
 .topbar {
   background: var(--mast); padding: 5px 0;
   font-size: 0.7rem; color: rgba(255,255,255,0.5);
@@ -81,6 +83,7 @@ a { color: inherit; text-decoration: none; }
 .topbar .loc { display: flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.65); }
 .topbar .loc::before { content: '◉'; font-size: 0.55rem; color: #2e6e44; }
 
+/* MASTHEAD / NAV – ίδιο ύφος με άλλα άρθρα */
 .masthead {
   background: var(--mast);
   border-bottom: 4px solid var(--mast-mid);
@@ -128,36 +131,84 @@ nav.primary li a .nav-dot { width: 6px; height: 6px; border-radius: 50%; flex-sh
 nav.primary li a:hover { color: var(--white); }
 nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 
+/* LAYOUT */
 .article-wrap {
-  max-width: 1200px; margin: 36px auto 56px; padding: 0 24px;
+  max-width: 1200px; margin: 24px auto 56px; padding: 0 24px;
   display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 48px;
 }
 
-.article-category {
-  font-size: 0.72rem; font-weight: 600; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--lao); margin-bottom: 10px;
-  display: flex; align-items: center; gap: 8px;
+/* BREADCRUMBS + META LINE – εναρμόνιση με Ζενίκο */
+.breadcrumbs {
+  font-size: 0.78rem;
+  color: var(--ink-muted);
+  margin-bottom: 8px;
 }
-.article-category::before { content: ''; display: inline-block; width: 18px; height: 2px; background: var(--lao); }
+.breadcrumbs a { color: var(--ink-muted); }
+.breadcrumbs a:hover { text-decoration: underline; }
+.breadcrumbs-sep { margin: 0 4px; }
+
+.article-kicker {
+  font-size: 0.76rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  margin-bottom: 4px;
+}
+
+/* CATEGORY / HEADLINE */
+.article-category {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lao);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.article-category::before {
+  content: '';
+  display: inline-block;
+  width: 14px;
+  height: 1px;
+  background: var(--lao);
+}
 
 .article-headline {
   font-family: 'Playfair Display', Georgia, serif;
-  font-size: clamp(1.5rem, 3.5vw, 2.1rem); font-weight: 900;
-  line-height: 1.2; letter-spacing: -0.01em; margin-bottom: 14px; color: var(--ink);
+  font-size: clamp(1.4rem, 2.3vw, 1.75rem);
+  font-weight: 800;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-bottom: 8px;
+  color: var(--ink);
 }
 
+.article-meta-main {
+  font-size: 0.8rem;
+  color: var(--ink-muted);
+  margin-bottom: 18px;
+}
+
+/* DECK */
 .article-deck {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.05rem; line-height: 1.65; color: var(--ink-soft);
-  border-left: 3px solid var(--lao); padding-left: 16px; margin-bottom: 20px;
+  font-size: 1.0rem;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  border-left: 3px solid var(--lao);
+  padding-left: 16px;
+  margin-bottom: 18px;
 }
 
+/* META STRIP / TAGS */
 .article-meta {
   display: flex; flex-wrap: wrap; gap: 14px;
   font-size: 0.74rem; color: var(--ink-muted);
   letter-spacing: 0.08em; text-transform: uppercase;
-  padding: 12px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  margin-bottom: 26px;
+  padding: 10px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
 }
 .article-meta span { display: flex; align-items: center; gap: 5px; }
 .article-meta .status-badge {
@@ -166,8 +217,9 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
   text-transform: uppercase; border: 1px solid #d4a84b;
 }
 
-.article-hero-figure { margin: 0 0 28px 0; border: 1px solid var(--border); background: var(--white); }
-.article-hero-img { width: 100%; height: auto; display: block; max-height: 500px; object-fit: cover; object-position: center 58%; }
+/* HERO IMAGE */
+.article-hero-figure { margin: 0 0 24px 0; border: 1px solid var(--border); background: var(--white); }
+.article-hero-img { width: 100%; height: auto; display: block; max-height: 460px; object-fit: cover; object-position: center 58%; }
 .article-hero-caption {
   font-family: 'IBM Plex Sans', sans-serif; font-size: 0.78rem;
   color: var(--ink-muted); line-height: 1.55; padding: 9px 12px;
@@ -175,10 +227,11 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 }
 .fig-credit { display: block; margin-top: 3px; font-size: 0.7rem; color: var(--ink-muted); opacity: 0.76; letter-spacing: 0.04em; }
 
+/* BODY */
 .article-body { font-family: 'Libre Baskerville', Georgia, serif; font-size: 0.98rem; line-height: 1.85; color: var(--ink); }
 .article-body p { margin-bottom: 1.3em; }
 .article-body h2 {
-  font-family: 'Playfair Display', Georgia, serif; font-size: 1.2rem; font-weight: 700;
+  font-family: 'Playfair Display', Georgia, serif; font-size: 1.15rem; font-weight: 700;
   margin: 2em 0 0.7em; color: var(--ink); padding-bottom: 6px; border-bottom: 1px solid var(--border);
 }
 .article-body h3 {
@@ -191,6 +244,7 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 }
 .article-body blockquote cite { display: block; margin-top: 8px; font-size: 0.78rem; font-style: normal; color: var(--ink-muted); letter-spacing: 0.06em; }
 
+/* INFO BOXES */
 .note-box {
   background: #f0f4f0; border: 1px solid #c2d4c5; border-left: 4px solid var(--lao);
   padding: 14px 18px; font-family: 'IBM Plex Sans', sans-serif;
@@ -214,8 +268,9 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 .open-question ul { padding-left: 18px; margin: 0; }
 .open-question ul li { margin-bottom: 4px; }
 
+/* TAGS FOOTER */
 .article-tags-footer {
-  margin-top: 32px; padding-top: 16px; border-top: 1px solid var(--border);
+  margin-top: 28px; padding-top: 14px; border-top: 1px solid var(--border);
   display: flex; flex-wrap: wrap; gap: 8px;
 }
 .tag-chip {
@@ -224,14 +279,16 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
   color: var(--ink-muted); background: var(--white);
 }
 
+/* BACK LINK */
 .back-link {
   display: inline-flex; align-items: center; gap: 6px;
   font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--rep); margin-bottom: 24px; font-weight: 500;
+  color: var(--rep); margin-top: 18px; margin-bottom: 24px; font-weight: 500;
 }
 .back-link:hover { text-decoration: underline; }
 
 /* SIDEBAR */
+aside { font-size: 0.84rem; }
 .sidebar-block { margin-bottom: 28px; }
 .sidebar-label {
   font-size: 0.7rem; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
@@ -241,6 +298,7 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 .sidebar-card h4 { font-family: 'Playfair Display', serif; font-size: 0.98rem; color: var(--ink); margin-bottom: 6px; }
 .sidebar-card p { margin-bottom: 8px; }
 .sidebar-card .s-meta { font-size: 0.72rem; color: var(--ink-muted); letter-spacing: 0.06em; text-transform: uppercase; }
+
 .sidebar-status-list { list-style: none; }
 .sidebar-status-list li { padding: 8px 0; border-bottom: 1px solid var(--bg-warm); font-size: 0.8rem; }
 .sidebar-status-list li:last-child { border-bottom: none; }
@@ -248,13 +306,14 @@ nav.primary li a.nav-rep { border-bottom-color: var(--rep-lt); color: #ffffff; }
 .s-badge.open { background: #fff3e0; color: #8a5f1e; border: 1px solid #d4a84b; }
 .s-badge.noans { background: #fdecea; color: var(--rep); border: 1px solid #e8a0a0; }
 .s-badge.answered { background: #e8f5ec; color: #1e4a2e; border: 1px solid #8ec4a0; }
+
 .related-list { list-style: none; }
 .related-list li { padding: 8px 0; border-bottom: 1px solid var(--bg-warm); font-size: 0.82rem; }
 .related-list li:last-child { border-bottom: none; }
 .related-list a:hover { text-decoration: underline; }
 .related-list .r-meta { font-size: 0.7rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
 
-/* FOOTER */
+/* FOOTER – ίδιο ύφος με Ζενίκο */
 footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-inner {
   max-width: 1200px; margin: 0 auto; padding: 40px 24px 28px;
@@ -274,8 +333,15 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 .footer-bottom .copy { color: rgba(255,255,255,0.25); }
 .footer-bottom .independence { font-style: italic; color: rgba(255,255,255,0.22); }
 
-@media (max-width: 900px) { .article-wrap { grid-template-columns: 1fr; } .footer-inner { grid-template-columns: 1fr 1fr; } }
-@media (max-width: 600px) { .article-wrap { padding: 0 16px 32px; } .footer-inner { grid-template-columns: 1fr; } .article-hero-img { max-height: 260px; } }
+@media (max-width: 900px) {
+  .article-wrap { grid-template-columns: 1fr; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
+  .article-wrap { padding: 0 16px 32px; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .article-hero-img { max-height: 260px; }
+}
 </style>
 </head>
 <body>
@@ -317,13 +383,23 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
 
   <article>
 
-    <a href="reportaz.html" class="back-link">← Ρεπορτάζ &amp; Παρεμβάσεις</a>
+    <div class="breadcrumbs">
+      <a href="index.html">Αρχική</a>
+      <span class="breadcrumbs-sep">›</span>
+      <a href="reportaz.html">Ρεπορτάζ &amp; Παρεμβάσεις</a>
+      <span class="breadcrumbs-sep">›</span>
+      Λαογραφία &amp; Κοινότητα
+    </div>
 
-    <div class="article-category">Λαογραφία &amp; Κοινοτική Μνήμη</div>
+    <div class="article-kicker">ΡΕΠΟΡΤΑΖ · ΛΑΟΓΡΑΦΙΑ &amp; ΚΟΙΝΟΤΙΚΗ ΜΝΗΜΗ</div>
 
     <h1 class="article-headline">
       Μια μνήμη που φθείρεται: το λαογραφικό υλικό του Σταυροδρομίου και το αίτημα επανενεργοποίησης του Συλλόγου
     </h1>
+
+    <div class="article-meta-main">
+      25 Απριλίου 2026 · Κοινότητα Σταυροδρομίου
+    </div>
 
     <p class="article-deck">
       Αντικείμενα της καθημερινής ζωής παλαιότερων γενεών, εργαλεία, υφαντά και οικιακά σκεύη παραμένουν, σύμφωνα με τοπικές μαρτυρίες, σε αίθουσα του νέου δημοτικού σχολείου Σταυροδρομίου, χωρίς συστηματική καταγραφή, χωρίς συντήρηση και χωρίς σαφή θεσμικό φορέα που να αναλαμβάνει την ευθύνη τους. Παράλληλα, κάτοικοι εντός και εκτός χωριού ζητούν να διερευνηθεί η επανενεργοποίηση του Πολιτιστικού Συλλόγου Σταυροδρομιτών Αθηνών.
@@ -446,6 +522,8 @@ footer { background: var(--mast); color: rgba(255,255,255,0.45); }
         <span class="tag-chip">Ρεπορτάζ</span>
         <span class="tag-chip">Κοινότητα</span>
       </div>
+
+      <a href="reportaz.html" class="back-link">← Επιστροφή στην ενότητα «Ρεπορτάζ &amp; Παρεμβάσεις»</a>
 
     </div><!-- /article-body -->
 

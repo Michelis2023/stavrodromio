@@ -237,7 +237,7 @@ nav.primary li a.nav-active {
   margin-top: 4px;
 }
 
-/* MAIN FEATURE */
+/* MAIN FEATURE – HERO STYLE */
 .feature-block {
   margin-top: 32px;
 }
@@ -263,20 +263,27 @@ nav.primary li a.nav-active {
 .feature-card {
   background: var(--white);
   border: 1px solid var(--border);
-  padding: 16px 18px 18px;
-  display: grid;
-  grid-template-columns: 140px minmax(0, 1fr);
-  gap: 14px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
 }
 .feature-image-wrap {
   overflow: hidden;
-  border: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  aspect-ratio: 16 / 7;
 }
 .feature-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 0.3s ease;
+}
+.feature-image:hover {
+  transform: scale(1.02);
+}
+.feature-body {
+  padding: 16px 18px 18px;
 }
 .feature-meta-top {
   font-size: 0.7rem;
@@ -520,9 +527,6 @@ footer {
   .footer-inner {
     grid-template-columns: 1fr 1fr;
   }
-  .feature-card {
-    grid-template-columns: 1fr;
-  }
 }
 @media (max-width: 600px) {
   .main {
@@ -530,6 +534,9 @@ footer {
   }
   .footer-inner {
     grid-template-columns: 1fr;
+  }
+  .feature-image-wrap {
+    aspect-ratio: 16 / 9;
   }
 }
 </style>
@@ -627,10 +634,10 @@ footer {
       <article class="feature-card">
         <div class="feature-image-wrap">
           <a href="article-gortynias-parakampsi-lagkadia.html">
-            <img src="og-image.png" alt="Παράκαμψη Λαγκαδίων Γορτυνίας" class="feature-image" loading="lazy" width="140" height="140">
+            <img src="images/gortynias-parakampsi/parakampsi-001.jpg" alt="Παράκαμψη Λαγκαδίων Γορτυνίας" class="feature-image" loading="lazy">
           </a>
         </div>
-        <div>
+        <div class="feature-body">
           <div class="feature-meta-top">ΝΕΟ · 14 ΙΟΥΝ. 2026</div>
           <h3 class="feature-title">
             <a href="article-gortynias-parakampsi-lagkadia.html">Η Γορτυνία περιμένει: Η παράκαμψη που δεν έρχεται και η σιωπή που κοστίζει</a>

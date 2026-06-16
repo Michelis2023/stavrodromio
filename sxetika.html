@@ -323,7 +323,8 @@ footer {
     .then(r => r.text())
     .then(html => document.getElementById('masthead-placeholder').innerHTML = html);
 </script>
-  <section>
+  <div class="main"><main>
+<section>
     <div class="section-header">
       <div class="section-kicker">ΣΧΕΤΙΚΑ ΜΕ ΤΟ SITE</div>
       <h2 class="section-title">Τι είναι το «Σταυροδρόμι – Κοινότητα»</h2>
@@ -427,10 +428,10 @@ footer {
       </p>
     </section>
 
-  </section>
+  </main>
 
   <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
-  <section>
+  <aside class="right-col">
 
     <div class="right-col-section">
       <div class="right-label">ΓΙΑ ΤΗ ΣΕΛΙΔΑ</div>
@@ -476,9 +477,8 @@ footer {
       </div>
     </div>
 
-  </section>
+  </aside></div>
 
-</main>
 
 <footer>
   <div class="footer-inner">

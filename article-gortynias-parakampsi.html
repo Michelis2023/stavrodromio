@@ -372,7 +372,7 @@ footer {
 
 <div id="progress"></div>
 
-<div id="masthead-placeholder"></div>
+    .then(html => { document.getElementById('masthead-placeholder').innerHTML = html; updateDates(); });
 <script>
   fetch('masthead.html')
     .then(r => r.text())

@@ -611,7 +611,7 @@ window.addEventListener('scroll', () => {
   document.getElementById('progress').style.width = pct + '%';
 });
 
-(function(){
+function updateDates(){
   const days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
   const months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
   const now = new Date();
@@ -623,7 +623,9 @@ window.addEventListener('scroll', () => {
   if(dayEl) dayEl.textContent = String(d).padStart(2,'0');
   if(fullEl) fullEl.textContent = full;
   if(topEl) topEl.textContent = full;
-})();
+}
+updateDates();
+setInterval(updateDates, 60000);
 </script>
 
 </body>

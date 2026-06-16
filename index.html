@@ -551,7 +551,8 @@ footer {
     .then(r => r.text())
     .then(html => document.getElementById('masthead-placeholder').innerHTML = html);
 </script>
-  <section>
+  <div class="main"><main>
+<section>
     <div class="intro-block">
       <div class="intro-kicker">Ιστορία · Μνήμη · Λαογραφία · Αυτοδιοίκηση · Ρεπορτάζ</div>
       <h2 class="intro-title">Ιστορία, μνήμη και δημόσιος λόγος για ένα χωριό της Γορτυνίας</h2>
@@ -686,10 +687,10 @@ footer {
 
       </div>
     </section>
-  </section>
+  </main>
 
   <!-- ΔΕΞΙΑ ΣΤΗΛΗ -->
-  <section>
+  <aside class="right-col">
 
     <div class="right-col-section">
       <div class="right-label">ΙΣΤΟΡΙΑ &amp; ΜΝΗΜΗ</div>
@@ -797,8 +798,7 @@ footer {
       </div>
     </div>
 
-  </section>
-</main>
+  </aside></div>
 
 <footer>
   <div class="footer-inner">

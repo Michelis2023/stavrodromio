@@ -376,7 +376,7 @@ footer {
 <script>
   fetch('masthead.html')
     .then(r => r.text())
-    .then(html => document.getElementById('masthead-placeholder').innerHTML = html);
+    .then(html => { document.getElementById('masthead-placeholder').innerHTML = html; updateDates(); });
 </script>
 
 <main class="main">

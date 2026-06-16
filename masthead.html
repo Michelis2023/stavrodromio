@@ -1,0 +1,63 @@
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="loc">Κοινότητα Σταυροδρομίου · Δήμος Γορτυνίας · Αρκαδία</div>
+    <span id="topbar-date"></span>
+  </div>
+</div>
+
+<header class="masthead">
+  <div class="mast-brand">
+    <a href="index.html" class="mast-logo-link">
+      <div class="mast-logo-box">
+        <img src="og-image.png" alt="Σταυροδρόμι – Κοινότητα" class="mast-logo-img">
+      </div>
+    </a>
+    <div class="mast-date">
+      <div class="md-day" id="mast-day"></div>
+      <div class="md-full" id="mast-full"></div>
+    </div>
+  </div>
+</header>
+
+<nav class="primary">
+  <ul>
+    <li><a href="index.html">Αρχική</a></li>
+    <li><a href="reportaz.html">Ρεπορτάζ & Παρεμβάσεις</a></li>
+    <li><a href="history.html">Ιστορία & Μνήμη</a></li>
+    <li><a href="laografia.html">Λαογραφία & Πολιτισμός</a></li>
+    <li><a href="autodioikisi.html">Αυτοδιοίκηση & Κοινωνία</a></li>
+    <li><a href="sxetika.html">Σχετικά</a></li>
+    <li><a href="epikoinonia.html">Επικοινωνία</a></li>
+  </ul>
+</nav>
+
+<style>
+.mast-logo-link { text-decoration: none; }
+.mast-logo-box {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 8px 14px;
+  display: inline-flex;
+  align-items: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+.mast-logo-img {
+  height: 64px;
+  width: auto;
+  display: block;
+}
+</style>
+
+<script>
+(function(){
+  var months = ['Ιανουαρίου','Φεβρουαρίου','Μαρτίου','Απριλίου','Μαΐου','Ιουνίου','Ιουλίου','Αυγούστου','Σεπτεμβρίου','Οκτωβρίου','Νοεμβρίου','Δεκεμβρίου'];
+  var days = ['Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέμπτη','Παρασκευή','Σάββατο'];
+  var d = new Date();
+  var dayEl = document.getElementById('mast-day');
+  var fullEl = document.getElementById('mast-full');
+  var topbarDate = document.getElementById('topbar-date');
+  if(dayEl) dayEl.textContent = d.getDate();
+  if(fullEl) fullEl.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+  if(topbarDate) topbarDate.textContent = days[d.getDay()] + ', ' + d.getDate() + ' ' + months[d.getMonth()] + ' ' + d.getFullYear();
+})();
+</script>

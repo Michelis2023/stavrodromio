@@ -549,7 +549,7 @@ footer {
 <script>
   fetch('masthead.html')
     .then(r => r.text())
-    .then(html => document.getElementById('masthead-placeholder').innerHTML = html);
+    .then(html => { document.getElementById('masthead-placeholder').innerHTML = html; updateDates(); });
 </script>
   <div class="main"><main>
 <section>
@@ -605,11 +605,6 @@ footer {
         <a href="reportaz.html" class="feature-all-link">ΟΛΑ ΤΑ ΡΕΠΟΡΤΑΖ →</a>
       </div>
       <article class="feature-card">
-        <div class="feature-image-wrap">
-          <a href="article-gortynias-parakampsi-lagkadia.html">
-            <img src="og-image.png" alt="Κύριο Θέμα – Σταυροδρόμι Κοινότητα" class="feature-image" loading="lazy">
-          </a>
-        </div>
         <div class="feature-body">
           <div class="feature-meta-top">ΝΕΟ · 14 ΙΟΥΝ. 2026</div>
           <h3 class="feature-title">

@@ -3,12 +3,11 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createServer } = require('node:http');
 const { randomBytes, createHash } = require('node:crypto');
-const { render, sections, statuses, articleUrl, rich, safeUrl } = require('./pages.cjs');
+const { render, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
 const repo = 'Michelis2023/stavrodromio';
 const branch = 'stavrodromio-content';
-const legacy = 'https://michelis2023.github.io/stavrodromio';
 const raw = 'https://raw.githubusercontent.com/' + repo + '/' + branch;
 const repoApi = '/repos/' + repo;
 const sourceRoot = path.resolve(__dirname, '..');
@@ -168,7 +167,7 @@ function respond(res, code, body, type, headers = {}) {
 const js = (res, code, value, headers) => respond(res, code, JSON.stringify(value), 'application/json; charset=utf-8', { 'Cache-Control': 'no-store', ...headers });
 const html = (res, code, value, extra) => respond(res, code, value, 'text/html; charset=utf-8', {
   'Cache-Control': 'no-cache',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io; base-uri 'none'; object-src 'none'",
+  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https: data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io; base-uri 'none'; object-src 'none'",
   ...extra,
 });
 const cookie = (id, age) => 'stavrodromio=' + id + '; HttpOnly; SameSite=Strict; Path=/api/admin; Max-Age=' + age + (secure ? '; Secure' : '');
@@ -264,7 +263,7 @@ async function admin(req, res, p, origin) {
   throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
 }
 const mimes = { '.css':'text/css; charset=utf-8', '.js':'text/javascript; charset=utf-8', '.jpg':'image/jpeg',
-  '.jpeg':'image/jpeg', '.png':'image/png', '.webp':'image/webp', '.gif':'image/gif', '.svg':'image/svg+xml', '.pdf':'application/pdf' };
+  '.woff2':'font/woff2', '.jpeg':'image/jpeg', '.png':'image/png', '.webp':'image/webp', '.gif':'image/gif', '.svg':'image/svg+xml', '.pdf':'application/pdf' };
 function asset(res, p, directory, age = 3600) {
   const filename = path.resolve(directory, '.' + p);
   const type = mimes[path.extname(filename).toLowerCase()];
@@ -287,12 +286,11 @@ function informationPage(source) {
   const header = left.match(/<div class="section-header">([\s\S]*?<\/p>)\s*<\/div>/);
   const title = header[1].match(/<h2 class="section-title">([^<]+)<\/h2>/)[1];
   const summary = source.match(/<meta name="description" content="([^"]*)"/)?.[1];
-  const image = source.match(/<meta property="og:image" content="[^"]*\/stavrodromio(\/[^"]*)"/)?.[1];
   const content = markup => markup
     .replace(/\sstyle="[^"]*"/g, '')
     .replace(/\b(href|src)="((?:images\/[^"]+)|(?:[a-z0-9-]+\.html(?:#[^"]*)?))"/g, '$1="/$2"');
   return {
-    title, summary, image,
+    title, summary,
     heading: header[1].replace('class="section-kicker"', 'class="eyebrow"')
       .replace('<h2 class="section-title">', '<h1>').replace('</h2>', '</h1>'),
     body: content(left.replace(header[0], '')).replace(/<(\/?)h([34])\b/g, (_, closing, level) => '<' + closing + 'h' + (Number(level) - 1)),
@@ -305,27 +303,39 @@ const route = async (req, res) => {
   const origin = new URL(process.env.PUBLIC_ORIGIN || process.env.RENDER_EXTERNAL_URL || 'http://localhost:' + (req.socket.localPort || 4173)).origin;
   try {
     const url = new URL(req.url, origin);
-    p = decodeURIComponent(url.pathname);
+    try { p = decodeURIComponent(url.pathname); }
+    catch { throw failure(400, 'Μη έγκυρη διεύθυνση.'); }
     if (p.startsWith('/api/admin/')) return await admin(req, res, p.slice('/api/admin/'.length), origin);
     if (!['GET','HEAD'].includes(req.method)) throw failure(405, 'Μη επιτρεπτό αίτημα.');
     if (p === '/healthz') return js(res, 200, { ok: true });
-    if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\n', 'text/plain; charset=utf-8');
+    if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\nSitemap: ' + origin + '/sitemap.xml\n', 'text/plain; charset=utf-8');
     if (p === '/index.html' || p === '/masthead.html' || p === '/stavrodromio' || p.startsWith('/stavrodromio/')) {
       const next = p === '/index.html' || p === '/masthead.html' ? '/' : p.slice('/stavrodromio'.length) || '/';
       if (next.startsWith('//') || next.includes('\\')) throw failure(404, 'Η σελίδα δεν βρέθηκε.');
       res.writeHead(308, { Location: encodeURI(next) + url.search }); return res.end();
     }
-    if (p === '/site.css' || p === '/editor.js') return asset(res, p, __dirname);
-    if ((p === '/og-image.png' || /^\/images\/[A-Za-z0-9._% /()-]+$/.test(p)) && !p.split('/').includes('..')) {
-      if (asset(res, p, sourceRoot)) return;
-      res.writeHead(302, { Location: legacy + encodeURI(p) }); return res.end();
+    if (p === '/site.css') return asset(res, p, __dirname, url.searchParams.get('v') === stylesheetVersion ? 31536000 : 0);
+    if (p === '/editor.js' || p === '/favicon.svg') return asset(res, p, __dirname);
+    if (/^\/fonts\/source-serif-4-005-(?:roman|italic)\.woff2$/.test(p) && asset(res, p, __dirname, 31536000)) return;
+    if (p === '/images/history/stavrodromi-plateia.jpg' || p === '/images/laografia/plateia-kai-giorti.jpg') {
+      res.writeHead(308, { Location: '/og-image.png' }); return res.end();
+    }
+    if (p === '/og-image.png' || /^\/images\/[A-Za-z0-9._% /()-]+$/.test(p)) {
+      if (!p.split('/').includes('..') && asset(res, p, sourceRoot)) return;
+      return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
     if (/^\/uploads\/[a-f0-9]{64}\.(jpg|png|webp)$/.test(p)) {
       if (local && asset(res, p, path.resolve(path.dirname(local)), 31536000)) return;
       if (!local) {
-        const image = await fetch(raw + p, { signal: AbortSignal.timeout(8000) });
-        if (image.ok) return respond(res, 200, Buffer.from(await image.arrayBuffer()), mimes[path.extname(p)], { 'Cache-Control': 'public, max-age=31536000, immutable' });
+        try {
+          const image = await fetch(raw + p, { signal: AbortSignal.timeout(8000) });
+          if (image.ok) return respond(res, 200, Buffer.from(await image.arrayBuffer()), mimes[path.extname(p)], { 'Cache-Control': 'public, max-age=31536000, immutable' });
+          if (image.status !== 404) return respond(res, 502, 'Image unavailable', 'text/plain; charset=utf-8');
+        } catch {
+          return respond(res, 502, 'Image unavailable', 'text/plain; charset=utf-8');
+        }
       }
+      return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
     if (p === '/admin') return html(res, 200, render('admin', { origin, local }), { 'Cache-Control': 'no-store' });
     const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
@@ -336,6 +346,14 @@ const route = async (req, res) => {
     }
     const state = await publicState();
     const all = merged(state);
+    if (p === '/sitemap.xml') {
+      const paths = ['/', '/arxeio', '/paratiritirio', '/sxetika.html', '/epikoinonia.html',
+        ...Object.keys(sections).map(key => '/' + key + '.html'),
+        '/afieroma/history', '/afieroma/laografia', '/afieroma/autodioikisi',
+        ...Object.keys(all).filter(id => !all[id].archived).map(articleUrl)];
+      const urls = paths.map(path => '<url><loc>' + origin + path + '</loc></url>').join('');
+      return respond(res, 200, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>', 'application/xml; charset=utf-8');
+    }
     const params = { origin, all, state, p };
     if (p === '/') return html(res, 200, render('home', params));
     if (p === '/paratiritirio') return html(res, 200, render('issues', params));

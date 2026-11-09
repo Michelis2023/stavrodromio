@@ -1,6 +1,11 @@
 'use strict';
+const { createHash } = require('node:crypto');
+const { readFileSync } = require('node:fs');
+const { join } = require('node:path');
+const stylesheetVersion = createHash('sha256').update(readFileSync(join(__dirname, 'site.css'))).digest('hex').slice(0, 12);
 (function pages(module) {
 const name = 'Σταυροδρόμι Κοινότητα';
+const fallbackImage = '/og-image.png';
 const about = 'Ιστορία, μνήμη και ανεξάρτητο ρεπορτάζ για το Σταυροδρόμι Γορτυνίας.';
 const sections = {
   reportaz: ['Ρεπορτάζ & Παρεμβάσεις','Έργα, αποφάσεις και ερωτήματα για την κοινότητα.'],
@@ -34,7 +39,7 @@ function rich(nodes, depth = 0) {
 function layout(body, { origin, p = '/', title, summary = about, image, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
-  const shareImage = image?.startsWith('data:') ? '' : new URL(image || '/images/history/stavrodromi-plateia.jpg', origin).href;
+  const shareImage = image?.startsWith('data:') ? '' : new URL(image || fallbackImage, origin).href;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -44,7 +49,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">`}
-  <link rel="stylesheet" href="/site.css?v=layout-2"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>
   <p>Ιστορία, μνήμη και δημόσιος λόγος<br>για ένα χωριό της Γορτυνίας</p></div>
@@ -57,15 +62,24 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
 }
 const sorted = all => Object.values(all).filter(item => !item.archived).sort((a,b) => b.date.localeCompare(a.date));
 const label = item => sections[item.sections[0]][0];
-const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
+const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia.jpg'
+  ? 'width="1935" height="1089" srcset="/images/parakampsi-640.webp 640w, /images/parakampsi-1280.webp 1280w" sizes="' +
+      (eager ? '(max-width: 580px) 95vw, 850px' : '(max-width: 580px) 95vw, 380px') + '"' + (eager ? ' fetchpriority="high"' : '')
+  : '';
+const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
 const cards = items => items.length ? `<div class="cards">${items.map(item => `<article class="card">
-  <a class="card-photo" href="${articleUrl(item.id)}" tabindex="-1" aria-hidden="true">${photo(item)}</a>
+  ${item.image ? `<a class="card-photo" href="${articleUrl(item.id)}" tabindex="-1" aria-hidden="true">${photo(item)}</a>` : ''}
   <div class="card-copy"><div class="eyebrow">${e(label(item))}</div><h3><a href="${articleUrl(item.id)}">${e(item.title)}</a></h3>
   <p>${e(item.summary)}</p>${time(item.date)}</div></article>`).join('')}</div>` : '<p class="notice">Δεν βρέθηκαν κείμενα.</p>';
 const issue = item => `<li><div><strong>${item.article ? `<a href="${articleUrl(item.article)}">${e(item.title)}</a>` : e(item.title)}</strong>
   ${time(item.date)}${item.update ? `<p>${e(item.update)}</p>` : ''}</div><span class="status ${e(item.status)}">${e(statuses[item.status])}</span></li>`;
 const intro = (kicker,title,summary) => `<div class="page-intro"><div class="eyebrow">${e(kicker)}</div><h1>${e(title)}</h1><p>${e(summary)}</p></div>`;
+const features = {
+  history: 'Το Σταυροδρόμι μέσα στον χρόνο',
+  laografia: 'Καθημερινή ζωή, έθιμα και μνήμες από το Σταυροδρόμι',
+  autodioikisi: 'Ένα ζωντανό παρατηρητήριο του τόπου',
+};
 const options = values => Object.entries(values).map(([key,value]) => `<option value="${key}">${e(Array.isArray(value) ? value[0] : value)}</option>`).join('');
 const normalize = value => value.toLocaleLowerCase('el').normalize('NFD').replace(/\p{M}/gu,'').replace(/ς/g,'σ').trim();
 
@@ -76,7 +90,7 @@ function render(kind, params) {
     const lead = all[state.featured] || items[0];
     const recent = items.filter(item => item.id !== lead.id).slice(0,6);
     return layout(`<h1 class="sr-only">${name}</h1>
-      <section class="lead"><a class="lead-photo" href="${articleUrl(lead.id)}" tabindex="-1" aria-hidden="true">${photo(lead,true)}</a>
+      <section class="lead${lead.image ? '' : ' lead-text'}">${lead.image ? `<a class="lead-photo" href="${articleUrl(lead.id)}" tabindex="-1" aria-hidden="true">${photo(lead,true)}</a>` : ''}
       <div class="lead-copy"><div class="eyebrow">Κύριο θέμα · ${e(label(lead))}</div><h2><a href="${articleUrl(lead.id)}">${e(lead.title)}</a></h2>
       <p>${e(lead.summary)}</p>${time(lead.date)}<a class="text-link" href="${articleUrl(lead.id)}">Διάβασε το άρθρο ↗</a></div></section>
       <div class="front-grid"><section>${head('Πρόσφατα κείμενα','<a href="/arxeio">Όλο το αρχείο ↗</a>')}${cards(recent)}</section>
@@ -94,7 +108,8 @@ function render(kind, params) {
       <input id="q" name="q" type="search" maxlength="100" placeholder="Αναζήτηση κειμένων" value="${e(q)}"><button>Αναζήτηση</button></form>
       <div class="filters">${[['','Όλα'],...Object.entries(sections).map(([key,[label]]) => [key,label])].map(([id,label]) =>
       `<a href="${id ? link(id) : '/arxeio'}"${(category || '') === id ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div>
-      ${category && category !== 'reportaz' ? `<p><a class="text-link" href="/afieroma/${category}">Διάβασε το αφιέρωμα της ενότητας ↗</a></p>` : ''}${cards(items)}`,
+      ${features[category] ? `<a class="feature-link" href="/afieroma/${category}"><span class="eyebrow">Αφιέρωμα</span><strong>${e(features[category])} ↗</strong></a>` : ''}
+      ${items.length || !features[category] || q ? cards(items) : ''}`,
       { origin,p,title,summary });
   }
   if (kind === 'information') {
@@ -117,10 +132,12 @@ function render(kind, params) {
     const related = sorted(all).filter(item => item.id !== article.id && item.sections.includes(article.sections[0])).slice(0,3);
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
-      <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}</p>
+      <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
+      ${article.updated ? `<br>Επικαιροποίηση ${time(article.updated)}` : ''}</p>
       ${article.archived ? '<p class="notice">Προγενέστερη εκδοχή. <a href="/article-gortynias-parakampsi-lagkadia.html">Νεότερη δημοσίευση</a></p>' : ''}</header>
       ${article.hero && article.image ? `<figure class="hero-figure">${photo(article,true)}${article.caption ? '<figcaption>' + e(article.caption) + '</figcaption>' : ''}</figure>` : ''}
-      <div class="reading article-body">${article.body}</div>
+      <div class="reading article-body">${article.body.replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')}</div>
+      ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
@@ -162,5 +179,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, sections, statuses, articleUrl, rich, safeUrl };
+module.exports = { render, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion };
 })(module);

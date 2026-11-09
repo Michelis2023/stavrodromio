@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: stavrodromio-koinotita
+    runtime: node
+    plan: free
+    region: frankfurt
+    branch: stavrodromio-dynamic
+    buildCommand: node --check dynamic/server.cjs && node --check dynamic/pages.cjs && node --check dynamic/editor.js
+    startCommand: node dynamic/server.cjs
+    healthCheckPath: /healthz

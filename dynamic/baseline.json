@@ -1,0 +1,62 @@
+{
+  "articles": {},
+  "featured": "gortynias-parakampsi-lagkadia",
+  "issues": [
+    {
+      "id": "parakampsi",
+      "title": "Παράκαμψη Αγίας Παρασκευής Λευκοχωρίου",
+      "status": "pending",
+      "date": "2026-06-14",
+      "article": "gortynias-parakampsi-lagkadia",
+      "update": ""
+    },
+    {
+      "id": "keraies",
+      "title": "Κεραίες στον Σταυρό, όρια και έσοδα",
+      "status": "pending",
+      "date": "2026-04-23",
+      "article": "keraies-stavros",
+      "update": ""
+    },
+    {
+      "id": "nero",
+      "title": "Υδροδότηση Σταυροδρομίου",
+      "status": "pending",
+      "date": "2026-04-22",
+      "article": "nero-zenikos",
+      "update": ""
+    },
+    {
+      "id": "proedros",
+      "title": "Απάντηση στον Πρόεδρο, ανοιχτά ερωτήματα",
+      "status": "tracking",
+      "date": "2026-04-21",
+      "article": "apantisi-proedro",
+      "update": ""
+    },
+    {
+      "id": "sxoleio",
+      "title": "Σχολική αυλή Δημοτικού Σχολείου",
+      "status": "answered",
+      "date": "2026-04-21",
+      "article": "apantisi-proedro",
+      "update": ""
+    },
+    {
+      "id": "koimitiria",
+      "title": "Τέλη κοιμητηρίων και ανταποδοτικότητα",
+      "status": "pending",
+      "date": "2026-04-20",
+      "article": "koimitiria-sxoleio",
+      "update": ""
+    },
+    {
+      "id": "tsimento",
+      "title": "Τσιμεντόστρωση και τεχνική επίβλεψη",
+      "status": "pending",
+      "date": "2026-04-19",
+      "article": "tsimeniostrosi",
+      "update": ""
+    }
+  ]
+}

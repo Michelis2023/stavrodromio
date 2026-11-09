@@ -177,3 +177,4 @@ dialog iframe { display:block; border:1px solid var(--line); width:100%; height:
 .information-page :is(.timeline-year,.stat-value,.label,.value) { font-weight:700; }
 .information-page :is(.cards-grid,.stats-grid,.status-group) { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr)); gap:.7rem; }
 .information-page :is(.timeline-item,.small-card,.status-block,.watch-row,.dossier-item) h3 { margin:0 0 .65rem; }
+.information-sidebar .right-card-meta ul { list-style:none; padding-left:0; }

@@ -44,7 +44,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">`}
-  <link rel="stylesheet" href="/site.css"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
+  <link rel="stylesheet" href="/site.css?v=layout-2"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>
   <p>Ιστορία, μνήμη και δημόσιος λόγος<br>για ένα χωριό της Γορτυνίας</p></div>

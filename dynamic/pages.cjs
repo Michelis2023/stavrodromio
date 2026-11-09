@@ -2,7 +2,9 @@
 const { createHash } = require('node:crypto');
 const { readFileSync } = require('node:fs');
 const { join } = require('node:path');
-const stylesheetVersion = createHash('sha256').update(readFileSync(join(__dirname, 'site.css'))).digest('hex').slice(0, 12);
+const assetVersion = filename => createHash('sha256').update(readFileSync(join(__dirname, filename))).digest('hex').slice(0, 12);
+const stylesheetVersion = assetVersion('site.css');
+const editorVersion = assetVersion('editor.js');
 (function pages(module) {
 const name = 'Σταυροδρόμι Κοινότητα';
 const fallbackImage = '/og-image.png';
@@ -58,7 +60,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   <main class="wrap main" id="main">${body}</main>
   <footer class="footer"><div class="wrap"><div><strong>${name}</strong><p>Ανεξάρτητος χώρος καταγραφής για το Σταυροδρόμι Γορτυνίας.</p></div>
   <div><a href="/sxetika.html">Σχετικά</a><a href="/epikoinonia.html">Επικοινωνία</a><a href="/arxeio">Αρχείο</a><a href="/admin">Διαχείριση</a></div></div></footer>
-  ${admin ? '<script src="/editor.js" defer></script>' : ''}</body></html>`;
+  ${admin ? `<script src="/editor.js?v=${editorVersion}" defer></script>` : ''}</body></html>`;
 }
 const sorted = all => Object.values(all).filter(item => !item.archived).sort((a,b) => b.date.localeCompare(a.date));
 const label = item => sections[item.sections[0]][0];

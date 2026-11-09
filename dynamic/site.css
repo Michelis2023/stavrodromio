@@ -150,3 +150,30 @@ dialog iframe { display:block; border:1px solid var(--line); width:100%; height:
   .topic-grid { gap:.65rem; }
   .front-grid { margin-top:28px; gap:18px; }
 }
+
+.information-page.front-grid { margin-top:0; }
+.information-page:not(.front-grid) { max-width:750px; }
+.information-page > * { min-width:0; }
+.information-body > section { margin-block:1.5rem 2rem; }
+.information-body > section:first-child { margin-top:0; }
+.information-body section > h2 { margin:.4rem 0 .7rem; }
+.information-body li + li { margin-top:.4rem; }
+.information-body :is(.history-label,.about-label,.lao-label,.civic-label,.dossier-tag),
+.information-page :is(.right-label,.quick-nav-title) { color:var(--accent); font:750 .73rem/1.4 var(--sans); letter-spacing:.08em; }
+.information-page :is(.right-col-section,.quick-nav,.contact-form,.timeline-item,.stat-card,.small-card,.status-block,.watch-row,.dossier-item) {
+  border:1px solid var(--line); background:#fdfbf5; padding:1rem; margin-bottom:1rem;
+}
+.information-sidebar h3 { font-size:1.2rem; margin:.6rem 0; }
+.information-sidebar :is(p,li,.right-card-meta) { font-size:.89rem; }
+.information-sidebar :is(p,ul) { margin:.65rem 0; }
+.information-sidebar .right-card-meta { color:var(--subtle); margin-top:.6rem; }
+.information-page .quick-nav ul { padding-left:1.3rem; margin-bottom:0; }
+.information-page .contact-form { font:1rem/1.55 var(--sans); }
+.information-page .form-row { margin-bottom:1rem; }
+.information-page .form-row label { display:block; font-size:.92rem; font-weight:650; margin-bottom:.25rem; }
+.information-page .contact-form small { display:block; color:var(--subtle); margin-top:.35rem; }
+.information-page .contact-form textarea { min-height:9rem; resize:vertical; }
+.information-page .form-row input[type=email] { width:100%; }
+.information-page :is(.timeline-year,.stat-value,.label,.value) { font-weight:700; }
+.information-page :is(.cards-grid,.stats-grid,.status-group) { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,11rem),1fr)); gap:.7rem; }
+.information-page :is(.timeline-item,.small-card,.status-block,.watch-row,.dossier-item) h3 { margin:0 0 .65rem; }

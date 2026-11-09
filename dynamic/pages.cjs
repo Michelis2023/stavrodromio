@@ -33,6 +33,7 @@ function rich(nodes, depth = 0) {
 }
 function layout(body, { origin, p = '/', title, summary = about, image, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
+  const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
   const shareImage = image?.startsWith('data:') ? '' : new URL(image || '/images/history/stavrodromi-plateia.jpg', origin).href;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο']];
@@ -48,7 +49,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>
   <p>Ιστορία, μνήμη και δημόσιος λόγος<br>για ένα χωριό της Γορτυνίας</p></div>
   <nav class="nav" aria-label="Κύριο μενού"><div class="wrap">${nav.map(([href,label]) =>
-    `<a href="${href}"${p === href ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div></nav></header>
+    `<a href="${href}"${activePath === href ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div></nav></header>
   <main class="wrap main" id="main">${body}</main>
   <footer class="footer"><div class="wrap"><div><strong>${name}</strong><p>Ανεξάρτητος χώρος καταγραφής για το Σταυροδρόμι Γορτυνίας.</p></div>
   <div><a href="/sxetika.html">Σχετικά</a><a href="/epikoinonia.html">Επικοινωνία</a><a href="/arxeio">Αρχείο</a><a href="/admin">Διαχείριση</a></div></div></footer>
@@ -69,7 +70,7 @@ const options = values => Object.entries(values).map(([key,value]) => `<option v
 const normalize = value => value.toLocaleLowerCase('el').normalize('NFD').replace(/\p{M}/gu,'').replace(/ς/g,'σ').trim();
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information } = params;
   if (kind === 'home') {
     const items = sorted(all);
     const lead = all[state.featured] || items[0];
@@ -95,6 +96,14 @@ function render(kind, params) {
       `<a href="${id ? link(id) : '/arxeio'}"${(category || '') === id ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div>
       ${category && category !== 'reportaz' ? `<p><a class="text-link" href="/afieroma/${category}">Διάβασε το αφιέρωμα της ενότητας ↗</a></p>` : ''}${cards(items)}`,
       { origin,p,title,summary });
+  }
+  if (kind === 'information') {
+    const { title, summary, image, heading, body, sidebar } = information;
+    return layout(`<div class="page-intro">${heading}</div>
+      <div class="information-page${sidebar ? ' front-grid' : ''}">
+        <div class="information-body reading">${body}</div>
+        ${sidebar ? `<aside class="information-sidebar" aria-label="Συμπληρωματικές πληροφορίες">${sidebar}</aside>` : ''}
+      </div>`, { origin, p, title, summary, image });
   }
   if (kind === 'issues') {
     return layout(`${intro('Αυτοδιοίκηση','Παρατηρητήριο','Οι υποθέσεις της κοινότητας, οι απαντήσεις και όσα παραμένουν ανοιχτά.')}

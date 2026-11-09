@@ -275,6 +275,31 @@ function asset(res, p, directory, age = 3600) {
     return true;
   } catch (error) { if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false; throw error; }
 }
+
+function informationPage(source) {
+  const main = source.match(/<main\b[^>]*>([\s\S]*?)<\/main>/i)[1];
+  const sidebar = source.match(/<aside class="right-col">([\s\S]*?)<\/aside>/i)?.[1];
+  // The contact and civic pages put their right column inside <main>.
+  const split = /<\/section>\s*(?:<!--[^>]*-->\s*)?<section>\s*(?=<div class="right-col-section">)/.exec(main);
+  const right = sidebar || (split && main.slice(split.index + split[0].length).replace(/<\/section>\s*$/, ''));
+  const left = (split ? main.slice(0, split.index) : main)
+    .replace(/^\s*(?:<!--[^>]*-->\s*)?<section>\s*/, '');
+  const header = left.match(/<div class="section-header">([\s\S]*?<\/p>)\s*<\/div>/);
+  const title = header[1].match(/<h2 class="section-title">([^<]+)<\/h2>/)[1];
+  const summary = source.match(/<meta name="description" content="([^"]*)"/)?.[1];
+  const image = source.match(/<meta property="og:image" content="[^"]*\/stavrodromio(\/[^"]*)"/)?.[1];
+  const content = markup => markup
+    .replace(/\sstyle="[^"]*"/g, '')
+    .replace(/\b(href|src)="((?:images\/[^"]+)|(?:[a-z0-9-]+\.html(?:#[^"]*)?))"/g, '$1="/$2"');
+  return {
+    title, summary, image,
+    heading: header[1].replace('class="section-kicker"', 'class="eyebrow"')
+      .replace('<h2 class="section-title">', '<h1>').replace('</h2>', '</h1>'),
+    body: content(left.replace(header[0], '')).replace(/<(\/?)h([34])\b/g, (_, closing, level) => '<' + closing + 'h' + (Number(level) - 1)),
+    sidebar: right ? content(right) : '',
+  };
+}
+
 const route = async (req, res) => {
   let p = '/';
   const origin = new URL(process.env.PUBLIC_ORIGIN || process.env.RENDER_EXTERNAL_URL || 'http://localhost:' + (req.socket.localPort || 4173)).origin;
@@ -285,8 +310,8 @@ const route = async (req, res) => {
     if (!['GET','HEAD'].includes(req.method)) throw failure(405, 'Μη επιτρεπτό αίτημα.');
     if (p === '/healthz') return js(res, 200, { ok: true });
     if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\n', 'text/plain; charset=utf-8');
-    if (p === '/index.html' || p === '/stavrodromio' || p.startsWith('/stavrodromio/')) {
-      const next = p === '/index.html' ? '/' : p.slice('/stavrodromio'.length) || '/';
+    if (p === '/index.html' || p === '/masthead.html' || p === '/stavrodromio' || p.startsWith('/stavrodromio/')) {
+      const next = p === '/index.html' || p === '/masthead.html' ? '/' : p.slice('/stavrodromio'.length) || '/';
       if (next.startsWith('//') || next.includes('\\')) throw failure(404, 'Η σελίδα δεν βρέθηκε.');
       res.writeHead(308, { Location: encodeURI(next) + url.search }); return res.end();
     }
@@ -303,17 +328,11 @@ const route = async (req, res) => {
       }
     }
     if (p === '/admin') return html(res, 200, render('admin', { origin, local }), { 'Cache-Control': 'no-store' });
-    const legacyName = /^\/(sxetika|epikoinonia|masthead)\.html$/.exec(p)?.[1]
+    const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
       || /^\/afieroma\/(history|laografia|autodioikisi)$/.exec(p)?.[1];
-    if (legacyName) {
-      const content = fs.readFileSync(path.join(sourceRoot, legacyName + '.html'), 'utf8')
-        .replace(/\b(href|src)=(["'])([^"']*)\2/g, (old, attr, q, value) => /^(?:images\/|article-|[a-z]+\.html$|og-image\.png$)/.test(value) ? attr + '=' + q + '/' + value + q : old)
-        .replace("fetch('masthead.html')", "fetch('/masthead.html')")
-        .replace(/<link rel="canonical"[^>]*>|<meta property="og:url"[^>]*>/g, '')
-        .replace('</head>', '<link rel="canonical" href="' + origin + p + '"><meta property="og:url" content="' + origin + p + '"></head>');
-      return html(res, 200, content, {
-        'Content-Security-Policy': "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' https: data:; frame-ancestors 'self'; form-action 'self' https://formspree.io; object-src 'none'",
-      });
+    if (informationName) {
+      const source = fs.readFileSync(path.join(sourceRoot, informationName + '.html'), 'utf8');
+      return html(res, 200, render('information', { origin, p, information: informationPage(source) }));
     }
     const state = await publicState();
     const all = merged(state);

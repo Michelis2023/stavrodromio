@@ -4,6 +4,7 @@ const path = require('node:path');
 const { createServer } = require('node:http');
 const { randomBytes, createHash } = require('node:crypto');
 const { render, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
+const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
 const repo = 'Michelis2023/stavrodromio';
@@ -13,6 +14,7 @@ const repoApi = '/repos/' + repo;
 const sourceRoot = path.resolve(__dirname, '..');
 const local = process.env.STAVRODROMIO_TEST_FILE;
 const secure = !!process.env.RENDER || process.env.PUBLIC_ORIGIN?.startsWith('https:');
+const team = createTeam({ repoApi, repository: 'stavrodromio', local });
 const sessions = new Map();
 const attempts = new Map();
 const maxAge = 6 * 3600;
@@ -154,8 +156,8 @@ function articleInput(input, existing, image, id) {
   if (!body?.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, '').trim()) throw failure(400, 'Συμπλήρωσε το κείμενο του άρθρου.');
   return { fields, item: { ...existing, ...fields, id, body } };
 }
-const dashboard = state => ({ featured: state.featured,
-  articles: Object.values(merged(state)).map(({ blocks, ...item }) => ({ ...item, rev: hash(state.articles[item.id]) })),
+const dashboard = (state, user) => ({ featured: state.featured, user,
+  articles: Object.values(merged(state)).map(({ blocks, sourceNotes, ...item }) => ({ ...item, rev: hash(state.articles[item.id]) })),
   issues: state.issues.map(item => ({ ...item, rev: hash(item) })),
 });
 
@@ -187,17 +189,29 @@ async function requestBody(req, max = 5000000) {
   } catch { /* invalid JSON */ }
   throw failure(400, 'Το αίτημα δεν διαβάστηκε.');
 }
+
+function limitSignIn(req) {
+  const address = process.env.RENDER ? (req.headers['x-forwarded-for'] || '').split(',').at(-1).trim() : req.socket.remoteAddress;
+  const previous = attempts.get(address);
+  const entry = previous?.until > Date.now() ? previous : { count: 0, until: Date.now() + 600000 };
+  if (++entry.count > 10) throw failure(429, 'Πολλές προσπάθειες. Δοκίμασε σε λίγα λεπτά.');
+  attempts.set(address, entry);
+}
+function newSession(res, previous, session) {
+  const key = randomBytes(32).toString('hex');
+  sessions.delete(previous);
+  sessions.set(key, { ...session, until: Date.now() + maxAge * 1000 });
+  return js(res, 200, { ok: true }, { 'Set-Cookie': cookie(key, maxAge) });
+}
+const ownerUser = { role: 'owner', name: 'Μιχαήλ Σωτηρίου Μιχαλακόπουλος' };
+
 async function admin(req, res, p, origin) {
   const post = req.method === 'POST';
   if (!post && req.method !== 'GET') throw failure(405, 'Μη επιτρεπτό αίτημα.');
   if (post && req.headers.origin !== origin) throw failure(403, 'Μη επιτρεπτή προέλευση.');
   const id = req.headers.cookie?.match(/(?:^|;\s*)stavrodromio=([a-f0-9]{64})(?:;|$)/)?.[1];
   if (p === 'login' && post) {
-    const address = process.env.RENDER ? (req.headers['x-forwarded-for'] || '').split(',').at(-1).trim() : req.socket.remoteAddress;
-    const previous = attempts.get(address);
-    const entry = previous?.until > Date.now() ? previous : { count: 0, until: Date.now() + 600000 };
-    if (++entry.count > 10) throw failure(429, 'Πολλές προσπάθειες. Δοκίμασε σε λίγα λεπτά.');
-    attempts.set(address, entry);
+    limitSignIn(req);
     const { token } = await requestBody(req, 1024);
     if (local) {
       if (!process.env.STAVRODROMIO_TEST_PASSWORD || token !== process.env.STAVRODROMIO_TEST_PASSWORD) throw failure(401, 'Ο κωδικός δεν έγινε δεκτός.');
@@ -207,10 +221,22 @@ async function admin(req, res, p, origin) {
       if (owner.id !== 131882462) throw failure(401, 'Η σύνδεση επιτρέπεται μόνο στον ιδιοκτήτη.');
       await gh(repoApi + '/git/ref/heads/' + branch, token);
     }
-    const key = randomBytes(32).toString('hex');
-    sessions.delete(id);
-    sessions.set(key, { token, until: Date.now() + maxAge * 1000 });
-    return js(res, 200, { ok: true }, { 'Set-Cookie': cookie(key, maxAge) });
+    return newSession(res, id, { token, user: ownerUser });
+  }
+  if ((p === 'team-login' || p === 'team-accept') && post) {
+    limitSignIn(req);
+    const input = await requestBody(req, 2048);
+    const token = await team.serviceToken();
+    const state = await adminState(token);
+    if (p === 'team-login') {
+      const user = await team.signIn(state, input);
+      return newSession(res, id, { user });
+    }
+    team.checkInvite(state, input);
+    const verifier = await team.newPassword(input.password);
+    const accountId = randomBytes(16).toString('hex');
+    const saved = await save(token, current => team.redeem(current, input, verifier, accountId), 'Activate an editorial invitation');
+    return newSession(res, id, { user: team.requireMember(saved, accountId) });
   }
   if (p === 'logout' && post) {
     sessions.delete(id);
@@ -218,8 +244,38 @@ async function admin(req, res, p, origin) {
   }
   const session = sessions.get(id);
   if (!session || session.until < Date.now()) throw failure(401, 'Χρειάζεται σύνδεση διαχειριστή.');
-  const { token } = session;
-  if (p === 'state' && !post) return js(res, 200, dashboard(await adminState(token)));
+  const owner = session.user.role === 'owner';
+  if (['team','team-invite','team-remove'].includes(p)) {
+    if (!owner) throw failure(403, 'Μόνο ο ιδιοκτήτης διαχειρίζεται συνεργάτες.');
+    if (p === 'team' && !post) {
+      if (!team.enabled) return js(res, 200, { enabled: false });
+      return js(res, 200, { enabled: true, ...team.ownerView(await adminState(session.token)) });
+    }
+    if (!post || p === 'team') throw failure(405, 'Μη επιτρεπτό αίτημα.');
+    const input = await requestBody(req, 2048);
+    if (p === 'team-invite') {
+      await team.serviceToken();
+      const secret = randomBytes(32).toString('base64url');
+      const state = await save(session.token, current => team.newInvite(current, input, secret), 'Create an editorial invitation');
+      return js(res, 200, { enabled: true, ...team.ownerView(state), link: origin + '/admin#invite=' + secret });
+    }
+    const state = await save(session.token, current => team.remove(current, input.id), 'Revoke editorial access');
+    for (const [key, value] of sessions) {
+      if (value.user.id && value.user.id === input.id) sessions.delete(key);
+    }
+    return js(res, 200, { enabled: true, ...team.ownerView(state) });
+  }
+  const token = owner ? session.token : await team.serviceToken();
+  const currentUser = state => owner ? session.user : team.requireMember(state, session.user.id);
+  const articleData = (input, existing, image, id, state) => {
+    const user = currentUser(state);
+    const data = user.role === 'owner' ? input : { ...input, author: existing ? existing.author : user.name };
+    return articleInput(data, existing, image, id);
+  };
+  if (p === 'state' && !post) {
+    const state = await adminState(token);
+    return js(res, 200, dashboard(state, currentUser(state)));
+  }
   if (!post) throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
   const input = await requestBody(req);
   if (p === 'article' || p === 'preview') {
@@ -227,8 +283,9 @@ async function admin(req, res, p, origin) {
     const id = input.id || 'keimeno-' + randomBytes(8).toString('hex');
     if (!validId(id)) throw failure(400, 'Μη έγκυρη διεύθυνση άρθρου.');
     if (p === 'preview') {
-      const all = merged(await adminState(token));
-      const { item } = articleInput(input, known(all, id) ? all[id] : null, image, id);
+      const state = await adminState(token);
+      const all = merged(state);
+      const { item } = articleData(input, known(all, id) ? all[id] : null, image, id, state);
       if (image) item.image = input.upload;
       return html(res, 200, render('article', { origin, article: item, all: {}, preview: true }), { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' });
     }
@@ -238,15 +295,16 @@ async function admin(req, res, p, origin) {
       if (input.id && (!existing || input.rev !== hash(state.articles[id]))) throw failure(409, 'Το άρθρο έχει ήδη αλλάξει. Άνοιξέ το ξανά.');
       if (!input.id && existing) throw failure(409, 'Η διεύθυνση υπάρχει ήδη.');
       if (input.featured && existing?.archived) throw failure(400, 'Η προγενέστερη εκδοχή δεν γίνεται κύριο θέμα.');
-      const { fields } = articleInput(input, existing, image, id);
+      const { fields } = articleData(input, existing, image, id, state);
       return { ...state, articles: { ...state.articles, [id]: { ...state.articles[id], ...fields } },
         featured: input.featured ? id : state.featured === id ? null : state.featured };
     }, 'Publish article: ' + id, image);
-    return js(res, 200, { ...dashboard(state), id, path: articleUrl(id) });
+    return js(res, 200, { ...dashboard(state, currentUser(state)), id, path: articleUrl(id) });
   }
   if (p === 'issue') {
     const id = input.id || randomBytes(8).toString('hex');
     const state = await save(token, state => {
+      currentUser(state);
       const index = state.issues.findIndex(item => item.id === id);
       if (input.id && (index < 0 || input.rev !== hash(state.issues[index]))) throw failure(409, 'Η υπόθεση έχει ήδη αλλάξει.');
       if (!known(statuses, input.status)) throw failure(400, 'Διάλεξε κατάσταση.');
@@ -258,7 +316,7 @@ async function admin(req, res, p, origin) {
       else issues[index] = item;
       return { ...state, issues };
     }, 'Update observatory');
-    return js(res, 200, { ...dashboard(state), id });
+    return js(res, 200, { ...dashboard(state, currentUser(state)), id });
   }
   throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
 }
@@ -337,7 +395,7 @@ const route = async (req, res) => {
       }
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
-    if (p === '/admin') return html(res, 200, render('admin', { origin, local }), { 'Cache-Control': 'no-store' });
+    if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled }), { 'Cache-Control': 'no-store' });
     const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
       || /^\/afieroma\/(history|laografia|autodioikisi)$/.exec(p)?.[1];
     if (informationName) {

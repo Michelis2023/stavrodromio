@@ -5,6 +5,8 @@ const form = $('article-form');
 const editor = $('body-editor');
 const issueForm = $('issue-form');
 const dialog = $('preview-dialog');
+const inviteCode = new URLSearchParams(window.location.hash.slice(1)).get('invite');
+let loginMode = inviteCode ? 'accept' : 'owner';
 let state;
 let selected;
 let initialHtml = '';
@@ -28,6 +30,14 @@ async function api(endpoint, data) {
 function showLogin() {
   $('desk').hidden = true;
   $('login-panel').hidden = false;
+  $('login').hidden = loginMode !== 'owner';
+  $('team-login').hidden = loginMode !== 'team';
+  $('team-accept').hidden = loginMode !== 'accept';
+  $('login-heading').textContent = {
+    owner: 'Σύνδεση ιδιοκτήτη', team: 'Σύνδεση συνδιαχειριστή', accept: 'Αποδοχή πρόσκλησης',
+  }[loginMode];
+  const switcher = $('login-switch');
+  if (switcher) switcher.textContent = loginMode === 'owner' ? 'Σύνδεση συνδιαχειριστή' : 'Σύνδεση ιδιοκτήτη';
 }
 async function run(action, button, showErrors = true) {
   if (busy) return;
@@ -61,7 +71,8 @@ function openArticle(item = null) {
   selected = item;
   form.reset();
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
-  if (!item) form.elements.author.value = 'Μιχαήλ Σωτηρίου Μιχαλακόπουλος';
+  if (!item) form.elements.author.value = state.user.name;
+  form.elements.author.readOnly = state.user.role !== 'owner';
   form.elements.category.value = item?.sections[0] || 'reportaz';
   form.elements.date.value = item?.date || today();
   form.elements.hero.checked = item?.hero ?? true;
@@ -96,6 +107,10 @@ function activate(data) {
   state = data;
   $('login-panel').hidden = true;
   $('desk').hidden = false;
+  $('editor-role').textContent = (data.user.role === 'owner' ? 'Ιδιοκτήτης' : 'Συνδιαχειριστής') + ' · ' + data.user.name;
+  $('team-panel').hidden = data.user.role !== 'owner';
+  $('team-panel').open = false;
+  clearTeam();
   openArticle();
   updateIssues();
 }
@@ -133,6 +148,95 @@ async function payload() {
   }
   return data;
 }
+
+function clearTeam() {
+  $('team-controls').hidden = true;
+  $('team-invite-result').hidden = true;
+  $('team-invite-link').value = '';
+  $('team-invite').reset();
+  $('team-accounts').replaceChildren();
+  $('team-pending').replaceChildren();
+  $('team-status').textContent = '';
+}
+function showTeam(data) {
+  $('team-controls').hidden = !data.enabled;
+  $('team-status').textContent = data.enabled ? '' : 'Εκκρεμεί η σύνδεση της εφαρμογής GitHub για τις προσκλήσεις.';
+  if (!data.enabled) return;
+  const date = new Intl.DateTimeFormat('el-GR', { dateStyle: 'medium', timeZone: 'Europe/Athens' });
+  function rows(list, pending) {
+    if (!list.length) {
+      const li = document.createElement('li');
+      li.textContent = pending ? 'Καμία ενεργή πρόσκληση.' : 'Κανένας ενεργός συνεργάτης.';
+      return [li];
+    }
+    return list.map(item => {
+      const li = document.createElement('li');
+      const label = document.createElement('span');
+      label.textContent = item.name + ' · ' + item.email + (pending ? ' · Λήγει ' + date.format(item.expires) : '');
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'secondary';
+      button.textContent = pending ? 'Ακύρωση πρόσκλησης' : 'Ανάκληση πρόσβασης';
+      button.addEventListener('click', () => {
+        if (!window.confirm((pending ? 'Να ακυρωθεί η πρόσκληση για ' : 'Να ανακληθεί η πρόσβαση του χρήστη ') + item.email + ';')) return;
+        run(async () => {
+          const next = await api('team-remove', { id: item.id });
+          showTeam(next);
+          $('team-invite-result').hidden = true;
+          $('team-invite-link').value = '';
+          $('team-status').textContent = pending ? 'Η πρόσκληση ακυρώθηκε.' : 'Η πρόσβαση ανακλήθηκε.';
+        }, button);
+      });
+      li.append(label, button);
+      return li;
+    });
+  }
+  $('team-accounts').replaceChildren(...rows(data.accounts, false));
+  $('team-pending').replaceChildren(...rows(data.invites, true));
+}
+$('team-panel').addEventListener('toggle', () => {
+  if ($('team-panel').open) run(async () => showTeam(await api('team')));
+});
+$('team-invite').addEventListener('submit', event => {
+  event.preventDefault();
+  run(async () => {
+    const data = await api('team-invite', Object.fromEntries(new FormData(event.target)));
+    showTeam(data);
+    event.target.reset();
+    $('team-invite-link').value = data.link;
+    $('team-invite-result').hidden = false;
+  }, event.submitter);
+});
+$('team-copy').addEventListener('click', async () => {
+  const link = $('team-invite-link');
+  try {
+    await navigator.clipboard.writeText(link.value);
+    $('team-status').textContent = 'Ο σύνδεσμος αντιγράφηκε.';
+  } catch {
+    link.select();
+    $('team-status').textContent = 'Αντίγραψε τον επιλεγμένο σύνδεσμο.';
+  }
+});
+$('login-switch')?.addEventListener('click', () => {
+  if (busy) return;
+  loginMode = loginMode === 'owner' ? 'team' : 'owner';
+  showLogin();
+});
+for (const mode of ['team-login', 'team-accept']) {
+  $(mode).addEventListener('submit', event => {
+    event.preventDefault();
+    const data = Object.fromEntries(new FormData(event.target));
+    if (mode === 'team-accept') data.code = inviteCode;
+    event.target.elements.password.value = '';
+    run(async () => {
+      await api(mode, data);
+      if (mode === 'team-accept') history.replaceState(null, '', location.pathname + location.search);
+      loginMode = 'team';
+      activate(await api('state'));
+    }, event.submitter);
+  });
+}
+
 $('login').addEventListener('submit', event => {
   event.preventDefault();
   const token = $('key').value;
@@ -147,6 +251,7 @@ $('logout').addEventListener('click', event => {
     state = null;
     selected = null;
     dirty = false;
+    clearTeam();
     showLogin();
   }, event.currentTarget);
 });
@@ -208,5 +313,6 @@ issueForm.addEventListener('submit', event => {
 window.addEventListener('beforeunload', event => {
   if (dirty) { event.preventDefault(); event.returnValue = true; }
 });
-run(async () => activate(await api('state')), null, false);
+showLogin();
+if (!inviteCode) run(async () => activate(await api('state')), null, false);
 })();

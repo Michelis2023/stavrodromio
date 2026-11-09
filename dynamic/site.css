@@ -215,3 +215,13 @@ dialog iframe { display:block; border:1px solid var(--line); width:100%; height:
 .source-notes-grid p { margin:.35rem 0; }
 .source-notes-grid ul { padding-inline-start:1.35rem; margin-block:.55rem 0; }
 .source-notes-grid :is(.obs-meta,.right-card-meta,.s-meta,.r-meta) { color:var(--subtle); font-size:.85rem; }
+
+#login-switch { margin-top:1rem; }
+#editor-role { color:var(--subtle); }
+.team-panel { margin-bottom:1rem; }
+.team-panel summary { cursor:pointer; font-weight:700; }
+.team-panel h3 { margin-top:1.1rem; }
+.team-panel form,.team-panel #team-invite-result { margin-block:1rem; }
+.team-panel #team-invite-result p { margin-top:.5rem; color:var(--subtle); }
+.team-list { list-style:none; padding:0; margin:.5rem 0 0; }
+.team-list li { display:flex; flex-wrap:wrap; align-items:center; gap:.5rem 1rem; border-bottom:1px solid var(--line); padding:.6rem 0; overflow-wrap:anywhere; }

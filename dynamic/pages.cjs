@@ -84,7 +84,7 @@ const options = values => Object.entries(values).map(([key,value]) => `<option v
 const normalize = value => value.toLocaleLowerCase('el').normalize('NFD').replace(/\p{M}/gu,'').replace(/ς/g,'σ').trim();
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled } = params;
   if (kind === 'home') {
     const items = sorted(all);
     const lead = all[state.featured] || items[0];
@@ -145,11 +145,42 @@ function render(kind, params) {
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>
-    <section class="panel narrow" id="login-panel"><h2>Σύνδεση διαχειριστή</h2><form id="login">
+    <section class="panel narrow" id="login-panel"><h2 id="login-heading">Σύνδεση διαχειριστή</h2><form id="login">
     <label>${local ? 'Κωδικός δοκιμής' : 'Κλειδί πρόσβασης GitHub'}<input type="password" id="key" maxlength="300" required autocomplete="off"></label>
     ${local ? '' : '<p>Χρησιμοποίησε κλειδί περιορισμένο στο αποθετήριο stavrodromio, με άδεια Contents: Read and write.</p>'}
-    <button>Σύνδεση</button></form></section>
-    <div id="desk" hidden><div class="desk-top"><button id="new-article">Νέο άρθρο</button><button id="logout" class="secondary">Αποσύνδεση</button></div>
+    
+    <button>Σύνδεση</button></form>
+    <form id="team-login" hidden>
+      <label>Email <input type="email" name="email" required maxlength="254" autocomplete="username"></label>
+      <label>Κωδικός <input type="password" name="password" required maxlength="128" autocomplete="current-password"></label>
+      <button>Σύνδεση</button>
+    </form>
+    <form id="team-accept" hidden>
+      <label>Email πρόσκλησης <input type="email" name="email" required maxlength="254" autocomplete="username"></label>
+      <label>Νέος κωδικός <input type="password" name="password" required minlength="12" maxlength="128" autocomplete="new-password"></label>
+      <p>Χρησιμοποίησε τουλάχιστον 12 χαρακτήρες.</p><button>Αποδοχή πρόσκλησης</button>
+    </form>
+    ${teamEnabled ? '<button id="login-switch" class="secondary" type="button">Σύνδεση συνδιαχειριστή</button>' : ''}
+    </section>
+    <div id="desk" hidden><p id="editor-role"></p>
+    <details id="team-panel" class="panel team-panel" hidden>
+      <summary>Συνδιαχειριστές</summary>
+      <p id="team-status" role="status" aria-live="polite"></p>
+      <div id="team-controls" hidden>
+        <form id="team-invite" class="narrow">
+          <label>Όνομα υπογραφής <input name="name" required maxlength="120"></label>
+          <label>Email συνεργάτη <input name="email" type="email" required maxlength="254"></label>
+          <button>Δημιουργία πρόσκλησης</button>
+        </form>
+        <div id="team-invite-result" hidden>
+          <label>Ιδιωτικός σύνδεσμος πρόσκλησης <input id="team-invite-link" readonly></label>
+          <button id="team-copy" type="button" class="secondary">Αντιγραφή συνδέσμου</button>
+          <p>Στείλε τον σύνδεσμο ιδιωτικά στον συνεργάτη σου. Ισχύει για 7 ημέρες και μία εγγραφή.</p>
+        </div>
+        <h3>Ενεργοί συνεργάτες</h3><ul id="team-accounts" class="team-list"></ul>
+        <h3>Προσκλήσεις σε αναμονή</h3><ul id="team-pending" class="team-list"></ul>
+      </div>
+    </details><div class="desk-top"><button id="new-article">Νέο άρθρο</button><button id="logout" class="secondary">Αποσύνδεση</button></div>
     <div class="editor-grid"><aside class="panel"><h2>Δημοσιεύσεις</h2><div id="article-list" class="editor-list"></div></aside>
     <section class="panel"><h2 id="edit-title">Νέο άρθρο</h2><form id="article-form">
     <label>Τίτλος <input name="title" required maxlength="240"></label>

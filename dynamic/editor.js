@@ -51,14 +51,14 @@ async function api(endpoint, data) {
 }
 async function uploadFile(file, type, label) {
   if (stagedFiles.has(file)) return stagedFiles.get(file);
-  uploadNotice('Μεταφόρτωση ' + label, 0);
+  uploadNotice('Μεταφόρτωση αρχείου ' + label, 0);
   const uploadId = await new Promise((resolve, reject) => {
     const request = new XMLHttpRequest();
     request.upload.addEventListener('progress', event => {
       if (event.lengthComputable && event.total > 0) uploadPercent(Math.floor(100 * event.loaded / event.total));
     });
     request.upload.addEventListener('load', () => {
-      uploadNotice('Το αρχείο στάλθηκε. Αναμονή επιβεβαίωσης για ' + label, null);
+      uploadNotice('Το αρχείο στάλθηκε. Αναμονή επιβεβαίωσης για το αρχείο ' + label, null);
     });
     request.addEventListener('load', () => {
       const result = request.response;
@@ -361,7 +361,7 @@ async function publishArticle(data, files) {
   const submit = async () => {
     let index = 0;
     const stagedMedia = await mapFiles(files, async (file, type) => {
-      const label = 'αρχείου ' + (++index) + ' από ' + count + ' (' + file.name + ')';
+      const label = (++index) + ' από ' + count + ' (' + file.name + ')';
       const uploadId = await uploadFile(file, type, label);
       uploadNotice('Επιβεβαιώθηκαν ' + index + ' από ' + count + ' αρχεία.', 100);
       return uploadId;

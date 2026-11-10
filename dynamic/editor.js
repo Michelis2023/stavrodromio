@@ -44,6 +44,9 @@ async function uploadFile(file, type) {
 }
 function showLogin() {
   $('desk').hidden = true;
+  $('mobile-publishing').hidden = true;
+  $('mobile-publishing').open = false;
+  $('mobile-publishing-text').textContent = '';
   $('login-panel').hidden = false;
   $('login').hidden = loginMode !== 'owner';
   $('team-login').hidden = loginMode !== 'team';
@@ -239,6 +242,8 @@ function activate(data) {
   state = data;
   $('login-panel').hidden = true;
   $('desk').hidden = false;
+  $('mobile-publishing-text').textContent = data.mobileHelp || '';
+  $('mobile-publishing').hidden = !data.mobileHelp;
   $('editor-role').textContent = (data.user.role === 'owner' ? 'Ιδιοκτήτης' : 'Συνδιαχειριστής') + ' · ' + data.user.name;
   $('team-panel').hidden = data.user.role !== 'owner';
   $('team-panel').open = false;

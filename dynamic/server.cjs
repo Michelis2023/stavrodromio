@@ -269,6 +269,7 @@ function articleInput(input, existing, uploads, id) {
   return { fields, item: { ...existing, ...fields, id, body } };
 }
 const dashboard = (state, user) => ({ featured: state.featured, user,
+  mobileHelp: 'Άνοιξε το Σταυροδρόμι από το εικονίδιο της εφαρμογής και μπες στη Διαχείριση. Πάτησε «Νέο άρθρο» για να γράψεις, να επιλέξεις φωτογραφίες και βίντεο από το κινητό ή να επικολλήσεις σύνδεσμο βίντεο. Η δημοσίευση χρειάζεται σύνδεση στο διαδίκτυο.',
   articles: Object.values(merged(state)).map(({ blocks, sourceNotes, ...item }) => ({ ...item, rev: hash(state.articles[item.id]) })),
   issues: state.issues.map(item => ({ ...item, rev: hash(item) })),
 });

@@ -193,10 +193,6 @@ function render(kind, params) {
         <li>Πάτησε τις τρεις τελείες και έπειτα «Εγκατάσταση εφαρμογής» ή «Προσθήκη στην αρχική οθόνη».</li>
         <li>Πάτησε «Εγκατάσταση» και άνοιξε την εφαρμογή από το εικονίδιό της.</li>
       </ol></section>
-      <section aria-labelledby="install-admin"><h2 id="install-admin">Δημοσίευση από το κινητό</h2>
-        <p>Μέσα από την εφαρμογή άνοιξε τη <a href="/admin">Διαχείριση</a> και συνδέσου με τον λογαριασμό σου. Εκεί γράφεις άρθρα, διαλέγεις φωτογραφίες και βίντεο από το κινητό ή επικολλάς σύνδεσμο βίντεο.</p>
-        <p>Η ανάγνωση και η δημοσίευση χρειάζονται σύνδεση στο διαδίκτυο.</p>
-      </section>
     </div>`, { origin, p:'/egkatastasi', title:'Εγκατάσταση εφαρμογής' });
   if (kind === 'home') {
     const items = sorted(all);
@@ -300,6 +296,10 @@ function render(kind, params) {
     ${teamEnabled ? '<button id="login-switch" class="secondary" type="button">Σύνδεση συνδιαχειριστή</button>' : ''}
     </section>
     <div id="desk" hidden><p id="editor-role"></p>
+    <details id="mobile-publishing" class="panel team-panel" hidden>
+      <summary>Δημοσίευση από το κινητό</summary>
+      <p id="mobile-publishing-text"></p>
+    </details>
     <details id="team-panel" class="panel team-panel" hidden>
       <summary>Συνδιαχειριστές</summary>
       <p id="team-status" role="status" aria-live="polite"></p>

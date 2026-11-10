@@ -38,10 +38,13 @@ function rich(nodes, depth = 0) {
     return `<${node.tag}${attr}>` + (empty.has(node.tag) ? '' : rich(node.children, depth + 1) + `</${node.tag}>`);
   }).join('');
 }
-function layout(body, { origin, p = '/', title, summary = about, image, article = false, privatePage = false, admin = false }) {
+function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
-  const shareImage = image?.startsWith('data:') ? '' : new URL(image || fallbackImage, origin).href;
+  const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
+  const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
+  if (isSiteImage) shareImage.searchParams.set('v', '2');
+  const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -50,7 +53,10 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
-  <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">
+  <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
+  ${isSiteImage ? '<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
+  ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">
   <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
@@ -176,7 +182,7 @@ function render(kind, params) {
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:article.summary,image:article.image,article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:article.summary,image:article.image,imageAlt:article.alt,article:true,privatePage:preview });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>

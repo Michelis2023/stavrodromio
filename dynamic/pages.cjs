@@ -142,6 +142,10 @@ function render(kind, params) {
       <section class="lead${lead.image ? '' : ' lead-text'}">${lead.image ? `<a class="lead-photo" href="${articleUrl(lead.id)}" tabindex="-1" aria-hidden="true">${photo(lead,true)}</a>` : ''}
       <div class="lead-copy"><div class="eyebrow">Κύριο θέμα · ${e(label(lead))}</div><h2><a href="${articleUrl(lead.id)}">${e(lead.title)}</a></h2>
       <p>${e(lead.summary)}</p>${time(lead.date)}<a class="text-link" href="${articleUrl(lead.id)}">Διάβασε το άρθρο ↗</a></div></section>
+      ${newsletterAction ? `<aside class="newsletter-banner" aria-label="Ενημερώσεις με email">
+        <div><strong>Νέα από το Σταυροδρόμι</strong><p>Λάβε τις νέες δημοσιεύσεις στο email σου.</p></div>
+        <a href="#newsletter-heading">Εγγραφή με email <span aria-hidden="true">↓</span></a>
+      </aside>` : ''}
       <div class="front-grid"><section>${head('Πρόσφατα κείμενα','<a href="/arxeio">Όλο το αρχείο ↗</a>')}${cards(recent)}</section>
       <aside>${head('Παρατηρητήριο')}<div class="issue-panel"><p>Τοπικές υποθέσεις και οι τελευταίες εξελίξεις τους.</p>
       <ul class="issues">${state.issues.slice(0,4).map(issue).join('')}</ul><a class="text-link" href="/paratiritirio">Όλα τα ζητήματα ↗</a></div></aside></div>

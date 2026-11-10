@@ -5,6 +5,7 @@ const { join } = require('node:path');
 const assetVersion = filename => createHash('sha256').update(readFileSync(join(__dirname, filename))).digest('hex').slice(0, 12);
 const stylesheetVersion = assetVersion('site.css');
 const editorVersion = assetVersion('editor.js');
+const appVersion = assetVersion('app.js');
 (function pages(module) {
 const name = 'Σταυροδρόμι Κοινότητα';
 const fallbackImage = '/og-image.png';
@@ -38,6 +39,45 @@ function rich(nodes, depth = 0) {
     return `<${node.tag}${attr}>` + (empty.has(node.tag) ? '' : rich(node.children, depth + 1) + `</${node.tag}>`);
   }).join('');
 }
+function videoEmbed(source) {
+  const url = new URL(source);
+  const { hostname: host, pathname: path, searchParams: query } = url;
+  if (['youtu.be', 'youtube.com', 'www.youtube.com', 'm.youtube.com', 'www.youtube-nocookie.com'].includes(host)) {
+    const id = host === 'youtu.be' ? path.slice(1)
+      : path === '/watch' ? query.get('v') : /^\/(?:shorts|live|embed)\/([\w-]+)\/?$/.exec(path)?.[1];
+    if (/^[\w-]{11}$/.test(id ?? '')) return ['YouTube', 'https://www.youtube-nocookie.com/embed/' + id];
+  }
+  if (['vimeo.com', 'www.vimeo.com', 'player.vimeo.com'].includes(host)) {
+    const match = /^\/(?:video\/)?(\d+)(?:\/([a-z0-9]+))?\/?$/i.exec(path);
+    if (match) {
+      const hash = match[2] || query.get('h');
+      return ['Vimeo', 'https://player.vimeo.com/video/' + match[1] + (/^[a-z0-9]+$/i.test(hash ?? '') ? '?h=' + hash : '')];
+    }
+  }
+  if (['facebook.com', 'www.facebook.com', 'm.facebook.com', 'web.facebook.com'].includes(host)) {
+    const id = /^\/(?:watch\/?|video\.php)$/.test(path) ? query.get('v')
+      : /^\/(?:reel|(?:[^/]+\/)?videos)\/(\d+)\/?$/.exec(path)?.[1];
+    if (/^\d+$/.test(id ?? '')) {
+      const canonical = 'https://www.facebook.com' + (/^\/(?:watch\/?|video\.php)$/.test(path) ? '/watch/?v=' + id : path);
+      return ['Facebook', 'https://www.facebook.com/plugins/video.php?show_text=false&href=' + encodeURIComponent(canonical)];
+    }
+  }
+  if (['tiktok.com', 'www.tiktok.com', 'm.tiktok.com'].includes(host)) {
+    const id = /^\/@[^/]+\/video\/(\d+)\/?$/.exec(path)?.[1];
+    if (id) return ['TikTok', 'https://www.tiktok.com/player/v1/' + id];
+  }
+  return [];
+}
+function linkedVideo(source, preview, title) {
+  if (!safeUrl(source) || !/^https:\/\//i.test(source)) return '';
+  const [provider, embed] = videoEmbed(source);
+  return `<section class="article-media" aria-labelledby="article-external-video">
+    <h2 id="article-external-video">Βίντεο</h2>
+    ${embed && !preview ? `<button type="button" class="video-play" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>Αναπαραγωγή από ${e(provider)}</button>` : ''}
+    ${embed && preview ? '<p>Η αναπαραγωγή εμφανίζεται μετά τη δημοσίευση, εφόσον το επιτρέπει η υπηρεσία.</p>' : ''}
+    <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
+  </section>`;
+}
 function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
@@ -46,7 +86,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   if (isSiteImage) shareImage.searchParams.set('v', '2');
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
-    ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο']];
+    ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title ? title + ' | ' + name : name)}</title><meta name="description" content="${e(summary)}">
   ${privatePage ? '<meta name="robots" content="noindex,nofollow">' :
@@ -59,6 +99,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">
   <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
+  <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/app-192.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">
@@ -77,7 +118,8 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
     `<a href="${href}"${activePath === href ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div></nav></header>
   <main class="wrap main" id="main">${body}</main>
   <footer class="footer"><div class="wrap"><div><strong>${name}</strong><p>Ανεξάρτητος χώρος καταγραφής για το Σταυροδρόμι Γορτυνίας.</p></div>
-  <div><a href="/sxetika.html">Σχετικά</a><a href="/epikoinonia.html">Επικοινωνία</a><a href="/arxeio">Αρχείο</a><a href="/admin">Διαχείριση</a></div></div></footer>
+  <div><a href="/sxetika.html">Σχετικά</a><a href="/epikoinonia.html">Επικοινωνία</a><a href="/arxeio">Αρχείο</a><a href="/egkatastasi">Εγκατάσταση εφαρμογής</a><a href="/admin">Διαχείριση</a></div></div></footer>
+  <script src="/app.js?v=${appVersion}" defer></script>
   ${admin ? `<script src="/editor.js?v=${editorVersion}" defer></script>` : ''}</body></html>`;
 }
 const sorted = all => Object.values(all).filter(item => !item.archived).sort((a,b) => b.date.localeCompare(a.date));
@@ -136,6 +178,25 @@ const newsletter = action => action ? `<section class="panel newsletter" aria-la
 
 function render(kind, params) {
   const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, newsletterAction } = params;
+  if (kind === 'install') return layout(`${intro('Σταυροδρόμι στο κινητό', 'Εγκατάσταση εφαρμογής', 'Άνοιξε το Σταυροδρόμι από το εικονίδιό του στην αρχική οθόνη.')}
+    <div class="install-guide">
+      <button type="button" id="install-app" hidden>Εγκατάσταση εφαρμογής</button>
+      <p id="installed-app" role="status" hidden>Έχεις ανοίξει το Σταυροδρόμι ως εφαρμογή.</p>
+      <section aria-labelledby="install-ios"><h2 id="install-ios">iPhone και iPad</h2><ol>
+        <li>Άνοιξε το Σταυροδρόμι στο Safari.</li>
+        <li>Πάτησε «Κοινή χρήση» και έπειτα «Προσθήκη στην οθόνη Αφετηρίας».</li>
+        <li>Ενεργοποίησε το «Άνοιγμα ως εφαρμογής ιστού», αν εμφανίζεται, και πάτησε «Προσθήκη».</li>
+      </ol></section>
+      <section aria-labelledby="install-android"><h2 id="install-android">Android</h2><ol>
+        <li>Άνοιξε το Σταυροδρόμι στο Chrome.</li>
+        <li>Πάτησε τις τρεις τελείες και έπειτα «Εγκατάσταση εφαρμογής» ή «Προσθήκη στην αρχική οθόνη».</li>
+        <li>Πάτησε «Εγκατάσταση» και άνοιξε την εφαρμογή από το εικονίδιό της.</li>
+      </ol></section>
+      <section aria-labelledby="install-admin"><h2 id="install-admin">Δημοσίευση από το κινητό</h2>
+        <p>Μέσα από την εφαρμογή άνοιξε τη <a href="/admin">Διαχείριση</a> και συνδέσου με τον λογαριασμό σου. Εκεί γράφεις άρθρα, διαλέγεις φωτογραφίες και βίντεο από το κινητό ή επικολλάς σύνδεσμο βίντεο.</p>
+        <p>Η ανάγνωση και η δημοσίευση χρειάζονται σύνδεση στο διαδίκτυο.</p>
+      </section>
+    </div>`, { origin, p:'/egkatastasi', title:'Εγκατάσταση εφαρμογής' });
   if (kind === 'home') {
     const items = sorted(all);
     const lead = all[state.featured] || items[0];
@@ -202,6 +263,7 @@ function render(kind, params) {
         <video controls playsinline preload="none" aria-labelledby="article-video" src="${e(article.video)}"${poster ? ` poster="${e(poster)}"` : ''}>Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
         ${preview ? '' : `<a class="media-file-link" href="${e(article.video)}">Άνοιγμα αρχείου βίντεο</a>`}
       </section>` : ''}
+      ${linkedVideo(article.videoLink, preview, article.title)}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
         <h2 id="article-gallery">Φωτογραφίες</h2>
         <div class="article-gallery">${gallery.map((src, i) => `<figure><img src="${e(src)}" alt="Φωτογραφία ${i + 1} από τη δημοσίευση" loading="lazy" decoding="async"></figure>`).join('')}</div>
@@ -269,7 +331,8 @@ function render(kind, params) {
       <div id="existing-gallery" class="editor-gallery" hidden></div>
       <label>Βίντεο MP4 <input type="file" name="video" accept="video/mp4,.mp4"></label>
       <label id="existing-video" hidden><input type="checkbox" name="removeVideo"> Αφαίρεση υπάρχοντος βίντεο</label>
-      <p class="editor-media-help">Έως 6 φωτογραφίες, 3 MB η καθεμία. Ένα βίντεο έως 15 MB. Τα νέα αρχεία χωρούν συνολικά έως 20 MB.</p>
+      <label>Σύνδεσμος βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
+      <p class="editor-media-help">Διάλεξε μαζί όσες φωτογραφίες θέλεις, έως 10 MB η καθεμία. Για βίντεο, βάλε αρχείο MP4 έως 48 MB ή σύνδεσμο από YouTube, Facebook, Vimeo, TikTok ή άλλη υπηρεσία. Η αναπαραγωγή μέσα στο άρθρο εξαρτάται από τις ρυθμίσεις της υπηρεσίας και του βίντεο.</p>
     </fieldset>
     <div class="toolbar"><label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
     <span id="body-label">Κείμενο άρθρου</span>
@@ -285,7 +348,7 @@ function render(kind, params) {
     <div class="form-grid"><label>Κατάσταση <select name="status">${options(statuses)}</select></label><label>Ημερομηνία <input name="date" type="date" required></label></div>
     <label>Σχετικό άρθρο <select id="issue-article" name="article"></select></label>
     <label>Νεότερη ενημέρωση <textarea name="update" rows="3" maxlength="2000"></textarea></label><button>Αποθήκευση στο Παρατηρητήριο</button></form></section></div>
-    <dialog id="preview-dialog"><div><button id="close-preview" class="secondary">Κλείσιμο</button></div><iframe title="Προεπισκόπηση άρθρου" id="preview-frame" sandbox></iframe></dialog>`,
+    <dialog id="preview-dialog"><div><button id="close-preview" class="secondary">Κλείσιμο</button></div><iframe title="Προεπισκόπηση άρθρου" id="preview-frame" sandbox="allow-same-origin"></iframe></dialog>`,
     { origin,p:'/admin',title:'Διαχείριση',admin:true,privatePage:true });
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });

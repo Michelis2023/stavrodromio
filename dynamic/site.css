@@ -107,6 +107,7 @@ figcaption,.photo-caption { font:.83rem/1.5 var(--font); color:var(--subtle); pa
 .article-media { max-width:43rem; margin:2rem auto; }
 .article-media h2 { margin-bottom:.8rem; }
 .article-media video { display:block; width:100%; aspect-ratio:16/9; max-height:65vh; background:var(--green); }
+.article-external-video { display:block; width:100%; aspect-ratio:16/9; border:0; background:var(--green); }
 .media-file-link { display:inline-block; margin-top:.4rem; font-size:.9rem; }
 .article-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); gap:.75rem; }
 .article-gallery figure { margin:0; }
@@ -255,3 +256,10 @@ dialog iframe { display:block; border:1px solid var(--line); width:100%; height:
 @media(max-width:420px) {
   .newsletter-fields { display:grid; }
 }
+.article-external-video[data-provider="TikTok"] { aspect-ratio:9/16; max-width:25rem; margin-inline:auto; }
+.video-play { margin-right:.9rem; margin-bottom:.55rem; }
+.install-guide { max-width:43rem; margin:0 auto 2.5rem; }
+.install-guide section { margin:1.35rem 0; padding:clamp(1rem, 3vw, 1.65rem); border:1px solid var(--line); }
+.install-guide h2 { margin-bottom:.55rem; }
+.install-guide ol { padding-left:1.5rem; }
+.install-guide li + li { margin-top:.4rem; }

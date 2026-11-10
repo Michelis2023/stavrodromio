@@ -12,6 +12,8 @@ let selected;
 let initialHtml = '';
 let dirty = false;
 let busy = false;
+let stagedFiles = new WeakMap();
+const previewUrls = new Set();
 const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Athens'}).format(new Date());
 function feedback(message, error = false) {
   $('feedback').textContent = message;
@@ -26,6 +28,14 @@ async function api(endpoint, data) {
     throw Object.assign(new Error(error.error || 'Το αίτημα δεν ολοκληρώθηκε.'), { status: response.status });
   }
   return endpoint === 'preview' ? response.text() : response.json();
+}
+async function uploadFile(file, type) {
+  if (stagedFiles.has(file)) return stagedFiles.get(file);
+  const response = await fetch('/api/admin/stage-media', { method: 'POST', headers: { 'Content-Type': type }, body: file });
+  const result = await response.json().catch(() => ({}));
+  if (!response.ok) throw Object.assign(new Error(result.error || 'Η μεταφόρτωση δεν ολοκληρώθηκε.'), { status: response.status });
+  stagedFiles.set(file, result.uploadId);
+  return result.uploadId;
 }
 function showLogin() {
   $('desk').hidden = true;
@@ -94,6 +104,7 @@ function openArticle(item = null) {
   form.reset();
   showArticleMedia(item);
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
+  form.elements.videoLink.value = item?.videoLink || '';
   if (!item) form.elements.author.value = state.user.name;
   form.elements.author.readOnly = state.user.role !== 'owner';
   form.elements.category.value = item?.sections[0] || 'reportaz';
@@ -157,15 +168,14 @@ function blocks(node) {
   if (tag === 'img') { block.src = node.getAttribute('src'); block.alt = node.getAttribute('alt'); }
   return [block];
 }
-function readUpload(file, type = file.type) {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.onerror = () => reject(new Error('Το αρχείο δεν διαβάστηκε.'));
-    reader.readAsDataURL(type === file.type ? file : new Blob([file], { type }));
-  });
+function photoType(file) {
+  if (['image/jpeg', 'image/png', 'image/webp'].includes(file.type)) return file.type;
+  const extension = file.name.split('.').at(-1).toLowerCase();
+  const types = { jpg: 'image/jpeg', jpeg: 'image/jpeg', png: 'image/png', webp: 'image/webp' };
+  if (!Object.hasOwn(types, extension)) throw Error('Διάλεξε φωτογραφίες JPG, PNG ή WebP.');
+  return types[extension];
 }
-async function payload() {
+function payload() {
   const fields = form.elements;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
@@ -181,20 +191,47 @@ async function payload() {
   const gallery = [...fields.gallery.files];
   const video = fields.video.files[0];
   const photos = cover ? [cover, ...gallery] : gallery;
-  if (gallery.length + (selected?.gallery?.length ?? 0) - data.removeGallery.length > 6) {
-    throw Error('Η συλλογή χωρά έως 6 φωτογραφίες.');
+  if (photos.some(file => file.size > 10 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 10 MB.');
+  if (video && (!/\.mp4$/i.test(video.name) && video.type !== 'video/mp4' || video.size > 48 * 1024 * 1024)) {
+    throw Error('Διάλεξε MP4 έως 48 MB ή χρησιμοποίησε σύνδεσμο βίντεο.');
   }
-  if (photos.some(file => file.size > 3 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 3 MB.');
-  if (video && (!/\.mp4$/i.test(video.name) && video.type !== 'video/mp4' || video.size > 15 * 1024 * 1024)) {
-    throw Error('Διάλεξε βίντεο MP4 έως 15 MB.');
+  photos.forEach(photoType);
+  return { data, files: { cover, gallery, video } };
+}
+async function mapFiles(files, use) {
+  const media = { gallery: [] };
+  if (files.cover) media.cover = await use(files.cover, photoType(files.cover));
+  for (const file of files.gallery) media.gallery.push(await use(file, photoType(file)));
+  if (files.video) media.video = await use(files.video, 'video/mp4');
+  return media;
+}
+function previewFile(file, type) {
+  const url = URL.createObjectURL(type === file.type ? file : file.slice(0, file.size, type));
+  previewUrls.add(url);
+  return url;
+}
+function clearPreview() {
+  for (const url of previewUrls) URL.revokeObjectURL(url);
+  previewUrls.clear();
+}
+async function publishArticle(data, files) {
+  const count = files.gallery.length + Number(!!files.cover) + Number(!!files.video);
+  const submit = async () => {
+    let index = 0;
+    const stagedMedia = await mapFiles(files, (file, type) => {
+      feedback('Μεταφόρτωση αρχείου ' + (++index) + ' από ' + count + '…');
+      return uploadFile(file, type);
+    });
+    if (count) feedback('Αποθήκευση δημοσίευσης…');
+    return api('article', { ...data, stagedMedia });
+  };
+  try {
+    return await submit();
+  } catch (error) {
+    if (error.status !== 410) throw error;
+    stagedFiles = new WeakMap();
+    return submit();
   }
-  if (photos.reduce((total, file) => total + file.size, video?.size ?? 0) > 20 * 1024 * 1024) {
-    throw Error('Τα νέα αρχεία της δημοσίευσης ξεπερνούν συνολικά τα 20 MB.');
-  }
-  if (cover) data.upload = await readUpload(cover);
-  data.galleryUploads = await Promise.all(gallery.map(file => readUpload(file)));
-  if (video) data.videoUpload = await readUpload(video, 'video/mp4');
-  return data;
 }
 
 function clearTeam() {
@@ -337,16 +374,29 @@ form.querySelectorAll('[data-format]').forEach(button => {
 $('preview').addEventListener('click', event => {
   if (!form.reportValidity()) return;
   run(async () => {
-    $('preview-frame').srcdoc = await api('preview',await payload());
-    dialog.showModal();
+    clearPreview();
+    const { data, files } = payload();
+    try {
+      const previewMedia = await mapFiles(files, previewFile);
+      $('preview-frame').srcdoc = await api('preview', { ...data, previewMedia });
+      dialog.showModal();
+    } catch (error) {
+      clearPreview();
+      throw error;
+    }
   }, event.currentTarget);
 });
 $('close-preview').addEventListener('click', () => dialog.close());
+dialog.addEventListener('close', () => {
+  $('preview-frame').removeAttribute('srcdoc');
+  clearPreview();
+});
 form.addEventListener('submit', event => {
   event.preventDefault();
   run(async () => {
     const selectedIssue = $('issue-select').value;
-    state = await api('article',await payload());
+    const { data, files } = payload();
+    state = await publishArticle(data, files);
     openArticle(state.articles.find(a => a.id === state.id));
     updateIssues(selectedIssue);
     feedback('Το άρθρο αποθηκεύτηκε. ');

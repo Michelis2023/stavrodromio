@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "Σταυροδρόμι Κοινότητα",
+  "short_name": "Σταυροδρόμι",
+  "description": "Ιστορία, μνήμη και ανεξάρτητο ρεπορτάζ για το Σταυροδρόμι Γορτυνίας.",
+  "lang": "el",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#243f32",
+  "theme_color": "#243f32",
+  "icons": [
+    { "src": "/app-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/app-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Αρχείο κειμένων", "url": "/arxeio" },
+    { "name": "Διαχείριση", "url": "/admin" }
+  ]
+}

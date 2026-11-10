@@ -61,7 +61,17 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
-  <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>
+  <div class="brand wrap"><a href="/" class="wordmark">
+  <svg class="wordmark-emblem" viewBox="0 0 72 64" width="72" height="64" aria-hidden="true" focusable="false">
+    <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+      <path d="m17 20 11-9 6 4 9-10 12 13"/>
+      <path d="m5 25 20 10m42-10L47 35"/>
+      <path d="M5 48c11-4 15-13 31-13s20 9 31 13"/>
+      <path d="M11 53h13v-3a12 12 0 0 1 24 0v3h13"/>
+      <path d="M37 46c-7 5 6 7 3 13"/>
+    </g>
+  </svg>
+  <span class="wordmark-copy">Σταυροδρόμι<span class="wordmark-label">ΚΟΙΝΟΤΗΤΑ</span></span></a>
   <p>Ιστορία, μνήμη και δημόσιος λόγος<br>για ένα χωριό της Γορτυνίας</p></div>
   <nav class="nav" aria-label="Κύριο μενού"><div class="wrap">${nav.map(([href,label]) =>
     `<a href="${href}"${activePath === href ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div></nav></header>

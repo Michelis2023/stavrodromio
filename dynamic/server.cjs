@@ -2,6 +2,8 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { createServer } = require('node:http');
+const { Readable } = require('node:stream');
+const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash } = require('node:crypto');
 const { render, rss, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
@@ -90,13 +92,14 @@ async function head(token) {
 
 const adminState = async token => local ? readLocal() : (await head(token)).state;
 
-async function save(token, update, message, image) {
+async function save(token, update, message, files = []) {
+  const uploads = new Map(files.map(file => [file.path, file]));
   if (local) {
     const state = update(readLocal());
-    if (image) {
-      const destination = path.join(path.dirname(local), image.path);
+    for (const file of uploads.values()) {
+      const destination = path.join(path.dirname(local), file.path);
       fs.mkdirSync(path.dirname(destination), { recursive: true });
-      fs.writeFileSync(destination, image.bytes);
+      fs.writeFileSync(destination, file.bytes);
     }
     fs.writeFileSync(local + '.tmp', JSON.stringify(state));
     fs.renameSync(local + '.tmp', local);
@@ -107,9 +110,9 @@ async function save(token, update, message, image) {
   const data = JSON.stringify(state, null, 2);
   if (Buffer.byteLength(data) > 900000) throw failure(413, 'Το αρχείο δημοσιεύσεων έφτασε στο όριο αποθήκευσης.');
   const tree = [{ path: 'dynamic-content.json', mode: '100644', type: 'blob', content: data }];
-  if (image) {
-    const blob = await gh(repoApi + '/git/blobs', token, 'POST', { content: image.bytes.toString('base64'), encoding: 'base64' });
-    tree.push({ path: image.path, mode: '100644', type: 'blob', sha: blob.sha });
+  for (const file of uploads.values()) {
+    const blob = await gh(repoApi + '/git/blobs', token, 'POST', { content: file.bytes.toString('base64'), encoding: 'base64' });
+    tree.push({ path: file.path, mode: '100644', type: 'blob', sha: blob.sha });
   }
   const nextTree = await gh(repoApi + '/git/trees', token, 'POST', { base_tree: current.tree, tree });
   const commit = await gh(repoApi + '/git/commits', token, 'POST', { message, tree: nextTree.sha, parents: [current.sha] });
@@ -131,6 +134,32 @@ function cover(value) {
   return { bytes, path: 'uploads/' + createHash('sha256').update(bytes).digest('hex') + '.' + (format === 'jpeg' ? 'jpg' : format) };
 }
 
+const maxVideoBytes = 15 * 1024 * 1024;
+const maxUploadBytes = 20 * 1024 * 1024;
+const maxGallery = 6;
+function articleUploads(input) {
+  const image = cover(input.upload);
+  const uploads = input.galleryUploads ?? [];
+  if (!Array.isArray(uploads) || uploads.length > maxGallery || uploads.some(value => !value)) {
+    throw failure(400, 'Διάλεξε έως 6 φωτογραφίες για τη συλλογή.');
+  }
+  const gallery = uploads.map(cover);
+  let video = null;
+  if (input.videoUpload) {
+    const match = typeof input.videoUpload === 'string' && /^data:video\/mp4;base64,([A-Za-z0-9+/]+={0,2})$/.exec(input.videoUpload);
+    const bytes = match && Buffer.from(match[1], 'base64');
+    if (!bytes || bytes.length < 16 || bytes.length > maxVideoBytes || bytes.toString('ascii', 4, 8) !== 'ftyp') {
+      throw failure(400, 'Διάλεξε έγκυρο βίντεο MP4 έως 15 MB.');
+    }
+    video = { bytes, path: 'uploads/' + createHash('sha256').update(bytes).digest('hex') + '.mp4' };
+  }
+  const files = [image, ...gallery, video].filter(Boolean);
+  if (files.reduce((size, file) => size + file.bytes.length, 0) > maxUploadBytes) {
+    throw failure(413, 'Τα νέα αρχεία της δημοσίευσης ξεπερνούν συνολικά τα 20 MB.');
+  }
+  return { image, gallery, video, files };
+}
+
 function field(value, limit, required = false) {
   const text = typeof value === 'string' ? value.trim() : '';
   if (text.length > limit || (required && !text)) throw failure(400, 'Έλεγξε τα υποχρεωτικά πεδία και το μήκος τους.');
@@ -141,21 +170,36 @@ function date(value) {
   if (!d || !Number.isFinite(+d) || d.toISOString().slice(0, 10) !== value) throw failure(400, 'Συμπλήρωσε έγκυρη ημερομηνία.');
   return value;
 }
-function articleInput(input, existing, image, id) {
+function articleInput(input, existing, uploads, id) {
+  const { image, gallery, video } = uploads;
   const title = field(input.title, 240, true);
   if (!known(sections, input.category)) throw failure(400, 'Διάλεξε ενότητα.');
   const imageUrl = field(input.image, 1600);
   if (!image && imageUrl && !safeUrl(imageUrl)) throw failure(400, 'Έλεγξε τη διεύθυνση της εικόνας.');
-  const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800, true),
+  const removed = new Set(Array.isArray(input.removeGallery) ? input.removeGallery : []);
+  const photos = [...new Set([...(existing?.gallery ?? []).filter(src => !removed.has(src)), ...gallery.map(file => '/' + file.path)])];
+  if (photos.length > maxGallery) throw failure(400, 'Η συλλογή χωρά έως 6 φωτογραφίες.');
+  const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800),
     deck: field(input.deck, 2400), image: image ? '/' + image.path : imageUrl,
+    gallery: photos, video: video ? '/' + video.path : input.removeVideo === true ? '' : existing?.video || '',
     sections: existing?.sections[0] === input.category ? existing.sections : [input.category],
     hero: input.hero === true, alt: field(input.alt, 300), caption: field(input.caption, 500) };
   if (input.blocks !== undefined) {
     if (!Array.isArray(input.blocks) || JSON.stringify(input.blocks).length > 300000) throw failure(400, 'Το κείμενο ξεπερνά το όριο.');
     fields.blocks = input.blocks;
   }
-  const body = fields.blocks ? rich(fields.blocks) : existing?.body;
-  if (!body?.replace(/<[^>]*>/g, '').replace(/&nbsp;/g, '').trim()) throw failure(400, 'Συμπλήρωσε το κείμενο του άρθρου.');
+  const body = fields.blocks ? rich(fields.blocks) : existing?.body || '';
+  const hasBody = /<img\b[^>]*\bsrc=/i.test(body) || !!body.replace(/<[^>]*>/g, '').replace(/&nbsp;|\u00a0/g, ' ').trim();
+  const hasPhotos = fields.image || photos.length > 0;
+  if (!hasBody && !fields.deck && !hasPhotos && !fields.video) {
+    throw failure(400, 'Πρόσθεσε κείμενο, φωτογραφία ή βίντεο για να δημοσιεύσεις.');
+  }
+  if (!hasBody && !fields.deck && fields.image && !photos.length && !fields.video) fields.hero = true;
+  if (!fields.summary) {
+    fields.summary = fields.deck.slice(0, 300) || (hasBody ? title : fields.video
+      ? hasPhotos ? 'Φωτογραφίες και βίντεο από το Σταυροδρόμι.' : 'Βίντεο από το Σταυροδρόμι.'
+      : 'Φωτογραφίες από το Σταυροδρόμι.');
+  }
   return { fields, item: { ...existing, ...fields, id, body } };
 }
 const dashboard = (state, user) => ({ featured: state.featured, user,
@@ -171,7 +215,7 @@ function respond(res, code, body, type, headers = {}) {
 const js = (res, code, value, headers) => respond(res, code, JSON.stringify(value), 'application/json; charset=utf-8', { 'Cache-Control': 'no-store', ...headers });
 const html = (res, code, value, extra) => respond(res, code, value, 'text/html; charset=utf-8', {
   'Cache-Control': 'no-cache',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https: data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io" +
+  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https: data:; media-src 'self' data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io" +
     (newsletterAction ? ' https://api.follow.it https://follow.it' : '') + "; base-uri 'none'; object-src 'none'",
   ...extra,
 });
@@ -270,26 +314,29 @@ async function admin(req, res, p, origin) {
   }
   const token = owner ? session.token : await team.serviceToken();
   const currentUser = state => owner ? session.user : team.requireMember(state, session.user.id);
-  const articleData = (input, existing, image, id, state) => {
+  const articleData = (input, existing, uploads, id, state) => {
     const user = currentUser(state);
     const data = user.role === 'owner' ? input : { ...input, author: existing ? existing.author : user.name };
-    return articleInput(data, existing, image, id);
+    return articleInput(data, existing, uploads, id);
   };
   if (p === 'state' && !post) {
     const state = await adminState(token);
     return js(res, 200, dashboard(state, currentUser(state)));
   }
   if (!post) throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
-  const input = await requestBody(req);
+  const input = await requestBody(req, p === 'article' || p === 'preview' ? 29 * 1024 * 1024 : undefined);
   if (p === 'article' || p === 'preview') {
-    const image = cover(input.upload);
+    const uploads = articleUploads(input);
     const id = input.id || 'keimeno-' + randomBytes(8).toString('hex');
     if (!validId(id)) throw failure(400, 'Μη έγκυρη διεύθυνση άρθρου.');
     if (p === 'preview') {
       const state = await adminState(token);
       const all = merged(state);
-      const { item } = articleData(input, known(all, id) ? all[id] : null, image, id, state);
-      if (image) item.image = input.upload;
+      const { item } = articleData(input, known(all, id) ? all[id] : null, uploads, id, state);
+      if (uploads.image) item.image = input.upload;
+      const inlinePhotos = new Map(uploads.gallery.map((file, index) => ['/' + file.path, input.galleryUploads[index]]));
+      item.gallery = item.gallery.map(src => inlinePhotos.get(src) ?? src);
+      if (uploads.video) item.video = input.videoUpload;
       return html(res, 200, render('article', { origin, article: item, all: {}, preview: true }), { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' });
     }
     const state = await save(token, state => {
@@ -298,11 +345,11 @@ async function admin(req, res, p, origin) {
       if (input.id && (!existing || input.rev !== hash(state.articles[id]))) throw failure(409, 'Το άρθρο έχει ήδη αλλάξει. Άνοιξέ το ξανά.');
       if (!input.id && existing) throw failure(409, 'Η διεύθυνση υπάρχει ήδη.');
       if (input.featured && existing?.archived) throw failure(400, 'Η προγενέστερη εκδοχή δεν γίνεται κύριο θέμα.');
-      const { fields } = articleData(input, existing, image, id, state);
+      const { fields } = articleData(input, existing, uploads, id, state);
       if (!existing) fields.publishedAt = new Date().toISOString();
       return { ...state, articles: { ...state.articles, [id]: { ...state.articles[id], ...fields } },
         featured: input.featured ? id : state.featured === id ? null : state.featured };
-    }, 'Publish article: ' + id, image);
+    }, 'Publish article: ' + id, uploads.files);
     return js(res, 200, { ...dashboard(state, currentUser(state)), id, path: articleUrl(id) });
   }
   if (p === 'issue') {
@@ -335,6 +382,71 @@ function asset(res, p, directory, age = 3600) {
     respond(res, 200, fs.readFileSync(filename), type, { 'Cache-Control': 'public, max-age=' + age });
     return true;
   } catch (error) { if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false; throw error; }
+}
+
+const videoHeaders = { 'Content-Type': 'video/mp4', 'X-Content-Type-Options': 'nosniff',
+  'Cache-Control': 'public, max-age=31536000, immutable', 'Accept-Ranges': 'bytes' };
+function byteRange(header, size) {
+  const match = /^bytes=(\d*)-(\d*)$/.exec(header);
+  if (!match || !size || (!match[1] && !match[2])) return null;
+  const start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+  const end = match[1] && match[2] ? Math.min(size - 1, Number(match[2])) : size - 1;
+  return start <= end ? { start, end } : null;
+}
+function videoResponse(req, res, size, open) {
+  const range = req.method === 'GET' && req.headers.range ? byteRange(req.headers.range, size) : undefined;
+  if (range === null) {
+    res.writeHead(416, { ...videoHeaders, 'Content-Range': 'bytes */' + size });
+    return res.end();
+  }
+  const headers = { ...videoHeaders, 'Content-Length': range ? range.end - range.start + 1 : size };
+  if (range) headers['Content-Range'] = 'bytes ' + range.start + '-' + range.end + '/' + size;
+  res.writeHead(range ? 206 : 200, headers);
+  return req.method === 'HEAD' ? res.end() : pipeline(open(range), res);
+}
+async function uploadedVideo(req, res, p) {
+  if (local) {
+    const filename = path.join(path.dirname(local), p);
+    const file = await fs.promises.stat(filename).catch(error => {
+      if (error.code !== 'ENOENT') throw error;
+    });
+    if (!file?.isFile()) return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
+    return videoResponse(req, res, file.size, range => fs.createReadStream(filename, range));
+  }
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), 15000);
+  res.once('close', () => controller.abort());
+  const range = req.method === 'GET' ? req.headers.range : undefined;
+  const upstream = await fetch(raw + p, {
+    method: req.method, headers: range ? { Range: range } : {}, signal: controller.signal,
+  }).finally(() => clearTimeout(timeout));
+  if (upstream.status === 404) {
+    await upstream.body?.cancel();
+    return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
+  }
+  if (upstream.status === 416) {
+    await upstream.body?.cancel();
+    const headers = { ...videoHeaders };
+    const contentRange = upstream.headers.get('content-range');
+    if (contentRange) headers['Content-Range'] = contentRange;
+    res.writeHead(416, headers);
+    return res.end();
+  }
+  if (!upstream.ok) {
+    await upstream.body?.cancel();
+    throw failure(502, 'Το βίντεο δεν είναι διαθέσιμο προσωρινά.');
+  }
+  if (range && upstream.status === 200) {
+    const bytes = Buffer.from(await upstream.arrayBuffer());
+    return videoResponse(req, res, bytes.length, part => Readable.from(part ? bytes.subarray(part.start, part.end + 1) : bytes));
+  }
+  const headers = { ...videoHeaders };
+  for (const key of ['content-range', 'content-length']) {
+    const value = upstream.headers.get(key);
+    if (value) headers[key] = value;
+  }
+  res.writeHead(upstream.status, headers);
+  return upstream.body ? pipeline(Readable.fromWeb(upstream.body), res) : res.end();
 }
 
 function informationPage(source) {
@@ -386,6 +498,7 @@ const route = async (req, res) => {
       if (!p.split('/').includes('..') && asset(res, p, sourceRoot)) return;
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
+    if (/^\/uploads\/[a-f0-9]{64}\.mp4$/.test(p)) return await uploadedVideo(req, res, p);
     if (/^\/uploads\/[a-f0-9]{64}\.(jpg|png|webp)$/.test(p)) {
       if (local && asset(res, p, path.resolve(path.dirname(local)), 31536000)) return;
       if (!local) {
@@ -428,6 +541,7 @@ const route = async (req, res) => {
     if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id] }));
     return html(res, 404, render('missing', { origin }));
   } catch (error) {
+    if (res.headersSent || res.destroyed) return res.destroy();
     const status = error.status || 500;
     if (status >= 500 && !error.status) console.error('Request failed:', error.name, error.code || '');
     const message = error.status ? error.message : 'Παρουσιάστηκε πρόβλημα. Δοκίμασε ξανά.';

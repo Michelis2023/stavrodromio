@@ -104,6 +104,13 @@ time { color:var(--subtle); font-size:.82rem; }
 .hero-figure img { width:100%; max-height:620px; object-fit:contain; background:#deded2; }
 figcaption,.photo-caption { font:.83rem/1.5 var(--font); color:var(--subtle); padding-top:.5rem; }
 .reading { font:clamp(1.125rem,2.3vw,1.25rem)/1.75 var(--font); overflow-wrap:anywhere; }
+.article-media { max-width:43rem; margin:2rem auto; }
+.article-media h2 { margin-bottom:.8rem; }
+.article-media video { display:block; width:100%; aspect-ratio:16/9; max-height:65vh; background:var(--green); }
+.media-file-link { display:inline-block; margin-top:.4rem; font-size:.9rem; }
+.article-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); gap:.75rem; }
+.article-gallery figure { margin:0; }
+.article-gallery img { width:100%; height:auto; }
 .reading h2,.reading h3,.reading h4 { margin:1.45em 0 .55em; }
 .reading blockquote { margin-inline:0; padding:.85rem 1.2rem; border-left:3px solid #9d6c4f; background:#ede8dc; }
 .reading a { color:var(--accent); }
@@ -140,6 +147,12 @@ button.secondary,.toolbar button:not(#publish),.editor-list button { color:var(-
 .toolbar button { font-size:.82rem; padding:.45rem .62rem; }
 #body-label { display:block; font-size:.9rem; font-weight:650; margin-bottom:.45rem; }
 #article-form label small { display:block; margin-top:.2rem; color:var(--subtle); font-weight:400; }
+.editor-media { min-width:0; margin:0 0 1rem; padding:.75rem; border:1px solid var(--line); }
+.editor-media legend { font-weight:700; }
+.editor-media-help { color:var(--subtle); font-size:.88rem; }
+.editor-media .editor-media-help { margin-bottom:0; }
+.editor-gallery { display:flex; flex-wrap:wrap; gap:.75rem; }
+.editor-gallery img { width:4rem; height:3rem; object-fit:contain; }
 #body-editor { min-height:18rem; border:1px solid #9b9b8c; border-radius:3px; padding:.75rem; background:white; margin-bottom:1rem; }
 .issue-editor { max-width:49rem; margin-top:1rem; }
 dialog { width:min(960px,calc(100% - 24px)); padding:.6rem; border:1px solid var(--line); background:var(--paper); }

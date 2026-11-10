@@ -106,9 +106,11 @@ const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia
       (eager ? '(max-width: 580px) 95vw, 850px' : '(max-width: 580px) 95vw, 380px') + '"' + (eager ? ' fetchpriority="high"' : '')
   : '';
 const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
+const thumbnail = item => item.image || item.gallery?.[0];
+const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
 const cards = items => items.length ? `<div class="cards">${items.map(item => `<article class="card">
-  ${item.image ? `<a class="card-photo" href="${articleUrl(item.id)}" tabindex="-1" aria-hidden="true">${photo(item)}</a>` : ''}
+  ${thumbnail(item) ? `<a class="card-photo" href="${articleUrl(item.id)}" tabindex="-1" aria-hidden="true">${cardPhoto(item)}</a>` : ''}
   <div class="card-copy"><div class="eyebrow">${e(label(item))}</div><h3><a href="${articleUrl(item.id)}">${e(item.title)}</a></h3>
   <p>${e(item.summary)}</p>${time(item.date)}</div></article>`).join('')}</div>` : '<p class="notice">Δεν βρέθηκαν κείμενα.</p>';
 const issue = item => `<li><div><strong>${item.article ? `<a href="${articleUrl(item.article)}">${e(item.title)}</a>` : e(item.title)}</strong>
@@ -139,7 +141,7 @@ function render(kind, params) {
     const lead = all[state.featured] || items[0];
     const recent = items.filter(item => item.id !== lead.id).slice(0,6);
     return layout(`<h1 class="sr-only">${name}</h1>
-      <section class="lead${lead.image ? '' : ' lead-text'}">${lead.image ? `<a class="lead-photo" href="${articleUrl(lead.id)}" tabindex="-1" aria-hidden="true">${photo(lead,true)}</a>` : ''}
+      <section class="lead${thumbnail(lead) ? '' : ' lead-text'}">${thumbnail(lead) ? `<a class="lead-photo" href="${articleUrl(lead.id)}" tabindex="-1" aria-hidden="true">${cardPhoto(lead,true)}</a>` : ''}
       <div class="lead-copy"><div class="eyebrow">Κύριο θέμα · ${e(label(lead))}</div><h2><a href="${articleUrl(lead.id)}">${e(lead.title)}</a></h2>
       <p>${e(lead.summary)}</p>${time(lead.date)}<a class="text-link" href="${articleUrl(lead.id)}">Διάβασε το άρθρο ↗</a></div></section>
       ${newsletterAction ? `<aside class="newsletter-banner" aria-label="Ενημερώσεις με email">
@@ -186,19 +188,30 @@ function render(kind, params) {
   if (kind === 'article') {
     const address = articleUrl(article.id);
     const related = sorted(all).filter(item => item.id !== article.id && item.sections.includes(article.sections[0])).slice(0,3);
+    const gallery = (article.gallery ?? []).filter(src => !article.hero || src !== article.image);
+    const poster = thumbnail(article);
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
       ${article.updated ? `<br>Επικαιροποίηση ${time(article.updated)}` : ''}</p>
       ${article.archived ? '<p class="notice">Προγενέστερη εκδοχή. <a href="/article-gortynias-parakampsi-lagkadia.html">Νεότερη δημοσίευση</a></p>' : ''}</header>
       ${article.hero && article.image ? `<figure class="hero-figure">${photo(article,true)}${article.caption ? '<figcaption>' + e(article.caption) + '</figcaption>' : ''}</figure>` : ''}
-      <div class="reading article-body">${article.body.replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')}</div>
+      ${article.body ? `<div class="reading article-body">${article.body.replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')}</div>` : ''}
+      ${article.video ? `<section class="article-media" aria-labelledby="article-video">
+        <h2 id="article-video">Βίντεο</h2>
+        <video controls playsinline preload="none" aria-labelledby="article-video" src="${e(article.video)}"${poster ? ` poster="${e(poster)}"` : ''}>Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
+        ${preview ? '' : `<a class="media-file-link" href="${e(article.video)}">Άνοιγμα αρχείου βίντεο</a>`}
+      </section>` : ''}
+      ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
+        <h2 id="article-gallery">Φωτογραφίες</h2>
+        <div class="article-gallery">${gallery.map((src, i) => `<figure><img src="${e(src)}" alt="Φωτογραφία ${i + 1} από τη δημοσίευση" loading="lazy" decoding="async"></figure>`).join('')}</div>
+      </section>` : ''}
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:article.summary,image:article.image,imageAlt:article.alt,article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:article.summary,image:thumbnail(article),imageAlt:article.image ? article.alt : '',article:true,privatePage:preview });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>
@@ -245,13 +258,22 @@ function render(kind, params) {
     <div class="form-grid"><label>Κύρια ενότητα <select name="category">${options(sections)}</select></label>
     <label>Ημερομηνία <input type="date" name="date" required></label></div>
     <label>Συντάκτης <input name="author" maxlength="120"></label>
-    <label><span id="summary-label">Σύντομη περιγραφή</span> <textarea name="summary" rows="2" maxlength="800" aria-labelledby="summary-label" aria-describedby="summary-help" required></textarea><small id="summary-help">Εμφανίζεται στις λίστες άρθρων και στην προεπισκόπηση κοινοποίησης.</small></label>
+    <label><span id="summary-label">Σύντομη περιγραφή</span> <textarea name="summary" rows="2" maxlength="800" aria-labelledby="summary-label" aria-describedby="summary-help"></textarea><small id="summary-help">Προαιρετική. Εμφανίζεται στις λίστες άρθρων και στην προεπισκόπηση κοινοποίησης.</small></label>
     <label><span id="deck-label">Εισαγωγή άρθρου</span> <textarea name="deck" rows="3" maxlength="2400" aria-labelledby="deck-label" aria-describedby="deck-help"></textarea><small id="deck-help">Προαιρετική. Εμφανίζεται κάτω από τον τίτλο του άρθρου.</small></label>
     <div class="form-grid"><label>Φωτογραφία εξωφύλλου <input type="file" name="cover" accept="image/jpeg,image/png,image/webp"></label>
     <label>ή διεύθυνση εικόνας <input name="image" maxlength="1600"></label></div>
     <div class="form-grid"><label>Περιγραφή εικόνας <input name="alt" maxlength="300"></label><label>Λεζάντα <input name="caption" maxlength="500"></label></div>
-    <div class="toolbar"><label><input type="checkbox" name="hero"> Εικόνα μέσα στο άρθρο</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
+    <fieldset class="editor-media">
+      <legend>Φωτογραφίες και βίντεο</legend>
+      <label>Φωτογραφίες συλλογής <input type="file" name="gallery" multiple accept="image/jpeg,image/png,image/webp"></label>
+      <div id="existing-gallery" class="editor-gallery" hidden></div>
+      <label>Βίντεο MP4 <input type="file" name="video" accept="video/mp4,.mp4"></label>
+      <label id="existing-video" hidden><input type="checkbox" name="removeVideo"> Αφαίρεση υπάρχοντος βίντεο</label>
+      <p class="editor-media-help">Έως 6 φωτογραφίες, 3 MB η καθεμία. Ένα βίντεο έως 15 MB. Τα νέα αρχεία χωρούν συνολικά έως 20 MB.</p>
+    </fieldset>
+    <div class="toolbar"><label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
     <span id="body-label">Κείμενο άρθρου</span>
+    <p class="editor-media-help">Άφησέ το κενό για δημοσίευση μόνο με φωτογραφίες ή βίντεο.</p>
     <div class="toolbar" role="group" aria-label="Μορφοποίηση κειμένου"><button type="button" data-format="bold">Έντονα</button>
     <button type="button" data-format="italic">Πλάγια</button><button type="button" data-format="formatBlock" data-value="h2">Μεσότιτλος</button>
     <button type="button" data-format="formatBlock" data-value="p">Παράγραφος</button><button type="button" data-format="insertUnorderedList">Λίστα</button>

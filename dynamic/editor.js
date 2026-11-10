@@ -71,9 +71,28 @@ function articles() {
   }));
 }
 function confirmChange() { return !dirty || window.confirm('Υπάρχουν αλλαγές χωρίς αποθήκευση. Θέλεις να αλλάξεις άρθρο;'); }
+function showArticleMedia(item) {
+  const gallery = $('existing-gallery');
+  const photos = item?.gallery ?? [];
+  gallery.replaceChildren(...photos.map((src, index) => {
+    const label = document.createElement('label');
+    const image = document.createElement('img');
+    image.src = src;
+    image.alt = '';
+    const remove = document.createElement('input');
+    remove.type = 'checkbox';
+    remove.name = 'removeGallery';
+    remove.value = src;
+    label.append(image, remove, ' Αφαίρεση φωτογραφίας ' + (index + 1));
+    return label;
+  }));
+  gallery.hidden = !photos.length;
+  $('existing-video').hidden = !item?.video;
+}
 function openArticle(item = null) {
   selected = item;
   form.reset();
+  showArticleMedia(item);
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
   if (!item) form.elements.author.value = state.user.name;
   form.elements.author.readOnly = state.user.role !== 'owner';
@@ -138,25 +157,43 @@ function blocks(node) {
   if (tag === 'img') { block.src = node.getAttribute('src'); block.alt = node.getAttribute('alt'); }
   return [block];
 }
+function readUpload(file, type = file.type) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = () => reject(new Error('Το αρχείο δεν διαβάστηκε.'));
+    reader.readAsDataURL(type === file.type ? file : new Blob([file], { type }));
+  });
+}
 async function payload() {
   const fields = form.elements;
-  const data = Object.fromEntries(new FormData(form));
-  delete data.cover;
+  const formData = new FormData(form);
+  const data = Object.fromEntries(formData);
+  for (const key of ['cover', 'gallery', 'video']) delete data[key];
+  data.removeGallery = formData.getAll('removeGallery');
+  data.removeVideo = fields.removeVideo.checked;
   data.id = selected?.id;
   data.rev = selected?.rev;
   data.hero = fields.hero.checked;
   data.featured = fields.featured.checked;
   if (!selected || editor.innerHTML !== initialHtml) data.blocks = Array.from(editor.childNodes).flatMap(blocks);
   const cover = fields.cover.files[0];
-  if (cover) {
-    if (cover.size > 3 * 1024 * 1024) throw Error('Διάλεξε εικόνα έως 3 MB.');
-    data.upload = await new Promise((resolve,reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.onerror = () => reject(new Error('Η εικόνα δεν διαβάστηκε.'));
-      reader.readAsDataURL(cover);
-    });
+  const gallery = [...fields.gallery.files];
+  const video = fields.video.files[0];
+  const photos = cover ? [cover, ...gallery] : gallery;
+  if (gallery.length + (selected?.gallery?.length ?? 0) - data.removeGallery.length > 6) {
+    throw Error('Η συλλογή χωρά έως 6 φωτογραφίες.');
   }
+  if (photos.some(file => file.size > 3 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 3 MB.');
+  if (video && (!/\.mp4$/i.test(video.name) && video.type !== 'video/mp4' || video.size > 15 * 1024 * 1024)) {
+    throw Error('Διάλεξε βίντεο MP4 έως 15 MB.');
+  }
+  if (photos.reduce((total, file) => total + file.size, video?.size ?? 0) > 20 * 1024 * 1024) {
+    throw Error('Τα νέα αρχεία της δημοσίευσης ξεπερνούν συνολικά τα 20 MB.');
+  }
+  if (cover) data.upload = await readUpload(cover);
+  data.galleryUploads = await Promise.all(gallery.map(file => readUpload(file)));
+  if (video) data.videoUpload = await readUpload(video, 'video/mp4');
   return data;
 }
 

@@ -90,6 +90,7 @@ time { color:var(--subtle); font-size:.82rem; }
 .page-intro p { color:var(--subtle); }
 .search,.filters,.toolbar,.desk-top { display:flex; gap:.55rem; }
 .search { max-width:32rem; margin-bottom:1rem; }
+.search-summary { color:var(--subtle); font-size:.9rem; }
 .filters,.toolbar,.desk-top { flex-wrap:wrap; margin-bottom:.9rem; }
 .filters a { text-decoration:none; background:#ebe7da; border:1px solid var(--line); padding:.4rem .67rem; font-size:.85rem; }
 .filters [aria-current] { background:var(--green); color:white; }
@@ -138,6 +139,7 @@ button.secondary,.toolbar button:not(#publish),.editor-list button { color:var(-
 .form-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; }
 .toolbar button { font-size:.82rem; padding:.45rem .62rem; }
 #body-label { display:block; font-size:.9rem; font-weight:650; margin-bottom:.45rem; }
+#article-form label small { display:block; margin-top:.2rem; color:var(--subtle); font-weight:400; }
 #body-editor { min-height:18rem; border:1px solid #9b9b8c; border-radius:3px; padding:.75rem; background:white; margin-bottom:1rem; }
 .issue-editor { max-width:49rem; margin-top:1rem; }
 dialog { width:min(960px,calc(100% - 24px)); padding:.6rem; border:1px solid var(--line); background:var(--paper); }

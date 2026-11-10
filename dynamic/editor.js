@@ -62,7 +62,11 @@ function articles() {
     b.type = 'button';
     b.textContent = item.title;
     b.setAttribute('aria-pressed', String(selected?.id === item.id));
-    b.addEventListener('click', () => { if (!busy && confirmChange()) openArticle(item); });
+    b.addEventListener('click', () => {
+      if (busy || !confirmChange()) return;
+      openArticle(item);
+      form.elements.title.focus();
+    });
     return b;
   }));
 }
@@ -104,6 +108,7 @@ function updateIssues(id) {
   openIssue(id);
 }
 function activate(data) {
+  const resume = dirty && state?.user.role === data.user.role && state.user.id === data.user.id;
   state = data;
   $('login-panel').hidden = true;
   $('desk').hidden = false;
@@ -111,7 +116,13 @@ function activate(data) {
   $('team-panel').hidden = data.user.role !== 'owner';
   $('team-panel').open = false;
   clearTeam();
-  openArticle();
+  if (resume) {
+    articles();
+    feedback('Η σύνδεση ανανεώθηκε. Οι αλλαγές του άρθρου διατηρήθηκαν.');
+    form.elements.title.focus();
+  } else {
+    openArticle();
+  }
   updateIssues();
 }
 function blocks(node) {
@@ -262,7 +273,11 @@ $('logout').addEventListener('click', event => {
     showLogin();
   }, event.currentTarget);
 });
-$('new-article').addEventListener('click', () => { if (!busy && confirmChange()) openArticle(); });
+$('new-article').addEventListener('click', () => {
+  if (busy || !confirmChange()) return;
+  openArticle();
+  form.elements.title.focus();
+});
 form.addEventListener('input', () => { dirty = true; });
 editor.addEventListener('paste', event => {
   event.preventDefault();

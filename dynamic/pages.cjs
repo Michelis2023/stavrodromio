@@ -151,13 +151,15 @@ function render(kind, params) {
   }
   if (kind === 'archive') {
     const [title,summary] = sections[category] || ['Αρχείο κειμένων','Δημοσιεύσεις ανά ενότητα και αναζήτηση με λέξεις.'];
+    const searchSuffix = q ? '?' + new URLSearchParams({ q }) : '';
     const items = sorted(all).filter(item => (!category || item.sections.includes(category)) &&
       (!q || normalize(item.title + ' ' + item.summary).includes(normalize(q))));
     return layout(`${intro('Κείμενα',title,summary)}
       <form class="search" action="${p}"><label class="sr-only" for="q">Αναζήτηση κειμένων</label>
       <input id="q" name="q" type="search" maxlength="100" placeholder="Αναζήτηση κειμένων" value="${e(q)}"><button>Αναζήτηση</button></form>
+      ${q ? `<p class="search-summary">Αποτελέσματα για «${e(q)}» (${items.length}) · <a href="${e(p)}">Καθαρισμός αναζήτησης</a></p>` : ''}
       <div class="filters">${[['','Όλα'],...Object.entries(sections).map(([key,[label]]) => [key,label])].map(([id,label]) =>
-      `<a href="${id ? link(id) : '/arxeio'}"${(category || '') === id ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div>
+      `<a href="${e((id ? link(id) : '/arxeio') + searchSuffix)}"${(category || '') === id ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div>
       ${features[category] ? `<a class="feature-link" href="/afieroma/${category}"><span class="eyebrow">Αφιέρωμα</span><strong>${e(features[category])} ↗</strong></a>` : ''}
       ${items.length || !features[category] || q ? cards(items) : ''}`,
       { origin,p,title,summary });
@@ -239,8 +241,8 @@ function render(kind, params) {
     <div class="form-grid"><label>Κύρια ενότητα <select name="category">${options(sections)}</select></label>
     <label>Ημερομηνία <input type="date" name="date" required></label></div>
     <label>Συντάκτης <input name="author" maxlength="120"></label>
-    <label>Σύντομη περιγραφή <textarea name="summary" rows="2" maxlength="800" required></textarea></label>
-    <label>Εισαγωγή άρθρου <textarea name="deck" rows="3" maxlength="2400"></textarea></label>
+    <label><span id="summary-label">Σύντομη περιγραφή</span> <textarea name="summary" rows="2" maxlength="800" aria-labelledby="summary-label" aria-describedby="summary-help" required></textarea><small id="summary-help">Εμφανίζεται στις λίστες άρθρων και στην προεπισκόπηση κοινοποίησης.</small></label>
+    <label><span id="deck-label">Εισαγωγή άρθρου</span> <textarea name="deck" rows="3" maxlength="2400" aria-labelledby="deck-label" aria-describedby="deck-help"></textarea><small id="deck-help">Προαιρετική. Εμφανίζεται κάτω από τον τίτλο του άρθρου.</small></label>
     <div class="form-grid"><label>Φωτογραφία εξωφύλλου <input type="file" name="cover" accept="image/jpeg,image/png,image/webp"></label>
     <label>ή διεύθυνση εικόνας <input name="image" maxlength="1600"></label></div>
     <div class="form-grid"><label>Περιγραφή εικόνας <input name="alt" maxlength="300"></label><label>Λεζάντα <input name="caption" maxlength="500"></label></div>

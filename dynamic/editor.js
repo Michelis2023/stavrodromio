@@ -5,6 +5,10 @@ const form = $('article-form');
 const editor = $('body-editor');
 const issueForm = $('issue-form');
 const dialog = $('preview-dialog');
+const mediaPanel = $('editor-media-panel');
+const mediaList = $('editor-media-items');
+const mediaKinds = ['cover', 'gallery', 'videos'];
+const mediaLabels = { cover: 'Εξώφυλλο', gallery: 'Φωτογραφία', videos: 'Βίντεο' };
 const inviteCode = new URLSearchParams(window.location.hash.slice(1)).get('invite');
 let loginMode = inviteCode ? 'accept' : 'owner';
 let state;
@@ -13,6 +17,7 @@ let initialHtml = '';
 let dirty = false;
 let busy = false;
 let stagedFiles = new WeakMap();
+let mediaRows = [];
 const previewUrls = new Set();
 const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Athens'}).format(new Date());
 function feedback(message, error = false) {
@@ -81,41 +86,121 @@ function articles() {
   }));
 }
 function confirmChange() { return !dirty || window.confirm('Υπάρχουν αλλαγές χωρίς αποθήκευση. Θέλεις να αλλάξεις άρθρο;'); }
-function showArticleMedia(item) {
-  const gallery = $('existing-gallery');
-  const photos = item?.gallery ?? [];
-  gallery.replaceChildren(...photos.map((src, index) => {
-    const label = document.createElement('label');
+function mediaRow(kind, title, { src, file } = {}) {
+  const element = document.createElement('li');
+  const label = document.createElement('label');
+  const checkbox = document.createElement('input');
+  checkbox.type = 'checkbox';
+  checkbox.className = 'media-checkbox';
+  label.append(checkbox, title);
+  if (src && kind !== 'videos') {
     const image = document.createElement('img');
     image.src = src;
     image.alt = '';
     image.loading = 'lazy';
-    const remove = document.createElement('input');
-    remove.type = 'checkbox';
-    remove.name = 'removeGallery';
-    remove.value = src;
-    label.append(image, remove, ' Αφαίρεση φωτογραφίας ' + (index + 1));
-    return label;
-  }));
-  gallery.hidden = !photos.length;
-  const videoList = $('existing-videos');
-  const videos = item?.videos ?? (item?.video ? [item.video] : []);
-  videoList.replaceChildren(...videos.map((src, index) => {
-    const label = document.createElement('label');
-    const remove = document.createElement('input');
-    remove.type = 'checkbox';
-    remove.name = 'removeVideos';
-    remove.value = src;
-    label.append(remove, ' Αφαίρεση βίντεο ' + (index + 1));
-    return label;
-  }));
-  videoList.hidden = !videos.length;
+    label.append(image);
+  }
+  const status = document.createElement('small');
+  element.append(label, status);
+  if (kind === 'videos' && src?.startsWith('/uploads/')) {
+    const preview = document.createElement('a');
+    preview.href = src;
+    preview.target = '_blank';
+    preview.rel = 'noopener';
+    preview.textContent = 'Προβολή βίντεο';
+    preview.setAttribute('aria-label', 'Προβολή ' + title.toLocaleLowerCase('el'));
+    element.append(preview);
+  }
+  return { element, checkbox, status, kind, src, file, removed: false };
 }
+function updateMediaActions() {
+  const active = mediaRows.filter(row => !row.removed);
+  const selectedRows = active.filter(row => row.checkbox.checked);
+  const removed = mediaRows.length - active.length;
+  $('editor-media-count').textContent = selectedRows.length + ' επιλεγμένα · ' + removed + ' προς αφαίρεση';
+  const buttons = mediaPanel.querySelectorAll('[data-media-action]');
+  for (const button of buttons) {
+    const action = button.dataset.mediaAction;
+    button.disabled = action === 'all' ? !active.length : action === 'undo' ? !removed
+      : action === 'cover' ? selectedRows.length !== 1 || selectedRows[0].kind !== 'gallery' || !selectedRows[0].src
+      : !selectedRows.length;
+  }
+}
+function renderMediaList() {
+  mediaList.replaceChildren(...mediaRows.map(row => row.element));
+  mediaPanel.hidden = !mediaRows.length;
+  updateMediaActions();
+}
+function updateCoverRow() {
+  const src = form.elements.image.value.trim();
+  mediaRows = mediaRows.filter(row => row.kind !== 'cover' || row.file);
+  if (/^(?:\/(?!\/)|https:\/\/)/i.test(src)) mediaRows.unshift(mediaRow('cover', 'Εξώφυλλο', { src }));
+  renderMediaList();
+}
+function showArticleMedia(item) {
+  const photos = item?.gallery ?? [];
+  const videos = item?.videos ?? (item?.video ? [item.video] : []);
+  mediaRows = [
+    ...photos.map((src, index) => mediaRow('gallery', 'Φωτογραφία ' + (index + 1), { src })),
+    ...videos.map((src, index) => mediaRow('videos', 'Βίντεο ' + (index + 1), { src })),
+  ];
+  updateCoverRow();
+}
+function updateNewFiles(kind) {
+  mediaRows = mediaRows.filter(row => row.kind !== kind || !row.file);
+  mediaRows.push(...Array.from(form.elements[kind].files, file =>
+    mediaRow(kind, mediaLabels[kind] + ' · ' + file.name, { file })));
+  renderMediaList();
+}
+function setMediaRemoved(row, removed) {
+  row.removed = removed;
+  row.checkbox.checked = false;
+  row.checkbox.disabled = removed;
+  row.element.classList.toggle('media-removed', removed);
+  row.status.textContent = removed ? 'Προς αφαίρεση' : '';
+}
+mediaPanel.addEventListener('click', event => {
+  const button = event.target.closest('[data-media-action]');
+  if (!button || busy) return;
+  const active = mediaRows.filter(row => !row.removed);
+  const checked = active.filter(row => row.checkbox.checked);
+  switch (button.dataset.mediaAction) {
+    case 'all':
+    case 'none':
+      for (const row of active) row.checkbox.checked = button.dataset.mediaAction === 'all';
+      break;
+    case 'remove':
+    case 'keep':
+      for (const row of active) {
+        if (row.checkbox.checked === (button.dataset.mediaAction === 'remove')) setMediaRemoved(row, true);
+      }
+      dirty = true;
+      break;
+    case 'undo':
+      for (const row of mediaRows) if (row.removed) setMediaRemoved(row, false);
+      dirty = true;
+      break;
+    case 'cover':
+      if (checked.length !== 1 || checked[0].kind !== 'gallery' || !checked[0].src) return;
+      form.elements.image.value = checked[0].src;
+      form.elements.cover.value = '';
+      checked[0].checkbox.checked = false;
+      mediaRows = mediaRows.filter(row => row.kind !== 'cover');
+      updateCoverRow();
+      dirty = true;
+      break;
+  }
+  updateMediaActions();
+});
+for (const kind of mediaKinds) {
+  form.elements[kind].addEventListener('change', () => updateNewFiles(kind));
+}
+form.elements.image.addEventListener('change', updateCoverRow);
 function openArticle(item = null) {
   selected = item;
   form.reset();
-  showArticleMedia(item);
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
+  showArticleMedia(item);
   form.elements.videoLink.value = item?.videoLink || '';
   if (!item) form.elements.author.value = state.user.name;
   form.elements.author.readOnly = state.user.role !== 'owner';
@@ -192,16 +277,19 @@ function payload() {
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
   for (const key of ['cover', 'gallery', 'videos']) delete data[key];
-  data.removeGallery = formData.getAll('removeGallery');
-  data.removeVideos = formData.getAll('removeVideos');
+  const removed = mediaRows.filter(row => row.removed);
+  data.removeGallery = removed.filter(row => row.kind === 'gallery' && row.src).map(row => row.src);
+  data.removeVideos = removed.filter(row => row.kind === 'videos' && row.src).map(row => row.src);
+  if (removed.some(row => row.kind === 'cover' && row.src === data.image.trim())) data.image = '';
   data.id = selected?.id;
   data.rev = selected?.rev;
   data.hero = fields.hero.checked;
   data.featured = fields.featured.checked;
   if (!selected || editor.innerHTML !== initialHtml) data.blocks = Array.from(editor.childNodes).flatMap(blocks);
-  const cover = fields.cover.files[0];
-  const gallery = [...fields.gallery.files];
-  const videos = [...fields.videos.files];
+  const filesFor = kind => mediaRows.filter(row => row.kind === kind && row.file && !row.removed).map(row => row.file);
+  const [cover] = filesFor('cover');
+  const gallery = filesFor('gallery');
+  const videos = filesFor('videos');
   const photos = cover ? [cover, ...gallery] : gallery;
   if (photos.some(file => file.size > 10 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 10 MB.');
   if (videos.some(file => (!/\.mp4$/i.test(file.name) && file.type !== 'video/mp4') || file.size > 48 * 1024 * 1024)) {
@@ -364,7 +452,10 @@ $('new-article').addEventListener('click', () => {
   openArticle();
   form.elements.title.focus();
 });
-form.addEventListener('input', () => { dirty = true; });
+form.addEventListener('input', event => {
+  if (event.target.matches('.media-checkbox')) updateMediaActions();
+  else dirty = true;
+});
 editor.addEventListener('paste', event => {
   event.preventDefault();
   document.execCommand('insertText', false, event.clipboardData.getData('text/plain'));

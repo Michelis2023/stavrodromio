@@ -332,11 +332,22 @@ function render(kind, params) {
     <fieldset class="editor-media">
       <legend>Φωτογραφίες και βίντεο</legend>
       <label>Φωτογραφίες συλλογής <input type="file" name="gallery" multiple accept="image/jpeg,image/png,image/webp"></label>
-      <div id="existing-gallery" class="editor-gallery" hidden></div>
       <label>Αρχεία βίντεο MP4 <input type="file" name="videos" multiple accept="video/mp4,.mp4"></label>
-      <div id="existing-videos" class="editor-gallery" hidden></div>
       <label>Σύνδεσμος βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
       <p class="editor-media-help">Διάλεξε πολλές φωτογραφίες (έως 10 MB η καθεμία) και πολλά βίντεο MP4 (έως 48 MB το καθένα). Αν θέλεις, πρόσθεσε και σύνδεσμο βίντεο.</p>
+      <section id="editor-media-panel" aria-label="Διαχείριση αρχείων" hidden>
+        <p class="editor-media-help">Τσέκαρε τα αρχεία και διάλεξε ενέργεια. Οι αλλαγές εφαρμόζονται με την αποθήκευση του άρθρου.</p>
+        <div class="toolbar media-toolbar" role="group" aria-label="Ενέργειες αρχείων">
+          <button type="button" data-media-action="all">Επιλογή όλων</button>
+          <button type="button" data-media-action="none">Καθαρισμός επιλογής</button>
+          <button type="button" data-media-action="remove">Αφαίρεση επιλεγμένων</button>
+          <button type="button" data-media-action="keep">Διατήρηση μόνο επιλεγμένων</button>
+          <button type="button" data-media-action="cover">Ορισμός ως εξώφυλλο</button>
+          <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων</button>
+        </div>
+        <p id="editor-media-count" class="editor-media-help" role="status"></p>
+        <ul id="editor-media-items" class="editor-gallery"></ul>
+      </section>
     </fieldset>
     <div class="toolbar"><label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
     <span id="body-label">Κείμενο άρθρου</span>

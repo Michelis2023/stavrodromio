@@ -105,8 +105,18 @@ const features = {
 const options = values => Object.entries(values).map(([key,value]) => `<option value="${key}">${e(Array.isArray(value) ? value[0] : value)}</option>`).join('');
 const normalize = value => value.toLocaleLowerCase('el').normalize('NFD').replace(/\p{M}/gu,'').replace(/ς/g,'σ').trim();
 
+const newsletter = action => action ? `<section class="panel newsletter" aria-labelledby="newsletter-heading">
+  <h2 id="newsletter-heading">Λάβε τα νέα άρθρα με email</h2>
+  <form action="${e(action)}" method="post">
+    <label for="newsletter-email">Διεύθυνση email</label>
+    <div class="newsletter-fields"><input id="newsletter-email" name="email" type="email" autocomplete="email" maxlength="254" required>
+      <button type="submit">Εγγραφή</button></div>
+  </form>
+  <p>Το follow.it στέλνει το μήνυμα επιβεβαίωσης και τις ενημερώσεις. Σε κάθε email θα βρεις σύνδεσμο διαγραφής.</p>
+</section>` : '';
+
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, newsletterAction } = params;
   if (kind === 'home') {
     const items = sorted(all);
     const lead = all[state.featured] || items[0];
@@ -118,6 +128,7 @@ function render(kind, params) {
       <div class="front-grid"><section>${head('Πρόσφατα κείμενα','<a href="/arxeio">Όλο το αρχείο ↗</a>')}${cards(recent)}</section>
       <aside>${head('Παρατηρητήριο')}<div class="issue-panel"><p>Τοπικές υποθέσεις και οι τελευταίες εξελίξεις τους.</p>
       <ul class="issues">${state.issues.slice(0,4).map(issue).join('')}</ul><a class="text-link" href="/paratiritirio">Όλα τα ζητήματα ↗</a></div></aside></div>
+      ${newsletter(newsletterAction)}
       <section class="topics">${head('Θεματικές ενότητες')}<div class="topic-grid">${Object.entries(sections).map(([id,[title,desc]]) =>
         `<a href="${link(id)}"><h3>${e(title)}</h3><p>${e(desc)}</p></a>`).join('')}</div></section>`, { origin });
   }
@@ -162,6 +173,7 @@ function render(kind, params) {
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
+      ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
       { origin,p:address,title:article.title,summary:article.summary,image:article.image,article:true,privatePage:preview });
   }

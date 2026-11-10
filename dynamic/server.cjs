@@ -13,6 +13,8 @@ const raw = 'https://raw.githubusercontent.com/' + repo + '/' + branch;
 const repoApi = '/repos/' + repo;
 const sourceRoot = path.resolve(__dirname, '..');
 const local = process.env.STAVRODROMIO_TEST_FILE;
+const newsletterConfig = process.env.STAVRODROMIO_NEWSLETTER_ACTION || '';
+const newsletterAction = /^https:\/\/api\.follow\.it\/subscription-form\/[A-Za-z0-9+\/_=-]+\/\d+$/.test(newsletterConfig) ? newsletterConfig : '';
 const secure = !!process.env.RENDER || process.env.PUBLIC_ORIGIN?.startsWith('https:');
 const team = createTeam({ repoApi, repository: 'stavrodromio', local });
 const sessions = new Map();
@@ -169,7 +171,8 @@ function respond(res, code, body, type, headers = {}) {
 const js = (res, code, value, headers) => respond(res, code, JSON.stringify(value), 'application/json; charset=utf-8', { 'Cache-Control': 'no-store', ...headers });
 const html = (res, code, value, extra) => respond(res, code, value, 'text/html; charset=utf-8', {
   'Cache-Control': 'no-cache',
-  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https: data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io; base-uri 'none'; object-src 'none'",
+  'Content-Security-Policy': "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self' https: data:; frame-src 'self' blob:; frame-ancestors 'self'; form-action 'self' https://formspree.io" +
+    (newsletterAction ? ' https://api.follow.it https://follow.it' : '') + "; base-uri 'none'; object-src 'none'",
   ...extra,
 });
 const cookie = (id, age) => 'stavrodromio=' + id + '; HttpOnly; SameSite=Strict; Path=/api/admin; Max-Age=' + age + (secure ? '; Secure' : '');
@@ -416,7 +419,7 @@ const route = async (req, res) => {
       const urls = paths.map(path => '<url><loc>' + origin + path + '</loc></url>').join('');
       return respond(res, 200, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>', 'application/xml; charset=utf-8');
     }
-    const params = { origin, all, state, p };
+    const params = { origin, all, state, p, newsletterAction };
     if (p === '/') return html(res, 200, render('home', params));
     if (p === '/paratiritirio') return html(res, 200, render('issues', params));
     const category = /^\/(reportaz|history|laografia|autodioikisi)\.html$/.exec(p)?.[1];

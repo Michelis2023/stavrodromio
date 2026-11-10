@@ -52,6 +52,7 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">
   <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
+  ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>

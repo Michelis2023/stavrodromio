@@ -142,6 +142,11 @@ button.secondary,.toolbar button:not(#publish),.editor-list button { color:var(-
 #login p { color:var(--subtle); font-size:.9rem; }
 #feedback:not(:empty) { background:#e7ebdf; border-left:4px solid var(--green); padding:.7rem .9rem; }
 #feedback.error { background:#f2e2d9; border-color:var(--accent); }
+#upload-status { margin-bottom:.75rem; padding:.65rem .8rem; background:#e7ebdf; border-inline-start:4px solid var(--green); overflow-wrap:anywhere; }
+#upload-status.error { background:#f2e2d9; border-color:var(--accent); }
+#upload-message { margin:0; }
+#upload-progress { width:min(75%, 24rem); vertical-align:middle; accent-color:var(--green); }
+#upload-percent { padding-inline-start:.4rem; font-variant-numeric:tabular-nums; }
 .editor-list { display:grid; gap:.45rem; }
 .editor-list button { text-align:left; font-size:.82rem; font-weight:500; }
 .editor-list button[aria-pressed=true] { background:var(--green); color:white; }

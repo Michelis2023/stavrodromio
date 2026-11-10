@@ -45,8 +45,18 @@ async function gh(resource, token, method = 'GET', body, timeout = 15000) {
     body: body === undefined ? undefined : JSON.stringify(body),
   });
   if (response.ok) return response.json();
-  if (response.status === 401 || response.status === 403 || response.status === 404) {
-    throw failure(response.status, 'Έλεγξε την πρόσβαση GitHub και την άδεια εγγραφής στο αποθετήριο.');
+  if (response.status === 429 || (response.status === 403 &&
+      (response.headers.has('retry-after') || response.headers.get('x-ratelimit-remaining') === '0'))) {
+    throw failure(429, 'Το GitHub περιόρισε προσωρινά τα αιτήματα. Δοκίμασε ξανά σε λίγα λεπτά.');
+  }
+  if (response.status === 401) {
+    throw failure(401, 'Το GitHub δεν δέχτηκε το κλειδί πρόσβασης. Συνδέσου ξανά με ενεργό κλειδί.');
+  }
+  if (response.status === 403 || response.status === 404) {
+    const message = method === 'GET'
+      ? 'Έλεγξε ότι το κλειδί GitHub έχει πρόσβαση στο αποθετήριο stavrodromio.'
+      : 'Το GitHub δεν επέτρεψε την εγγραφή στο αποθετήριο stavrodromio. Αν συνδέεσαι ως ιδιοκτήτης, έλεγξε ότι το κλειδί σου έχει άδεια Contents → Read and write για το συγκεκριμένο αποθετήριο.';
+    throw failure(response.status, message);
   }
   if (response.status === 409 || response.status === 422) throw failure(409, 'Η αποθήκευση συγκρούστηκε με άλλη αλλαγή. Φόρτωσε ξανά το άρθρο.');
   throw failure(502, 'Το GitHub δεν ολοκλήρωσε την αποθήκευση. Δοκίμασε ξανά.');

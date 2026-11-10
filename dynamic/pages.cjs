@@ -357,6 +357,11 @@ function render(kind, params) {
     <button type="button" data-format="formatBlock" data-value="p">Παράγραφος</button><button type="button" data-format="insertUnorderedList">Λίστα</button>
     <button type="button" data-format="createLink">Σύνδεσμος</button></div>
     <div id="body-editor" class="reading" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="body-label"></div>
+    <div id="upload-status" hidden>
+      <p id="upload-message" role="status"></p>
+      <progress id="upload-progress" max="100" aria-label="Πρόοδος μεταφόρτωσης αρχείου" hidden></progress>
+      <span id="upload-percent" aria-hidden="true"></span>
+    </div>
     <div class="toolbar"><button type="button" id="preview" class="secondary">Προεπισκόπηση</button><button id="publish">Δημοσίευση</button></div></form></section></div>
     <section class="panel issue-editor"><h2>Παρατηρητήριο</h2><form id="issue-form">
     <label>Υπόθεση <select id="issue-select"></select></label><label>Τίτλος <input name="title" required maxlength="240"></label>

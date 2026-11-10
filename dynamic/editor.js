@@ -24,6 +24,21 @@ function feedback(message, error = false) {
   $('feedback').textContent = message;
   $('feedback').classList.toggle('error', error);
 }
+function uploadNotice(message, progress, error = false) {
+  const panel = $('upload-status');
+  const bar = $('upload-progress');
+  panel.hidden = !message;
+  panel.classList.toggle('error', error);
+  $('upload-message').textContent = message;
+  bar.hidden = progress === undefined;
+  uploadPercent(progress);
+}
+function uploadPercent(percent) {
+  const bar = $('upload-progress');
+  if (percent == null) bar.removeAttribute('value');
+  else bar.value = percent;
+  $('upload-percent').textContent = percent == null ? '' : percent + '%';
+}
 async function api(endpoint, data) {
   const response = await fetch('/api/admin/' + endpoint, data === undefined ? {} : {
     method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify(data),
@@ -34,13 +49,34 @@ async function api(endpoint, data) {
   }
   return endpoint === 'preview' ? response.text() : response.json();
 }
-async function uploadFile(file, type) {
+async function uploadFile(file, type, label) {
   if (stagedFiles.has(file)) return stagedFiles.get(file);
-  const response = await fetch('/api/admin/stage-media', { method: 'POST', headers: { 'Content-Type': type }, body: file });
-  const result = await response.json().catch(() => ({}));
-  if (!response.ok) throw Object.assign(new Error(result.error || 'Η μεταφόρτωση δεν ολοκληρώθηκε.'), { status: response.status });
-  stagedFiles.set(file, result.uploadId);
-  return result.uploadId;
+  uploadNotice('Μεταφόρτωση ' + label, 0);
+  const uploadId = await new Promise((resolve, reject) => {
+    const request = new XMLHttpRequest();
+    request.upload.addEventListener('progress', event => {
+      if (event.lengthComputable && event.total > 0) uploadPercent(Math.floor(100 * event.loaded / event.total));
+    });
+    request.upload.addEventListener('load', () => {
+      uploadNotice('Το αρχείο στάλθηκε. Αναμονή επιβεβαίωσης για ' + label, null);
+    });
+    request.addEventListener('load', () => {
+      const result = request.response;
+      if (request.status >= 200 && request.status < 300 && typeof result?.uploadId === 'string') {
+        resolve(result.uploadId);
+      } else {
+        reject(Object.assign(new Error(result?.error || 'Η μεταφόρτωση δεν ολοκληρώθηκε.'), { status: request.status }));
+      }
+    });
+    request.addEventListener('error', () => reject(new Error('Η σύνδεση διακόπηκε κατά τη μεταφόρτωση. Δοκίμασε ξανά.')));
+    request.addEventListener('abort', () => reject(new Error('Η μεταφόρτωση διακόπηκε. Δοκίμασε ξανά.')));
+    request.open('POST', '/api/admin/stage-media');
+    request.responseType = 'json';
+    request.setRequestHeader('Content-Type', type);
+    request.send(file);
+  });
+  stagedFiles.set(file, uploadId);
+  return uploadId;
 }
 function showLogin() {
   $('desk').hidden = true;
@@ -202,6 +238,7 @@ form.elements.image.addEventListener('change', updateCoverRow);
 function openArticle(item = null) {
   selected = item;
   form.reset();
+  uploadNotice('');
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
   showArticleMedia(item);
   form.elements.videoLink.value = item?.videoLink || '';
@@ -323,11 +360,13 @@ async function publishArticle(data, files) {
   const count = files.gallery.length + Number(!!files.cover) + files.videos.length;
   const submit = async () => {
     let index = 0;
-    const stagedMedia = await mapFiles(files, (file, type) => {
-      feedback('Μεταφόρτωση αρχείου ' + (++index) + ' από ' + count + '…');
-      return uploadFile(file, type);
+    const stagedMedia = await mapFiles(files, async (file, type) => {
+      const label = 'αρχείου ' + (++index) + ' από ' + count + ' (' + file.name + ')';
+      const uploadId = await uploadFile(file, type, label);
+      uploadNotice('Επιβεβαιώθηκαν ' + index + ' από ' + count + ' αρχεία.', 100);
+      return uploadId;
     });
-    if (count) feedback('Αποθήκευση δημοσίευσης…');
+    uploadNotice((count ? 'Μεταφορτώθηκαν όλα τα αρχεία. ' : '') + 'Αποθήκευση δημοσίευσης…', null);
     return api('article', { ...data, stagedMedia });
   };
   try {
@@ -503,10 +542,16 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   run(async () => {
     const selectedIssue = $('issue-select').value;
-    const { data, files } = payload();
-    state = await publishArticle(data, files);
+    try {
+      const { data, files } = payload();
+      state = await publishArticle(data, files);
+    } catch (error) {
+      uploadNotice(error.message, undefined, true);
+      throw error;
+    }
     openArticle(state.articles.find(a => a.id === state.id));
     updateIssues(selectedIssue);
+    uploadNotice('Το άρθρο αποθηκεύτηκε.');
     feedback('Το άρθρο αποθηκεύτηκε. ');
     const a = document.createElement('a');
     a.href = state.path;

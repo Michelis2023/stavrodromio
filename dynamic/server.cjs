@@ -58,7 +58,20 @@ async function gh(resource, token, method = 'GET', body, timeout = 15000) {
       : 'Το GitHub δεν επέτρεψε την εγγραφή στο αποθετήριο stavrodromio. Αν συνδέεσαι ως ιδιοκτήτης, έλεγξε ότι το κλειδί σου έχει άδεια Contents → Read and write για το συγκεκριμένο αποθετήριο.';
     throw failure(response.status, message);
   }
-  if (response.status === 409 || response.status === 422) throw failure(409, 'Η αποθήκευση συγκρούστηκε με άλλη αλλαγή. Φόρτωσε ξανά το άρθρο.');
+  if ([409, 413, 422].includes(response.status)) {
+    const blob = method === 'POST' && resource === repoApi + '/git/blobs';
+    const ref = method === 'PATCH' && resource === repoApi + '/git/refs/heads/' + branch;
+    const details = await response.json().catch(() => null);
+    const fields = Array.isArray(details?.errors) ? details.errors : [];
+    const tooLarge = blob && (response.status === 413 || fields.some(item => item?.code === 'too_large') ||
+      /too large|exceeds?.{0,40}(?:size|limit|bytes)|maximum.{0,20}(?:size|bytes)/i.test(details?.message || '') ||
+      fields.some(item => /too large|size limit|exceeds?.{0,20}bytes/i.test(item?.message || '')));
+    console.warn('GitHub storage rejected:', blob ? 'file' : ref ? 'branch' : 'publication', response.status, tooLarge ? 'size' : 'validation');
+    if (tooLarge) throw failure(413, 'Το GitHub απέρριψε το αρχείο λόγω μεγέθους. Δοκίμασε μικρότερο αρχείο.');
+    if (blob) throw failure(422, 'Το GitHub απέρριψε την αποθήκευση του αρχείου. Το άρθρο παραμένει ανοιχτό με τις αλλαγές σου.');
+    if (ref) throw Object.assign(failure(409, 'Το GitHub δεν δέχτηκε την ενημέρωση του αποθετηρίου. Οι αλλαγές σου παραμένουν στη φόρμα.'), { refRejected: true });
+    throw failure(422, 'Το GitHub απέρριψε την αποθήκευση της δημοσίευσης. Οι αλλαγές σου παραμένουν στη φόρμα.');
+  }
   throw failure(502, 'Το GitHub δεν ολοκλήρωσε την αποθήκευση. Δοκίμασε ξανά.');
 }
 
@@ -115,20 +128,30 @@ async function save(token, update, message, files = []) {
     fs.renameSync(local + '.tmp', local);
     return state;
   }
-  const current = await head(token);
-  const state = update(current.state);
-  const data = JSON.stringify(state, null, 2);
-  if (Buffer.byteLength(data) > 900000) throw failure(413, 'Το αρχείο δημοσιεύσεων έφτασε στο όριο αποθήκευσης.');
-  const tree = [{ path: 'dynamic-content.json', mode: '100644', type: 'blob', content: data }];
-  for (const file of uploads.values()) {
-    const sha = file.sha ?? (await gh(repoApi + '/git/blobs', token, 'POST', { content: file.bytes.toString('base64'), encoding: 'base64' })).sha;
-    tree.push({ path: file.path, mode: '100644', type: 'blob', sha });
+  let current = await head(token);
+  for (let attempt = 0; ; attempt++) {
+    const state = update(current.state);
+    const data = JSON.stringify(state, null, 2);
+    if (Buffer.byteLength(data) > 900000) throw failure(413, 'Το αρχείο δημοσιεύσεων έφτασε στο όριο αποθήκευσης.');
+    const tree = [{ path: 'dynamic-content.json', mode: '100644', type: 'blob', content: data }];
+    for (const file of uploads.values()) {
+      file.sha ??= (await gh(repoApi + '/git/blobs', token, 'POST', { content: file.bytes.toString('base64'), encoding: 'base64' })).sha;
+      tree.push({ path: file.path, mode: '100644', type: 'blob', sha: file.sha });
+    }
+    const nextTree = await gh(repoApi + '/git/trees', token, 'POST', { base_tree: current.tree, tree });
+    const commit = await gh(repoApi + '/git/commits', token, 'POST', { message, tree: nextTree.sha, parents: [current.sha] });
+    try {
+      await gh(repoApi + '/git/refs/heads/' + branch, token, 'PATCH', { sha: commit.sha, force: false });
+    } catch (error) {
+      if (!error.refRejected || attempt) throw error;
+      const latest = await head(token);
+      if (latest.sha === current.sha) throw error;
+      current = latest;
+      continue;
+    }
+    cache = { state, until: Date.now() + 45000 };
+    return state;
   }
-  const nextTree = await gh(repoApi + '/git/trees', token, 'POST', { base_tree: current.tree, tree });
-  const commit = await gh(repoApi + '/git/commits', token, 'POST', { message, tree: nextTree.sha, parents: [current.sha] });
-  await gh(repoApi + '/git/refs/heads/' + branch, token, 'PATCH', { sha: commit.sha, force: false });
-  cache = { state, until: Date.now() + 45000 };
-  return state;
 }
 
 function cover(value) {

@@ -239,9 +239,16 @@ for (const mode of ['team-login', 'team-accept']) {
 
 $('login').addEventListener('submit', event => {
   event.preventDefault();
-  const token = $('key').value;
-  $('key').value = '';
-  run(async () => { await api('login',{token}); activate(await api('state')); }, event.submitter);
+  const key = $('key');
+  const token = key.value;
+  run(async () => {
+    try {
+      await api('login', { token });
+      activate(await api('state'));
+    } finally {
+      key.value = '';
+    }
+  }, event.submitter);
 });
 $('logout').addEventListener('click', event => {
   if (!confirmChange()) return;

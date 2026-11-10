@@ -147,8 +147,9 @@ function render(kind, params) {
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>
-    <section class="panel narrow" id="login-panel"><h2 id="login-heading">Σύνδεση διαχειριστή</h2><form id="login">
-    <label>${local ? 'Κωδικός δοκιμής' : 'Κλειδί πρόσβασης GitHub'}<input type="password" id="key" maxlength="300" required autocomplete="off"></label>
+    <section class="panel narrow" id="login-panel"><h2 id="login-heading">Σύνδεση διαχειριστή</h2><form id="login" method="post" action="/api/admin/login">
+    ${local ? '' : '<input id="owner-username" type="text" name="username" value="Michelis2023" autocomplete="username" hidden>'}
+    <label>${local ? 'Κωδικός δοκιμής' : 'Κλειδί πρόσβασης GitHub'}<input type="password" id="key" name="password" maxlength="300" required autocomplete="${local ? 'off' : 'current-password'}"></label>
     ${local ? '' : '<p>Χρησιμοποίησε κλειδί περιορισμένο στο αποθετήριο stavrodromio, με άδεια Contents: Read and write.</p>'}
     
     <button>Σύνδεση</button></form>

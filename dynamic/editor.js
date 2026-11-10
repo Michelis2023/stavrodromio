@@ -89,6 +89,7 @@ function showArticleMedia(item) {
     const image = document.createElement('img');
     image.src = src;
     image.alt = '';
+    image.loading = 'lazy';
     const remove = document.createElement('input');
     remove.type = 'checkbox';
     remove.name = 'removeGallery';
@@ -97,7 +98,18 @@ function showArticleMedia(item) {
     return label;
   }));
   gallery.hidden = !photos.length;
-  $('existing-video').hidden = !item?.video;
+  const videoList = $('existing-videos');
+  const videos = item?.videos ?? (item?.video ? [item.video] : []);
+  videoList.replaceChildren(...videos.map((src, index) => {
+    const label = document.createElement('label');
+    const remove = document.createElement('input');
+    remove.type = 'checkbox';
+    remove.name = 'removeVideos';
+    remove.value = src;
+    label.append(remove, ' Αφαίρεση βίντεο ' + (index + 1));
+    return label;
+  }));
+  videoList.hidden = !videos.length;
 }
 function openArticle(item = null) {
   selected = item;
@@ -179,9 +191,9 @@ function payload() {
   const fields = form.elements;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-  for (const key of ['cover', 'gallery', 'video']) delete data[key];
+  for (const key of ['cover', 'gallery', 'videos']) delete data[key];
   data.removeGallery = formData.getAll('removeGallery');
-  data.removeVideo = fields.removeVideo.checked;
+  data.removeVideos = formData.getAll('removeVideos');
   data.id = selected?.id;
   data.rev = selected?.rev;
   data.hero = fields.hero.checked;
@@ -189,20 +201,20 @@ function payload() {
   if (!selected || editor.innerHTML !== initialHtml) data.blocks = Array.from(editor.childNodes).flatMap(blocks);
   const cover = fields.cover.files[0];
   const gallery = [...fields.gallery.files];
-  const video = fields.video.files[0];
+  const videos = [...fields.videos.files];
   const photos = cover ? [cover, ...gallery] : gallery;
   if (photos.some(file => file.size > 10 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 10 MB.');
-  if (video && (!/\.mp4$/i.test(video.name) && video.type !== 'video/mp4' || video.size > 48 * 1024 * 1024)) {
-    throw Error('Διάλεξε MP4 έως 48 MB ή χρησιμοποίησε σύνδεσμο βίντεο.');
+  if (videos.some(file => (!/\.mp4$/i.test(file.name) && file.type !== 'video/mp4') || file.size > 48 * 1024 * 1024)) {
+    throw Error('Διάλεξε αρχεία MP4 έως 48 MB το καθένα.');
   }
   photos.forEach(photoType);
-  return { data, files: { cover, gallery, video } };
+  return { data, files: { cover, gallery, videos } };
 }
 async function mapFiles(files, use) {
-  const media = { gallery: [] };
+  const media = { gallery: [], videos: [] };
   if (files.cover) media.cover = await use(files.cover, photoType(files.cover));
   for (const file of files.gallery) media.gallery.push(await use(file, photoType(file)));
-  if (files.video) media.video = await use(files.video, 'video/mp4');
+  for (const file of files.videos) media.videos.push(await use(file, 'video/mp4'));
   return media;
 }
 function previewFile(file, type) {
@@ -215,7 +227,7 @@ function clearPreview() {
   previewUrls.clear();
 }
 async function publishArticle(data, files) {
-  const count = files.gallery.length + Number(!!files.cover) + Number(!!files.video);
+  const count = files.gallery.length + Number(!!files.cover) + files.videos.length;
   const submit = async () => {
     let index = 0;
     const stagedMedia = await mapFiles(files, (file, type) => {

@@ -5,7 +5,7 @@ const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash } = require('node:crypto');
-const { render, rss, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, articleVideos, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
@@ -173,8 +173,11 @@ function referencedMedia(input, resolve) {
   if (!input || typeof input !== 'object' || !Array.isArray(input.gallery)) throw failure(400, 'Έλεγξε τα αρχεία της δημοσίευσης.');
   const image = input.cover ? resolve(input.cover, false) : null;
   const gallery = input.gallery.map(value => resolve(value, false));
-  const video = input.video ? resolve(input.video, true) : null;
-  return { image, gallery, video, files: [image, ...gallery, video].filter(Boolean) };
+  const appendVideos = Object.hasOwn(input, 'videos');
+  const videoRefs = appendVideos ? input.videos : input.video ? [input.video] : [];
+  if (!Array.isArray(videoRefs)) throw failure(400, 'Έλεγξε τα βίντεο της δημοσίευσης.');
+  const videos = videoRefs.map(value => resolve(value, true));
+  return { image, gallery, videos, appendVideos, files: [...(image ? [image] : []), ...gallery, ...videos] };
 }
 function previewFile(value, origin) {
   const prefix = 'blob:' + origin + '/';
@@ -205,7 +208,7 @@ function articleUploads(input) {
   if (files.reduce((size, file) => size + file.bytes.length, 0) > maxUploadBytes) {
     throw failure(413, 'Τα νέα αρχεία της δημοσίευσης ξεπερνούν συνολικά τα 20 MB.');
   }
-  return { image, gallery, video, files };
+  return { image, gallery, videos: video ? [video] : [], files };
 }
 
 function field(value, limit, required = false) {
@@ -227,7 +230,7 @@ function videoLink(value) {
   throw failure(400, 'Βάλε έγκυρο σύνδεσμο βίντεο με https://.');
 }
 function articleInput(input, existing, uploads, id) {
-  const { image, gallery, video } = uploads;
+  const { image, gallery, videos, appendVideos } = uploads;
   const title = field(input.title, 240, true);
   if (!known(sections, input.category)) throw failure(400, 'Διάλεξε ενότητα.');
   const imageUrl = field(input.image, 1600);
@@ -235,10 +238,15 @@ function articleInput(input, existing, uploads, id) {
   const removed = new Set(Array.isArray(input.removeGallery) ? input.removeGallery : []);
   const source = file => file.src ?? '/' + file.path;
   const photos = [...new Set([...(existing?.gallery ?? []).filter(src => !removed.has(src)), ...gallery.map(source)])];
-  const externalVideo = video ? '' : input.videoLink === undefined ? existing?.videoLink || '' : videoLink(input.videoLink);
+  const newVideos = videos.map(source);
+  const externalVideo = !appendVideos && newVideos.length ? '' : input.videoLink === undefined ? existing?.videoLink || '' : videoLink(input.videoLink);
+  const removedVideos = new Set(Array.isArray(input.removeVideos) ? input.removeVideos : []);
+  const keepExisting = input.removeVideo !== true && (appendVideos || (!newVideos.length && !externalVideo));
+  const keptVideos = keepExisting ? articleVideos(existing).filter(src => !removedVideos.has(src)) : [];
+  const allVideos = [...new Set([...keptVideos, ...newVideos])];
   const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800),
     deck: field(input.deck, 2400), image: image ? source(image) : imageUrl,
-    gallery: photos, video: video ? source(video) : externalVideo || input.removeVideo === true ? '' : existing?.video || '', videoLink: externalVideo,
+    gallery: photos, videos: allVideos, video: allVideos[0] || '', videoLink: externalVideo,
     sections: existing?.sections[0] === input.category ? existing.sections : [input.category],
     hero: input.hero === true, alt: field(input.alt, 300), caption: field(input.caption, 500) };
   if (input.blocks !== undefined) {
@@ -248,7 +256,7 @@ function articleInput(input, existing, uploads, id) {
   const body = fields.blocks ? rich(fields.blocks) : existing?.body || '';
   const hasBody = /<img\b[^>]*\bsrc=/i.test(body) || !!body.replace(/<[^>]*>/g, '').replace(/&nbsp;|\u00a0/g, ' ').trim();
   const hasPhotos = fields.image || photos.length > 0;
-  const hasVideo = fields.video || externalVideo;
+  const hasVideo = allVideos.length > 0 || externalVideo;
   if (!hasBody && !fields.deck && !hasPhotos && !hasVideo) {
     throw failure(400, 'Πρόσθεσε κείμενο, φωτογραφία ή βίντεο για να δημοσιεύσεις.');
   }
@@ -410,7 +418,7 @@ async function admin(req, res, p, origin) {
         if (uploads.image) item.image = input.upload;
         const inlinePhotos = new Map(uploads.gallery.map((file, index) => ['/' + file.path, input.galleryUploads[index]]));
         item.gallery = item.gallery.map(src => inlinePhotos.get(src) ?? src);
-        if (uploads.video) item.video = input.videoUpload;
+        if (uploads.videos.length) item.videos = [input.videoUpload];
       }
       return html(res, 200, render('article', { origin, article: item, all: {}, preview: true }), { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' });
     }
@@ -480,6 +488,17 @@ function videoResponse(req, res, size, open) {
   res.writeHead(range ? 206 : 200, headers);
   return req.method === 'HEAD' ? res.end() : pipeline(open(range), res);
 }
+async function* sliceVideo(body, range) {
+  let offset = 0;
+  for await (const chunk of body) {
+    const next = offset + chunk.length;
+    if (next > range.start) {
+      yield chunk.subarray(Math.max(0, range.start - offset), range.end + 1 - offset);
+    }
+    if (next > range.end) return;
+    offset = next;
+  }
+}
 async function uploadedVideo(req, res, p) {
   if (local) {
     const filename = path.join(path.dirname(local), p);
@@ -494,7 +513,7 @@ async function uploadedVideo(req, res, p) {
   res.once('close', () => controller.abort());
   const range = req.method === 'GET' ? req.headers.range : undefined;
   const upstream = await fetch(raw + p, {
-    method: req.method, headers: range ? { Range: range } : {}, signal: controller.signal,
+    method: req.method, headers: { 'Accept-Encoding': 'identity', ...(range ? { Range: range } : {}) }, signal: controller.signal,
   }).finally(() => clearTimeout(timeout));
   if (upstream.status === 404) {
     await upstream.body?.cancel();
@@ -513,6 +532,12 @@ async function uploadedVideo(req, res, p) {
     throw failure(502, 'Το βίντεο δεν είναι διαθέσιμο προσωρινά.');
   }
   if (range && upstream.status === 200) {
+    const length = Number(upstream.headers.get('content-length'));
+    const encoding = upstream.headers.get('content-encoding');
+    if (upstream.body && length > 0 && (!encoding || encoding === 'identity')) {
+      if (!byteRange(range, length)) await upstream.body.cancel();
+      return videoResponse(req, res, length, part => Readable.from(sliceVideo(upstream.body, part)));
+    }
     const bytes = Buffer.from(await upstream.arrayBuffer());
     return videoResponse(req, res, bytes.length, part => Readable.from(part ? bytes.subarray(part.start, part.end + 1) : bytes));
   }

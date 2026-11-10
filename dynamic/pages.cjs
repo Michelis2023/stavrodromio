@@ -148,6 +148,7 @@ const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia
       (eager ? '(max-width: 580px) 95vw, 850px' : '(max-width: 580px) 95vw, 380px') + '"' + (eager ? ' fetchpriority="high"' : '')
   : '';
 const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
+const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
 const thumbnail = item => item.image || item.gallery?.[0];
 const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
@@ -251,6 +252,7 @@ function render(kind, params) {
     const related = sorted(all).filter(item => item.id !== article.id && item.sections.includes(article.sections[0])).slice(0,3);
     const gallery = (article.gallery ?? []).filter(src => !article.hero || src !== article.image);
     const poster = thumbnail(article);
+    const videos = articleVideos(article);
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
@@ -258,10 +260,12 @@ function render(kind, params) {
       ${article.archived ? '<p class="notice">Προγενέστερη εκδοχή. <a href="/article-gortynias-parakampsi-lagkadia.html">Νεότερη δημοσίευση</a></p>' : ''}</header>
       ${article.hero && article.image ? `<figure class="hero-figure">${photo(article,true)}${article.caption ? '<figcaption>' + e(article.caption) + '</figcaption>' : ''}</figure>` : ''}
       ${article.body ? `<div class="reading article-body">${article.body.replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')}</div>` : ''}
-      ${article.video ? `<section class="article-media" aria-labelledby="article-video">
+      ${videos.length ? `<section class="article-media" aria-labelledby="article-video">
         <h2 id="article-video">Βίντεο</h2>
-        <video controls playsinline preload="none" aria-labelledby="article-video" src="${e(article.video)}"${poster ? ` poster="${e(poster)}"` : ''}>Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
-        ${preview ? '' : `<a class="media-file-link" href="${e(article.video)}">Άνοιγμα αρχείου βίντεο</a>`}
+        ${videos.map((src, index) => `<div class="article-video">
+          <video controls playsinline preload="none" aria-label="Βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}" src="${e(src)}"${index === 0 && poster ? ` poster="${e(poster)}"` : ''}>Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
+          ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
+        </div>`).join('')}
       </section>` : ''}
       ${linkedVideo(article.videoLink, preview, article.title)}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
@@ -329,10 +333,10 @@ function render(kind, params) {
       <legend>Φωτογραφίες και βίντεο</legend>
       <label>Φωτογραφίες συλλογής <input type="file" name="gallery" multiple accept="image/jpeg,image/png,image/webp"></label>
       <div id="existing-gallery" class="editor-gallery" hidden></div>
-      <label>Βίντεο MP4 <input type="file" name="video" accept="video/mp4,.mp4"></label>
-      <label id="existing-video" hidden><input type="checkbox" name="removeVideo"> Αφαίρεση υπάρχοντος βίντεο</label>
+      <label>Αρχεία βίντεο MP4 <input type="file" name="videos" multiple accept="video/mp4,.mp4"></label>
+      <div id="existing-videos" class="editor-gallery" hidden></div>
       <label>Σύνδεσμος βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
-      <p class="editor-media-help">Διάλεξε μαζί όσες φωτογραφίες θέλεις, έως 10 MB η καθεμία. Για βίντεο, βάλε αρχείο MP4 έως 48 MB ή σύνδεσμο από YouTube, Facebook, Vimeo, TikTok ή άλλη υπηρεσία. Η αναπαραγωγή μέσα στο άρθρο εξαρτάται από τις ρυθμίσεις της υπηρεσίας και του βίντεο.</p>
+      <p class="editor-media-help">Διάλεξε πολλές φωτογραφίες (έως 10 MB η καθεμία) και πολλά βίντεο MP4 (έως 48 MB το καθένα). Αν θέλεις, πρόσθεσε και σύνδεσμο βίντεο.</p>
     </fieldset>
     <div class="toolbar"><label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
     <span id="body-label">Κείμενο άρθρου</span>
@@ -353,5 +357,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, rss, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion };
+module.exports = { render, rss, sections, statuses, articleUrl, articleVideos, rich, safeUrl, stylesheetVersion };
 })(module);

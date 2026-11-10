@@ -50,7 +50,8 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
-  <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">`}
+  <meta property="og:image" content="${e(shareImage)}"><meta name="twitter:card" content="summary_large_image">
+  <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">Σταυροδρόμι<span>ΚΟΙΝΟΤΗΤΑ</span></a>
@@ -63,6 +64,25 @@ function layout(body, { origin, p = '/', title, summary = about, image, article 
   ${admin ? `<script src="/editor.js?v=${editorVersion}" defer></script>` : ''}</body></html>`;
 }
 const sorted = all => Object.values(all).filter(item => !item.archived).sort((a,b) => b.date.localeCompare(a.date));
+const xml = value => e(String(value ?? '').replace(/[^\u0009\u000a\u000d\u0020-\ud7ff\ue000-\ufffd\u{10000}-\u{10ffff}]/gu, ''));
+function rss(origin, all) {
+  const items = Object.values(all).filter(item => !item.archived).map(item => ({
+    item, published: Date.parse(item.publishedAt || item.date + 'T12:00:00Z'),
+  }));
+  const entries = items.sort((a, b) => b.published - a.published).map(({ item, published }) => {
+    const address = xml(origin + articleUrl(item.id));
+    const summary = xml('<p>' + e(item.summary) + '</p>');
+    const date = Number.isFinite(published) ? '<pubDate>' + new Date(published).toUTCString() + '</pubDate>' : '';
+    return '<item><title>' + xml(item.title) + '</title><link>' + address + '</link>' +
+      '<guid>' + address + '</guid><description>' + summary + '</description>' + date + '</item>';
+  });
+  return '<?xml version="1.0" encoding="UTF-8"?>\n' +
+    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel>' +
+    '<title>' + xml(name) + '</title><link>' + xml(origin + '/') + '</link>' +
+    '<description>' + xml(about) + '</description><language>el</language>' +
+    '<atom:link href="' + xml(origin + '/rss.xml') + '" rel="self" type="application/rss+xml"/>' +
+    entries.join('\n') + '</channel></rss>\n';
+}
 const label = item => sections[item.sections[0]][0];
 const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia.jpg'
   ? 'width="1935" height="1089" srcset="/images/parakampsi-640.webp 640w, /images/parakampsi-1280.webp 1280w" sizes="' +
@@ -213,5 +233,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion };
+module.exports = { render, rss, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion };
 })(module);

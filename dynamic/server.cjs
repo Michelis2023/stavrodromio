@@ -3,7 +3,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { createServer } = require('node:http');
 const { randomBytes, createHash } = require('node:crypto');
-const { render, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
@@ -296,6 +296,7 @@ async function admin(req, res, p, origin) {
       if (!input.id && existing) throw failure(409, 'Η διεύθυνση υπάρχει ήδη.');
       if (input.featured && existing?.archived) throw failure(400, 'Η προγενέστερη εκδοχή δεν γίνεται κύριο θέμα.');
       const { fields } = articleData(input, existing, image, id, state);
+      if (!existing) fields.publishedAt = new Date().toISOString();
       return { ...state, articles: { ...state.articles, [id]: { ...state.articles[id], ...fields } },
         featured: input.featured ? id : state.featured === id ? null : state.featured };
     }, 'Publish article: ' + id, image);
@@ -404,6 +405,9 @@ const route = async (req, res) => {
     }
     const state = await publicState();
     const all = merged(state);
+    if (p === '/rss.xml') {
+      return respond(res, 200, rss(origin, all), 'application/rss+xml; charset=utf-8', { 'Cache-Control': 'public, max-age=45' });
+    }
     if (p === '/sitemap.xml') {
       const paths = ['/', '/arxeio', '/paratiritirio', '/sxetika.html', '/epikoinonia.html',
         ...Object.keys(sections).map(key => '/' + key + '.html'),

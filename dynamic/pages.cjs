@@ -81,21 +81,14 @@ function linkedVideo(source, preview, title, poster) {
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </div>`;
 }
-function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, video, article = false, privatePage = false, admin = false }) {
-  const url = origin + p;
-  const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
+function socialTags({ origin, url, title, summary, image, imageAlt, video, article }) {
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
   if (isSiteImage) shareImage.searchParams.set('v', '2');
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const imageExtension = /\.(jpe?g|png|webp)$/i.exec(shareImage.pathname)?.[1].toLowerCase();
   const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
-  const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
-    ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
-  return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>${e(title ? title + ' | ' + name : name)}</title><meta name="description" content="${e(summary)}">
-  ${privatePage ? '<meta name="robots" content="noindex,nofollow">' :
-  `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
+  return `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
@@ -103,8 +96,17 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   ${isSiteImage ? '<meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
   ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
   ${video ? `<meta property="og:video" content="${e(video)}"><meta property="og:video:secure_url" content="${e(video)}"><meta property="og:video:type" content="video/mp4">` : ''}
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">
-  <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">`;
+}
+function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, video, article = false, privatePage = false, admin = false }) {
+  const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
+  const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
+    ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
+  return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${e(title ? title + ' | ' + name : name)}</title><meta name="description" content="${e(summary)}">
+  ${privatePage ? '<meta name="robots" content="noindex,nofollow">' :
+  socialTags({ origin, url: origin + p, title, summary, image, imageAlt, video, article }) +
+  `<link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/app-192.png">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
@@ -176,6 +178,18 @@ function articleDescription(item) {
   const complete = [...firstPart.matchAll(sentenceEnd)].at(-1);
   if (complete && complete.index >= 95) return firstPart.slice(0, complete.index + 1);
   return text.slice(0, 199).replace(/\s+\S*$/, '').trimEnd() + '…';
+}
+function renderShare(origin, articleOrigin, item, image) {
+  const address = articleUrl(item.id);
+  const title = item.title;
+  const summary = articleDescription(item);
+  const imageAlt = item.image ? item.alt : item.videoPoster && !item.gallery?.length ? 'Καρέ του βίντεο' : '';
+  return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>${e(title)} | ${name}</title>
+  ${socialTags({ origin, url: origin + address, title, summary, image, imageAlt, article: true })}
+  </head><body><main><h1>${e(title)}</h1><p>${e(summary)}</p>
+  <a id="article" href="${e(articleOrigin + address)}">Διάβασε το άρθρο στο Σταυροδρόμι</a></main>
+  <script>location.replace(document.getElementById('article').href);</script></body></html>`;
 }
 const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
@@ -429,5 +443,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion };
+module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion };
 })(module);

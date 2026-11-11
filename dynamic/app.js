@@ -16,6 +16,36 @@ for (const button of document.querySelectorAll('[data-video-embed]')) {
   });
 }
 
+for (const panel of document.querySelectorAll('[data-article-share]')) {
+  const address = panel.querySelector('input');
+  const share = panel.querySelector('[data-native-share]');
+  const copy = panel.querySelector('[data-copy-link]');
+  const status = panel.querySelector('[role="status"]');
+  const data = { title: panel.dataset.title, url: address.value };
+  if (typeof navigator.share === 'function' && (typeof navigator.canShare !== 'function' || navigator.canShare(data))) {
+    share.hidden = false;
+    share.addEventListener('click', async () => {
+      status.textContent = '';
+      try {
+        await navigator.share(data);
+      } catch (error) {
+        if (error.name !== 'AbortError') status.textContent = 'Χρησιμοποίησε την αντιγραφή συνδέσμου για κοινοποίηση.';
+      }
+    });
+  }
+  copy.hidden = false;
+  copy.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(address.value);
+      status.textContent = 'Ο σύνδεσμος αντιγράφηκε.';
+    } catch {
+      address.focus();
+      address.select();
+      status.textContent = 'Αντίγραψε τον επιλεγμένο σύνδεσμο.';
+    }
+  });
+}
+
 const install = document.querySelector('#install-app');
 const installed = document.querySelector('#installed-app');
 if (install && installed) {

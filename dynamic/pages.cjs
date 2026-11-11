@@ -81,13 +81,15 @@ function linkedVideo(source, preview, title, poster) {
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </div>`;
 }
-function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
+function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, video, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
   if (isSiteImage) shareImage.searchParams.set('v', '2');
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
+  const imageExtension = /\.(jpe?g|png|webp)$/i.exec(shareImage.pathname)?.[1].toLowerCase();
+  const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
@@ -97,8 +99,10 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
-  ${isSiteImage ? '<meta property="og:image:type" content="image/png"><meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
+  ${imageType ? `<meta property="og:image:type" content="image/${imageType}">` : ''}
+  ${isSiteImage ? '<meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
   ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
+  ${video ? `<meta property="og:video" content="${e(video)}"><meta property="og:video:secure_url" content="${e(video)}"><meta property="og:video:type" content="video/mp4">` : ''}
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">
   <link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
@@ -159,6 +163,19 @@ function thumbnail(item) {
   if (image || articleVideos(item).length || !safeUrl(firstLink) || !/^https:\/\//i.test(firstLink)) return image;
   const [provider, embed] = videoEmbed(firstLink);
   return provider === 'YouTube' ? youtubePoster(embed) : '';
+}
+function articleDescription(item) {
+  const entities = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'", '#39': "'", nbsp: ' ' };
+  const body = item.body?.replace(/<\/?(?:p|div|br|li|h[1-6])\b[^>]*>/gi, ' ').replace(/<[^>]*>/g, '')
+    .replace(/&(amp|lt|gt|quot|apos|#39|nbsp);/g, (_, entity) => entities[entity]);
+  const text = [item.summary, item.deck, body].find(part => part?.trim())?.replace(/\s+/g, ' ').trim() ||
+    (articleVideos(item).length || articleLinks(item).length ? 'Δημοσίευση με βίντεο στο Σταυροδρόμι Κοινότητα.' : about);
+  if (text.length <= 200) return text;
+  const firstPart = text.slice(0, 200);
+  const sentenceEnd = /[.!;…](?=\s|$)/gu;
+  const complete = [...firstPart.matchAll(sentenceEnd)].at(-1);
+  if (complete && complete.index >= 95) return firstPart.slice(0, complete.index + 1);
+  return text.slice(0, 199).replace(/\s+\S*$/, '').trimEnd() + '…';
 }
 const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
@@ -261,6 +278,7 @@ function render(kind, params) {
     const poster = thumbnail(article);
     const videos = articleVideos(article);
     const videoLinks = articleLinks(article);
+    const shareVideo = /^\/uploads\/[a-f0-9]{64}\.mp4$/.test(videos[0]) ? origin + videos[0] : '';
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
@@ -285,10 +303,19 @@ function render(kind, params) {
       </section>` : ''}
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a>
+        <details class="article-share" data-article-share data-title="${e(article.title)}">
+          <summary>Κοινοποίηση</summary>
+          <div class="article-share-options">
+            <button type="button" data-native-share hidden>Κοινοποίηση σε εφαρμογή</button>
+            <button type="button" class="secondary" data-copy-link hidden>Αντιγραφή συνδέσμου</button>
+            <label>Σύνδεσμος άρθρου <input type="url" readonly value="${e(origin + address)}"></label>
+            <p role="status"></p>
+          </div>
+        </details></div>`}</article>
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:article.summary,image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',video:shareVideo,article:true,privatePage:preview });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>

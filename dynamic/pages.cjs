@@ -317,7 +317,7 @@ function render(kind, params) {
       </section>` : ''}
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
-        <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a>
+        <a href="/koinopoiisi/facebook/${encodeURIComponent(article.id)}">Κοινοποίηση στο Facebook</a>
         <details class="article-share" data-article-share data-title="${e(article.title)}">
           <summary>Κοινοποίηση</summary>
           <div class="article-share-options">

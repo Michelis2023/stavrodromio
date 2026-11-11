@@ -13,6 +13,7 @@ const repo = 'Michelis2023/stavrodromio';
 const branch = 'stavrodromio-content';
 const raw = 'https://raw.githubusercontent.com/' + repo + '/' + branch;
 const repoApi = '/repos/' + repo;
+const shareOrigin = 'https://stavrodromio-koinotita-share.onrender.com';
 const sourceRoot = path.resolve(__dirname, '..');
 const local = process.env.STAVRODROMIO_TEST_FILE;
 const newsletterConfig = process.env.STAVRODROMIO_NEWSLETTER_ACTION || '';
@@ -693,6 +694,17 @@ const route = async (req, res) => {
     if (!['GET','HEAD'].includes(req.method)) throw failure(405, 'Μη επιτρεπτό αίτημα.');
     if (p === '/healthz') return js(res, 200, { ok: true });
     if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\nSitemap: ' + origin + '/sitemap.xml\n', 'text/plain; charset=utf-8');
+    const facebookShare = /^\/koinopoiisi\/facebook\/([a-z0-9][a-z0-9-]{0,95})$/.exec(p);
+    if (facebookShare) {
+      const address = articleUrl(facebookShare[1]);
+      const shareUrl = shareOrigin + address;
+      const ready = !local && await fetch(shareUrl, {
+        method: 'HEAD', redirect: 'error', signal: AbortSignal.timeout(2500),
+      }).then(result => result.ok).catch(() => false);
+      const target = (ready ? shareOrigin : origin) + address;
+      res.writeHead(302, { Location: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(target), 'Cache-Control': 'no-store' });
+      return res.end();
+    }
     if (p === '/index.html' || p === '/masthead.html' || p === '/stavrodromio' || p.startsWith('/stavrodromio/')) {
       const next = p === '/index.html' || p === '/masthead.html' ? '/' : p.slice('/stavrodromio'.length) || '/';
       if (next.startsWith('//') || next.includes('\\')) throw failure(404, 'Η σελίδα δεν βρέθηκε.');

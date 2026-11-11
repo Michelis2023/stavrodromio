@@ -82,6 +82,7 @@ function linkedVideo(source, preview, title, poster) {
   </div>`;
 }
 function socialTags({ origin, url, title, summary, image, imageAlt, video, article }) {
+  const cardTitle = article && title ? name + ' | ' + title : title || name;
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
   if (isSiteImage) shareImage.searchParams.set('v', '2');
@@ -90,13 +91,15 @@ function socialTags({ origin, url, title, summary, image, imageAlt, video, artic
   const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
   return `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
-  <meta property="og:title" content="${e(title || name)}"><meta property="og:description" content="${e(summary)}">
+  <meta property="og:title" content="${e(cardTitle)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
   ${imageType ? `<meta property="og:image:type" content="image/${imageType}">` : ''}
   ${isSiteImage ? '<meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
   ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
   ${video ? `<meta property="og:video" content="${e(video)}"><meta property="og:video:secure_url" content="${e(video)}"><meta property="og:video:type" content="video/mp4">` : ''}
-  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="${e(shareImage.href)}">`;
+  <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(cardTitle)}">
+  <meta name="twitter:description" content="${e(summary)}"><meta name="twitter:image" content="${e(shareImage.href)}">
+  ${shareAlt ? `<meta name="twitter:image:alt" content="${e(shareAlt)}">` : ''}`;
 }
 function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, video, article = false, privatePage = false, admin = false }) {
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;

@@ -326,30 +326,39 @@ function render(kind, params) {
     <label>Συντάκτης <input name="author" maxlength="120"></label>
     <label><span id="summary-label">Σύντομη περιγραφή</span> <textarea name="summary" rows="2" maxlength="800" aria-labelledby="summary-label" aria-describedby="summary-help"></textarea><small id="summary-help">Προαιρετική. Εμφανίζεται στις λίστες άρθρων και στην προεπισκόπηση κοινοποίησης.</small></label>
     <label><span id="deck-label">Εισαγωγή άρθρου</span> <textarea name="deck" rows="3" maxlength="2400" aria-labelledby="deck-label" aria-describedby="deck-help"></textarea><small id="deck-help">Προαιρετική. Εμφανίζεται κάτω από τον τίτλο του άρθρου.</small></label>
-    <div class="form-grid"><label>Φωτογραφία εξωφύλλου <input type="file" name="cover" accept="image/jpeg,image/png,image/webp"></label>
-    <label>ή διεύθυνση εικόνας <input name="image" maxlength="1600"></label></div>
-    <div class="form-grid"><label>Περιγραφή εικόνας <input name="alt" maxlength="300"></label><label>Λεζάντα <input name="caption" maxlength="500"></label></div>
-    <fieldset class="editor-media">
-      <legend>Φωτογραφίες και βίντεο</legend>
-      <label>Φωτογραφίες συλλογής <input type="file" name="gallery" multiple accept="image/jpeg,image/png,image/webp"></label>
-      <label>Αρχεία βίντεο MP4 <input type="file" name="videos" multiple accept="video/mp4,.mp4"></label>
-      <label>Σύνδεσμος βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
-      <p class="editor-media-help">Διάλεξε πολλές φωτογραφίες (έως 10 MB η καθεμία) και πολλά βίντεο MP4 (έως 48 MB το καθένα). Αν θέλεις, πρόσθεσε και σύνδεσμο βίντεο.</p>
-      <section id="editor-media-panel" aria-label="Διαχείριση αρχείων" hidden>
-        <p class="editor-media-help">Τσέκαρε τα αρχεία και διάλεξε ενέργεια. Οι αλλαγές εφαρμόζονται με την αποθήκευση του άρθρου.</p>
-        <div class="toolbar media-toolbar" role="group" aria-label="Ενέργειες αρχείων">
-          <button type="button" data-media-action="all">Επιλογή όλων</button>
-          <button type="button" data-media-action="none">Καθαρισμός επιλογής</button>
-          <button type="button" data-media-action="remove">Αφαίρεση επιλεγμένων</button>
-          <button type="button" data-media-action="keep">Διατήρηση μόνο επιλεγμένων</button>
-          <button type="button" data-media-action="cover">Ορισμός ως εξώφυλλο</button>
-          <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων</button>
+    <fieldset class="editor-media" aria-label="Υλικό άρθρου">
+      <details id="media-add">
+        <summary>Προσθήκη υλικού</summary>
+        <div class="media-add-fields">
+          <label>Φωτογραφίες ή βίντεο <input type="file" id="media-files" multiple accept="image/jpeg,image/png,image/webp,video/mp4,.mp4" aria-describedby="media-file-help">
+          <small id="media-file-help">JPG, PNG, WebP έως 10 MB ή MP4 έως 48 MB ανά αρχείο.</small></label>
+          <label>Ή επικόλλησε σύνδεσμο βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
+          <p id="media-add-error" role="status"></p>
         </div>
-        <p id="editor-media-count" class="editor-media-help" role="status"></p>
+      </details>
+      <section id="editor-media-panel" aria-label="Διαχείριση αρχείων" hidden>
         <ul id="editor-media-items" class="editor-gallery"></ul>
+        <details class="media-options">
+          <summary>Ενέργειες αρχείων</summary>
+          <div class="toolbar media-toolbar" role="group" aria-label="Ενέργειες αρχείων">
+            <button type="button" data-media-action="all">Επιλογή όλων</button>
+            <button type="button" data-media-action="none">Καθαρισμός επιλογής</button>
+            <button type="button" data-media-action="remove">Αφαίρεση επιλεγμένων</button>
+            <button type="button" data-media-action="keep">Διατήρηση μόνο επιλεγμένων</button>
+            <button type="button" data-media-action="cover">Ορισμός ως εξώφυλλο</button>
+            <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων</button>
+          </div>
+          <p id="editor-media-count" class="editor-media-help" role="status"></p>
+        </details>
       </section>
+      <details id="media-cover-options" class="media-options">
+        <summary>Ρυθμίσεις εξωφύλλου</summary>
+        <label>Διεύθυνση εικόνας <input name="image" maxlength="1600"></label>
+        <div class="form-grid"><label>Περιγραφή εικόνας <input name="alt" maxlength="300"></label><label>Λεζάντα <input name="caption" maxlength="500"></label></div>
+        <label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label>
+      </details>
     </fieldset>
-    <div class="toolbar"><label><input type="checkbox" name="hero"> Εξώφυλλο μέσα στη δημοσίευση</label><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
+    <div class="toolbar"><label><input type="checkbox" name="featured"> Κύριο θέμα της αρχικής</label></div>
     <span id="body-label">Κείμενο άρθρου</span>
     <p class="editor-media-help">Άφησέ το κενό για δημοσίευση μόνο με φωτογραφίες ή βίντεο.</p>
     <div class="toolbar" role="group" aria-label="Μορφοποίηση κειμένου"><button type="button" data-format="bold">Έντονα</button>

@@ -155,7 +155,13 @@ button.secondary,.toolbar button:not(#publish),.editor-list button { color:var(-
 #body-label { display:block; font-size:.9rem; font-weight:650; margin-bottom:.45rem; }
 #article-form label small { display:block; margin-top:.2rem; color:var(--subtle); font-weight:400; }
 .editor-media { min-width:0; margin:0 0 1rem; padding:.75rem; border:1px solid var(--line); }
-.editor-media legend { font-weight:700; }
+#media-add > summary { width:fit-content; padding:.55rem .85rem; border-radius:3px; background:var(--green); color:white; cursor:pointer; font-weight:650; }
+.media-add-fields { margin-top:.7rem; }
+#media-add-error { color:var(--accent); margin:0; }
+#media-add-error:empty { display:none; }
+.media-options { margin-top:.65rem; }
+.media-options > summary { width:fit-content; padding:.25rem 0; cursor:pointer; font-size:.9rem; color:var(--subtle); }
+.media-options[open] > summary { margin-bottom:.5rem; }
 .editor-media-help { color:var(--subtle); font-size:.88rem; }
 .editor-media .editor-media-help { margin-bottom:0; }
 #editor-media-panel { margin-top:1rem; padding-top:.8rem; border-top:1px solid var(--line); }

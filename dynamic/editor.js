@@ -7,8 +7,7 @@ const issueForm = $('issue-form');
 const dialog = $('preview-dialog');
 const mediaPanel = $('editor-media-panel');
 const mediaList = $('editor-media-items');
-const mediaKinds = ['cover', 'gallery', 'videos'];
-const mediaLabels = { cover: 'Εξώφυλλο', gallery: 'Φωτογραφία', videos: 'Βίντεο' };
+const mediaFiles = $('media-files');
 const inviteCode = new URLSearchParams(window.location.hash.slice(1)).get('invite');
 let loginMode = inviteCode ? 'accept' : 'owner';
 let state;
@@ -150,7 +149,7 @@ function mediaRow(kind, title, { src, file } = {}) {
     preview.setAttribute('aria-label', 'Προβολή ' + title.toLocaleLowerCase('el'));
     element.append(preview);
   }
-  return { element, checkbox, status, kind, src, file, removed: false };
+  return { element, checkbox, status, kind, title, src, file, removed: false };
 }
 function updateMediaActions() {
   const active = mediaRows.filter(row => !row.removed);
@@ -161,7 +160,7 @@ function updateMediaActions() {
   for (const button of buttons) {
     const action = button.dataset.mediaAction;
     button.disabled = action === 'all' ? !active.length : action === 'undo' ? !removed
-      : action === 'cover' ? selectedRows.length !== 1 || selectedRows[0].kind !== 'gallery' || !selectedRows[0].src
+      : action === 'cover' ? selectedRows.length !== 1 || selectedRows[0].kind !== 'gallery'
       : !selectedRows.length;
   }
 }
@@ -185,11 +184,27 @@ function showArticleMedia(item) {
   ];
   updateCoverRow();
 }
-function updateNewFiles(kind) {
-  mediaRows = mediaRows.filter(row => row.kind !== kind || !row.file);
-  mediaRows.push(...Array.from(form.elements[kind].files, file =>
-    mediaRow(kind, mediaLabels[kind] + ' · ' + file.name, { file })));
-  renderMediaList();
+function addMediaFiles() {
+  const added = [];
+  const rejected = [];
+  for (const file of mediaFiles.files) {
+    try {
+      const video = file.type === 'video/mp4' || /\.mp4$/i.test(file.name);
+      if (!video) photoType(file);
+      const limit = video ? 48 : 10;
+      if (file.size > limit * 1024 * 1024) throw Error('μέγιστο μέγεθος ' + limit + ' MB');
+      added.push(mediaRow(video ? 'videos' : 'gallery', file.name, { file }));
+    } catch (error) {
+      rejected.push(file.name + ' (' + error.message + ')');
+    }
+  }
+  mediaFiles.value = '';
+  if (added.length) {
+    mediaRows.push(...added);
+    dirty = true;
+    renderMediaList();
+  }
+  $('media-add-error').textContent = rejected.length ? 'Αρχεία που δεν προστέθηκαν · ' + rejected.join(', ') : '';
 }
 function setMediaRemoved(row, removed) {
   row.removed = removed;
@@ -219,26 +234,35 @@ mediaPanel.addEventListener('click', event => {
       for (const row of mediaRows) if (row.removed) setMediaRemoved(row, false);
       dirty = true;
       break;
-    case 'cover':
-      if (checked.length !== 1 || checked[0].kind !== 'gallery' || !checked[0].src) return;
-      form.elements.image.value = checked[0].src;
-      form.elements.cover.value = '';
-      checked[0].checkbox.checked = false;
-      mediaRows = mediaRows.filter(row => row.kind !== 'cover');
+    case 'cover': {
+      if (checked.length !== 1 || checked[0].kind !== 'gallery') return;
+      const photo = checked[0];
+      form.elements.image.value = photo.src || '';
+      mediaRows = mediaRows.flatMap(row => {
+        if (row === photo) {
+          return row.file ? [mediaRow('cover', 'Εξώφυλλο · ' + row.title, { file: row.file })] : [row];
+        }
+        if (row.kind !== 'cover') return [row];
+        return row.file && !row.removed ? [mediaRow('gallery', row.file.name, { file: row.file })] : [];
+      });
+      photo.checkbox.checked = false;
       updateCoverRow();
       dirty = true;
       break;
+    }
   }
   updateMediaActions();
 });
-for (const kind of mediaKinds) {
-  form.elements[kind].addEventListener('change', () => updateNewFiles(kind));
-}
+mediaFiles.addEventListener('change', addMediaFiles);
+form.elements.videoLink.addEventListener('invalid', () => { $('media-add').open = true; });
 form.elements.image.addEventListener('change', updateCoverRow);
 function openArticle(item = null) {
   selected = item;
   form.reset();
   uploadNotice('');
+  $('media-add-error').textContent = '';
+  $('media-add').open = Boolean(item?.videoLink);
+  $('media-cover-options').open = false;
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
   showArticleMedia(item);
   form.elements.videoLink.value = item?.videoLink || '';
@@ -318,7 +342,6 @@ function payload() {
   const fields = form.elements;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
-  for (const key of ['cover', 'gallery', 'videos']) delete data[key];
   const removed = mediaRows.filter(row => row.removed);
   data.removeGallery = removed.filter(row => row.kind === 'gallery' && row.src).map(row => row.src);
   data.removeVideos = removed.filter(row => row.kind === 'videos' && row.src).map(row => row.src);

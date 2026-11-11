@@ -68,12 +68,16 @@ function videoEmbed(source) {
   }
   return [];
 }
-function linkedVideo(source, preview, title) {
+function youtubePoster(embed) {
+  return 'https://i.ytimg.com/vi/' + embed.split('/').at(-1) + '/hqdefault.jpg';
+}
+function linkedVideo(source, preview, title, poster) {
   if (!safeUrl(source) || !/^https:\/\//i.test(source)) return '';
   const [provider, embed] = videoEmbed(source);
+  const image = poster ? `<img src="${e(poster)}" alt="" loading="lazy" decoding="async">` : '';
   return `<section class="article-media" aria-labelledby="article-external-video">
     <h2 id="article-external-video">Βίντεο</h2>
-    ${embed && !preview ? `<button type="button" class="video-play" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>Αναπαραγωγή από ${e(provider)}</button>` : ''}
+    ${embed && !preview ? `<button type="button" class="video-play${poster ? ' video-play-preview' : ''}" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>${image}Αναπαραγωγή από ${e(provider)}</button>` : image}
     ${embed && preview ? '<p>Η αναπαραγωγή εμφανίζεται μετά τη δημοσίευση, εφόσον το επιτρέπει η υπηρεσία.</p>' : ''}
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </section>`;
@@ -149,7 +153,12 @@ const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia
   : '';
 const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
 const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
-const thumbnail = item => item.image || item.gallery?.[0];
+function thumbnail(item) {
+  const image = item.image || item.gallery?.[0] || item.videoPoster;
+  if (image || articleVideos(item).length || !safeUrl(item.videoLink) || !/^https:\/\//i.test(item.videoLink)) return image;
+  const [provider, embed] = videoEmbed(item.videoLink);
+  return provider === 'YouTube' ? youtubePoster(embed) : '';
+}
 const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
 const cards = items => items.length ? `<div class="cards">${items.map(item => `<article class="card">
@@ -263,7 +272,7 @@ function render(kind, params) {
           ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
         </div>`).join('')}
       </section>` : ''}
-      ${linkedVideo(article.videoLink, preview, article.title)}
+      ${linkedVideo(article.videoLink, preview, article.title, !videos.length && !article.image && !gallery.length ? poster : '')}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
         <h2 id="article-gallery">Φωτογραφίες</h2>
         <div class="article-gallery">${gallery.map((src, i) => `<figure><img src="${e(src)}" alt="Φωτογραφία ${i + 1} από τη δημοσίευση" loading="lazy" decoding="async"></figure>`).join('')}</div>
@@ -273,7 +282,7 @@ function render(kind, params) {
         <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(origin + address)}" rel="noopener noreferrer">Κοινοποίηση στο Facebook</a></div>`}</article>
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:article.summary,image:thumbnail(article),imageAlt:article.image ? article.alt : '',article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:article.summary,image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>

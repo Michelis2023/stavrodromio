@@ -278,6 +278,8 @@ dialog iframe { display:block; border:1px solid var(--line); width:100%; height:
 }
 .article-external-video[data-provider="TikTok"] { aspect-ratio:9/16; max-width:25rem; margin-inline:auto; }
 .video-play { margin-right:.9rem; margin-bottom:.55rem; }
+.video-play-preview { display:block; max-width:min(100%, 30rem); }
+.video-play-preview img { display:block; width:100%; margin-bottom:.5rem; }
 .install-guide { max-width:43rem; margin:0 auto 2.5rem; }
 .install-guide section { margin:1.35rem 0; padding:clamp(1rem, 3vw, 1.65rem); border:1px solid var(--line); }
 .install-guide h2 { margin-bottom:.55rem; }

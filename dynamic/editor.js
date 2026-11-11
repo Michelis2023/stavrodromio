@@ -366,9 +366,62 @@ function payload() {
 async function mapFiles(files, use) {
   const media = { gallery: [], videos: [] };
   if (files.cover) media.cover = await use(files.cover, photoType(files.cover));
+  if (files.poster) media.poster = await use(files.poster, 'image/jpeg');
   for (const file of files.gallery) media.gallery.push(await use(file, photoType(file)));
   for (const file of files.videos) media.videos.push(await use(file, 'video/mp4'));
   return media;
+}
+async function captureVideoPoster(source) {
+  const objectUrl = typeof source === 'string' ? '' : URL.createObjectURL(source);
+  const video = document.createElement('video');
+  video.preload = 'auto';
+  video.muted = true;
+  video.playsInline = true;
+  let timer;
+  let captured = false;
+  try {
+    return await new Promise(resolve => {
+      timer = setTimeout(() => resolve(null), 6500);
+      video.addEventListener('error', () => resolve(null), { once:true });
+      video.addEventListener('loadedmetadata', () => {
+        if (Number.isFinite(video.duration) && video.duration > 0) {
+          video.currentTime = Math.min(1, video.duration / 3);
+        }
+      }, { once:true });
+      const capture = () => {
+        try {
+          if (captured || video.readyState < 2 || !video.videoWidth || !video.videoHeight) return;
+          captured = true;
+          const canvas = document.createElement('canvas');
+          const scale = Math.min(1, 1200 / Math.max(video.videoWidth, video.videoHeight));
+          canvas.width = Math.max(1, Math.round(video.videoWidth * scale));
+          canvas.height = Math.max(1, Math.round(video.videoHeight * scale));
+          canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
+          canvas.toBlob(blob => resolve(blob ? new File([blob], 'Καρέ βίντεο.jpg', { type:'image/jpeg' }) : null), 'image/jpeg', 0.85);
+        } catch {
+          resolve(null);
+        }
+      };
+      video.addEventListener('seeked', capture, { once:true });
+      video.addEventListener('loadeddata', () => { if (!video.seeking) capture(); }, { once:true });
+      video.src = objectUrl || source;
+    });
+  } finally {
+    clearTimeout(timer);
+    video.removeAttribute('src');
+    video.load();
+    if (objectUrl) URL.revokeObjectURL(objectUrl);
+  }
+}
+async function prepareArticleMedia(data, files) {
+  const active = mediaRows.filter(row => !row.removed);
+  if (data.image.trim() || files.cover || active.some(row => row.kind === 'gallery')) return;
+  const firstVideo = active.find(row => row.kind === 'videos');
+  if (!firstVideo) return;
+  if (firstVideo.src && selected?.videoPoster && firstVideo.src === (selected.videos?.[0] || selected.video)) return;
+  if (firstVideo.src && !/^\/uploads\/[a-f0-9]{64}\.mp4$/.test(firstVideo.src)) return;
+  uploadNotice('Ετοιμάζεται η εικόνα προεπισκόπησης του βίντεο…', null);
+  files.poster = await captureVideoPoster(firstVideo.src || firstVideo.file).catch(() => null);
 }
 function previewFile(file, type) {
   const url = URL.createObjectURL(type === file.type ? file : file.slice(0, file.size, type));
@@ -380,7 +433,8 @@ function clearPreview() {
   previewUrls.clear();
 }
 async function publishArticle(data, files) {
-  const count = files.gallery.length + Number(!!files.cover) + files.videos.length;
+  await prepareArticleMedia(data, files);
+  const count = files.gallery.length + Number(!!files.cover) + Number(!!files.poster) + files.videos.length;
   const submit = async () => {
     let index = 0;
     const stagedMedia = await mapFiles(files, async (file, type) => {
@@ -547,10 +601,13 @@ $('preview').addEventListener('click', event => {
     clearPreview();
     const { data, files } = payload();
     try {
+      await prepareArticleMedia(data, files);
       const previewMedia = await mapFiles(files, previewFile);
+      uploadNotice('');
       $('preview-frame').srcdoc = await api('preview', { ...data, previewMedia });
       dialog.showModal();
     } catch (error) {
+      uploadNotice('');
       clearPreview();
       throw error;
     }

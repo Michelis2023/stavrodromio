@@ -157,9 +157,9 @@ function rss(origin, all) {
 const label = item => sections[item.sections[0]][0];
 const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia.jpg'
   ? 'width="1935" height="1089" srcset="/images/parakampsi-640.webp 640w, /images/parakampsi-1280.webp 1280w" sizes="' +
-      (eager ? '(max-width: 580px) 95vw, 850px' : '(max-width: 580px) 95vw, 380px') + '"' + (eager ? ' fetchpriority="high"' : '')
+      (eager ? '(max-width: 580px) 95vw, 850px' : '(max-width: 580px) 95vw, 380px') + '"'
   : '';
-const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
+const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async">` : '';
 const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
 const articleLinks = item => item?.videoLinks ?? (item?.videoLink ? [item.videoLink] : []);
 function thumbnail(item) {
@@ -194,7 +194,18 @@ function renderShare(origin, articleOrigin, item, image) {
   <a id="article" href="${e(articleOrigin + address)}">Διάβασε το άρθρο στο Σταυροδρόμι</a></main>
   <script>location.replace(document.getElementById('article').href);</script></body></html>`;
 }
-const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
+const cardThumbnails = new Map([
+  ['/images/sxoleio/sxoleio-stavrodromio-2026.jpg', '/images/card-school-720.jpg'],
+  ['/images/keraies-stavros/stauros-001.JPG', '/images/card-antennas-720.jpg'],
+  ['/images/koimitirio/IMG_20260420_184806.jpg', '/images/card-cemetery-720.jpg'],
+  ['/images/nero/IMG_20260420_181010.jpg', '/images/card-water-720.jpg'],
+  ['/images/tsimento-01.jpg', '/images/card-concrete-720.jpg'],
+]);
+const cardPhoto = (item, eager) => {
+  const originalImage = thumbnail(item);
+  const image = (!eager && cardThumbnails.get(originalImage)) || originalImage;
+  return photo({ image, alt: item.image ? item.alt : '' }, eager);
+};
 const head = (title, more = '') => `<div class="section-head"><h2>${e(title)}</h2>${more}</div>`;
 const cards = items => items.length ? `<div class="cards">${items.map(item => `<article class="card">
   ${thumbnail(item) ? `<a class="card-photo" href="${articleUrl(item.id)}" tabindex="-1" aria-hidden="true">${cardPhoto(item)}</a>` : ''}
@@ -446,5 +457,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion };
+module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion, appVersion, editorVersion };
 })(module);

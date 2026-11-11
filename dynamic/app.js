@@ -1,5 +1,26 @@
 'use strict';
 
+const connection = navigator.connection;
+if (!connection?.saveData && !['slow-2g', '2g', '3g'].includes(connection?.effectiveType)) {
+  const prefetched = new Set();
+  const prefetch = event => {
+    if (event.type === 'pointerover' && event.pointerType !== 'mouse') return;
+    const anchor = event.target.closest('a[href]');
+    if (!anchor || anchor.target || anchor.hasAttribute('download') || prefetched.size >= 6) return;
+    const url = new URL(anchor.href);
+    if (url.origin !== location.origin || url.search || url.hash || url.pathname === location.pathname ||
+        !/^\/(?:arxeio|paratiritirio|(?:reportaz|history|laografia|autodioikisi|article-[a-z0-9-]+)\.html)?$/.test(url.pathname) ||
+        prefetched.has(url.href)) return;
+    prefetched.add(url.href);
+    const hint = document.createElement('link');
+    hint.rel = 'prefetch';
+    hint.href = url.href;
+    document.head.append(hint);
+  };
+  document.addEventListener('pointerover', prefetch);
+  document.addEventListener('focusin', prefetch);
+}
+
 for (const button of document.querySelectorAll('[data-video-embed]')) {
   button.hidden = false;
   button.addEventListener('click', () => {

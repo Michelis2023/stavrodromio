@@ -5,10 +5,11 @@ const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash, createCipheriv, createDecipheriv, hkdfSync } = require('node:crypto');
-const { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
+const publicSnapshot = require('./public-snapshot.json');
 const repo = 'Michelis2023/stavrodromio';
 const branch = 'stavrodromio-content';
 const raw = 'https://raw.githubusercontent.com/' + repo + '/' + branch;
@@ -28,8 +29,9 @@ const sessionRoot = process.env.STAVRODROMIO_TEAM_KEY || '';
 const sessionCookieKey = (secure || local) && /^[a-f0-9]{64}$/i.test(sessionRoot)
   ? hkdfSync('sha256', Buffer.from(sessionRoot, 'hex'), '', 'stavrodromio-admin-session-v1', 32)
   : null;
-let cache = { state: baseline, until: 0 };
+let cache = { state: publicSnapshot, until: 0 };
 let pending;
+const publicCacheHeaders = { 'Cache-Control': 'public, max-age=15, stale-while-revalidate=30' };
 const hash = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex');
 const validId = value => typeof value === 'string' && /^[a-z0-9][a-z0-9-]{0,95}$/.test(value);
 const failure = (status, message) => Object.assign(new Error(message), { status });
@@ -86,7 +88,7 @@ function readLocal() {
   catch (error) { if (error.code === 'ENOENT') return baseline; throw error; }
 }
 
-async function publicState() {
+async function publicState(articleId) {
   if (local) return readLocal();
   if (Date.now() < cache.until) return cache.state;
   if (!pending) {
@@ -106,7 +108,8 @@ async function publicState() {
       return cache.state;
     })().finally(() => { pending = null; });
   }
-  return pending;
+  if (articleId && !known(cache.state.articles, articleId) && !known(original, articleId)) return pending;
+  return cache.state;
 }
 
 async function head(token) {
@@ -711,7 +714,11 @@ const route = async (req, res) => {
       res.writeHead(308, { Location: encodeURI(next) + url.search }); return res.end();
     }
     if (p === '/site.css') return asset(res, p, __dirname, url.searchParams.get('v') === stylesheetVersion ? 31536000 : 0);
-    if (['/editor.js', '/favicon.svg', '/app.js', '/app.webmanifest', '/app-192.png', '/app-512.png'].includes(p)) return asset(res, p, __dirname);
+    if (p === '/app.js' || p === '/editor.js') {
+      const version = p === '/app.js' ? appVersion : editorVersion;
+      return asset(res, p, __dirname, url.searchParams.get('v') === version ? 31536000 : 0);
+    }
+    if (['/favicon.svg', '/app.webmanifest', '/app-192.png', '/app-512.png'].includes(p)) return asset(res, p, __dirname);
     if (/^\/fonts\/source-serif-4-005-(?:roman|italic)\.woff2$/.test(p) && asset(res, p, __dirname, 31536000)) return;
     if (p === '/images/history/stavrodromi-plateia.jpg' || p === '/images/laografia/plateia-kai-giorti.jpg') {
       res.writeHead(308, { Location: '/og-image.png' }); return res.end();
@@ -735,14 +742,15 @@ const route = async (req, res) => {
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
     if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled, rememberLogin: !!sessionCookieKey }), { 'Cache-Control': 'no-store' });
-    if (p === '/egkatastasi') return html(res, 200, render('install', { origin }));
+    if (p === '/egkatastasi') return html(res, 200, render('install', { origin }), publicCacheHeaders);
     const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
       || /^\/afieroma\/(history|laografia|autodioikisi)$/.exec(p)?.[1];
     if (informationName) {
       const source = fs.readFileSync(path.join(sourceRoot, informationName + '.html'), 'utf8');
-      return html(res, 200, render('information', { origin, p, information: informationPage(source) }));
+      return html(res, 200, render('information', { origin, p, information: informationPage(source) }), publicCacheHeaders);
     }
-    const state = await publicState();
+    const id = /^\/article-([a-z0-9-]+)\.html$/.exec(p)?.[1];
+    const state = await publicState(id);
     const all = merged(state);
     if (p === '/rss.xml') {
       return respond(res, 200, rss(origin, all), 'application/rss+xml; charset=utf-8', { 'Cache-Control': 'public, max-age=45' });
@@ -756,12 +764,11 @@ const route = async (req, res) => {
       return respond(res, 200, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>', 'application/xml; charset=utf-8');
     }
     const params = { origin, all, state, p, newsletterAction };
-    if (p === '/') return html(res, 200, render('home', params));
-    if (p === '/paratiritirio') return html(res, 200, render('issues', params));
+    if (p === '/') return html(res, 200, render('home', params), publicCacheHeaders);
+    if (p === '/paratiritirio') return html(res, 200, render('issues', params), publicCacheHeaders);
     const category = /^\/(reportaz|history|laografia|autodioikisi)\.html$/.exec(p)?.[1];
-    if (category || p === '/arxeio') return html(res, 200, render('archive', { ...params, category, q: (url.searchParams.get('q') || '').slice(0, 100) }));
-    const id = /^\/article-([a-z0-9-]+)\.html$/.exec(p)?.[1];
-    if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id] }));
+    if (category || p === '/arxeio') return html(res, 200, render('archive', { ...params, category, q: (url.searchParams.get('q') || '').slice(0, 100) }), publicCacheHeaders);
+    if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id] }), publicCacheHeaders);
     return html(res, 404, render('missing', { origin }));
   } catch (error) {
     if (res.headersSent || res.destroyed) return res.destroy();
@@ -778,5 +785,10 @@ const sweep = setInterval(() => {
   }
 }, 60000);
 sweep.unref();
-if (require.main === module) createServer(route).listen(Number(process.env.PORT || 4173), '0.0.0.0', () => console.log('Stavrodromio ready'));
+if (require.main === module) {
+  createServer(route).listen(Number(process.env.PORT || 4173), '0.0.0.0', () => {
+    console.log('Stavrodromio ready');
+    if (!local) void publicState();
+  });
+}
 module.exports = { route, cover };

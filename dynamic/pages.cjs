@@ -188,7 +188,8 @@ const newsletter = action => action ? `<section class="panel newsletter" aria-la
 </section>` : '';
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, newsletterAction } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction } = params;
+  const rememberDevice = rememberLogin ? '<label><input type="checkbox" name="remember" checked> Να με θυμάσαι σε αυτή τη συσκευή</label>' : '';
   if (kind === 'install') return layout(`${intro('Σταυροδρόμι στο κινητό', 'Εγκατάσταση εφαρμογής', 'Άνοιξε το Σταυροδρόμι από το εικονίδιό του στην αρχική οθόνη.')}
     <div class="install-guide">
       <button type="button" id="install-app" hidden>Εγκατάσταση εφαρμογής</button>
@@ -295,16 +296,18 @@ function render(kind, params) {
     ${local ? '' : '<input id="owner-username" type="text" name="username" value="Michelis2023" autocomplete="username" hidden>'}
     <label>${local ? 'Κωδικός δοκιμής' : 'Κλειδί πρόσβασης GitHub'}<input type="password" id="key" name="password" maxlength="300" required autocomplete="${local ? 'off' : 'current-password'}"></label>
     ${local ? '' : '<p>Χρησιμοποίησε κλειδί περιορισμένο στο αποθετήριο stavrodromio, με άδεια Contents: Read and write.</p>'}
-    
+    ${rememberDevice}
     <button>Σύνδεση</button></form>
     <form id="team-login" hidden>
       <label>Email <input type="email" name="email" required maxlength="254" autocomplete="username"></label>
       <label>Κωδικός <input type="password" name="password" required maxlength="128" autocomplete="current-password"></label>
+      ${rememberDevice}
       <button>Σύνδεση</button>
     </form>
     <form id="team-accept" hidden>
       <label>Email πρόσκλησης <input type="email" name="email" required maxlength="254" autocomplete="username"></label>
       <label>Νέος κωδικός <input type="password" name="password" required minlength="12" maxlength="128" autocomplete="new-password"></label>
+      ${rememberDevice}
       <p>Χρησιμοποίησε τουλάχιστον 12 χαρακτήρες.</p><button>Αποδοχή πρόσκλησης</button>
     </form>
     ${teamEnabled ? '<button id="login-switch" class="secondary" type="button">Σύνδεση συνδιαχειριστή</button>' : ''}

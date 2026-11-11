@@ -4,7 +4,7 @@ const path = require('node:path');
 const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
-const { randomBytes, createHash } = require('node:crypto');
+const { randomBytes, createHash, createCipheriv, createDecipheriv, hkdfSync } = require('node:crypto');
 const { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
@@ -22,6 +22,11 @@ const team = createTeam({ repoApi, repository: 'stavrodromio', local });
 const sessions = new Map();
 const attempts = new Map();
 const maxAge = 6 * 3600;
+const rememberedAge = 90 * 24 * 3600;
+const sessionRoot = process.env.STAVRODROMIO_TEAM_KEY || '';
+const sessionCookieKey = (secure || local) && /^[a-f0-9]{64}$/i.test(sessionRoot)
+  ? hkdfSync('sha256', Buffer.from(sessionRoot, 'hex'), '', 'stavrodromio-admin-session-v1', 32)
+  : null;
 let cache = { state: baseline, until: 0 };
 let pending;
 const hash = value => createHash('sha256').update(JSON.stringify(value ?? null)).digest('hex');
@@ -365,9 +370,45 @@ function limitSignIn(req) {
   if (++entry.count > 10) throw failure(429, 'Πολλές προσπάθειες. Δοκίμασε σε λίγα λεπτά.');
   attempts.set(address, entry);
 }
-function newSession(res, previous, session) {
+function rememberedCookie(session) {
+  const nonce = randomBytes(12);
+  const cipher = createCipheriv('aes-256-gcm', sessionCookieKey, nonce);
+  const bytes = Buffer.concat([cipher.update(JSON.stringify(session), 'utf8'), cipher.final()]);
+  const sealed = [nonce, cipher.getAuthTag(), bytes].map(part => part.toString('base64url')).join('.');
+  return cookie(sealed, rememberedAge);
+}
+
+function readRememberedCookie(value) {
+  if (!sessionCookieKey || !value || !/^[\w-]{16}\.[\w-]{22}\.[\w-]{1,600}$/.test(value)) return null;
+  try {
+    const [nonce, tag, bytes] = value.split('.').map(part => Buffer.from(part, 'base64url'));
+    if (tag.length !== 16) return null;
+    const decipher = createDecipheriv('aes-256-gcm', sessionCookieKey, nonce, { authTagLength: 16 });
+    decipher.setAuthTag(tag);
+    const data = JSON.parse(Buffer.concat([decipher.update(bytes), decipher.final()]));
+    return data.until > Date.now() ? data : null;
+  } catch {
+    return null;
+  }
+}
+
+function endSession(id, remembered) {
+  if (remembered) {
+    const until = Date.now() + rememberedAge * 1000;
+    sessions.set(id, { revoked: true, until });
+  } else {
+    sessions.delete(id);
+  }
+}
+
+function newSession(res, previous, remembered, session, persist = false) {
   const key = randomBytes(32).toString('hex');
-  sessions.delete(previous);
+  endSession(previous, remembered);
+  if (persist && sessionCookieKey) {
+    const identity = session.user.role === 'owner' ? { token: session.token } : { member: session.user.id };
+    const value = rememberedCookie({ key, ...identity, until: Date.now() + rememberedAge * 1000 });
+    return js(res, 200, { ok: true }, { 'Set-Cookie': value });
+  }
   sessions.set(key, { ...session, until: Date.now() + maxAge * 1000 });
   return js(res, 200, { ok: true }, { 'Set-Cookie': cookie(key, maxAge) });
 }
@@ -377,10 +418,12 @@ async function admin(req, res, p, origin) {
   const post = req.method === 'POST';
   if (!post && req.method !== 'GET') throw failure(405, 'Μη επιτρεπτό αίτημα.');
   if (post && req.headers.origin !== origin) throw failure(403, 'Μη επιτρεπτή προέλευση.');
-  const id = req.headers.cookie?.match(/(?:^|;\s*)stavrodromio=([a-f0-9]{64})(?:;|$)/)?.[1];
+  const value = req.headers.cookie?.match(/(?:^|;\s*)stavrodromio=([^;]*)(?:;|$)/)?.[1];
+  const remembered = readRememberedCookie(value);
+  const id = remembered ? 'remembered:' + remembered.key : /^[a-f0-9]{64}$/.test(value) ? value : null;
   if (p === 'login' && post) {
     limitSignIn(req);
-    const { token } = await requestBody(req, 1024);
+    const { token, remember } = await requestBody(req, 1024);
     if (local) {
       if (!process.env.STAVRODROMIO_TEST_PASSWORD || token !== process.env.STAVRODROMIO_TEST_PASSWORD) throw failure(401, 'Ο κωδικός δεν έγινε δεκτός.');
     } else {
@@ -389,7 +432,7 @@ async function admin(req, res, p, origin) {
       if (owner.id !== 131882462) throw failure(401, 'Η σύνδεση επιτρέπεται μόνο στον ιδιοκτήτη.');
       await gh(repoApi + '/git/ref/heads/' + branch, token);
     }
-    return newSession(res, id, { token, user: ownerUser });
+    return newSession(res, id, remembered, { token, user: ownerUser }, remember === true);
   }
   if ((p === 'team-login' || p === 'team-accept') && post) {
     limitSignIn(req);
@@ -398,19 +441,25 @@ async function admin(req, res, p, origin) {
     const state = await adminState(token);
     if (p === 'team-login') {
       const user = await team.signIn(state, input);
-      return newSession(res, id, { user });
+      return newSession(res, id, remembered, { user }, input.remember === true);
     }
     team.checkInvite(state, input);
     const verifier = await team.newPassword(input.password);
     const accountId = randomBytes(16).toString('hex');
     const saved = await save(token, current => team.redeem(current, input, verifier, accountId), 'Activate an editorial invitation');
-    return newSession(res, id, { user: team.requireMember(saved, accountId) });
+    return newSession(res, id, remembered, { user: team.requireMember(saved, accountId) }, input.remember === true);
   }
   if (p === 'logout' && post) {
-    sessions.delete(id);
+    endSession(id, remembered);
     return js(res, 200, { ok: true }, { 'Set-Cookie': cookie('', 0) });
   }
-  const session = sessions.get(id);
+  let session = sessions.get(id);
+  if (session?.revoked) throw failure(401, 'Χρειάζεται σύνδεση διαχειριστή.');
+  if (remembered && (!session || session.until < Date.now())) {
+    const user = remembered.member ? { role: 'coadmin', id: remembered.member } : ownerUser;
+    session = { token: remembered.token, user, until: Date.now() + maxAge * 1000 };
+    sessions.set(id, session);
+  }
   if (!session || session.until < Date.now()) throw failure(401, 'Χρειάζεται σύνδεση διαχειριστή.');
   const owner = session.user.role === 'owner';
   if (['team','team-invite','team-remove'].includes(p)) {
@@ -429,7 +478,7 @@ async function admin(req, res, p, origin) {
     }
     const state = await save(session.token, current => team.remove(current, input.id), 'Revoke editorial access');
     for (const [key, value] of sessions) {
-      if (value.user.id && value.user.id === input.id) sessions.delete(key);
+      if (value.user?.id && value.user.id === input.id) sessions.delete(key);
     }
     return js(res, 200, { enabled: true, ...team.ownerView(state) });
   }
@@ -442,10 +491,19 @@ async function admin(req, res, p, origin) {
   };
   if (p === 'state' && !post) {
     const state = await adminState(token);
-    return js(res, 200, dashboard(state, currentUser(state)));
+    const user = currentUser(state);
+    let headers;
+    if (remembered && remembered.until - Date.now() < (rememberedAge - 86400) * 1000 && sessions.get(id) === session) {
+      const until = Date.now() + rememberedAge * 1000;
+      headers = { 'Set-Cookie': rememberedCookie({ ...remembered, until }) };
+    }
+    return js(res, 200, dashboard(state, user), headers);
   }
   if (!post) throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
-  if (p === 'stage-media') return js(res, 200, await stageMedia(req, token, session));
+  if (p === 'stage-media') {
+    if (!owner) currentUser(await adminState(token));
+    return js(res, 200, await stageMedia(req, token, session));
+  }
   const input = await requestBody(req, p === 'article' || p === 'preview' ? 29 * 1024 * 1024 : undefined);
   if (p === 'article' || p === 'preview') {
     const used = [];
@@ -664,7 +722,7 @@ const route = async (req, res) => {
       }
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
-    if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled }), { 'Cache-Control': 'no-store' });
+    if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled, rememberLogin: !!sessionCookieKey }), { 'Cache-Control': 'no-store' });
     if (p === '/egkatastasi') return html(res, 200, render('install', { origin }));
     const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
       || /^\/afieroma\/(history|laografia|autodioikisi)$/.exec(p)?.[1];

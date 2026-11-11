@@ -659,6 +659,7 @@ for (const mode of ['team-login', 'team-accept']) {
   $(mode).addEventListener('submit', event => {
     event.preventDefault();
     const data = Object.fromEntries(new FormData(event.target));
+    data.remember = event.target.elements.remember?.checked === true;
     if (mode === 'team-accept') data.code = inviteCode;
     event.target.elements.password.value = '';
     run(async () => {
@@ -674,9 +675,10 @@ $('login').addEventListener('submit', event => {
   event.preventDefault();
   const key = $('key');
   const token = key.value;
+  const remember = event.target.elements.remember?.checked === true;
   run(async () => {
     try {
-      await api('login', { token });
+      await api('login', { token, remember });
       activate(await api('state'));
     } finally {
       key.value = '';

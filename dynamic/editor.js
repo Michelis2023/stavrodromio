@@ -8,6 +8,8 @@ const dialog = $('preview-dialog');
 const mediaPanel = $('editor-media-panel');
 const mediaList = $('editor-media-items');
 const mediaFiles = $('media-files');
+const mediaReplace = $('media-replace');
+const mediaLink = $('media-link-url');
 const inviteCode = new URLSearchParams(window.location.hash.slice(1)).get('invite');
 let loginMode = inviteCode ? 'accept' : 'owner';
 let state;
@@ -17,6 +19,8 @@ let dirty = false;
 let busy = false;
 let stagedFiles = new WeakMap();
 let mediaRows = [];
+let replacingMedia = null;
+let editingMediaLink = null;
 const previewUrls = new Set();
 const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Athens'}).format(new Date());
 function feedback(message, error = false) {
@@ -131,7 +135,7 @@ function mediaRow(kind, title, { src, file } = {}) {
   checkbox.type = 'checkbox';
   checkbox.className = 'media-checkbox';
   label.append(checkbox, title);
-  if (src && kind !== 'videos') {
+  if (src && (kind === 'cover' || kind === 'gallery')) {
     const image = document.createElement('img');
     image.src = src;
     image.alt = '';
@@ -140,16 +144,43 @@ function mediaRow(kind, title, { src, file } = {}) {
   }
   const status = document.createElement('small');
   element.append(label, status);
-  if (kind === 'videos' && src?.startsWith('/uploads/')) {
+  if ((kind === 'videos' && src?.startsWith('/uploads/')) || (kind === 'link' && /^https:\/\//i.test(src))) {
     const preview = document.createElement('a');
     preview.href = src;
     preview.target = '_blank';
     preview.rel = 'noopener';
-    preview.textContent = 'Προβολή βίντεο';
+    preview.textContent = kind === 'link' ? 'Άνοιγμα συνδέσμου' : 'Προβολή βίντεο';
     preview.setAttribute('aria-label', 'Προβολή ' + title.toLocaleLowerCase('el'));
     element.append(preview);
   }
-  return { element, checkbox, status, kind, title, src, file, removed: false };
+  const actions = document.createElement('details');
+  actions.className = 'media-row-actions';
+  const summary = document.createElement('summary');
+  summary.textContent = 'Επεξεργασία';
+  summary.setAttribute('aria-label', 'Επεξεργασία · ' + title);
+  const controls = document.createElement('div');
+  controls.className = 'toolbar';
+  const row = { element, checkbox, status, actions, kind, title, src, file, removed: false };
+  const action = (title, handler) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.textContent = title;
+    button.addEventListener('click', () => { if (!busy) handler(); });
+    controls.append(button);
+  };
+  action(kind === 'link' ? 'Αλλαγή συνδέσμου' : 'Αντικατάσταση', () => editMediaRow(row));
+  if (kind !== 'cover') {
+    action('Πάνω', () => moveMediaRow(row, -1));
+    action('Κάτω', () => moveMediaRow(row, 1));
+  }
+  action('Αφαίρεση', () => {
+    setMediaRemoved(row, true);
+    updateMediaActions();
+    dirty = true;
+  });
+  actions.append(summary, controls);
+  element.append(actions);
+  return row;
 }
 function updateMediaActions() {
   const active = mediaRows.filter(row => !row.removed);
@@ -178,22 +209,27 @@ function updateCoverRow() {
 function showArticleMedia(item) {
   const photos = item?.gallery ?? [];
   const videos = item?.videos ?? (item?.video ? [item.video] : []);
+  const links = item?.videoLinks ?? (item?.videoLink ? [item.videoLink] : []);
   mediaRows = [
     ...photos.map((src, index) => mediaRow('gallery', 'Φωτογραφία ' + (index + 1), { src })),
     ...videos.map((src, index) => mediaRow('videos', 'Βίντεο ' + (index + 1), { src })),
+    ...links.map(src => mediaRow('link', src, { src })),
   ];
   updateCoverRow();
+}
+function mediaFileKind(file) {
+  const video = file.type === 'video/mp4' || /\.mp4$/i.test(file.name);
+  if (!video) photoType(file);
+  const limit = video ? 48 : 10;
+  if (file.size > limit * 1024 * 1024) throw Error('μέγιστο μέγεθος ' + limit + ' MB');
+  return video ? 'videos' : 'gallery';
 }
 function addMediaFiles() {
   const added = [];
   const rejected = [];
   for (const file of mediaFiles.files) {
     try {
-      const video = file.type === 'video/mp4' || /\.mp4$/i.test(file.name);
-      if (!video) photoType(file);
-      const limit = video ? 48 : 10;
-      if (file.size > limit * 1024 * 1024) throw Error('μέγιστο μέγεθος ' + limit + ' MB');
-      added.push(mediaRow(video ? 'videos' : 'gallery', file.name, { file }));
+      added.push(mediaRow(mediaFileKind(file), file.name, { file }));
     } catch (error) {
       rejected.push(file.name + ' (' + error.message + ')');
     }
@@ -206,12 +242,65 @@ function addMediaFiles() {
   }
   $('media-add-error').textContent = rejected.length ? 'Αρχεία που δεν προστέθηκαν · ' + rejected.join(', ') : '';
 }
+function moveMediaRow(row, direction) {
+  const peers = mediaRows.filter(item => !item.removed && item.kind === row.kind);
+  const neighbor = peers[peers.indexOf(row) + direction];
+  if (!neighbor) return;
+  const from = mediaRows.indexOf(row);
+  const to = mediaRows.indexOf(neighbor);
+  [mediaRows[from], mediaRows[to]] = [mediaRows[to], mediaRows[from]];
+  renderMediaList();
+  dirty = true;
+}
+function editMediaRow(row) {
+  if (row.kind === 'link') {
+    editingMediaLink = row;
+    mediaLink.value = row.src;
+    mediaLink.setCustomValidity('');
+    $('media-add').open = true;
+    $('media-link-save').textContent = 'Αποθήκευση συνδέσμου';
+    mediaLink.focus();
+    return;
+  }
+  replacingMedia = row;
+  mediaReplace.accept = row.kind === 'videos' ? 'video/mp4,.mp4' : 'image/jpeg,image/png,image/webp';
+  mediaReplace.value = '';
+  mediaReplace.click();
+}
+function saveMediaLink() {
+  const value = mediaLink.value.trim();
+  if (!value) return;
+  let url;
+  try { url = new URL(value); } catch { /* handled below */ }
+  if (url?.protocol !== 'https:' || url.username || url.password || url.port) {
+    const message = 'Βάλε έγκυρο σύνδεσμο βίντεο με https://.';
+    mediaLink.setCustomValidity(message);
+    $('media-add').open = true;
+    mediaLink.reportValidity();
+    throw Error(message);
+  }
+  const row = mediaRow('link', url.href, { src: url.href });
+  const index = mediaRows.indexOf(editingMediaLink);
+  if (index < 0) mediaRows.push(row);
+  else mediaRows[index] = row;
+  resetMediaLink();
+  renderMediaList();
+  dirty = true;
+}
+function resetMediaLink() {
+  editingMediaLink = null;
+  mediaLink.value = '';
+  mediaLink.setCustomValidity('');
+  $('media-link-save').textContent = 'Προσθήκη συνδέσμου';
+}
 function setMediaRemoved(row, removed) {
   row.removed = removed;
   row.checkbox.checked = false;
   row.checkbox.disabled = removed;
+  row.actions.hidden = removed;
   row.element.classList.toggle('media-removed', removed);
   row.status.textContent = removed ? 'Προς αφαίρεση' : '';
+  if (removed && editingMediaLink === row) resetMediaLink();
 }
 mediaPanel.addEventListener('click', event => {
   const button = event.target.closest('[data-media-action]');
@@ -231,7 +320,9 @@ mediaPanel.addEventListener('click', event => {
       dirty = true;
       break;
     case 'undo':
+      mediaRows = mediaRows.filter(row => !row.replaces);
       for (const row of mediaRows) if (row.removed) setMediaRemoved(row, false);
+      renderMediaList();
       dirty = true;
       break;
     case 'cover': {
@@ -254,18 +345,46 @@ mediaPanel.addEventListener('click', event => {
   updateMediaActions();
 });
 mediaFiles.addEventListener('change', addMediaFiles);
-form.elements.videoLink.addEventListener('invalid', () => { $('media-add').open = true; });
+mediaReplace.addEventListener('change', () => {
+  const file = mediaReplace.files[0];
+  const row = replacingMedia;
+  replacingMedia = null;
+  if (!file || !row || row.removed) return;
+  try {
+    const kind = mediaFileKind(file);
+    if ((row.kind === 'videos') !== (kind === 'videos')) throw Error('Διάλεξε αρχείο του ίδιου τύπου.');
+    const title = row.kind === 'cover' ? 'Εξώφυλλο · ' + file.name : file.name;
+    const replacement = mediaRow(row.kind, title, { file });
+    replacement.replaces = row.replaces || row;
+    setMediaRemoved(row, true);
+    mediaRows.splice(mediaRows.indexOf(row), row.replaces ? 1 : 0, replacement);
+    renderMediaList();
+    dirty = true;
+    feedback('');
+  } catch (error) {
+    feedback(error.message, true);
+  }
+});
+mediaLink.addEventListener('input', () => mediaLink.setCustomValidity(''));
+mediaLink.addEventListener('invalid', () => { $('media-add').open = true; });
+mediaLink.addEventListener('keydown', event => {
+  if (event.key !== 'Enter') return;
+  event.preventDefault();
+  $('media-link-save').click();
+});
+$('media-link-save').addEventListener('click', event => run(async () => saveMediaLink(), event.currentTarget));
 form.elements.image.addEventListener('change', updateCoverRow);
 function openArticle(item = null) {
   selected = item;
   form.reset();
   uploadNotice('');
   $('media-add-error').textContent = '';
-  $('media-add').open = Boolean(item?.videoLink);
+  $('media-add').open = false;
   $('media-cover-options').open = false;
+  replacingMedia = null;
+  resetMediaLink();
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
   showArticleMedia(item);
-  form.elements.videoLink.value = item?.videoLink || '';
   if (!item) form.elements.author.value = state.user.name;
   form.elements.author.readOnly = state.user.role !== 'owner';
   form.elements.category.value = item?.sections[0] || 'reportaz';
@@ -339,12 +458,20 @@ function photoType(file) {
   return types[extension];
 }
 function payload() {
+  saveMediaLink();
   const fields = form.elements;
   const formData = new FormData(form);
   const data = Object.fromEntries(formData);
   const removed = mediaRows.filter(row => row.removed);
   data.removeGallery = removed.filter(row => row.kind === 'gallery' && row.src).map(row => row.src);
   data.removeVideos = removed.filter(row => row.kind === 'videos' && row.src).map(row => row.src);
+  const active = mediaRows.filter(row => !row.removed);
+  data.videoLinks = active.filter(row => row.kind === 'link').map(row => row.src);
+  const orderFor = kind => {
+    let index = 0;
+    return active.filter(row => row.kind === kind).map(row => row.src || index++);
+  };
+  data.mediaOrder = { gallery: orderFor('gallery'), videos: orderFor('videos') };
   if (removed.some(row => row.kind === 'cover' && row.src === data.image.trim())) data.image = '';
   data.id = selected?.id;
   data.rev = selected?.rev;
@@ -587,9 +714,24 @@ form.querySelectorAll('[data-format]').forEach(button => {
   button.addEventListener('click', () => {
     editor.focus();
     let value = button.dataset.value;
+    const selection = window.getSelection();
+    const node = selection?.anchorNode;
+    const link = (node?.nodeType === Node.ELEMENT_NODE ? node : node?.parentElement)?.closest('a');
+    const currentLink = link && editor.contains(link) ? link : null;
     if (button.dataset.format === 'createLink') {
-      value = window.prompt('Διεύθυνση συνδέσμου (https://)');
+      value = window.prompt('Διεύθυνση συνδέσμου (https://)', currentLink?.getAttribute('href') || '');
       if (!value || !/^(https:\/\/|\/(?!\/))/.test(value)) return;
+      if (currentLink) {
+        currentLink.setAttribute('href', value);
+        dirty = true;
+        return;
+      }
+    }
+    if (currentLink && button.dataset.format === 'unlink') {
+      const range = document.createRange();
+      range.selectNodeContents(currentLink);
+      selection.removeAllRanges();
+      selection.addRange(range);
     }
     document.execCommand(button.dataset.format, false, value);
     dirty = true;

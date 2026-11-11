@@ -75,12 +75,11 @@ function linkedVideo(source, preview, title, poster) {
   if (!safeUrl(source) || !/^https:\/\//i.test(source)) return '';
   const [provider, embed] = videoEmbed(source);
   const image = poster ? `<img src="${e(poster)}" alt="" loading="lazy" decoding="async">` : '';
-  return `<section class="article-media" aria-labelledby="article-external-video">
-    <h2 id="article-external-video">Βίντεο</h2>
+  return `<div class="article-video">
     ${embed && !preview ? `<button type="button" class="video-play${poster ? ' video-play-preview' : ''}" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>${image}Αναπαραγωγή από ${e(provider)}</button>` : image}
     ${embed && preview ? '<p>Η αναπαραγωγή εμφανίζεται μετά τη δημοσίευση, εφόσον το επιτρέπει η υπηρεσία.</p>' : ''}
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
-  </section>`;
+  </div>`;
 }
 function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
   const url = origin + p;
@@ -153,10 +152,12 @@ const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia
   : '';
 const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}" decoding="async">` : '';
 const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
+const articleLinks = item => item?.videoLinks ?? (item?.videoLink ? [item.videoLink] : []);
 function thumbnail(item) {
   const image = item.image || item.gallery?.[0] || item.videoPoster;
-  if (image || articleVideos(item).length || !safeUrl(item.videoLink) || !/^https:\/\//i.test(item.videoLink)) return image;
-  const [provider, embed] = videoEmbed(item.videoLink);
+  const firstLink = articleLinks(item)[0];
+  if (image || articleVideos(item).length || !safeUrl(firstLink) || !/^https:\/\//i.test(firstLink)) return image;
+  const [provider, embed] = videoEmbed(firstLink);
   return provider === 'YouTube' ? youtubePoster(embed) : '';
 }
 const cardPhoto = (item, eager) => photo({ image: thumbnail(item), alt: item.image ? item.alt : '' }, eager);
@@ -258,6 +259,7 @@ function render(kind, params) {
     const gallery = (article.gallery ?? []).filter(src => !article.hero || src !== article.image);
     const poster = thumbnail(article);
     const videos = articleVideos(article);
+    const videoLinks = articleLinks(article);
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
@@ -272,7 +274,10 @@ function render(kind, params) {
           ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
         </div>`).join('')}
       </section>` : ''}
-      ${linkedVideo(article.videoLink, preview, article.title, !videos.length && !article.image && !gallery.length ? poster : '')}
+      ${videoLinks.length ? `<section class="article-media" aria-labelledby="article-external-video">
+        <h2 id="article-external-video">Σύνδεσμοι βίντεο</h2>
+        ${videoLinks.map((url, index) => linkedVideo(url, preview, article.title, index === 0 && !videos.length && !article.image && !gallery.length ? poster : '')).join('')}
+      </section>` : ''}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
         <h2 id="article-gallery">Φωτογραφίες</h2>
         <div class="article-gallery">${gallery.map((src, i) => `<figure><img src="${e(src)}" alt="Φωτογραφία ${i + 1} από τη δημοσίευση" loading="lazy" decoding="async"></figure>`).join('')}</div>
@@ -341,11 +346,13 @@ function render(kind, params) {
         <div class="media-add-fields">
           <label>Φωτογραφίες ή βίντεο <input type="file" id="media-files" multiple accept="image/jpeg,image/png,image/webp,video/mp4,.mp4" aria-describedby="media-file-help">
           <small id="media-file-help">JPG, PNG, WebP έως 10 MB ή MP4 έως 48 MB ανά αρχείο.</small></label>
-          <label>Ή επικόλλησε σύνδεσμο βίντεο <input name="videoLink" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
+          <label>Ή επικόλλησε σύνδεσμο βίντεο <input id="media-link-url" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
+          <button id="media-link-save" type="button" class="secondary">Προσθήκη συνδέσμου</button>
           <p id="media-add-error" role="status"></p>
         </div>
       </details>
       <section id="editor-media-panel" aria-label="Διαχείριση αρχείων" hidden>
+        <input id="media-replace" type="file" hidden>
         <ul id="editor-media-items" class="editor-gallery"></ul>
         <details class="media-options">
           <summary>Ενέργειες αρχείων</summary>
@@ -355,7 +362,7 @@ function render(kind, params) {
             <button type="button" data-media-action="remove">Αφαίρεση επιλεγμένων</button>
             <button type="button" data-media-action="keep">Διατήρηση μόνο επιλεγμένων</button>
             <button type="button" data-media-action="cover">Ορισμός ως εξώφυλλο</button>
-            <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων</button>
+            <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων και αντικαταστάσεων</button>
           </div>
           <p id="editor-media-count" class="editor-media-help" role="status"></p>
         </details>
@@ -373,7 +380,8 @@ function render(kind, params) {
     <div class="toolbar" role="group" aria-label="Μορφοποίηση κειμένου"><button type="button" data-format="bold">Έντονα</button>
     <button type="button" data-format="italic">Πλάγια</button><button type="button" data-format="formatBlock" data-value="h2">Μεσότιτλος</button>
     <button type="button" data-format="formatBlock" data-value="p">Παράγραφος</button><button type="button" data-format="insertUnorderedList">Λίστα</button>
-    <button type="button" data-format="createLink">Σύνδεσμος</button></div>
+    <button type="button" data-format="createLink">Σύνδεσμος</button>
+    <button type="button" data-format="unlink">Αφαίρεση συνδέσμου</button></div>
     <div id="body-editor" class="reading" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="body-label"></div>
     <div id="upload-status" hidden>
       <p id="upload-message" role="status"></p>
@@ -391,5 +399,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, rss, sections, statuses, articleUrl, articleVideos, rich, safeUrl, stylesheetVersion };
+module.exports = { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion };
 })(module);

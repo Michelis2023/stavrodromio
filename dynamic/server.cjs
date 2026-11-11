@@ -5,7 +5,7 @@ const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash } = require('node:crypto');
-const { render, rss, sections, statuses, articleUrl, articleVideos, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
@@ -263,6 +263,12 @@ function videoLink(value) {
   if (safeUrl(source) && url?.protocol === 'https:' && !url.username && !url.password && !url.port) return url.href;
   throw failure(400, 'Βάλε έγκυρο σύνδεσμο βίντεο με https://.');
 }
+function orderedMedia(order, existing, added) {
+  const knownSources = new Set(existing);
+  const requested = Array.isArray(order) ? order.map(item =>
+    Number.isInteger(item) ? added[item] : knownSources.has(item) ? item : null) : [];
+  return [...new Set([...requested.filter(Boolean), ...existing, ...added])];
+}
 function articleInput(input, existing, uploads, id) {
   const { image, poster, gallery, videos, appendVideos } = uploads;
   const title = field(input.title, 240, true);
@@ -271,19 +277,26 @@ function articleInput(input, existing, uploads, id) {
   if (!image && imageUrl && !safeUrl(imageUrl)) throw failure(400, 'Έλεγξε τη διεύθυνση της εικόνας.');
   const removed = new Set(Array.isArray(input.removeGallery) ? input.removeGallery : []);
   const source = file => file.src ?? '/' + file.path;
-  const photos = [...new Set([...(existing?.gallery ?? []).filter(src => !removed.has(src)), ...gallery.map(source)])];
+  const keptPhotos = (existing?.gallery ?? []).filter(src => !removed.has(src));
+  const photos = orderedMedia(input.mediaOrder?.gallery, keptPhotos, gallery.map(source));
   const newVideos = videos.map(source);
-  const externalVideo = !appendVideos && newVideos.length ? '' : input.videoLink === undefined ? existing?.videoLink || '' : videoLink(input.videoLink);
+  const previousLinks = articleLinks(existing);
+  if (input.videoLinks !== undefined && !Array.isArray(input.videoLinks)) throw failure(400, 'Έλεγξε τους συνδέσμους βίντεο.');
+  const links = input.videoLinks === undefined
+    ? !appendVideos && newVideos.length ? [] : input.videoLink === undefined ? previousLinks : [videoLink(input.videoLink), ...previousLinks.slice(1)]
+    : input.videoLinks.map(videoLink);
+  const videoLinks = [...new Set(links.filter(Boolean))];
+  const externalVideo = videoLinks[0] || '';
   const removedVideos = new Set(Array.isArray(input.removeVideos) ? input.removeVideos : []);
   const keepExisting = input.removeVideo !== true && (appendVideos || (!newVideos.length && !externalVideo));
   const keptVideos = keepExisting ? articleVideos(existing).filter(src => !removedVideos.has(src)) : [];
-  const allVideos = [...new Set([...keptVideos, ...newVideos])];
+  const allVideos = orderedMedia(input.mediaOrder?.videos, keptVideos, newVideos);
   const firstVideo = allVideos[0];
   const previousPoster = firstVideo && firstVideo === articleVideos(existing)[0] ? existing.videoPoster : '';
   const videoPoster = firstVideo && poster ? source(poster) : previousPoster || '';
   const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800),
     deck: field(input.deck, 2400), image: image ? source(image) : imageUrl,
-    gallery: photos, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoPoster,
+    gallery: photos, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoLinks, videoPoster,
     sections: existing?.sections[0] === input.category ? existing.sections : [input.category],
     hero: input.hero === true, alt: field(input.alt, 300), caption: field(input.caption, 500) };
   if (input.blocks !== undefined) {

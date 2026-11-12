@@ -897,7 +897,12 @@ form.addEventListener('submit', event => {
     const a = document.createElement('a');
     a.href = state.path;
     a.textContent = 'Δες τη δημοσίευση';
-    $('feedback').append(a);
+    const share = document.createElement('a');
+    share.href = '/koinopoiisi/facebook/' + encodeURIComponent(state.id);
+    share.textContent = 'Κοινοποίηση στο Facebook';
+    share.target = '_blank';
+    share.rel = 'noopener';
+    $('feedback').append(a, ' · ', share);
   }, event.submitter);
 });
 $('issue-select').addEventListener('change', event => openIssue(event.currentTarget.value));

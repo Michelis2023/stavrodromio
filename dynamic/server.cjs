@@ -5,7 +5,7 @@ const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash, createCipheriv, createDecipheriv, hkdfSync } = require('node:crypto');
-const { render, rss, sections, statuses, articleUrl, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
@@ -717,12 +717,26 @@ const route = async (req, res) => {
     if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\nSitemap: ' + origin + '/sitemap.xml\n', 'text/plain; charset=utf-8');
     const facebookShare = /^\/koinopoiisi\/facebook\/([a-z0-9][a-z0-9-]{0,95})$/.exec(p);
     if (facebookShare) {
-      const address = articleUrl(facebookShare[1]);
-      const shareUrl = shareOrigin + address;
-      const ready = !local && await fetch(shareUrl, {
-        method: 'HEAD', redirect: 'error', signal: AbortSignal.timeout(2500),
-      }).then(result => result.ok).catch(() => false);
-      const target = (ready ? shareOrigin : origin) + address;
+      const id = facebookShare[1];
+      const all = merged(await publicState(id));
+      if (!known(all, id)) throw failure(404, 'Το άρθρο δεν βρέθηκε.');
+      const address = articleUrl(id);
+      const shareUrl = shareOrigin + articleShareAddress(all[id]);
+      if (!local) {
+        const ready = await fetch(shareUrl, {
+          redirect: 'error', signal: AbortSignal.timeout(3500),
+        }).then(async result => result.ok && (await result.text()).includes('<meta property="og:url" content="' + shareUrl + '">'))
+          .catch(() => false);
+        if (!ready) {
+          const attempt = Number(url.searchParams.get('attempt'));
+          const retry = Number.isInteger(attempt) && attempt >= 0 && attempt < 12
+            ? `<meta http-equiv="refresh" content="4;url=${p}?attempt=${attempt + 1}">` : '';
+          const message = retry ? 'Η προεπισκόπηση ετοιμάζεται. Το Facebook θα ανοίξει αυτόματα.'
+            : 'Η προεπισκόπηση δεν είναι ακόμη διαθέσιμη. Δοκίμασε ξανά σε λίγο.';
+          return html(res, 202, `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Κοινοποίηση στο Facebook</title><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}">${retry}</head><body><main class="wrap main"><h1>Κοινοποίηση στο Facebook</h1><p>${message}</p><p><a href="${p}">Έλεγχος ξανά</a></p><p><a href="${address}">Πίσω στο άρθρο</a></p></main></body></html>`, { 'Cache-Control': 'no-store', 'X-Robots-Tag': 'noindex' });
+        }
+      }
+      const target = local ? origin + address : shareUrl;
       res.writeHead(302, { Location: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(target), 'Cache-Control': 'no-store' });
       return res.end();
     }

@@ -190,10 +190,14 @@ function renderShare(origin, articleOrigin, item, image) {
   const imageAlt = item.image ? item.alt : item.videoPoster && !item.gallery?.length ? 'Καρέ του βίντεο' : '';
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title)} | ${name}</title>
-  ${socialTags({ origin, url: origin + address, title, summary, image, imageAlt, article: true })}
+  ${socialTags({ origin, url: origin + articleShareAddress(item), title, summary, image, imageAlt, article: true })}
   </head><body><main><h1>${e(title)}</h1><p>${e(summary)}</p>
   <a id="article" href="${e(articleOrigin + address)}">Διάβασε το άρθρο στο Σταυροδρόμι</a></main>
   <script>location.replace(document.getElementById('article').href);</script></body></html>`;
+}
+function articleShareAddress(item) {
+  const revision = createHash('sha256').update(JSON.stringify([item.title, articleDescription(item), thumbnail(item)])).digest('hex').slice(0, 16);
+  return articleUrl(item.id) + '?preview=' + revision;
 }
 const cardThumbnails = new Map([
   ['/images/sxoleio/sxoleio-stavrodromio-2026.jpg', '/images/card-school-720.jpg'],
@@ -469,5 +473,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion, appVersion, editorVersion };
+module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion, appVersion, editorVersion };
 })(module);

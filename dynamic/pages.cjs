@@ -82,7 +82,7 @@ function linkedVideo(source, preview, title) {
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </div>`;
 }
-function socialTags({ origin, url, title, summary, image, imageAlt, video, article }) {
+function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
   const cardTitle = article && title ? name + ' | ' + title : title || name;
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
@@ -97,19 +97,18 @@ function socialTags({ origin, url, title, summary, image, imageAlt, video, artic
   ${imageType ? `<meta property="og:image:type" content="image/${imageType}">` : ''}
   ${isSiteImage ? '<meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
   ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
-  ${video ? `<meta property="og:video" content="${e(video)}"><meta property="og:video:secure_url" content="${e(video)}"><meta property="og:video:type" content="video/mp4">` : ''}
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(cardTitle)}">
   <meta name="twitter:description" content="${e(summary)}"><meta name="twitter:image" content="${e(shareImage.href)}">
   ${shareAlt ? `<meta name="twitter:image:alt" content="${e(shareAlt)}">` : ''}`;
 }
-function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, video, article = false, privatePage = false, admin = false }) {
+function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title ? title + ' | ' + name : name)}</title><meta name="description" content="${e(summary)}">
   ${privatePage ? '<meta name="robots" content="noindex,nofollow">' :
-  socialTags({ origin, url: origin + p, title, summary, image, imageAlt, video, article }) +
+  socialTags({ origin, url: origin + p, title, summary, image, imageAlt, article }) +
   `<link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/app-192.png">
@@ -318,7 +317,6 @@ function render(kind, params) {
       <video controls playsinline preload="none" aria-label="Βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}" src="${e(src)}" poster="${e(videoFrame(src, index))}">Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
       ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
     </div>`;
-    const shareVideo = /^\/uploads\/[a-f0-9]{64}\.mp4$/.test(videos[0]) ? origin + videos[0] : '';
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
@@ -341,8 +339,8 @@ function render(kind, params) {
       </section>` : ''}
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
-        <a href="/koinopoiisi/facebook/${encodeURIComponent(article.id)}">Κοινοποίηση στο Facebook</a>
-        <details class="article-share" data-article-share data-title="${e(article.title)}">
+        <a href="/koinopoiisi/facebook/${encodeURIComponent(article.id)}" target="_blank" rel="noopener">Κοινοποίηση στο Facebook</a>
+        <details class="article-share" data-article-share data-title="${e(article.title)}" data-share-endpoint="/koinopoiisi/${encodeURIComponent(article.id)}">
           <summary>Κοινοποίηση</summary>
           <div class="article-share-options">
             <button type="button" data-native-share hidden>Κοινοποίηση σε εφαρμογή</button>
@@ -353,7 +351,7 @@ function render(kind, params) {
         </details></div>`}</article>
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',video:shareVideo,article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>

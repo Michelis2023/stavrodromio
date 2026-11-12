@@ -42,13 +42,13 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
   const share = panel.querySelector('[data-native-share]');
   const copy = panel.querySelector('[data-copy-link]');
   const status = panel.querySelector('[role="status"]');
-  const data = { title: panel.dataset.title, url: address.value };
-  if (typeof navigator.share === 'function' && (typeof navigator.canShare !== 'function' || navigator.canShare(data))) {
+  const shareData = () => ({ title: panel.dataset.title, url: address.value });
+  if (typeof navigator.share === 'function' && (typeof navigator.canShare !== 'function' || navigator.canShare(shareData()))) {
     share.hidden = false;
     share.addEventListener('click', async () => {
       status.textContent = '';
       try {
-        await navigator.share(data);
+        await navigator.share(shareData());
       } catch (error) {
         if (error.name !== 'AbortError') status.textContent = 'Χρησιμοποίησε την αντιγραφή συνδέσμου για κοινοποίηση.';
       }
@@ -65,6 +65,37 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
       status.textContent = 'Αντίγραψε τον επιλεγμένο σύνδεσμο.';
     }
   });
+  let pending = false;
+  let ready = false;
+  async function prepareLink() {
+    if (!panel.open || pending || ready) return;
+    pending = true;
+    address.disabled = share.disabled = copy.disabled = true;
+    status.textContent = 'Ετοιμάζεται η προεπισκόπηση του άρθρου…';
+    try {
+      for (let attempt = 0; attempt < 13 && panel.open; attempt++) {
+        const result = await fetch(panel.dataset.shareEndpoint);
+        if (result.status === 202) {
+          if (attempt < 12) await new Promise(resolve => setTimeout(resolve, 4000));
+          continue;
+        }
+        if (!result.ok) break;
+        const { url } = await result.json();
+        if (!url) break;
+        address.value = url;
+        ready = true;
+        break;
+      }
+    } catch {
+      // The article's public address remains available if the preview service is unreachable.
+    } finally {
+      pending = false;
+      address.disabled = share.disabled = copy.disabled = false;
+      status.textContent = ready || !panel.open ? '' : 'Η προεπισκόπηση αργεί. Μπορείς να χρησιμοποιήσεις τον σύνδεσμο του άρθρου ή να ανοίξεις ξανά την κοινοποίηση.';
+    }
+  }
+  panel.addEventListener('toggle', prepareLink);
+  prepareLink();
 }
 
 const install = document.querySelector('#install-app');

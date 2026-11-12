@@ -715,9 +715,9 @@ const route = async (req, res) => {
     if (!['GET','HEAD'].includes(req.method)) throw failure(405, 'Μη επιτρεπτό αίτημα.');
     if (p === '/healthz') return js(res, 200, { ok: true });
     if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\nSitemap: ' + origin + '/sitemap.xml\n', 'text/plain; charset=utf-8');
-    const facebookShare = /^\/koinopoiisi\/facebook\/([a-z0-9][a-z0-9-]{0,95})$/.exec(p);
-    if (facebookShare) {
-      const id = facebookShare[1];
+    const share = /^\/koinopoiisi\/(?:(facebook)\/)?([a-z0-9][a-z0-9-]{0,95})$/.exec(p);
+    if (share) {
+      const [, facebook, id] = share;
       const all = merged(await publicState(id));
       if (!known(all, id)) throw failure(404, 'Το άρθρο δεν βρέθηκε.');
       const address = articleUrl(id);
@@ -728,6 +728,7 @@ const route = async (req, res) => {
         }).then(async result => result.ok && (await result.text()).includes('<meta property="og:url" content="' + shareUrl + '">'))
           .catch(() => false);
         if (!ready) {
+          if (!facebook) return js(res, 202, { ready: false }, { 'Retry-After': '4' });
           const attempt = Number(url.searchParams.get('attempt'));
           const retry = Number.isInteger(attempt) && attempt >= 0 && attempt < 12
             ? `<meta http-equiv="refresh" content="4;url=${p}?attempt=${attempt + 1}">` : '';
@@ -737,6 +738,7 @@ const route = async (req, res) => {
         }
       }
       const target = local ? origin + address : shareUrl;
+      if (!facebook) return js(res, 200, { url: target });
       res.writeHead(302, { Location: 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(target), 'Cache-Control': 'no-store' });
       return res.end();
     }

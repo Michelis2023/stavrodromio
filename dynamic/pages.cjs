@@ -74,9 +74,10 @@ function youtubePoster(embed) {
 function linkedVideo(source, preview, title, poster) {
   if (!safeUrl(source) || !/^https:\/\//i.test(source)) return '';
   const [provider, embed] = videoEmbed(source);
-  const image = poster ? `<img src="${e(poster)}" alt="" loading="lazy" decoding="async">` : '';
+  const frame = provider === 'YouTube' ? youtubePoster(embed) : embed ? poster || fallbackImage : '';
+  const image = frame ? `<img src="${e(frame)}" alt="" loading="lazy" decoding="async">` : '';
   return `<div class="article-video">
-    ${embed && !preview ? `<button type="button" class="video-play${poster ? ' video-play-preview' : ''}" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>${image}Αναπαραγωγή από ${e(provider)}</button>` : image}
+    ${embed && !preview ? `<button type="button" class="video-play${frame ? ' video-play-preview' : ''}" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>${image}Αναπαραγωγή από ${e(provider)}</button>` : image}
     ${embed && preview ? '<p>Η αναπαραγωγή εμφανίζεται μετά τη δημοσίευση, εφόσον το επιτρέπει η υπηρεσία.</p>' : ''}
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </div>`;
@@ -302,28 +303,33 @@ function render(kind, params) {
   if (kind === 'article') {
     const address = articleUrl(article.id);
     const related = sorted(all).filter(item => item.id !== article.id && item.sections.includes(article.sections[0])).slice(0,3);
-    const gallery = (article.gallery ?? []).filter(src => !article.hero || src !== article.image);
+    const coverImage = article.hero ? article.image || article.gallery?.[0] : '';
+    const gallery = (article.gallery ?? []).filter(src => src !== coverImage);
     const poster = thumbnail(article);
     const videos = articleVideos(article);
     const videoLinks = articleLinks(article);
+    const leadVideo = article.heroVideo ? videos[0] : '';
+    const videoFrame = (src, index) => article.videoPosters?.[src] || (index === 0 ? article.videoPoster : '') || poster || fallbackImage;
+    const videoPlayer = (src, index) => `<div class="article-video">
+      <video controls playsinline preload="none" aria-label="Βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}" src="${e(src)}" poster="${e(videoFrame(src, index))}">Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
+      ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
+    </div>`;
     const shareVideo = /^\/uploads\/[a-f0-9]{64}\.mp4$/.test(videos[0]) ? origin + videos[0] : '';
     return layout(`<article class="story"><header class="story-head"><a class="eyebrow" href="${link(article.sections[0])}">${e(label(article))}</a>
       <h1>${e(article.title)}</h1>${article.deck ? `<p class="deck">${e(article.deck)}</p>` : ''}
       <p class="byline">${time(article.date)}${article.author ? ' · ' + e(article.author) : ''}${article.sourceLine ? ' · ' + e(article.sourceLine) : ''}
       ${article.updated ? `<br>Επικαιροποίηση ${time(article.updated)}` : ''}</p>
       ${article.archived ? '<p class="notice">Προγενέστερη εκδοχή. <a href="/article-gortynias-parakampsi-lagkadia.html">Νεότερη δημοσίευση</a></p>' : ''}</header>
-      ${article.hero && article.image ? `<figure class="hero-figure">${photo(article,true)}${article.caption ? '<figcaption>' + e(article.caption) + '</figcaption>' : ''}</figure>` : ''}
+      ${coverImage ? `<figure class="hero-figure">${photo({ image: coverImage, alt: article.alt || 'Φωτογραφία εξωφύλλου' },true)}${article.caption ? '<figcaption>' + e(article.caption) + '</figcaption>' : ''}</figure>` : ''}
+      ${leadVideo ? `<div class="article-media article-lead-video">${videoPlayer(leadVideo, 0)}</div>` : ''}
       ${article.body ? `<div class="reading article-body">${article.body.replace(/<img\b(?![^>]*\bloading=)/gi, '<img loading="lazy" decoding="async"')}</div>` : ''}
-      ${videos.length ? `<section class="article-media" aria-labelledby="article-video">
+      ${videos.length > Number(!!leadVideo) ? `<section class="article-media" aria-labelledby="article-video">
         <h2 id="article-video">Βίντεο</h2>
-        ${videos.map((src, index) => `<div class="article-video">
-          <video controls playsinline preload="none" aria-label="Βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}" src="${e(src)}"${index === 0 && poster ? ` poster="${e(poster)}"` : ''}>Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή βίντεο.</video>
-          ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα αρχείου βίντεο${videos.length > 1 ? ' ' + (index + 1) : ''}</a>`}
-        </div>`).join('')}
+        ${videos.map((src, index) => leadVideo && index === 0 ? '' : videoPlayer(src, index)).join('')}
       </section>` : ''}
       ${videoLinks.length ? `<section class="article-media" aria-labelledby="article-external-video">
         <h2 id="article-external-video">Σύνδεσμοι βίντεο</h2>
-        ${videoLinks.map((url, index) => linkedVideo(url, preview, article.title, index === 0 && !videos.length && !article.image && !gallery.length ? poster : '')).join('')}
+        ${videoLinks.map(url => linkedVideo(url, preview, article.title, poster)).join('')}
       </section>` : ''}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
         <h2 id="article-gallery">Φωτογραφίες</h2>
@@ -413,6 +419,7 @@ function render(kind, params) {
       </details>
       <section id="editor-media-panel" aria-label="Διαχείριση αρχείων" hidden>
         <input id="media-replace" type="file" hidden>
+        <p class="editor-media-help">Η πρώτη φωτογραφία γίνεται εξώφυλλο. Πάτησε μια μικρογραφία για προεπισκόπηση.</p>
         <ul id="editor-media-items" class="editor-gallery"></ul>
         <details class="media-options">
           <summary>Ενέργειες αρχείων</summary>
@@ -421,7 +428,6 @@ function render(kind, params) {
             <button type="button" data-media-action="none">Καθαρισμός επιλογής</button>
             <button type="button" data-media-action="remove">Αφαίρεση επιλεγμένων</button>
             <button type="button" data-media-action="keep">Διατήρηση μόνο επιλεγμένων</button>
-            <button type="button" data-media-action="cover">Ορισμός ως εξώφυλλο</button>
             <button type="button" data-media-action="undo">Αναίρεση αφαιρέσεων και αντικαταστάσεων</button>
           </div>
           <p id="editor-media-count" class="editor-media-help" role="status"></p>
@@ -454,6 +460,10 @@ function render(kind, params) {
     <div class="form-grid"><label>Κατάσταση <select name="status">${options(statuses)}</select></label><label>Ημερομηνία <input name="date" type="date" required></label></div>
     <label>Σχετικό άρθρο <select id="issue-article" name="article"></select></label>
     <label>Νεότερη ενημέρωση <textarea name="update" rows="3" maxlength="2000"></textarea></label><button>Αποθήκευση στο Παρατηρητήριο</button></form></section></div>
+    <dialog id="media-preview-dialog" aria-labelledby="media-preview-title">
+      <div class="media-preview-bar"><strong id="media-preview-title"></strong><button type="button" id="close-media-preview" class="secondary">Κλείσιμο</button></div>
+      <div id="media-preview-content"></div>
+    </dialog>
     <dialog id="preview-dialog"><div><button id="close-preview" class="secondary">Κλείσιμο</button></div><iframe title="Προεπισκόπηση άρθρου" id="preview-frame" sandbox="allow-same-origin"></iframe></dialog>`,
     { origin,p:'/admin',title:'Διαχείριση',admin:true,privatePage:true });
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,

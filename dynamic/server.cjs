@@ -215,12 +215,17 @@ function referencedMedia(input, resolve) {
   if (!input || typeof input !== 'object' || !Array.isArray(input.gallery)) throw failure(400, 'Έλεγξε τα αρχεία της δημοσίευσης.');
   const image = input.cover ? resolve(input.cover, false) : null;
   const poster = input.poster ? resolve(input.poster, false) : null;
+  const posterRefs = input.posters ?? [];
+  if (!Array.isArray(posterRefs) || posterRefs.length > 100 || posterRefs.some(pair => !Array.isArray(pair) || pair.length !== 2)) {
+    throw failure(400, 'Έλεγξε τις εικόνες προεπισκόπησης των βίντεο.');
+  }
+  const posters = posterRefs.map(([reference, value]) => [reference, resolve(value, false)]);
   const gallery = input.gallery.map(value => resolve(value, false));
   const appendVideos = Object.hasOwn(input, 'videos');
   const videoRefs = appendVideos ? input.videos : input.video ? [input.video] : [];
   if (!Array.isArray(videoRefs)) throw failure(400, 'Έλεγξε τα βίντεο της δημοσίευσης.');
   const videos = videoRefs.map(value => resolve(value, true));
-  return { image, poster, gallery, videos, appendVideos, files: [image, poster, ...gallery, ...videos].filter(Boolean) };
+  return { image, poster, posters, gallery, videos, appendVideos, files: [image, poster, ...posters.map(([, file]) => file), ...gallery, ...videos].filter(Boolean) };
 }
 function previewFile(value, origin) {
   const prefix = 'blob:' + origin + '/';
@@ -279,7 +284,7 @@ function orderedMedia(order, existing, added) {
   return [...new Set([...requested.filter(Boolean), ...existing, ...added])];
 }
 function articleInput(input, existing, uploads, id) {
-  const { image, poster, gallery, videos, appendVideos } = uploads;
+  const { image, poster, posters = [], gallery, videos, appendVideos } = uploads;
   const title = field(input.title, 240, true);
   if (!known(sections, input.category)) throw failure(400, 'Διάλεξε ενότητα.');
   const imageUrl = field(input.image, 1600);
@@ -287,6 +292,8 @@ function articleInput(input, existing, uploads, id) {
   const removed = new Set(Array.isArray(input.removeGallery) ? input.removeGallery : []);
   const source = file => file.src ?? '/' + file.path;
   const keptPhotos = (existing?.gallery ?? []).filter(src => !removed.has(src));
+  if (existing?.image && (image || imageUrl !== existing.image) && input.mediaOrder?.gallery?.includes?.(existing.image) &&
+      !removed.has(existing.image) && safeUrl(existing.image)) keptPhotos.push(existing.image);
   const photos = orderedMedia(input.mediaOrder?.gallery, keptPhotos, gallery.map(source));
   const newVideos = videos.map(source);
   const previousLinks = articleLinks(existing);
@@ -301,11 +308,22 @@ function articleInput(input, existing, uploads, id) {
   const keptVideos = keepExisting ? articleVideos(existing).filter(src => !removedVideos.has(src)) : [];
   const allVideos = orderedMedia(input.mediaOrder?.videos, keptVideos, newVideos);
   const firstVideo = allVideos[0];
-  const previousPoster = firstVideo && firstVideo === articleVideos(existing)[0] ? existing.videoPoster : '';
-  const videoPoster = firstVideo && poster ? source(poster) : previousPoster || '';
+  const previousFirst = articleVideos(existing)[0];
+  const frameByVideo = new Map(allVideos.flatMap(video => {
+    const frame = existing?.videoPosters?.[video] || (video === previousFirst ? existing?.videoPoster : '');
+    return frame ? [[video, frame]] : [];
+  }));
+  if (firstVideo && poster) frameByVideo.set(firstVideo, source(poster));
+  for (const [reference, frame] of posters) {
+    const video = Number.isInteger(reference) ? newVideos[reference] : reference;
+    if (!allVideos.includes(video)) throw failure(400, 'Το καρέ δεν αντιστοιχεί σε βίντεο του άρθρου.');
+    frameByVideo.set(video, source(frame));
+  }
   const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800),
     deck: field(input.deck, 2400), image: image ? source(image) : imageUrl,
-    gallery: photos, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoLinks, videoPoster,
+    gallery: photos, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoLinks,
+    videoPosters: Object.fromEntries(frameByVideo), videoPoster: frameByVideo.get(firstVideo) || '',
+    heroVideo: !!firstVideo && (input.heroVideo ?? existing?.heroVideo) === true,
     sections: existing?.sections[0] === input.category ? existing.sections : [input.category],
     hero: input.hero === true, alt: field(input.alt, 300), caption: field(input.caption, 500) };
   if (input.blocks !== undefined) {

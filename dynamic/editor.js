@@ -22,6 +22,9 @@ let mediaRows = [];
 let replacingMedia = null;
 let editingMediaLink = null;
 const previewUrls = new Set();
+const mediaObjectUrls = new Map();
+const capturedPosters = new Map();
+let coverVideo = false;
 const today = () => new Intl.DateTimeFormat('sv-SE', {timeZone:'Europe/Athens'}).format(new Date());
 function feedback(message, error = false) {
   $('feedback').textContent = message;
@@ -152,24 +155,26 @@ function mediaRow(kind, title, { src, file } = {}) {
   checkbox.type = 'checkbox';
   checkbox.className = 'media-checkbox';
   label.append(checkbox, title);
-  if (src && (kind === 'cover' || kind === 'gallery')) {
+  const photo = kind === 'cover' || kind === 'gallery';
+  const preview = document.createElement('button');
+  preview.type = 'button';
+  preview.className = 'media-preview secondary';
+  preview.setAttribute('aria-label', 'Προεπισκόπηση · ' + title);
+  if (photo) {
     const image = document.createElement('img');
-    image.src = src;
+    image.src = src || mediaFileUrl(file);
     image.alt = '';
     image.loading = 'lazy';
-    label.append(image);
+    image.decoding = 'async';
+    preview.append(image);
+  } else {
+    preview.textContent = 'Προβολή';
   }
   const status = document.createElement('small');
-  element.append(label, status);
-  if ((kind === 'videos' && src?.startsWith('/uploads/')) || (kind === 'link' && /^https:\/\//i.test(src))) {
-    const preview = document.createElement('a');
-    preview.href = src;
-    preview.target = '_blank';
-    preview.rel = 'noopener';
-    preview.textContent = kind === 'link' ? 'Άνοιγμα συνδέσμου' : 'Προβολή βίντεο';
-    preview.setAttribute('aria-label', 'Προβολή ' + title.toLocaleLowerCase('el'));
-    element.append(preview);
-  }
+  const header = document.createElement('div');
+  header.className = 'media-row-heading';
+  header.append(preview, label);
+  element.append(header, status);
   const actions = document.createElement('details');
   actions.className = 'media-row-actions';
   const summary = document.createElement('summary');
@@ -178,29 +183,75 @@ function mediaRow(kind, title, { src, file } = {}) {
   const controls = document.createElement('div');
   controls.className = 'toolbar';
   const row = { element, checkbox, status, actions, kind, title, src, file, removed: false };
-  const action = (title, handler) => {
+  preview.addEventListener('click', () => {
+    if (row.kind === 'link') window.open(row.src, '_blank', 'noopener,noreferrer');
+    else showMediaPreview(row, photo);
+  });
+  const quick = document.createElement('div');
+  quick.className = 'media-quick';
+  row.quick = quick;
+  const action = (title, handler, container = controls) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.textContent = title;
     button.addEventListener('click', () => { if (!busy) handler(); });
-    controls.append(button);
+    container.append(button);
+    return button;
   };
-  action(kind === 'link' ? 'Αλλαγή συνδέσμου' : 'Αντικατάσταση', () => editMediaRow(row));
   if (kind !== 'cover') {
-    action('Πάνω', () => moveMediaRow(row, -1));
-    action('Κάτω', () => moveMediaRow(row, 1));
+    row.up = action('↑ Πάνω', () => moveMediaRow(row, -1), quick);
+    row.down = action('↓ Κάτω', () => moveMediaRow(row, 1), quick);
   }
+  if (kind === 'gallery') row.cover = action('Εξώφυλλο', () => chooseCoverPhoto(row), quick);
+  if (kind === 'videos') row.cover = action('Στην κορυφή', () => chooseCoverVideo(row), quick);
+  action(kind === 'link' ? 'Αλλαγή συνδέσμου' : 'Αντικατάσταση', () => editMediaRow(row));
   action('Αφαίρεση', () => {
     setMediaRemoved(row, true);
     updateMediaActions();
     dirty = true;
   });
   actions.append(summary, controls);
-  element.append(actions);
+  element.append(quick, actions);
   return row;
 }
+function mediaFileUrl(file) {
+  if (!mediaObjectUrls.has(file)) mediaObjectUrls.set(file, URL.createObjectURL(file));
+  return mediaObjectUrls.get(file);
+}
+function showMediaPreview(row, photo) {
+  const item = document.createElement(photo ? 'img' : 'video');
+  item.src = row.src || mediaFileUrl(row.file);
+  if (photo) item.alt = row.title;
+  else {
+    const poster = selected?.videoPosters?.[row.src] ||
+      (row.src === (selected?.videos?.[0] || selected?.video) ? selected?.videoPoster : '');
+    if (poster) item.poster = poster;
+    item.controls = true;
+    item.playsInline = true;
+    item.preload = 'metadata';
+  }
+  $('media-preview-title').textContent = row.title;
+  $('media-preview-content').replaceChildren(item);
+  $('media-preview-dialog').showModal();
+}
+$('close-media-preview').addEventListener('click', () => $('media-preview-dialog').close());
+$('media-preview-dialog').addEventListener('close', () => $('media-preview-content').replaceChildren());
 function updateMediaActions() {
   const active = mediaRows.filter(row => !row.removed);
+  const cover = active.find(row => row.kind === 'cover') || active.find(row => row.src && row.src === form.elements.image.value.trim()) ||
+    active.find(row => row.kind === 'gallery');
+  const video = coverVideo && active.find(row => row.kind === 'videos');
+  for (const row of mediaRows) {
+    const peers = active.filter(item => item.kind === row.kind);
+    const index = peers.indexOf(row);
+    row.quick.hidden = row.removed || !row.quick.childElementCount;
+    if (row.up) row.up.setAttribute('aria-disabled', String(index <= 0));
+    if (row.down) row.down.setAttribute('aria-disabled', String(index < 0 || index === peers.length - 1));
+    const chosen = row === cover || row === video;
+    if (row.cover) row.cover.setAttribute('aria-pressed', String(chosen && (row.kind === 'videos' || form.elements.hero.checked)));
+    row.status.textContent = row.removed ? 'Προς αφαίρεση'
+      : chosen ? row === video ? 'Βίντεο στην κορυφή' : 'Εικόνα εξωφύλλου' : '';
+  }
   const selectedRows = active.filter(row => row.checkbox.checked);
   const removed = mediaRows.length - active.length;
   $('editor-media-count').textContent = selectedRows.length + ' επιλεγμένα · ' + removed + ' προς αφαίρεση';
@@ -208,19 +259,20 @@ function updateMediaActions() {
   for (const button of buttons) {
     const action = button.dataset.mediaAction;
     button.disabled = action === 'all' ? !active.length : action === 'undo' ? !removed
-      : action === 'cover' ? selectedRows.length !== 1 || selectedRows[0].kind !== 'gallery'
       : !selectedRows.length;
   }
 }
 function renderMediaList() {
-  mediaList.replaceChildren(...mediaRows.map(row => row.element));
+  mediaList.replaceChildren(...['cover', 'gallery', 'videos', 'link'].flatMap(kind => mediaRows.filter(row => row.kind === kind).map(row => row.element)));
   mediaPanel.hidden = !mediaRows.length;
   updateMediaActions();
 }
 function updateCoverRow() {
   const src = form.elements.image.value.trim();
   mediaRows = mediaRows.filter(row => row.kind !== 'cover' || row.file);
-  if (/^(?:\/(?!\/)|https:\/\/)/i.test(src)) mediaRows.unshift(mediaRow('cover', 'Εξώφυλλο', { src }));
+  if (/^(?:\/(?!\/)|https:\/\/)/i.test(src) && !mediaRows.some(row => row.kind === 'gallery' && row.src === src && !row.removed)) {
+    mediaRows.unshift(mediaRow('cover', 'Εξώφυλλο', { src }));
+  }
   renderMediaList();
 }
 function showArticleMedia(item) {
@@ -267,6 +319,42 @@ function moveMediaRow(row, direction) {
   const to = mediaRows.indexOf(neighbor);
   [mediaRows[from], mediaRows[to]] = [mediaRows[to], mediaRows[from]];
   renderMediaList();
+  (direction < 0 ? row.up : row.down).focus();
+  dirty = true;
+}
+function chooseCoverPhoto(photo) {
+  const current = form.elements.image.value.trim();
+  const changed = current ? current !== photo.src : mediaRows.find(row => row.kind === 'gallery' && !row.removed) !== photo;
+  if (current && current !== photo.src && !mediaRows.some(row => row.kind === 'gallery' && row.src === current && !row.removed)) {
+    const oldCover = mediaRows.find(row => row.kind === 'cover' && row.src === current && !row.removed);
+    if (oldCover) mediaRows.push(mediaRow('gallery', 'Προηγούμενο εξώφυλλο', { src: current }));
+  }
+  form.elements.image.value = '';
+  form.elements.hero.checked = true;
+  if (changed) {
+    form.elements.alt.value = '';
+    form.elements.caption.value = '';
+  }
+  mediaRows = mediaRows.flatMap(row => {
+    if (row.kind !== 'cover') return [row];
+    return row.file && !row.removed ? [mediaRow('gallery', row.file.name, { file: row.file })] : [];
+  });
+  mediaRows.splice(mediaRows.indexOf(photo), 1);
+  mediaRows.unshift(photo);
+  photo.checkbox.checked = false;
+  updateCoverRow();
+  photo.cover.focus();
+  dirty = true;
+}
+function chooseCoverVideo(row) {
+  const index = mediaRows.findIndex(item => item.kind === 'videos' && !item.removed);
+  coverVideo = !coverVideo || mediaRows[index] !== row;
+  if (coverVideo) {
+    mediaRows.splice(mediaRows.indexOf(row), 1);
+    mediaRows.splice(index, 0, row);
+  }
+  renderMediaList();
+  row.cover.focus();
   dirty = true;
 }
 function editMediaRow(row) {
@@ -342,22 +430,6 @@ mediaPanel.addEventListener('click', event => {
       renderMediaList();
       dirty = true;
       break;
-    case 'cover': {
-      if (checked.length !== 1 || checked[0].kind !== 'gallery') return;
-      const photo = checked[0];
-      form.elements.image.value = photo.src || '';
-      mediaRows = mediaRows.flatMap(row => {
-        if (row === photo) {
-          return row.file ? [mediaRow('cover', 'Εξώφυλλο · ' + row.title, { file: row.file })] : [row];
-        }
-        if (row.kind !== 'cover') return [row];
-        return row.file && !row.removed ? [mediaRow('gallery', row.file.name, { file: row.file })] : [];
-      });
-      photo.checkbox.checked = false;
-      updateCoverRow();
-      dirty = true;
-      break;
-    }
   }
   updateMediaActions();
 });
@@ -391,6 +463,7 @@ mediaLink.addEventListener('keydown', event => {
 });
 $('media-link-save').addEventListener('click', event => run(async () => saveMediaLink(), event.currentTarget));
 form.elements.image.addEventListener('change', updateCoverRow);
+form.elements.hero.addEventListener('change', updateMediaActions);
 function openArticle(item = null) {
   selected = item;
   form.reset();
@@ -400,13 +473,17 @@ function openArticle(item = null) {
   $('media-cover-options').open = false;
   replacingMedia = null;
   resetMediaLink();
+  for (const url of mediaObjectUrls.values()) URL.revokeObjectURL(url);
+  mediaObjectUrls.clear();
+  capturedPosters.clear();
+  coverVideo = item?.heroVideo === true;
   for (const key of ['title','summary','author','deck','image','alt','caption']) form.elements[key].value = item?.[key] ?? '';
-  showArticleMedia(item);
   if (!item) form.elements.author.value = state.user.name;
   form.elements.author.readOnly = state.user.role !== 'owner';
   form.elements.category.value = item?.sections[0] || 'reportaz';
   form.elements.date.value = item?.date || today();
   form.elements.hero.checked = item?.hero ?? true;
+  showArticleMedia(item);
   form.elements.featured.checked = state.featured === item?.id;
   form.elements.featured.disabled = !!item?.archived;
   editor.innerHTML = item?.body || '';
@@ -489,10 +566,11 @@ function payload() {
     return active.filter(row => row.kind === kind).map(row => row.src || index++);
   };
   data.mediaOrder = { gallery: orderFor('gallery'), videos: orderFor('videos') };
-  if (removed.some(row => row.kind === 'cover' && row.src === data.image.trim())) data.image = '';
+  if (removed.some(row => (row.kind === 'cover' || row.kind === 'gallery') && row.src === data.image.trim())) data.image = '';
   data.id = selected?.id;
   data.rev = selected?.rev;
   data.hero = fields.hero.checked;
+  data.heroVideo = coverVideo && active.some(row => row.kind === 'videos');
   data.featured = fields.featured.checked;
   if (!selected || editor.innerHTML !== initialHtml) data.blocks = Array.from(editor.childNodes).flatMap(blocks);
   const filesFor = kind => mediaRows.filter(row => row.kind === kind && row.file && !row.removed).map(row => row.file);
@@ -505,12 +583,13 @@ function payload() {
     throw Error('Διάλεξε αρχεία MP4 έως 48 MB το καθένα.');
   }
   photos.forEach(photoType);
-  return { data, files: { cover, gallery, videos } };
+  return { data, files: { cover, gallery, videos, posters: [] } };
 }
 async function mapFiles(files, use) {
   const media = { gallery: [], videos: [] };
   if (files.cover) media.cover = await use(files.cover, photoType(files.cover));
-  if (files.poster) media.poster = await use(files.poster, 'image/jpeg');
+  media.posters = [];
+  for (const [reference, file] of files.posters) media.posters.push([reference, await use(file, 'image/jpeg')]);
   for (const file of files.gallery) media.gallery.push(await use(file, photoType(file)));
   for (const file of files.videos) media.videos.push(await use(file, 'video/mp4'));
   return media;
@@ -527,14 +606,27 @@ async function captureVideoPoster(source) {
     return await new Promise(resolve => {
       timer = setTimeout(() => resolve(null), 6500);
       video.addEventListener('error', () => resolve(null), { once:true });
-      video.addEventListener('loadedmetadata', () => {
-        if (Number.isFinite(video.duration) && video.duration > 0) {
-          video.currentTime = Math.min(1, video.duration / 3);
-        }
-      }, { once:true });
+      const sample = document.createElement('canvas');
+      sample.width = 32;
+      sample.height = 18;
+      const probe = sample.getContext('2d', { willReadFrequently: true });
+      const times = [0.2, 0.65, 1.2, 2.4];
+      let next = 0;
       const capture = () => {
         try {
           if (captured || video.readyState < 2 || !video.videoWidth || !video.videoHeight) return;
+          probe.drawImage(video, 0, 0, sample.width, sample.height);
+          const pixels = probe.getImageData(0, 0, sample.width, sample.height).data;
+          let lit = 0;
+          for (let i = 0; i < pixels.length; i += 4) {
+            if (Math.max(pixels[i], pixels[i + 1], pixels[i + 2]) >= 26) lit++;
+          }
+          if (lit < sample.width * sample.height / 20) {
+            const time = times[next++];
+            if (time !== undefined && time < video.duration) video.currentTime = time;
+            else resolve(null);
+            return;
+          }
           captured = true;
           const canvas = document.createElement('canvas');
           const scale = Math.min(1, 1200 / Math.max(video.videoWidth, video.videoHeight));
@@ -546,7 +638,7 @@ async function captureVideoPoster(source) {
           resolve(null);
         }
       };
-      video.addEventListener('seeked', capture, { once:true });
+      video.addEventListener('seeked', capture);
       video.addEventListener('loadeddata', () => { if (!video.seeking) capture(); }, { once:true });
       video.src = objectUrl || source;
     });
@@ -558,14 +650,22 @@ async function captureVideoPoster(source) {
   }
 }
 async function prepareArticleMedia(data, files) {
-  const active = mediaRows.filter(row => !row.removed);
-  if (data.image.trim() || files.cover || active.some(row => row.kind === 'gallery')) return;
-  const firstVideo = active.find(row => row.kind === 'videos');
-  if (!firstVideo) return;
-  if (firstVideo.src && selected?.videoPoster && firstVideo.src === (selected.videos?.[0] || selected.video)) return;
-  if (firstVideo.src && !/^\/uploads\/[a-f0-9]{64}\.mp4$/.test(firstVideo.src)) return;
-  uploadNotice('Ετοιμάζεται η εικόνα προεπισκόπησης του βίντεο…', null);
-  files.poster = await captureVideoPoster(firstVideo.src || firstVideo.file).catch(() => null);
+  const rows = mediaRows.filter(row => !row.removed && row.kind === 'videos');
+  const pending = rows.flatMap((row, index) => {
+    if (row.src && (selected?.videoPosters?.[row.src] ||
+        (selected?.videoPoster && row.src === (selected.videos?.[0] || selected.video)))) return [];
+    if (!row.file && !/^\/uploads\/[a-f0-9]{64}\.mp4$/.test(row.src || '')) return [];
+    return [[data.mediaOrder.videos[index], row.src || row.file]];
+  });
+  if (pending.length) uploadNotice('Ετοιμάζονται οι εικόνες προεπισκόπησης των βίντεο…', null);
+  for (let index = 0; index < pending.length; index += 3) {
+    const batch = await Promise.all(pending.slice(index, index + 3).map(async ([reference, source]) => {
+      const file = capturedPosters.get(source) || await captureVideoPoster(source).catch(() => null);
+      if (file) capturedPosters.set(source, file);
+      return [reference, file];
+    }));
+    files.posters.push(...batch.filter(([, file]) => file));
+  }
 }
 function previewFile(file, type) {
   const url = URL.createObjectURL(type === file.type ? file : file.slice(0, file.size, type));
@@ -578,7 +678,7 @@ function clearPreview() {
 }
 async function publishArticle(data, files) {
   await prepareArticleMedia(data, files);
-  const count = files.gallery.length + Number(!!files.cover) + Number(!!files.poster) + files.videos.length;
+  const count = files.gallery.length + Number(!!files.cover) + files.posters.length + files.videos.length;
   const submit = async () => {
     let index = 0;
     const stagedMedia = await mapFiles(files, async (file, type) => {

@@ -83,8 +83,7 @@
       ],
       "videos": [
         "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4",
-        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4",
-        "/uploads/d1a849b360dff272fb9cdece29154f753525db775ee4e32a144d4cd4272481f0.mp4"
+        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4"
       ],
       "video": "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4",
       "videoLink": "",
@@ -127,14 +126,47 @@
           "children": [
             "Ύστερα από τη Θεία Λειτουργία, η οικογένεια του Ηλία Παπαγεωργίου, που έχει τη φροντίδα του ναού, άνοιξε το σπίτι της στους προσκυνητές. Πρόσφερε γλυκά, καφέ και αναψυκτικά, όπως συνηθίζει κάθε χρόνο. Εκεί έμειναν για λίγο ακόμη οι χωριανοί και οι επισκέπτες, να πιουν έναν καφέ και να πουν δυο κουβέντες πριν πάρουν τον δρόμο της επιστροφής."
           ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            {
+              "tag": "b",
+              "children": [
+                "Φωτογραφικό υλικό και βίντεο "
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            {
+              "tag": "b",
+              "children": [
+                "Απο Γιάννα Σωτήρο & Παναγιώτης  Παναγιωτόπουλου (Μπόκου)"
+              ]
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            {
+              "tag": "b",
+              "children": [
+                "Της Λέλας, εγγόνια του Μπαρμπα-Χαράλαμπου και Χρυσαυγής."
+              ]
+            }
+          ]
         }
       ],
       "publishedAt": "2026-11-12T05:50:50.754Z",
       "videoPosters": {
         "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4": "/uploads/774e9c32ce525aedaf1675e0042a3f4bd51aa2baa8cee436d93eb6bf627f8036.jpg",
-        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4": "/uploads/53c0d7047dff6e09ffcb357009c9f1e3d0d374e6ac8b74776d0ed1f96eff17df.jpg",
-        "/uploads/d1a849b360dff272fb9cdece29154f753525db775ee4e32a144d4cd4272481f0.mp4": "/uploads/c852ea61462c8fabf46d225764bbc43624580ac1ff3cf459ae05c527d55e1e0f.jpg"
-      }
+        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4": "/uploads/53c0d7047dff6e09ffcb357009c9f1e3d0d374e6ac8b74776d0ed1f96eff17df.jpg"
+      },
+      "heroVideo": false
     }
   },
   "featured": "keimeno-1e1635f7c4ad3260",

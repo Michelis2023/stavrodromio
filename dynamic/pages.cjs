@@ -9,6 +9,7 @@ const appVersion = assetVersion('app.js');
 (function pages(module) {
 const name = 'Σταυροδρόμι Κοινότητα';
 const fallbackImage = '/og-image.png';
+const socialBrandVersion = '3';
 const about = 'Ιστορία, μνήμη και ανεξάρτητο ρεπορτάζ για το Σταυροδρόμι Γορτυνίας.';
 const sections = {
   reportaz: ['Ρεπορτάζ & Παρεμβάσεις','Έργα, αποφάσεις και ερωτήματα για την κοινότητα.'],
@@ -86,7 +87,7 @@ function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
   const cardTitle = article && title ? name + ' | ' + title : title || name;
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
-  if (isSiteImage) shareImage.searchParams.set('v', '2');
+  if (isSiteImage) shareImage.searchParams.set('v', socialBrandVersion);
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const imageExtension = /\.(jpe?g|png|webp)$/i.exec(shareImage.pathname)?.[1].toLowerCase();
   const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
@@ -95,11 +96,17 @@ function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
   <meta property="og:title" content="${e(cardTitle)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
   ${imageType ? `<meta property="og:image:type" content="image/${imageType}">` : ''}
-  ${isSiteImage ? '<meta property="og:image:width" content="1376"><meta property="og:image:height" content="768">' : ''}
+  ${isSiteImage ? '<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">' : ''}
   ${shareAlt ? `<meta property="og:image:alt" content="${e(shareAlt)}">` : ''}
   <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="${e(cardTitle)}">
   <meta name="twitter:description" content="${e(summary)}"><meta name="twitter:image" content="${e(shareImage.href)}">
   ${shareAlt ? `<meta name="twitter:image:alt" content="${e(shareAlt)}">` : ''}`;
+}
+function brandIcons(origin = '') {
+  const version = '?v=' + socialBrandVersion;
+  return `<link rel="icon" href="${e(origin + '/app-192.png' + version)}" type="image/png" sizes="192x192">
+  <link rel="icon" href="${e(origin + '/favicon.svg' + version)}" type="image/svg+xml" sizes="any">
+  <link rel="apple-touch-icon" href="${e(origin + '/app-192.png' + version)}">`;
 }
 function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
@@ -111,8 +118,8 @@ function layout(body, { origin, p = '/', title, summary = about, image, imageAlt
   socialTags({ origin, url: origin + p, title, summary, image, imageAlt, article }) +
   `<link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
-  <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest"><link rel="apple-touch-icon" href="/app-192.png">
-  <link rel="icon" href="/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
+  <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest">${brandIcons()}
+  <link rel="stylesheet" href="/site.css?v=${stylesheetVersion}"></head><body><a class="skip" href="#main">Μετάβαση στο περιεχόμενο</a>
   <header class="mast"><div class="utility"><div class="wrap">Γορτυνία · Αρκαδία <a href="/epikoinonia.html">Επικοινωνία</a></div></div>
   <div class="brand wrap"><a href="/" class="wordmark">
   <svg class="wordmark-emblem" viewBox="0 0 72 64" width="72" height="64" aria-hidden="true" focusable="false">
@@ -163,7 +170,8 @@ const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}"
 const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
 const articleLinks = item => item?.videoLinks ?? (item?.videoLink ? [item.videoLink] : []);
 function thumbnail(item) {
-  const image = item.image || item.gallery?.[0] || item.videoPoster;
+  const firstVideo = articleVideos(item)[0];
+  const image = item.image || item.gallery?.[0] || item.videoPosters?.[firstVideo] || item.videoPoster;
   const firstLink = articleLinks(item)[0];
   if (image || articleVideos(item).length || !safeUrl(firstLink) || !/^https:\/\//i.test(firstLink)) return image;
   const [provider, embed] = videoEmbed(firstLink);
@@ -186,16 +194,17 @@ function renderShare(origin, articleOrigin, item, image) {
   const address = articleUrl(item.id);
   const title = item.title;
   const summary = articleDescription(item);
-  const imageAlt = item.image ? item.alt : item.videoPoster && !item.gallery?.length ? 'Καρέ του βίντεο' : '';
+  const imageAlt = item.image ? item.alt : image && !item.gallery?.length ? 'Καρέ του βίντεο' : '';
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title)} | ${name}</title>
+  <meta name="description" content="${e(summary)}">${brandIcons(articleOrigin)}
   ${socialTags({ origin, url: origin + articleShareAddress(item), title, summary, image, imageAlt, article: true })}
   </head><body><main><h1>${e(title)}</h1><p>${e(summary)}</p>
   <a id="article" href="${e(articleOrigin + address)}">Διάβασε το άρθρο στο Σταυροδρόμι</a></main>
   <script>location.replace(document.getElementById('article').href);</script></body></html>`;
 }
 function articleShareAddress(item) {
-  const revision = createHash('sha256').update(JSON.stringify([item.title, articleDescription(item), thumbnail(item)])).digest('hex').slice(0, 16);
+  const revision = createHash('sha256').update(JSON.stringify([socialBrandVersion, item.title, articleDescription(item), thumbnail(item)])).digest('hex').slice(0, 16);
   return articleUrl(item.id) + '?preview=' + revision;
 }
 const cardThumbnails = new Map([

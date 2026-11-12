@@ -37,6 +37,44 @@ for (const button of document.querySelectorAll('[data-video-embed]')) {
   });
 }
 
+const readerSearch = document.querySelector('[data-reader-search]');
+if (readerSearch) {
+  const field = readerSearch.elements.q;
+  const summary = document.querySelector('[data-reader-search-status]');
+  const cards = [...document.querySelectorAll('main .cards .card')];
+  const filters = [...document.querySelectorAll('.filters a')].map(link => ({ link, url: new URL(link.href) }));
+  const normalize = value => value.toLocaleLowerCase('el').normalize('NFD').replace(/\p{M}/gu, '').replace(/ς/g, 'σ').trim();
+  function filter() {
+    const q = (new URL(location.href).searchParams.get('q') || '').slice(0, 100);
+    const match = normalize(q);
+    field.value = q;
+    let found = 0;
+    for (const card of cards) {
+      const title = card.querySelector('h3').textContent;
+      const description = card.querySelector('p')?.textContent || '';
+      card.hidden = !normalize(title + ' ' + description).includes(match);
+      if (!card.hidden) found++;
+    }
+    summary.hidden = !q;
+    summary.textContent = 'Αποτελέσματα για «' + q + '» (' + found + ')';
+    for (const { link, url } of filters) {
+      if (q) url.searchParams.set('q', q);
+      else url.searchParams.delete('q');
+      link.href = url.href;
+    }
+  }
+  readerSearch.addEventListener('submit', event => {
+    event.preventDefault();
+    const url = new URL(location.href);
+    if (field.value.trim()) url.searchParams.set('q', field.value.trim());
+    else url.searchParams.delete('q');
+    history.pushState(null, '', url);
+    filter();
+  });
+  window.addEventListener('popstate', filter);
+  filter();
+}
+
 for (const panel of document.querySelectorAll('[data-article-share]')) {
   const address = panel.querySelector('input');
   const share = panel.querySelector('[data-native-share]');
@@ -66,6 +104,10 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
       status.textContent = 'Αντίγραψε τον επιλεγμένο σύνδεσμο.';
     }
   });
+  if (!panel.dataset.shareEndpoint) {
+    share.disabled = copy.disabled = false;
+    continue;
+  }
   let pending = false;
   async function prepareLink() {
     if (!panel.open || pending) return;

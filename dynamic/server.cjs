@@ -20,6 +20,7 @@ const repoApi = '/repos/' + repo;
 const shareOrigin = 'https://stavrodromio-koinotita-share.onrender.com';
 const sourceRoot = path.resolve(__dirname, '..');
 const local = process.env.STAVRODROMIO_TEST_FILE;
+const readerBackend = local ? process.env.STAVRODROMIO_READER_BACKEND : '';
 const newsletterConfig = process.env.STAVRODROMIO_NEWSLETTER_ACTION || '';
 const newsletterAction = /^https:\/\/api\.follow\.it\/subscription-form\/[A-Za-z0-9+\/_=-]+\/\d+$/.test(newsletterConfig) ? newsletterConfig : '';
 const secure = !!process.env.RENDER || process.env.PUBLIC_ORIGIN?.startsWith('https:');
@@ -901,7 +902,7 @@ const route = async (req, res) => {
       const urls = paths.map(path => '<url><loc>' + origin + path + '</loc></url>').join('');
       return respond(res, 200, '<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + urls + '</urlset>', 'application/xml; charset=utf-8');
     }
-    const params = { origin, all, state, p, newsletterAction };
+    const params = { origin, all, state, p, newsletterAction, readerBackend };
     if (p === '/') return html(res, 200, render('home', params), publicCacheHeaders);
     if (p === '/paratiritirio') return html(res, 200, render('issues', params), publicCacheHeaders);
     const category = /^\/(reportaz|history|laografia|autodioikisi)\.html$/.exec(p)?.[1];

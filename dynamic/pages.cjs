@@ -91,14 +91,14 @@ function socialImage(origin, image) {
   }
   return shareImage;
 }
-function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
+function socialTags({ origin, url, canonical = url, title, summary, image, imageAlt, article }) {
   const cardTitle = title || name;
   const shareImage = socialImage(origin, image);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const imageExtension = /\.(jpe?g|png|webp)$/i.exec(shareImage.pathname)?.[1].toLowerCase();
   const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
-  return `<link rel="canonical" href="${e(url)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
+  return `<link rel="canonical" href="${e(canonical)}"><meta property="og:type" content="${article ? 'article' : 'website'}">
   <meta property="og:locale" content="el_GR"><meta property="og:site_name" content="${name}"><meta property="og:url" content="${e(url)}">
   <meta property="og:title" content="${e(cardTitle)}"><meta property="og:description" content="${e(summary)}">
   <meta property="og:image" content="${e(shareImage.href)}"><meta property="og:image:secure_url" content="${e(shareImage.href)}">
@@ -115,14 +115,14 @@ function brandIcons(origin = '') {
   <link rel="icon" href="${e(origin + '/favicon.svg' + version)}" type="image/svg+xml" sizes="any">
   <link rel="apple-touch-icon" href="${e(origin + '/app-192.png' + version)}">`;
 }
-function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false }) {
+function layout(body, { origin, p = '/', title, summary = about, image, imageAlt, article = false, privatePage = false, admin = false, shareUrl }) {
   const activePath = p.startsWith('/afieroma/') ? link(p.split('/').at(-1)) : p;
   const nav = [['/','Αρχική'], ['/reportaz.html','Ρεπορτάζ'], ['/history.html','Ιστορία & Μνήμη'],
     ['/laografia.html','Λαογραφία'], ['/autodioikisi.html','Αυτοδιοίκηση'], ['/paratiritirio','Παρατηρητήριο'], ['/egkatastasi','Εφαρμογή']];
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title ? title + ' | ' + name : name)}</title><meta name="description" content="${e(summary)}">
   ${privatePage ? '<meta name="robots" content="noindex,nofollow">' :
-  socialTags({ origin, url: origin + p, title, summary, image, imageAlt, article }) +
+  socialTags({ origin, url: shareUrl || origin + p, canonical: origin + p, title, summary, image, imageAlt, article }) +
   `<link rel="alternate" type="application/rss+xml" title="${name}" href="${e(origin + '/rss.xml')}">`}
   ${!privatePage && p === '/' ? '<meta name="follow.it-verification-code" content="5rdQ8QEkX7UtSejdpg4p"/>' : ''}
   <meta name="theme-color" content="#243f32"><link rel="manifest" href="/app.webmanifest">${brandIcons()}
@@ -262,7 +262,7 @@ const newsletter = action => action ? `<section class="panel newsletter" aria-la
 </section>` : '';
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction, commentsEnabled, commentAccounts, commentEmail, commentGoogle } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction, commentsEnabled, commentAccounts, commentEmail, commentGoogle, readerBackend } = params;
   const rememberDevice = rememberLogin ? '<label><input type="checkbox" name="remember" checked> Να με θυμάσαι σε αυτή τη συσκευή</label>' : '';
   if (kind === 'install') return layout(`${intro('Σταυροδρόμι στο κινητό', 'Εγκατάσταση εφαρμογής', 'Άνοιξε το Σταυροδρόμι από το εικονίδιό του στην αρχική οθόνη.')}
     <div class="install-guide">
@@ -304,9 +304,10 @@ function render(kind, params) {
     const items = sorted(all).filter(item => (!category || item.sections.includes(category)) &&
       (!q || normalize(item.title + ' ' + item.summary).includes(normalize(q))));
     return layout(`${intro('Κείμενα',title,summary)}
-      <form class="search" action="${p}"><label class="sr-only" for="q">Αναζήτηση κειμένων</label>
+      <form class="search" action="${e((readerBackend || '') + p)}"${readerBackend ? ' data-reader-search' : ''}><label class="sr-only" for="q">Αναζήτηση κειμένων</label>
       <input id="q" name="q" type="search" maxlength="100" placeholder="Αναζήτηση κειμένων" value="${e(q)}"><button>Αναζήτηση</button></form>
       ${q ? `<p class="search-summary">Αποτελέσματα για «${e(q)}» (${items.length}) · <a href="${e(p)}">Καθαρισμός αναζήτησης</a></p>` : ''}
+      ${readerBackend ? '<p class="search-summary" data-reader-search-status role="status" hidden></p>' : ''}
       <div class="filters">${[['','Όλα'],...Object.entries(sections).map(([key,[label]]) => [key,label])].map(([id,label]) =>
       `<a href="${e((id ? link(id) : '/arxeio') + searchSuffix)}"${(category || '') === id ? ' aria-current="page"' : ''}>${e(label)}</a>`).join('')}</div>
       ${features[category] ? `<a class="feature-link" href="/afieroma/${category}"><span class="eyebrow">Αφιέρωμα</span><strong>${e(features[category])} ↗</strong></a>` : ''}
@@ -330,6 +331,9 @@ function render(kind, params) {
   }
   if (kind === 'article') {
     const address = articleUrl(article.id);
+    const shareUrl = readerBackend ? origin + articleShareAddress(article) : '';
+    const facebook = shareUrl ? 'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(shareUrl)
+      : '/koinopoiisi/facebook/' + encodeURIComponent(article.id);
     const related = sorted(all).filter(item => item.id !== article.id && item.sections.includes(article.sections[0])).slice(0,3);
     const coverImage = article.hero ? article.image || article.gallery?.[0] : '';
     const gallery = (article.gallery ?? []).filter(src => src !== coverImage);
@@ -364,17 +368,19 @@ function render(kind, params) {
       </section>` : ''}
       ${article.sourceNotes && !preview ? `<details class="source-notes"><summary>Στοιχεία της αρχικής δημοσίευσης</summary><div class="source-notes-grid">${article.sourceNotes}</div></details>` : ''}
       ${preview ? '' : `<div class="story-actions"><a href="${link(article.sections[0])}">Πίσω στην ενότητα</a>
-        <a href="/koinopoiisi/facebook/${encodeURIComponent(article.id)}" target="_blank" rel="noopener">Κοινοποίηση στο Facebook</a>
-        <details class="article-share" data-article-share data-title="${e(article.title)}" data-share-endpoint="/koinopoiisi/${encodeURIComponent(article.id)}">
+        <a href="${e(facebook)}" target="_blank" rel="noopener">Κοινοποίηση στο Facebook</a>
+        <details class="article-share" data-article-share data-title="${e(article.title)}"${shareUrl ? '' : ` data-share-endpoint="/koinopoiisi/${encodeURIComponent(article.id)}"`}>
           <summary>Κοινοποίηση</summary>
           <div class="article-share-options">
             <button type="button" data-native-share hidden disabled>Κοινοποίηση σε εφαρμογή</button>
             <button type="button" class="secondary" data-copy-link hidden disabled>Αντιγραφή συνδέσμου</button>
             <button type="button" class="secondary" data-retry-share hidden>Δοκίμασε ξανά</button>
-            <label>Σύνδεσμος με προεπισκόπηση <input type="url" readonly disabled></label>
+            <label>Σύνδεσμος με προεπισκόπηση <input type="url" readonly${shareUrl ? ` value="${e(shareUrl)}"` : ' disabled'}></label>
             <p role="status"></p>
           </div>
         </details></div>`}</article>
+      ${readerBackend ? `<section class="article-comments" aria-labelledby="comments-heading"><h2 id="comments-heading">Σχόλια</h2>
+        <a href="${e(readerBackend + address + '#comments-heading')}">Δες τα σχόλια ή γράψε το δικό σου</a></section>` : ''}
       ${!preview && commentsEnabled ? `<section class="article-comments" aria-labelledby="comments-heading" data-comments="/api/comments/${e(encodeURIComponent(article.id))}">
         <h2 id="comments-heading">Σχόλια</h2>
         <div data-comment-list></div>
@@ -408,7 +414,7 @@ function render(kind, params) {
       </section>` : ''}
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
-      { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview });
+      { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview,shareUrl });
   }
   if (kind === 'admin') return layout(`${intro('Σύνταξη','Διαχείριση','Άρθρα, κύριο θέμα και ενημερώσεις στο Παρατηρητήριο.')}
     <p id="feedback" role="status" aria-live="polite"></p>

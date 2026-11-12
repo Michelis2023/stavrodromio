@@ -96,19 +96,36 @@ function showLogin() {
   const switcher = $('login-switch');
   if (switcher) switcher.textContent = loginMode === 'owner' ? 'Σύνδεση συνδιαχειριστή' : 'Σύνδεση ιδιοκτήτη';
 }
-async function run(action, button, showErrors = true) {
+async function run(action, button) {
   if (busy) return;
   busy = true;
   if (button) button.disabled = true;
   feedback('');
   try { await action(); }
   catch (error) {
-    if (error.status === 401 && $('desk').hidden && !showErrors) return;
     if (error.status === 401 && !$('desk').hidden) showLogin();
     feedback(error.message, true);
   } finally {
     busy = false;
     if (button) button.disabled = false;
+  }
+}
+async function restoreSession() {
+  const retry = $('retry-session');
+  retry.hidden = true;
+  feedback('Έλεγχος αποθηκευμένης σύνδεσης…');
+  try {
+    activate(await api('state'));
+    feedback('');
+  } catch (error) {
+    if (error.status === 401) {
+      showLogin();
+      const needsLogin = error.message === 'Χρειάζεται σύνδεση διαχειριστή.';
+      feedback(needsLogin ? '' : error.message, !needsLogin);
+      return;
+    }
+    feedback('Ο έλεγχος σύνδεσης δεν ολοκληρώθηκε. Δοκίμασε ξανά σε λίγο.', true);
+    retry.hidden = false;
   }
 }
 function sorted() { return state.articles.slice().sort((a,b) => b.date.localeCompare(a.date)); }
@@ -799,6 +816,7 @@ issueForm.addEventListener('submit', event => {
 window.addEventListener('beforeunload', event => {
   if (dirty) { event.preventDefault(); event.returnValue = true; }
 });
-showLogin();
-if (!inviteCode) run(async () => activate(await api('state')), null, false);
+$('retry-session').addEventListener('click', restoreSession);
+if (inviteCode) showLogin();
+else void restoreSession();
 })();

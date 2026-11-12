@@ -55,9 +55,89 @@
       "publishedAt": "2026-11-11T06:24:05.192Z",
       "videoPoster": "/uploads/7ddd2a6999d2c51046e719b1b1b109f6f8ae13397786e8ddb2bcc568de9d15b0.jpg",
       "videoLinks": []
+    },
+    "keimeno-1e1635f7c4ad3260": {
+      "title": "Η γιορτή του Αγίου Νεκταρίου στο Σταυροδρόμι Γορτυνίας",
+      "date": "2026-11-09",
+      "author": "Μιχαήλ Σωτηρίου Μιχαλακόπουλος",
+      "summary": "Το Σταυροδρόμι της Γορτυνίας τίμησε τον Άγιο Νεκτάριο στο εκκλησάκι του, με Εσπερινό την Κυριακή 8 Νοεμβρίου και Θεία Λειτουργία με αρτοκλασία τη Δευτέρα 9 Νοεμβρίου.",
+      "deck": "Λίγο έξω από το Σταυροδρόμι της Γορτυνίας, το εκκλησάκι του Αγίου Νεκταρίου συγκέντρωσε και φέτος χωριανούς και προσκυνητές από τα γύρω χωριά. Μετά τη Θεία Λειτουργία, η οικογένεια του Ηλία Παπαγεωργίου τούς υποδέχτηκε στο σπίτι της, όπως κάθε χρόνο.",
+      "image": "",
+      "gallery": [
+        "/uploads/bf33a8ebb57a8d157ea162c2404f37448bc6db98147c922760b567aebfda1a63.jpg",
+        "/uploads/7cbed702b200bae3205760d42e32badaea48edf0e61d0a5d7a82b7471dcbe576.jpg",
+        "/uploads/0518d5557a11eb581d44577ddd4239e34e15694fdd9d56b79f9ac7b009190cba.jpg",
+        "/uploads/d21a635f244c35d1c0d8f27438b4a5da14ab055b2dda5371ee401e079baa3d81.jpg",
+        "/uploads/623051b9c5c42328d2c2f20a98639a87e2be838c5dbec14404eb957d0c345cc6.jpg",
+        "/uploads/1fd0ae007e68e53c58cc43d4b7d0c60d373aef387c63e537551f60a3ff5034fb.jpg",
+        "/uploads/1623a7f27b9057969af7eb4bac64d5b6a55b956872bac31865b92e480e4ce137.jpg",
+        "/uploads/7fd42cc09be25eebf3ed7c46b80ff3c085270e0895bdbb68bdc4ee348a170322.jpg",
+        "/uploads/a0a0e47207a89d53e12f6963b65274dbcda1f9161a1ee41f9f3a99fa9535cc81.jpg",
+        "/uploads/41693c06bbdc6320ac0e0be7baf5c34dae3628dd2139072ae2ca22716618dc41.jpg",
+        "/uploads/40fd9df5175f0e96d10d85b72a6bba9c9e4ad2eb3485ad119774bff461c5f54d.jpg",
+        "/uploads/1ecd4a77a39ee61c08c9e4462984c587c8cdf9ffb0dfebac7fad453e95770698.jpg",
+        "/uploads/d40323e67e2abf5ef20a648a6e366e751ffc62e68a8a4f029c11045d2b80cb6d.jpg",
+        "/uploads/009a2014fde6aa8eb11bb16b817674200df50b3dc67378aebeb659287fbcaee0.jpg",
+        "/uploads/b686091d852b4fbc7cab1bcd3a7264d071007f463882938bf0235e31065b1334.jpg",
+        "/uploads/66f42754949911c570355996e5fdd3c22de9904aacea7dd263b7559211507eaa.jpg"
+      ],
+      "videos": [
+        "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4",
+        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4",
+        "/uploads/d1a849b360dff272fb9cdece29154f753525db775ee4e32a144d4cd4272481f0.mp4"
+      ],
+      "video": "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4",
+      "videoLink": "",
+      "videoLinks": [],
+      "videoPoster": "/uploads/774e9c32ce525aedaf1675e0042a3f4bd51aa2baa8cee436d93eb6bf627f8036.jpg",
+      "sections": [
+        "reportaz"
+      ],
+      "hero": true,
+      "alt": "",
+      "caption": "",
+      "blocks": [
+        "Κάθε χρόνο, στις 9 Νοεμβρίου, το Σταυροδρόμι της Γορτυνίας τιμά τη μνήμη του Αγίου Νεκταρίου στο εκκλησάκι του, λίγο έξω από το χωριό. Την Κυριακή 8 Νοεμβρίου, το απόγευμα, τελέστηκε ο Εσπερινός με τη συμμετοχή πολλών συμπατριωτών μας και προσκυνητών από τα γύρω χωριά. Τη Δευτέρα 9 Νοεμβρίου, ανήμερα της γιορτής του Αγίου Νεκταρίου, τελέστηκε η Θεία Λειτουργία με αρτοκλασία.",
+        {
+          "tag": "div",
+          "children": [
+            {
+              "tag": "br",
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            "Το εκκλησάκι βρίσκεται περίπου 150 μέτρα νοτιοανατολικά του χωριού, δίπλα στο σπίτι του Ηλία Παπαγεωργίου. Χτίστηκε στις αρχές της δεκαετίας του 1980 από τον ίδιο και τον πεθερό του, τον Χαράλαμπο Μιχαλακόπουλο. Είναι βυζαντινού ρυθμού, με τρούλο. Στη δυτική πλευρά του βρίσκεται το κωδωνοστάσιο με την καμπάνα."
+          ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            {
+              "tag": "br",
+              "children": []
+            }
+          ]
+        },
+        {
+          "tag": "div",
+          "children": [
+            "Ύστερα από τη Θεία Λειτουργία, η οικογένεια του Ηλία Παπαγεωργίου, που έχει τη φροντίδα του ναού, άνοιξε το σπίτι της στους προσκυνητές. Πρόσφερε γλυκά, καφέ και αναψυκτικά, όπως συνηθίζει κάθε χρόνο. Εκεί έμειναν για λίγο ακόμη οι χωριανοί και οι επισκέπτες, να πιουν έναν καφέ και να πουν δυο κουβέντες πριν πάρουν τον δρόμο της επιστροφής."
+          ]
+        }
+      ],
+      "publishedAt": "2026-11-12T05:50:50.754Z",
+      "videoPosters": {
+        "/uploads/101fd5e7d219bc809d818662153fdba1cd6f02920fb813875ee3702d76a355df.mp4": "/uploads/774e9c32ce525aedaf1675e0042a3f4bd51aa2baa8cee436d93eb6bf627f8036.jpg",
+        "/uploads/88710c416d3a724e10e6975949e434ce07ad7c08a845ef5f294e837dd7b6ea93.mp4": "/uploads/53c0d7047dff6e09ffcb357009c9f1e3d0d374e6ac8b74776d0ed1f96eff17df.jpg",
+        "/uploads/d1a849b360dff272fb9cdece29154f753525db775ee4e32a144d4cd4272481f0.mp4": "/uploads/c852ea61462c8fabf46d225764bbc43624580ac1ff3cf459ae05c527d55e1e0f.jpg"
+      }
     }
   },
-  "featured": "keimeno-acfea1f46f7006f0",
+  "featured": "keimeno-1e1635f7c4ad3260",
   "issues": [
     {
       "id": "parakampsi",

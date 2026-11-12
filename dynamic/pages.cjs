@@ -10,6 +10,7 @@ const appVersion = assetVersion('app.js');
 const name = 'Σταυροδρόμι Κοινότητα';
 const fallbackImage = '/og-image.png';
 const socialBrandVersion = '3';
+const sharePageVersion = '2';
 const about = 'Ιστορία, μνήμη και ανεξάρτητο ρεπορτάζ για το Σταυροδρόμι Γορτυνίας.';
 const sections = {
   reportaz: ['Ρεπορτάζ & Παρεμβάσεις','Έργα, αποφάσεις και ερωτήματα για την κοινότητα.'],
@@ -83,11 +84,17 @@ function linkedVideo(source, preview, title) {
     <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
   </div>`;
 }
-function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
-  const cardTitle = article && title ? name + ' | ' + title : title || name;
+function socialImage(origin, image) {
   const shareImage = new URL(safeUrl(image) ? image : fallbackImage, origin);
+  if (shareImage.origin === origin && shareImage.pathname === fallbackImage) {
+    shareImage.searchParams.set('v', socialBrandVersion);
+  }
+  return shareImage;
+}
+function socialTags({ origin, url, title, summary, image, imageAlt, article }) {
+  const cardTitle = title || name;
+  const shareImage = socialImage(origin, image);
   const isSiteImage = shareImage.origin === origin && shareImage.pathname === fallbackImage;
-  if (isSiteImage) shareImage.searchParams.set('v', socialBrandVersion);
   const shareAlt = isSiteImage ? 'Λογότυπο του Σταυροδρομίου Κοινότητα' : imageAlt;
   const imageExtension = /\.(jpe?g|png|webp)$/i.exec(shareImage.pathname)?.[1].toLowerCase();
   const imageType = imageExtension === 'jpg' ? 'jpeg' : imageExtension;
@@ -191,20 +198,29 @@ function articleDescription(item) {
   return text.slice(0, 199).replace(/\s+\S*$/, '').trimEnd() + '…';
 }
 function renderShare(origin, articleOrigin, item, image) {
-  const address = articleUrl(item.id);
+  const address = articleOrigin + articleUrl(item.id);
   const title = item.title;
   const summary = articleDescription(item);
   const imageAlt = item.image ? item.alt : image && !item.gallery?.length ? 'Καρέ του βίντεο' : '';
   return `<!doctype html><html lang="el"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
   <title>${e(title)} | ${name}</title>
-  <meta name="description" content="${e(summary)}">${brandIcons(articleOrigin)}
+  <meta name="description" content="${e(summary)}">
   ${socialTags({ origin, url: origin + articleShareAddress(item), title, summary, image, imageAlt, article: true })}
-  </head><body><main><h1>${e(title)}</h1><p>${e(summary)}</p>
-  <a id="article" href="${e(articleOrigin + address)}">Διάβασε το άρθρο στο Σταυροδρόμι</a></main>
-  <script>location.replace(document.getElementById('article').href);</script></body></html>`;
+  ${brandIcons(articleOrigin)}
+  <style>
+  body{margin:0;background:#f6f3eb;color:#252820;font:1.15rem/1.55 Georgia,serif}
+  main{box-sizing:border-box;max-width:44rem;margin:auto;padding:2rem 1.25rem}
+  h1{font-size:clamp(1.75rem,5vw,2.75rem);line-height:1.15;margin:.65rem 0 1rem}
+  a{color:#202e25} img{display:block;width:100%;height:auto;border-radius:.3rem}
+  .read{display:inline-block;background:#202e25;color:#fff;padding:.7rem 1rem;border-radius:.3rem}
+  </style>
+  </head><body><main><a href="${e(articleOrigin + '/')}">${name}</a>
+  <h1>${e(title)}</h1>
+  <img src="${e(socialImage(origin, image).href)}" alt="${e(imageAlt || '')}">
+  <p>${e(summary)}</p><a class="read" href="${e(address)}">Διάβασε το άρθρο</a></main></body></html>`;
 }
 function articleShareAddress(item) {
-  const revision = createHash('sha256').update(JSON.stringify([socialBrandVersion, item.title, articleDescription(item), thumbnail(item)])).digest('hex').slice(0, 16);
+  const revision = createHash('sha256').update(JSON.stringify([sharePageVersion, socialBrandVersion, item.title, articleDescription(item), thumbnail(item)])).digest('hex').slice(0, 16);
   return articleUrl(item.id) + '?preview=' + revision;
 }
 const cardThumbnails = new Map([

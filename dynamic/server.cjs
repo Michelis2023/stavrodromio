@@ -9,6 +9,7 @@ const { render, rss, sections, statuses, articleUrl, articleShareAddress, articl
 const { createTeam } = require('./team.cjs');
 const { createComments } = require('./comments.cjs');
 const { createCommentAuth } = require('./comment-auth.cjs');
+const { createGoogleCommentAuth } = require('./comment-google.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
 const publicSnapshot = require('./public-snapshot.json');
@@ -39,6 +40,12 @@ const commentAuth = createCommentAuth({
   key: sessionCookieKey && Buffer.from(sessionRoot, 'hex'), secure, comments,
   apiKey: process.env.STAVRODROMIO_BREVO_API_KEY, sender: process.env.STAVRODROMIO_COMMENT_SENDER,
 });
+const googleCommentAuth = createGoogleCommentAuth({
+  key: sessionCookieKey && Buffer.from(sessionRoot, 'hex'), secure, comments,
+  clientId: process.env.STAVRODROMIO_GOOGLE_CLIENT_ID,
+  clientSecret: process.env.STAVRODROMIO_GOOGLE_CLIENT_SECRET,
+});
+const commentAccounts = commentAuth.enabled || googleCommentAuth.enabled;
 const commentNotification = process.env.STAVRODROMIO_COMMENT_NOTIFICATION_FORM || 'https://formspree.io/f/xbdqagyk';
 async function notifyComment(origin, article) {
   if (!/^https:\/\/formspree\.io\/f\/[a-z0-9]+$/.test(commentNotification)) return;
@@ -753,9 +760,36 @@ const route = async (req, res) => {
       if (req.method === 'POST' && req.headers.origin !== origin) throw failure(403, 'Μη επιτρεπτή προέλευση.');
       const address = process.env.RENDER ? (req.headers['x-forwarded-for'] || '').split(',').at(-1).trim() : req.socket.remoteAddress;
       if (id.startsWith('auth/')) {
+        if (id === 'auth/google' || id === 'auth/google/callback') {
+          if (!googleCommentAuth.enabled) throw failure(503, 'Η σύνδεση Google δεν είναι διαθέσιμη.');
+          if (req.method !== 'GET') throw failure(405, 'Μη επιτρεπτό αίτημα.');
+          const headers = { 'Cache-Control': 'no-store', 'Referrer-Policy': 'no-referrer' };
+          if (id === 'auth/google') {
+            const start = googleCommentAuth.start(origin, url.searchParams.get('article'));
+            if (!start) throw failure(400, 'Μη έγκυρη διεύθυνση άρθρου.');
+            res.writeHead(303, { ...headers, Location: start.url, 'Set-Cookie': start.cookie });
+            return res.end();
+          }
+          const state = googleCommentAuth.read(req, url.searchParams.get('state'));
+          if (!state) return js(res, 400, { error: 'Η σύνδεση έληξε. Άνοιξε το άρθρο και δοκίμασε ξανά.' },
+            { ...headers, 'Set-Cookie': googleCommentAuth.clear() });
+          const address = articleUrl(state.article);
+          const cookies = [googleCommentAuth.clear()];
+          let result = '';
+          try {
+            const reader = await googleCommentAuth.finish(origin, url.searchParams.get('code'), state.verifier);
+            cookies.push(commentAuth.cookie(reader));
+          } catch {
+            result = '?comment-login=failed';
+          }
+          res.writeHead(303, { ...headers, Location: address + result + '#comments-heading', 'Set-Cookie': cookies });
+          return res.end();
+        }
+        if (id === 'auth/logout' && commentAccounts && req.method === 'POST') {
+          return js(res, 200, { ok: true }, { 'Set-Cookie': commentAuth.cookie() });
+        }
         if (!commentAuth.enabled) throw failure(503, 'Η σύνδεση αναγνωστών δεν είναι διαθέσιμη.');
         if (req.method !== 'POST') throw failure(405, 'Μη επιτρεπτό αίτημα.');
-        if (id === 'auth/logout') return js(res, 200, { ok: true }, { 'Set-Cookie': commentAuth.cookie() });
         const input = await requestBody(req, 2048);
         if (id === 'auth/request') return js(res, 200, { challenge: await commentAuth.request(input, address) });
         if (id === 'auth/verify') {
@@ -768,10 +802,10 @@ const route = async (req, res) => {
       const all = merged(await publicState(id));
       if (!known(all, id)) throw failure(404, 'Το άρθρο δεν βρέθηκε.');
       if (req.method === 'GET') return js(res, 200, { items: await comments.published(id),
-        reader: commentAuth.enabled ? (await commentAuth.reader(req))?.name ?? null : undefined });
+        reader: commentAccounts ? (await commentAuth.reader(req))?.name ?? null : undefined });
       if (req.method !== 'POST') throw failure(405, 'Μη επιτρεπτό αίτημα.');
-      const reader = commentAuth.enabled ? await commentAuth.reader(req) : null;
-      if (commentAuth.enabled && !reader) throw failure(401, 'Συνδέσου με επιβεβαιωμένο email για να σχολιάσεις.');
+      const reader = commentAccounts ? await commentAuth.reader(req) : null;
+      if (commentAccounts && !reader) throw failure(401, 'Συνδέσου με επιβεβαιωμένο email για να σχολιάσεις.');
       const { created, items } = await comments.submit(id, await requestBody(req, 12000), address, reader);
       if (created) await notifyComment(origin, all[id]);
       return js(res, 201, { items });
@@ -873,7 +907,8 @@ const route = async (req, res) => {
     const category = /^\/(reportaz|history|laografia|autodioikisi)\.html$/.exec(p)?.[1];
     if (category || p === '/arxeio') return html(res, 200, render('archive', { ...params, category, q: (url.searchParams.get('q') || '').slice(0, 100) }), publicCacheHeaders);
     if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id],
-      commentsEnabled: comments.enabled, commentAccounts: commentAuth.enabled }), publicCacheHeaders);
+      commentsEnabled: comments.enabled, commentAccounts, commentEmail: commentAuth.enabled,
+      commentGoogle: googleCommentAuth.enabled }), publicCacheHeaders);
     return html(res, 404, render('missing', { origin }));
   } catch (error) {
     if (res.headersSent || res.destroyed) return res.destroy();

@@ -262,7 +262,7 @@ const newsletter = action => action ? `<section class="panel newsletter" aria-la
 </section>` : '';
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction, commentsEnabled, commentAccounts } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction, commentsEnabled, commentAccounts, commentEmail, commentGoogle } = params;
   const rememberDevice = rememberLogin ? '<label><input type="checkbox" name="remember" checked> Να με θυμάσαι σε αυτή τη συσκευή</label>' : '';
   if (kind === 'install') return layout(`${intro('Σταυροδρόμι στο κινητό', 'Εγκατάσταση εφαρμογής', 'Άνοιξε το Σταυροδρόμι από το εικονίδιό του στην αρχική οθόνη.')}
     <div class="install-guide">
@@ -378,7 +378,11 @@ function render(kind, params) {
       ${!preview && commentsEnabled ? `<section class="article-comments" aria-labelledby="comments-heading" data-comments="/api/comments/${e(encodeURIComponent(article.id))}">
         <h2 id="comments-heading">Σχόλια</h2>
         <div data-comment-list></div>
-        ${commentAccounts ? `<form method="post" data-comment-login hidden>
+        ${commentGoogle ? `<div data-comment-google>
+          <p>Το όνομα από το προφίλ Google εμφανίζεται δίπλα στα σχόλια. Το email μένει ιδιωτικό.</p>
+          <a href="/api/comments/auth/google?article=${encodeURIComponent(article.id)}">Σύνδεση με Google</a>
+        </div>` : ''}
+        ${commentEmail ? `<form method="post" data-comment-login hidden>
           <h3>Σύνδεση για σχόλια</h3>
           <p>Στην πρώτη εγγραφή συμπλήρωσε το ονοματεπώνυμό σου. Θα εμφανίζεται δίπλα στα σχόλια. Το email σου μένει ιδιωτικό.</p>
           <label>Email <input type="email" name="email" autocomplete="email" required maxlength="254"></label>
@@ -390,8 +394,8 @@ function render(kind, params) {
           <label>Κωδικός email <input name="code" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required></label>
           <button type="submit">Επιβεβαίωση και σύνδεση</button>
           <button type="button" class="secondary" data-comment-back>Νέος κωδικός</button>
-        </form>
-        <div data-comment-reader hidden><span></span> <button type="button" class="secondary">Αποσύνδεση</button></div>` : ''}
+        </form>` : ''}
+        ${commentAccounts ? '<div data-comment-reader hidden><span></span> <button type="button" class="secondary">Αποσύνδεση</button></div>' : ''}
         <form method="post" data-comment-form hidden>
           <p>Το σχόλιό σου δημοσιεύεται αμέσως. Η διαχείριση αφαιρεί προσβολές, απειλές, προτροπές σε βία, ανεπιθύμητη διαφήμιση και προσωπικά στοιχεία τρίτων.</p>
           ${commentAccounts ? '' : '<label>Όνομα ή ψευδώνυμο <input name="name" required maxlength="60"></label>'}

@@ -116,6 +116,7 @@ for (const section of document.querySelectorAll('[data-comments]')) {
   const login = section.querySelector('[data-comment-login]');
   const verify = section.querySelector('[data-comment-verify]');
   const readerLabel = section.querySelector('[data-comment-reader]');
+  const google = section.querySelector('[data-comment-google]');
   const date = new Intl.DateTimeFormat('el-GR', { dateStyle: 'medium', timeZone: 'Europe/Athens' });
   let submissionId;
 
@@ -137,10 +138,11 @@ for (const section of document.querySelectorAll('[data-comments]')) {
     }
   }
   function reader(name) {
-    form.hidden = !!login && !name;
-    if (!login) return;
-    login.hidden = !!name;
-    verify.hidden = true;
+    form.hidden = !!readerLabel && !name;
+    if (!readerLabel) return;
+    if (google) google.hidden = !!name;
+    if (login) login.hidden = !!name;
+    if (verify) verify.hidden = true;
     readerLabel.hidden = !name;
     readerLabel.querySelector('span').textContent = name || '';
   }
@@ -191,6 +193,8 @@ for (const section of document.querySelectorAll('[data-comments]')) {
       login.elements.email.focus();
       status.textContent = '';
     });
+  }
+  if (readerLabel) {
     readerLabel.querySelector('button').addEventListener('click', async () => {
       try {
         await commentRequest('/api/comments/auth/logout', {});
@@ -202,14 +206,15 @@ for (const section of document.querySelectorAll('[data-comments]')) {
     });
   }
   const endpoint = section.dataset.comments;
-  if (!login) reader(null);
+  if (!readerLabel) reader(null);
   status.textContent = 'Φόρτωση σχολίων…';
   const loaded = fetch(endpoint).then(async response => {
     if (!response.ok) throw new Error();
     const result = await response.json();
     show(result.items);
     reader(result.reader);
-    status.textContent = '';
+    status.textContent = google && new URLSearchParams(location.search).get('comment-login') === 'failed'
+      ? 'Η σύνδεση Google δεν ολοκληρώθηκε. Δοκίμασε ξανά.' : '';
   }).catch(() => {
     reader(null);
     status.textContent = 'Τα σχόλια δεν φορτώθηκαν. Δοκίμασε ανανέωση της σελίδας.';
@@ -233,7 +238,7 @@ for (const section of document.querySelectorAll('[data-comments]')) {
       }
       status.textContent = 'Το σχόλιό σου δημοσιεύτηκε.';
     } catch (error) {
-      if (error.status === 401 && login) reader(null);
+      if (error.status === 401 && readerLabel) reader(null);
       status.textContent = error.message || 'Η αποστολή δεν ολοκληρώθηκε. Δοκίμασε ξανά.';
     } finally {
       submit.disabled = false;

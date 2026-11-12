@@ -41,9 +41,10 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
   const address = panel.querySelector('input');
   const share = panel.querySelector('[data-native-share]');
   const copy = panel.querySelector('[data-copy-link]');
+  const retry = panel.querySelector('[data-retry-share]');
   const status = panel.querySelector('[role="status"]');
   const shareData = () => ({ title: panel.dataset.title, url: address.value });
-  if (typeof navigator.share === 'function' && (typeof navigator.canShare !== 'function' || navigator.canShare(shareData()))) {
+  if (typeof navigator.share === 'function') {
     share.hidden = false;
     share.addEventListener('click', async () => {
       status.textContent = '';
@@ -66,16 +67,18 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
     }
   });
   let pending = false;
-  let ready = false;
   async function prepareLink() {
-    if (!panel.open || pending || ready) return;
+    if (!panel.open || pending) return;
     pending = true;
+    let ready = false;
+    address.value = '';
     address.disabled = share.disabled = copy.disabled = true;
+    if (retry) retry.hidden = true;
     status.textContent = 'Ετοιμάζεται η προεπισκόπηση του άρθρου…';
     try {
       for (let attempt = 0; attempt < 13 && panel.open; attempt++) {
-        const result = await fetch(panel.dataset.shareEndpoint);
-        if (result.status === 202) {
+        const result = await fetch(panel.dataset.shareEndpoint, { signal: AbortSignal.timeout?.(8000) });
+        if (result.status === 202 || result.status >= 500) {
           if (attempt < 12) await new Promise(resolve => setTimeout(resolve, 4000));
           continue;
         }
@@ -87,14 +90,21 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
         break;
       }
     } catch {
-      // The article's public address remains available if the preview service is unreachable.
+      // Keep sharing disabled until the preview service responds successfully.
     } finally {
       pending = false;
-      address.disabled = share.disabled = copy.disabled = false;
-      status.textContent = ready || !panel.open ? '' : 'Η προεπισκόπηση αργεί. Μπορείς να χρησιμοποιήσεις τον σύνδεσμο του άρθρου ή να ανοίξεις ξανά την κοινοποίηση.';
+      address.disabled = share.disabled = copy.disabled = !ready || !panel.open;
+      if (ready && typeof navigator.canShare === 'function') share.hidden = !navigator.canShare(shareData());
+      if (retry) retry.hidden = ready;
+      status.textContent = ready || !panel.open ? '' : 'Η προεπισκόπηση δεν είναι ακόμη έτοιμη.';
     }
   }
-  panel.addEventListener('toggle', prepareLink);
+  panel.addEventListener('toggle', () => {
+    if (panel.open) return prepareLink();
+    address.disabled = share.disabled = copy.disabled = true;
+    address.value = '';
+  });
+  retry?.addEventListener('click', prepareLink);
   prepareLink();
 }
 

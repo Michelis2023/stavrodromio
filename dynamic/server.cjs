@@ -725,7 +725,13 @@ const route = async (req, res) => {
       if (!local) {
         const ready = await fetch(shareUrl, {
           redirect: 'error', signal: AbortSignal.timeout(3500),
-        }).then(async result => result.ok && (await result.text()).includes('<meta property="og:url" content="' + shareUrl + '">'))
+        }).then(async result => {
+          if (!result.ok) return false;
+          const markup = await result.text();
+          return markup.includes('<meta property="og:url" content="' + shareUrl + '">') &&
+            ['title', 'description', 'image'].every(field =>
+              new RegExp('<meta property="og:' + field + '" content="[^"]+">').test(markup));
+        })
           .catch(() => false);
         if (!ready) {
           if (!facebook) return js(res, 202, { ready: false }, { 'Retry-After': '4' });

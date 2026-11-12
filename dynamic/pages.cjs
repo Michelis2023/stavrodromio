@@ -368,9 +368,10 @@ function render(kind, params) {
         <details class="article-share" data-article-share data-title="${e(article.title)}" data-share-endpoint="/koinopoiisi/${encodeURIComponent(article.id)}">
           <summary>Κοινοποίηση</summary>
           <div class="article-share-options">
-            <button type="button" data-native-share hidden>Κοινοποίηση σε εφαρμογή</button>
-            <button type="button" class="secondary" data-copy-link hidden>Αντιγραφή συνδέσμου</button>
-            <label>Σύνδεσμος άρθρου <input type="url" readonly value="${e(origin + address)}"></label>
+            <button type="button" data-native-share hidden disabled>Κοινοποίηση σε εφαρμογή</button>
+            <button type="button" class="secondary" data-copy-link hidden disabled>Αντιγραφή συνδέσμου</button>
+            <button type="button" class="secondary" data-retry-share hidden>Δοκίμασε ξανά</button>
+            <label>Σύνδεσμος με προεπισκόπηση <input type="url" readonly disabled></label>
             <p role="status"></p>
           </div>
         </details></div>`}</article>

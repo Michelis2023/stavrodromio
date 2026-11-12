@@ -925,12 +925,16 @@ form.addEventListener('submit', event => {
   event.preventDefault();
   run(async () => {
     const selectedIssue = $('issue-select').value;
+    const controls = [...form.children].filter(element => element.id !== 'upload-status' && !element.inert);
     try {
       const { data, files } = payload();
+      for (const control of controls) control.inert = true;
       state = await publishArticle(data, files);
     } catch (error) {
       uploadNotice(error.message, undefined, true);
       throw error;
+    } finally {
+      for (const control of controls) control.inert = false;
     }
     openArticle(state.articles.find(a => a.id === state.id));
     updateIssues(selectedIssue);

@@ -110,13 +110,14 @@ function createComments({ local, key, enabled, repoApi, gh, serviceToken }) {
     limitByAddress.set(address, visitor);
   }
 
-  async function submit(article, input, address) {
-    const name = typeof input.name === 'string' ? input.name.replace(/\s+/g, ' ').trim() : '';
+  async function submit(article, input, address, member) {
+    const name = member?.name ?? (typeof input.name === 'string' ? input.name.replace(/\s+/g, ' ').trim() : '');
     const body = typeof input.body === 'string' ? input.body.replace(/\r\n?/g, '\n').trim() : '';
-    if (input.website || typeof input.id !== 'string' || !idPattern.test(input.id) || name.length > 60 || !name ||
+    if (input.website || typeof input.id !== 'string' || !idPattern.test(input.id) || name.length > (member ? 91 : 60) || !name ||
         body.length > 2000 || !body) throw error(400, 'Συμπλήρωσε όνομα και σχόλιο έως 2.000 χαρακτήρες.');
     limit(address);
     const entry = { id: input.id, article, name, body, created: new Date().toISOString() };
+    if (member) entry.memberId = member.id;
     let created;
     const items = await mutate(items => {
       created = !items.some(item => item.id === entry.id);
@@ -127,7 +128,13 @@ function createComments({ local, key, enabled, repoApi, gh, serviceToken }) {
 
   function remove(id) {
     if (typeof id !== 'string' || !idPattern.test(id)) throw error(400, 'Μη έγκυρη ενέργεια σχολίου.');
-    return mutate(items => items.some(item => item.id === id) ? items.filter(item => item.id !== id) : items);
+    return mutate(items => items.some(item => item.id === id && item.article) ? items.filter(item => item.id !== id) : items);
+  }
+
+  async function register(id, name, email) {
+    const items = await mutate(items => items.some(item => item.id === id && item.kind === 'member') ? items
+      : [...items, { id, kind: 'member', name, email }]);
+    return items.find(item => item.id === id && item.kind === 'member');
   }
 
   function forArticle(items, article) {
@@ -135,7 +142,10 @@ function createComments({ local, key, enabled, repoApi, gh, serviceToken }) {
       .map(({ name, body, created }) => ({ name, body, created }));
   }
 
-  return { enabled: !!(enabled && secret), list, submit, remove,
+  return { enabled: !!(enabled && secret), submit, register,
+    member: async id => (await list()).find(item => item.id === id && item.kind === 'member'),
+    moderationList: async () => (await list()).filter(item => item.article),
+    remove: async id => (await remove(id)).filter(item => item.article),
     published: async article => forArticle(await list(), article),
   };
 }

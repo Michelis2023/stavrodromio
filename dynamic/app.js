@@ -113,6 +113,9 @@ for (const section of document.querySelectorAll('[data-comments]')) {
   const list = section.querySelector('[data-comment-list]');
   const status = section.querySelector('[data-comment-status]');
   const submit = form.querySelector('button');
+  const login = section.querySelector('[data-comment-login]');
+  const verify = section.querySelector('[data-comment-verify]');
+  const readerLabel = section.querySelector('[data-comment-reader]');
   const date = new Intl.DateTimeFormat('el-GR', { dateStyle: 'medium', timeZone: 'Europe/Athens' });
   let submissionId;
 
@@ -133,14 +136,84 @@ for (const section of document.querySelectorAll('[data-comments]')) {
       list.append(row);
     }
   }
+  function reader(name) {
+    form.hidden = !!login && !name;
+    if (!login) return;
+    login.hidden = !!name;
+    verify.hidden = true;
+    readerLabel.hidden = !name;
+    readerLabel.querySelector('span').textContent = name || '';
+  }
+  async function commentRequest(url, data) {
+    const response = await fetch(url, {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+    const result = await response.json();
+    if (!response.ok) throw Object.assign(new Error(result.error || 'Η αποστολή δεν ολοκληρώθηκε.'), { status: response.status });
+    return result;
+  }
+  if (login) {
+    let challenge;
+    function authAction(form, action) {
+      form.addEventListener('submit', async event => {
+        event.preventDefault();
+        const button = event.submitter || form.querySelector('[type="submit"]');
+        button.disabled = true;
+        try {
+          await action(Object.fromEntries(new FormData(form)));
+        } catch (error) {
+          status.textContent = error.message;
+        } finally {
+          button.disabled = false;
+        }
+      });
+    }
+    authAction(login, async data => {
+      status.textContent = 'Αποστολή κωδικού…';
+      ({ challenge } = await commentRequest('/api/comments/auth/request', data));
+      login.hidden = true;
+      verify.hidden = false;
+      verify.elements.code.focus();
+      status.textContent = 'Έλεγξε το email σου και γράψε τον εξαψήφιο κωδικό.';
+    });
+    authAction(verify, async data => {
+      const result = await commentRequest('/api/comments/auth/verify', { ...data, challenge });
+      login.reset();
+      verify.reset();
+      reader(result.reader);
+      form.elements.body.focus();
+      status.textContent = 'Συνδέθηκες για να σχολιάσεις.';
+    });
+    verify.querySelector('[data-comment-back]').addEventListener('click', () => {
+      verify.reset();
+      reader(null);
+      login.elements.email.focus();
+      status.textContent = '';
+    });
+    readerLabel.querySelector('button').addEventListener('click', async () => {
+      try {
+        await commentRequest('/api/comments/auth/logout', {});
+        reader(null);
+        status.textContent = 'Αποσυνδέθηκες.';
+      } catch (error) {
+        status.textContent = error.message;
+      }
+    });
+  }
   const endpoint = section.dataset.comments;
-  form.hidden = false;
+  if (!login) reader(null);
   status.textContent = 'Φόρτωση σχολίων…';
   const loaded = fetch(endpoint).then(async response => {
     if (!response.ok) throw new Error();
-    show((await response.json()).items);
+    const result = await response.json();
+    show(result.items);
+    reader(result.reader);
     status.textContent = '';
-  }).catch(() => { status.textContent = 'Τα σχόλια δεν φορτώθηκαν. Δοκίμασε ανανέωση της σελίδας.'; });
+  }).catch(() => {
+    reader(null);
+    status.textContent = 'Τα σχόλια δεν φορτώθηκαν. Δοκίμασε ανανέωση της σελίδας.';
+  });
 
   form.addEventListener('input', () => { submissionId = undefined; });
   form.addEventListener('submit', async event => {
@@ -152,12 +225,7 @@ for (const section of document.querySelectorAll('[data-comments]')) {
     status.textContent = 'Αποστολή σχολίου…';
     try {
       await loaded;
-      const response = await fetch(endpoint, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...Object.fromEntries(fields), id }),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || 'Η αποστολή δεν ολοκληρώθηκε.');
+      const result = await commentRequest(endpoint, { ...Object.fromEntries(fields), id });
       show(result.items);
       if (submissionId === id) {
         form.elements.body.value = '';
@@ -165,6 +233,7 @@ for (const section of document.querySelectorAll('[data-comments]')) {
       }
       status.textContent = 'Το σχόλιό σου δημοσιεύτηκε.';
     } catch (error) {
+      if (error.status === 401 && login) reader(null);
       status.textContent = error.message || 'Η αποστολή δεν ολοκληρώθηκε. Δοκίμασε ξανά.';
     } finally {
       submit.disabled = false;

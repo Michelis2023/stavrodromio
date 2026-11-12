@@ -522,6 +522,7 @@ function activate(data) {
   $('team-panel').hidden = data.user.role !== 'owner';
   $('team-panel').open = false;
   clearTeam();
+  if ($('moderation') && location.hash === '#moderation') $('moderation').open = true;
   if (resume) {
     articles();
     feedback('Η σύνδεση ανανεώθηκε. Οι αλλαγές του άρθρου διατηρήθηκαν.');
@@ -744,6 +745,47 @@ function showTeam(data) {
   $('team-accounts').replaceChildren(...rows(data.accounts, false));
   $('team-pending').replaceChildren(...rows(data.invites, true));
 }
+const moderation = $('moderation');
+if (moderation) {
+  const list = $('moderation-list');
+  const status = $('moderation-status');
+  const refresh = $('refresh-comments');
+  function showComments(items) {
+    list.replaceChildren();
+    status.textContent = items.length ? '' : 'Δεν υπάρχουν σχόλια.';
+    for (const item of items.slice().reverse()) {
+      const row = document.createElement('article');
+      row.className = 'comment-entry';
+      const name = document.createElement('strong');
+      name.textContent = item.name;
+      const article = document.createElement('a');
+      article.href = '/article-' + encodeURIComponent(item.article) + '.html';
+      article.textContent = state.articles.find(entry => entry.id === item.article)?.title || 'Άνοιγμα άρθρου';
+      const info = document.createElement('p');
+      info.append(name, ' · ', article);
+      const body = document.createElement('p');
+      body.textContent = item.body;
+      const remove = document.createElement('button');
+      remove.type = 'button';
+      remove.className = 'secondary';
+      remove.textContent = 'Διαγραφή σχολίου';
+      remove.addEventListener('click', () => {
+        if (!window.confirm('Να διαγραφεί αυτό το σχόλιο;')) return;
+        run(async () => {
+          showComments((await api('comments', { id: item.id })).items);
+          status.textContent = 'Το σχόλιο διαγράφηκε.';
+          refresh.focus();
+        }, remove);
+      });
+      row.append(info, body, remove);
+      list.append(row);
+    }
+  }
+  const loadComments = () => run(async () => showComments((await api('comments')).items), refresh);
+  moderation.addEventListener('toggle', () => { if (moderation.open) loadComments(); });
+  refresh.addEventListener('click', loadComments);
+}
+
 $('team-panel').addEventListener('toggle', () => {
   if ($('team-panel').open) run(async () => showTeam(await api('team')));
 });

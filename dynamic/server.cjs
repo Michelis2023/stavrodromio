@@ -7,6 +7,7 @@ const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash, createCipheriv, createDecipheriv, hkdfSync } = require('node:crypto');
 const { render, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
+const { createComments } = require('./comments.cjs');
 const original = require('./original.json');
 const baseline = require('./baseline.json');
 const publicSnapshot = require('./public-snapshot.json');
@@ -29,6 +30,28 @@ const sessionRoot = process.env.STAVRODROMIO_TEAM_KEY || '';
 const sessionCookieKey = (secure || local) && /^[a-f0-9]{64}$/i.test(sessionRoot)
   ? hkdfSync('sha256', Buffer.from(sessionRoot, 'hex'), '', 'stavrodromio-admin-session-v1', 32)
   : null;
+const comments = createComments({
+  local, enabled: team.enabled, key: sessionCookieKey && Buffer.from(sessionRoot, 'hex'),
+  repoApi, gh, serviceToken: team.serviceToken,
+});
+const commentNotification = process.env.STAVRODROMIO_COMMENT_NOTIFICATION_FORM || 'https://formspree.io/f/xbdqagyk';
+async function notifyComment(origin, article) {
+  if (!/^https:\/\/formspree\.io\/f\/[a-z0-9]+$/.test(commentNotification)) return;
+  try {
+    const response = await fetch(commentNotification, {
+      method: 'POST', redirect: 'error', signal: AbortSignal.timeout(5000),
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json', Referer: origin + '/' },
+      body: JSON.stringify({
+        subject: 'Νέο σχόλιο στο Σταυροδρόμι',
+        message: 'Άρθρο: ' + article.title + '\n' + origin + articleUrl(article.id) +
+          '\n\nΈλεγχος σχολίων: ' + origin + '/admin#moderation',
+      }),
+    });
+    if (!response.ok) console.warn('Comment email rejected:', response.status);
+  } catch (cause) {
+    console.warn('Comment email unavailable:', cause.name);
+  }
+}
 let cache = { state: publicSnapshot, until: 0 };
 let pending;
 const publicCacheHeaders = { 'Cache-Control': 'public, max-age=15, stale-while-revalidate=30' };
@@ -521,6 +544,13 @@ async function admin(req, res, p, origin) {
     }
     return js(res, 200, dashboard(state, user), headers);
   }
+  if (p === 'comments') {
+    if (!comments.enabled) throw failure(503, 'Τα σχόλια δεν είναι διαθέσιμα.');
+    if (!owner) currentUser(await adminState(token));
+    if (!post) return js(res, 200, { items: await comments.list() });
+    const { id } = await requestBody(req, 1024);
+    return js(res, 200, { items: await comments.remove(id) });
+  }
   if (!post) throw failure(404, 'Η διεύθυνση δεν βρέθηκε.');
   if (p === 'stage-media') {
     if (!owner) currentUser(await adminState(token));
@@ -712,6 +742,20 @@ const route = async (req, res) => {
     try { p = decodeURIComponent(url.pathname); }
     catch { throw failure(400, 'Μη έγκυρη διεύθυνση.'); }
     if (p.startsWith('/api/admin/')) return await admin(req, res, p.slice('/api/admin/'.length), origin);
+    if (p.startsWith('/api/comments/')) {
+      if (!comments.enabled) throw failure(503, 'Τα σχόλια δεν είναι διαθέσιμα.');
+      const id = p.slice('/api/comments/'.length);
+      if (!validId(id)) throw failure(404, 'Το άρθρο δεν βρέθηκε.');
+      const all = merged(await publicState(id));
+      if (!known(all, id)) throw failure(404, 'Το άρθρο δεν βρέθηκε.');
+      if (req.method === 'GET') return js(res, 200, { items: await comments.published(id) });
+      if (req.method !== 'POST') throw failure(405, 'Μη επιτρεπτό αίτημα.');
+      if (req.headers.origin !== origin) throw failure(403, 'Μη επιτρεπτή προέλευση.');
+      const address = process.env.RENDER ? (req.headers['x-forwarded-for'] || '').split(',').at(-1).trim() : req.socket.remoteAddress;
+      const { created, items } = await comments.submit(id, await requestBody(req, 12000), address);
+      if (created) await notifyComment(origin, all[id]);
+      return js(res, 201, { items });
+    }
     if (!['GET','HEAD'].includes(req.method)) throw failure(405, 'Μη επιτρεπτό αίτημα.');
     if (p === '/healthz') return js(res, 200, { ok: true });
     if (p === '/robots.txt') return respond(res, 200, 'User-agent: *\nDisallow: /admin\nDisallow: /api/admin/\nSitemap: ' + origin + '/sitemap.xml\n', 'text/plain; charset=utf-8');
@@ -781,7 +825,7 @@ const route = async (req, res) => {
       }
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
-    if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled, rememberLogin: !!sessionCookieKey }), { 'Cache-Control': 'no-store' });
+    if (p === '/admin') return html(res, 200, render('admin', { origin, local, teamEnabled: team.enabled, rememberLogin: !!sessionCookieKey, commentsEnabled: comments.enabled }), { 'Cache-Control': 'no-store' });
     if (p === '/egkatastasi') return html(res, 200, render('install', { origin }), publicCacheHeaders);
     const informationName = /^\/(sxetika|epikoinonia)\.html$/.exec(p)?.[1]
       || /^\/afieroma\/(history|laografia|autodioikisi)$/.exec(p)?.[1];
@@ -808,14 +852,14 @@ const route = async (req, res) => {
     if (p === '/paratiritirio') return html(res, 200, render('issues', params), publicCacheHeaders);
     const category = /^\/(reportaz|history|laografia|autodioikisi)\.html$/.exec(p)?.[1];
     if (category || p === '/arxeio') return html(res, 200, render('archive', { ...params, category, q: (url.searchParams.get('q') || '').slice(0, 100) }), publicCacheHeaders);
-    if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id] }), publicCacheHeaders);
+    if (known(all, id)) return html(res, 200, render('article', { ...params, article: all[id], commentsEnabled: comments.enabled }), publicCacheHeaders);
     return html(res, 404, render('missing', { origin }));
   } catch (error) {
     if (res.headersSent || res.destroyed) return res.destroy();
     const status = error.status || 500;
     if (status >= 500 && !error.status) console.error('Request failed:', error.name, error.code || '');
     const message = error.status ? error.message : 'Παρουσιάστηκε πρόβλημα. Δοκίμασε ξανά.';
-    if (p.startsWith('/api/admin/')) return js(res, status, { error: message });
+    if (p.startsWith('/api/admin/') || p.startsWith('/api/comments/')) return js(res, status, { error: message });
     return html(res, status, render('missing', { origin }));
   }
 };

@@ -262,7 +262,7 @@ const newsletter = action => action ? `<section class="panel newsletter" aria-la
 </section>` : '';
 
 function render(kind, params) {
-  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction } = params;
+  const { origin, p, all, state, article, category, q, local, preview, information, teamEnabled, rememberLogin, newsletterAction, commentsEnabled } = params;
   const rememberDevice = rememberLogin ? '<label><input type="checkbox" name="remember" checked> Να με θυμάσαι σε αυτή τη συσκευή</label>' : '';
   if (kind === 'install') return layout(`${intro('Σταυροδρόμι στο κινητό', 'Εγκατάσταση εφαρμογής', 'Άνοιξε το Σταυροδρόμι από το εικονίδιό του στην αρχική οθόνη.')}
     <div class="install-guide">
@@ -375,6 +375,19 @@ function render(kind, params) {
             <p role="status"></p>
           </div>
         </details></div>`}</article>
+      ${!preview && commentsEnabled ? `<section class="article-comments" aria-labelledby="comments-heading" data-comments="/api/comments/${e(encodeURIComponent(article.id))}">
+        <h2 id="comments-heading">Σχόλια</h2>
+        <div data-comment-list></div>
+        <form method="post" data-comment-form hidden>
+          <p>Το σχόλιό σου δημοσιεύεται αμέσως. Η διαχείριση αφαιρεί προσβολές, απειλές, προτροπές σε βία, ανεπιθύμητη διαφήμιση και προσωπικά στοιχεία τρίτων.</p>
+          <label>Όνομα ή ψευδώνυμο <input name="name" required maxlength="60"></label>
+          <label>Σχόλιο <textarea name="body" required maxlength="2000" rows="4"></textarea></label>
+          <label hidden>Ιστότοπος <input name="website" tabindex="-1" autocomplete="off"></label>
+          <button type="submit">Υποβολή σχολίου</button>
+        </form>
+        <p role="status" data-comment-status></p>
+        <noscript><p>Ενεργοποίησε τη JavaScript για να δεις ή να υποβάλεις σχόλια.</p></noscript>
+      </section>` : ''}
       ${preview ? '' : newsletter(newsletterAction)}
       ${related.length ? '<section class="topics">' + head('Σχετικά κείμενα') + cards(related) + '</section>' : ''}`,
       { origin,p:address,title:article.title,summary:articleDescription(article),image:poster,imageAlt:article.image ? article.alt : poster && !article.gallery?.length ? 'Εικόνα προεπισκόπησης του βίντεο' : '',article:true,privatePage:preview });
@@ -404,6 +417,11 @@ function render(kind, params) {
     ${teamEnabled ? '<button id="login-switch" class="secondary" type="button">Σύνδεση συνδιαχειριστή</button>' : ''}
     </section>
     <div id="desk" hidden><p id="editor-role"></p>
+    ${commentsEnabled ? `<details id="moderation" class="panel team-panel">
+      <summary>Έλεγχος σχολίων</summary>
+      <button id="refresh-comments" type="button" class="secondary">Ανανέωση σχολίων</button>
+      <p id="moderation-status" role="status"></p><div id="moderation-list"></div>
+    </details>` : ''}
     <details id="mobile-publishing" class="panel team-panel" hidden>
       <summary>Δημοσίευση από το κινητό</summary>
       <p id="mobile-publishing-text"></p>

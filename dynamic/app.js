@@ -108,6 +108,70 @@ for (const panel of document.querySelectorAll('[data-article-share]')) {
   prepareLink();
 }
 
+for (const section of document.querySelectorAll('[data-comments]')) {
+  const form = section.querySelector('[data-comment-form]');
+  const list = section.querySelector('[data-comment-list]');
+  const status = section.querySelector('[data-comment-status]');
+  const submit = form.querySelector('button');
+  const date = new Intl.DateTimeFormat('el-GR', { dateStyle: 'medium', timeZone: 'Europe/Athens' });
+  let submissionId;
+
+  function show(items) {
+    list.replaceChildren();
+    if (!items.length) list.textContent = 'Δεν υπάρχουν ακόμη σχόλια.';
+    for (const item of items) {
+      const row = document.createElement('article');
+      row.className = 'comment-entry';
+      const name = document.createElement('strong');
+      name.textContent = item.name;
+      const time = document.createElement('time');
+      time.dateTime = item.created;
+      time.textContent = date.format(new Date(item.created));
+      const body = document.createElement('p');
+      body.textContent = item.body;
+      row.append(name, time, body);
+      list.append(row);
+    }
+  }
+  const endpoint = section.dataset.comments;
+  form.hidden = false;
+  status.textContent = 'Φόρτωση σχολίων…';
+  const loaded = fetch(endpoint).then(async response => {
+    if (!response.ok) throw new Error();
+    show((await response.json()).items);
+    status.textContent = '';
+  }).catch(() => { status.textContent = 'Τα σχόλια δεν φορτώθηκαν. Δοκίμασε ανανέωση της σελίδας.'; });
+
+  form.addEventListener('input', () => { submissionId = undefined; });
+  form.addEventListener('submit', async event => {
+    event.preventDefault();
+    submit.disabled = true;
+    const fields = new FormData(form);
+    submissionId ??= crypto.randomUUID().replace(/-/g, '');
+    const id = submissionId;
+    status.textContent = 'Αποστολή σχολίου…';
+    try {
+      await loaded;
+      const response = await fetch(endpoint, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ...Object.fromEntries(fields), id }),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Η αποστολή δεν ολοκληρώθηκε.');
+      show(result.items);
+      if (submissionId === id) {
+        form.elements.body.value = '';
+        submissionId = undefined;
+      }
+      status.textContent = 'Το σχόλιό σου δημοσιεύτηκε.';
+    } catch (error) {
+      status.textContent = error.message || 'Η αποστολή δεν ολοκληρώθηκε. Δοκίμασε ξανά.';
+    } finally {
+      submit.disabled = false;
+    }
+  });
+}
+
 const install = document.querySelector('#install-app');
 const installed = document.querySelector('#installed-app');
 if (install && installed) {

@@ -129,6 +129,13 @@ figcaption,.photo-caption { font:.83rem/1.5 var(--font); color:var(--subtle); pa
 .article-share-options button { min-height:44px; }
 .article-share-options label { flex-basis:100%; min-width:0; font-size:.86rem; }
 .article-share-options p { margin:0; flex-basis:100%; font-size:.86rem; }
+.article-comments { max-width:48rem; margin:2rem auto; border-top:1px solid var(--line); padding-top:1.4rem; }
+.article-comments form { max-width:37rem; margin-top:1rem; }
+.article-comments label { display:block; margin-bottom:.75rem; }
+.comment-entry { padding:.9rem 0; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.comment-entry p { white-space:pre-wrap; margin:.4rem 0; }
+.comment-entry time { margin-inline-start:.5rem; }
+#refresh-comments { margin-top:.65rem; }
 .footer { padding:1.7rem 0; font-size:.84rem; }
 .footer .wrap { align-items:baseline; flex-wrap:wrap; }
 .footer strong { font:700 1.35rem var(--font); }

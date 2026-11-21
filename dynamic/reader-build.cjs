@@ -58,7 +58,7 @@ async function build() {
         .replaceAll('/images/laografia/plateia-kai-giorti.jpg', '/og-image.png');
       for (const match of html.matchAll(/(?:\/uploads\/|\/images\/)[^"'<>\s,]+/g)) {
         const path = decodeURIComponent(match[0].split(/[?#]/)[0]);
-        if (/\.(?:jpg|jpeg|webp|png|gif|svg|mp4)$/i.test(path) && !path.split('/').includes('..')) assets.add(path.slice(1));
+        if (/\.(?:jpg|jpeg|webp|png|gif|svg|mp4|mp3|m4a|wav)$/i.test(path) && !path.split('/').includes('..')) assets.add(path.slice(1));
       }
       const file = path.endsWith('.html') ? path.slice(1) : path.slice(1) + '/index.html';
       write(file.replace(/^\//, ''), html);

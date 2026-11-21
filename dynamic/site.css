@@ -108,7 +108,8 @@ figcaption,.photo-caption { font:.83rem/1.5 var(--font); color:var(--subtle); pa
 .article-media { max-width:43rem; margin:2rem auto; }
 .article-media h2 { margin-bottom:.8rem; }
 .article-media video { display:block; width:100%; aspect-ratio:16/9; max-height:65vh; background:var(--green); }
-.article-video + .article-video { margin-top:1.5rem; }
+.article-media audio, #media-preview-content > audio { display:block; width:100%; }
+.article-audio + .article-audio, .article-video + .article-video { margin-top:1.5rem; }
 .article-external-video { display:block; width:100%; aspect-ratio:16/9; border:0; background:var(--green); }
 .media-file-link { display:inline-block; margin-top:.4rem; font-size:.9rem; }
 .article-gallery { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,14rem),1fr)); gap:.75rem; }

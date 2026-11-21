@@ -214,20 +214,23 @@ function mediaRow(kind, title, { src, file } = {}) {
   element.append(quick, actions);
   return row;
 }
-function mediaFileUrl(file) {
-  if (!mediaObjectUrls.has(file)) mediaObjectUrls.set(file, URL.createObjectURL(file));
+function mediaFileUrl(file, type = file.type) {
+  if (!mediaObjectUrls.has(file)) mediaObjectUrls.set(file, URL.createObjectURL(type === file.type ? file : file.slice(0, file.size, type)));
   return mediaObjectUrls.get(file);
 }
 function showMediaPreview(row, photo) {
-  const item = document.createElement(photo ? 'img' : 'video');
-  item.src = row.src || mediaFileUrl(row.file);
+  const item = document.createElement(photo ? 'img' : row.kind === 'audios' ? 'audio' : 'video');
+  item.src = row.src || (row.kind === 'audios'
+    ? mediaFileUrl(row.file, audioType(row.file)) : mediaFileUrl(row.file));
   if (photo) item.alt = row.title;
   else {
-    const poster = selected?.videoPosters?.[row.src] ||
-      (row.src === (selected?.videos?.[0] || selected?.video) ? selected?.videoPoster : '');
-    if (poster) item.poster = poster;
+    if (row.kind === 'videos') {
+      const poster = selected?.videoPosters?.[row.src] ||
+        (row.src === (selected?.videos?.[0] || selected?.video) ? selected?.videoPoster : '');
+      if (poster) item.poster = poster;
+      item.playsInline = true;
+    }
     item.controls = true;
-    item.playsInline = true;
     item.preload = 'metadata';
   }
   $('media-preview-title').textContent = row.title;
@@ -263,7 +266,7 @@ function updateMediaActions() {
   }
 }
 function renderMediaList() {
-  mediaList.replaceChildren(...['cover', 'gallery', 'videos', 'link'].flatMap(kind => mediaRows.filter(row => row.kind === kind).map(row => row.element)));
+  mediaList.replaceChildren(...['cover', 'gallery', 'videos', 'audios', 'link'].flatMap(kind => mediaRows.filter(row => row.kind === kind).map(row => row.element)));
   mediaPanel.hidden = !mediaRows.length;
   updateMediaActions();
 }
@@ -282,16 +285,27 @@ function showArticleMedia(item) {
   mediaRows = [
     ...photos.map((src, index) => mediaRow('gallery', 'Φωτογραφία ' + (index + 1), { src })),
     ...videos.map((src, index) => mediaRow('videos', 'Βίντεο ' + (index + 1), { src })),
+    ...(item?.audios ?? []).map((src, index) => mediaRow('audios', 'Αρχείο ήχου ' + (index + 1), { src })),
     ...links.map(src => mediaRow('link', src, { src })),
   ];
   updateCoverRow();
 }
+const audioMime = { mp3: 'audio/mpeg', m4a: 'audio/mp4', wav: 'audio/wav' };
+const audioAccept = Object.entries(audioMime).flatMap(([extension, type]) => [type, '.' + extension]).join(',');
+function audioType(file) {
+  const extension = file.name.split('.').at(-1).toLowerCase();
+  if (Object.hasOwn(audioMime, extension)) return audioMime[extension];
+  if (file.type === 'audio/x-m4a') return audioMime.m4a;
+  if (file.type === 'audio/x-wav' || file.type === 'audio/wave') return audioMime.wav;
+  return Object.values(audioMime).find(type => type === file.type);
+}
 function mediaFileKind(file) {
-  const video = file.type === 'video/mp4' || /\.mp4$/i.test(file.name);
-  if (!video) photoType(file);
-  const limit = video ? 48 : 10;
+  const kind = audioType(file) ? 'audios' : file.type === 'video/mp4' || /\.mp4$/i.test(file.name) ? 'videos' : 'gallery';
+  if (kind === 'gallery') photoType(file);
+  const limit = kind === 'gallery' ? 10 : 48;
   if (file.size > limit * 1024 * 1024) throw Error('μέγιστο μέγεθος ' + limit + ' MB');
-  return video ? 'videos' : 'gallery';
+  if (!file.size) throw Error('το αρχείο είναι κενό');
+  return kind;
 }
 function addMediaFiles() {
   const added = [];
@@ -368,7 +382,8 @@ function editMediaRow(row) {
     return;
   }
   replacingMedia = row;
-  mediaReplace.accept = row.kind === 'videos' ? 'video/mp4,.mp4' : 'image/jpeg,image/png,image/webp';
+  mediaReplace.accept = row.kind === 'audios' ? audioAccept
+    : row.kind === 'videos' ? 'video/mp4,.mp4' : 'image/jpeg,image/png,image/webp';
   mediaReplace.value = '';
   mediaReplace.click();
 }
@@ -378,7 +393,7 @@ function saveMediaLink() {
   let url;
   try { url = new URL(value); } catch { /* handled below */ }
   if (url?.protocol !== 'https:' || url.username || url.password || url.port) {
-    const message = 'Βάλε έγκυρο σύνδεσμο βίντεο με https://.';
+    const message = 'Βάλε έγκυρο σύνδεσμο με https://.';
     mediaLink.setCustomValidity(message);
     $('media-add').open = true;
     mediaLink.reportValidity();
@@ -441,7 +456,7 @@ mediaReplace.addEventListener('change', () => {
   if (!file || !row || row.removed) return;
   try {
     const kind = mediaFileKind(file);
-    if ((row.kind === 'videos') !== (kind === 'videos')) throw Error('Διάλεξε αρχείο του ίδιου τύπου.');
+    if (kind !== (row.kind === 'cover' ? 'gallery' : row.kind)) throw Error('Διάλεξε αρχείο του ίδιου τύπου.');
     const title = row.kind === 'cover' ? 'Εξώφυλλο · ' + file.name : file.name;
     const replacement = mediaRow(row.kind, title, { file });
     replacement.replaces = row.replaces || row;
@@ -560,13 +575,14 @@ function payload() {
   const removed = mediaRows.filter(row => row.removed);
   data.removeGallery = removed.filter(row => row.kind === 'gallery' && row.src).map(row => row.src);
   data.removeVideos = removed.filter(row => row.kind === 'videos' && row.src).map(row => row.src);
+  data.removeAudios = removed.filter(row => row.kind === 'audios' && row.src).map(row => row.src);
   const active = mediaRows.filter(row => !row.removed);
   data.videoLinks = active.filter(row => row.kind === 'link').map(row => row.src);
   const orderFor = kind => {
     let index = 0;
     return active.filter(row => row.kind === kind).map(row => row.src || index++);
   };
-  data.mediaOrder = { gallery: orderFor('gallery'), videos: orderFor('videos') };
+  data.mediaOrder = { gallery: orderFor('gallery'), videos: orderFor('videos'), audios: orderFor('audios') };
   if (removed.some(row => (row.kind === 'cover' || row.kind === 'gallery') && row.src === data.image.trim())) data.image = '';
   data.id = selected?.id;
   data.rev = selected?.rev;
@@ -578,21 +594,23 @@ function payload() {
   const [cover] = filesFor('cover');
   const gallery = filesFor('gallery');
   const videos = filesFor('videos');
+  const audios = filesFor('audios');
   const photos = cover ? [cover, ...gallery] : gallery;
   if (photos.some(file => file.size > 10 * 1024 * 1024)) throw Error('Κάθε φωτογραφία χωρά έως 10 MB.');
   if (videos.some(file => (!/\.mp4$/i.test(file.name) && file.type !== 'video/mp4') || file.size > 48 * 1024 * 1024)) {
     throw Error('Διάλεξε αρχεία MP4 έως 48 MB το καθένα.');
   }
   photos.forEach(photoType);
-  return { data, files: { cover, gallery, videos, posters: [] } };
+  return { data, files: { cover, gallery, videos, audios, posters: [] } };
 }
 async function mapFiles(files, use) {
-  const media = { gallery: [], videos: [] };
+  const media = { gallery: [], videos: [], audios: [] };
   if (files.cover) media.cover = await use(files.cover, photoType(files.cover));
   media.posters = [];
   for (const [reference, file] of files.posters) media.posters.push([reference, await use(file, 'image/jpeg')]);
   for (const file of files.gallery) media.gallery.push(await use(file, photoType(file)));
   for (const file of files.videos) media.videos.push(await use(file, 'video/mp4'));
+  for (const file of files.audios) media.audios.push(await use(file, audioType(file)));
   return media;
 }
 async function captureVideoPoster(source) {
@@ -679,7 +697,7 @@ function clearPreview() {
 }
 async function publishArticle(data, files) {
   await prepareArticleMedia(data, files);
-  const count = files.gallery.length + Number(!!files.cover) + files.posters.length + files.videos.length;
+  const count = files.gallery.length + Number(!!files.cover) + files.posters.length + files.videos.length + files.audios.length;
   const submit = async () => {
     let index = 0;
     const stagedMedia = await mapFiles(files, async (file, type) => {

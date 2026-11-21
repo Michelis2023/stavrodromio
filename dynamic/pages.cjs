@@ -73,7 +73,7 @@ function videoEmbed(source) {
 function youtubePoster(embed) {
   return 'https://i.ytimg.com/vi/' + embed.split('/').at(-1) + '/hqdefault.jpg';
 }
-function linkedVideo(source, preview, title) {
+function linkedMedia(source, preview, title) {
   if (!safeUrl(source) || !/^https:\/\//i.test(source)) return '';
   const [provider, embed] = videoEmbed(source);
   const frame = provider === 'YouTube' ? youtubePoster(embed) : embed ? fallbackImage : '';
@@ -81,7 +81,7 @@ function linkedVideo(source, preview, title) {
   return `<div class="article-video">
     ${embed && !preview ? `<button type="button" class="video-play${frame ? ' video-play-preview' : ''}" data-video-embed="${e(embed)}" data-video-title="${e(title)}" data-provider="${e(provider)}" hidden>${image}Αναπαραγωγή από ${e(provider)}</button>` : image}
     ${embed && preview ? '<p>Η αναπαραγωγή εμφανίζεται μετά τη δημοσίευση, εφόσον το επιτρέπει η υπηρεσία.</p>' : ''}
-    <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου βίντεο'}</a>
+    <a class="media-file-link" href="${e(source)}" target="_blank" rel="noopener noreferrer">${provider ? 'Προβολή στο ' + e(provider) : 'Άνοιγμα συνδέσμου · ' + e(new URL(source).hostname)}</a>
   </div>`;
 }
 function socialImage(origin, image) {
@@ -175,6 +175,7 @@ const photoAttrs = (image, eager) => image === '/images/dromos-kleistos-lagkadia
   : '';
 const photo = (item, eager = false) => item.image ? `<img src="${e(item.image)}" alt="${e(item.alt)}" ${photoAttrs(item.image, eager)} loading="${eager ? 'eager' : 'lazy'}"${eager ? ' fetchpriority="high"' : ''} decoding="async">` : '';
 const articleVideos = item => item?.videos ?? (item?.video ? [item.video] : []);
+const articleAudios = item => item?.audios ?? [];
 const articleLinks = item => item?.videoLinks ?? (item?.videoLink ? [item.videoLink] : []);
 function thumbnail(item) {
   const firstVideo = articleVideos(item)[0];
@@ -339,7 +340,8 @@ function render(kind, params) {
     const gallery = (article.gallery ?? []).filter(src => src !== coverImage);
     const poster = thumbnail(article);
     const videos = articleVideos(article);
-    const videoLinks = articleLinks(article);
+    const audios = articleAudios(article);
+    const mediaLinks = articleLinks(article);
     const leadVideo = article.heroVideo ? videos[0] : '';
     const videoFrame = (src, index) => article.videoPosters?.[src] || (index === 0 ? article.videoPoster : '') || fallbackImage;
     const videoPlayer = (src, index) => `<div class="article-video">
@@ -358,9 +360,19 @@ function render(kind, params) {
         <h2 id="article-video">Βίντεο</h2>
         ${videos.map((src, index) => leadVideo && index === 0 ? '' : videoPlayer(src, index)).join('')}
       </section>` : ''}
-      ${videoLinks.length ? `<section class="article-media" aria-labelledby="article-external-video">
-        <h2 id="article-external-video">Σύνδεσμοι βίντεο</h2>
-        ${videoLinks.map(url => linkedVideo(url, preview, article.title)).join('')}
+      ${audios.length ? `<section class="article-media" aria-labelledby="article-audio">
+        <h2 id="article-audio">Ήχος και podcast</h2>
+        ${audios.map((src, index) => {
+          const label = 'Αρχείο ήχου' + (audios.length > 1 ? ' ' + (index + 1) : '');
+          return `<div class="article-audio">
+            <audio controls preload="none" aria-label="${label}" src="${e(src)}">Ο περιηγητής σου δεν υποστηρίζει αναπαραγωγή ήχου.</audio>
+            ${preview ? '' : `<a class="media-file-link" href="${e(src)}">Άνοιγμα: ${label}</a>`}
+          </div>`;
+        }).join('')}
+      </section>` : ''}
+      ${mediaLinks.length ? `<section class="article-media" aria-labelledby="article-external-video">
+        <h2 id="article-external-video">Σύνδεσμοι</h2>
+        ${mediaLinks.map(url => linkedMedia(url, preview, article.title)).join('')}
       </section>` : ''}
       ${gallery.length ? `<section class="article-media" aria-labelledby="article-gallery">
         <h2 id="article-gallery">Φωτογραφίες</h2>
@@ -480,9 +492,9 @@ function render(kind, params) {
       <details id="media-add">
         <summary>Προσθήκη υλικού</summary>
         <div class="media-add-fields">
-          <label>Φωτογραφίες ή βίντεο <input type="file" id="media-files" multiple accept="image/jpeg,image/png,image/webp,video/mp4,.mp4" aria-describedby="media-file-help">
-          <small id="media-file-help">JPG, PNG, WebP έως 10 MB ή MP4 έως 48 MB ανά αρχείο.</small></label>
-          <label>Ή επικόλλησε σύνδεσμο βίντεο <input id="media-link-url" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
+          <label>Φωτογραφίες, βίντεο και αρχεία ήχου <input type="file" id="media-files" multiple accept="image/jpeg,image/png,image/webp,video/mp4,.mp4,audio/mpeg,audio/mp4,audio/wav,.mp3,.m4a,.wav" aria-describedby="media-file-help">
+          <small id="media-file-help">Φωτογραφίες JPG, PNG ή WebP έως 10 MB. Βίντεο MP4 και ήχος MP3, M4A ή WAV έως 48 MB ανά αρχείο.</small></label>
+          <label>Ή επικόλλησε σύνδεσμο <input id="media-link-url" type="url" maxlength="1600" inputmode="url" placeholder="https://…"></label>
           <button id="media-link-save" type="button" class="secondary">Προσθήκη συνδέσμου</button>
           <p id="media-add-error" role="status"></p>
         </div>
@@ -539,5 +551,5 @@ function render(kind, params) {
   return layout(`${intro('Σταυροδρόμι','Η σελίδα δεν είναι διαθέσιμη','Δες τα διαθέσιμα κείμενα στο αρχείο.')}<a href="/arxeio">Αρχείο κειμένων</a>`,
     { origin,title:'Η σελίδα δεν είναι διαθέσιμη',privatePage:true });
 }
-module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion, appVersion, editorVersion };
+module.exports = { render, renderShare, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleAudios, articleLinks, thumbnail, rich, safeUrl, stylesheetVersion, appVersion, editorVersion };
 })(module);

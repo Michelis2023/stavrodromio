@@ -5,7 +5,7 @@ const { createServer } = require('node:http');
 const { Readable } = require('node:stream');
 const { pipeline } = require('node:stream/promises');
 const { randomBytes, createHash, createCipheriv, createDecipheriv, hkdfSync } = require('node:crypto');
-const { render, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
+const { render, rss, sections, statuses, articleUrl, articleShareAddress, articleVideos, articleAudios, articleLinks, rich, safeUrl, stylesheetVersion, appVersion, editorVersion } = require('./pages.cjs');
 const { createTeam } = require('./team.cjs');
 const { createComments } = require('./comments.cjs');
 const { createCommentAuth } = require('./comment-auth.cjs');
@@ -220,27 +220,49 @@ function validVideo(bytes) {
   return bytes.length >= 16 && bytes.toString('ascii', 4, 8) === 'ftyp';
 }
 
+const audioFormats = {
+  'audio/mpeg': 'mp3',
+  'audio/mp4': 'm4a',
+  'audio/wav': 'wav',
+};
+const audioTypes = Object.fromEntries(Object.entries(audioFormats).map(([type, format]) => [format, type]));
+function validAudio(format, bytes) {
+  if (format === 'mp3') {
+    return bytes.length >= 4 && ((bytes.length >= 10 && bytes.toString('ascii', 0, 3) === 'ID3' &&
+      bytes[3] >= 2 && bytes[3] <= 4 && bytes.subarray(6, 10).every(byte => byte < 128)) ||
+      (bytes[0] === 0xff && (bytes[1] & 0xe0) === 0xe0 && (bytes[1] & 0x18) !== 0x08 &&
+        (bytes[1] & 0x06) === 0x02 && (bytes[2] >>> 4) !== 15 && (bytes[2] & 0x0c) !== 0x0c));
+  }
+  if (format === 'wav') {
+    return bytes.length >= 44 && bytes.toString('ascii', 0, 4) === 'RIFF' && bytes.toString('ascii', 8, 12) === 'WAVE';
+  }
+  return validVideo(bytes);
+}
+
 const maxPhotoBytes = 10 * 1024 * 1024;
 const maxVideoBytes = 48 * 1024 * 1024;
 let activeUploads = 0;
 async function stageMedia(req, token, session) {
-  const formats = { 'image/jpeg': 'jpeg', 'image/png': 'png', 'image/webp': 'webp', 'video/mp4': 'mp4' };
+  const formats = { 'image/jpeg': 'jpeg', 'image/png': 'png', 'image/webp': 'webp', 'video/mp4': 'mp4', ...audioFormats };
   const type = req.headers['content-type'];
-  if (!known(formats, type)) throw failure(415, 'Διάλεξε εικόνα JPG, PNG, WebP ή βίντεο MP4.');
+  if (!known(formats, type)) throw failure(415, 'Διάλεξε φωτογραφία JPG, PNG ή WebP, βίντεο MP4 ή ήχο MP3, M4A ή WAV.');
   const format = formats[type];
-  const video = format === 'mp4';
-  const limit = video ? maxVideoBytes : maxPhotoBytes;
-  if (Number(req.headers['content-length']) > limit) throw failure(413, video ? 'Το βίντεο ξεπερνά τα 48 MB.' : 'Η φωτογραφία ξεπερνά τα 10 MB.');
+  const kind = type.split('/')[0];
+  const limit = kind === 'image' ? maxPhotoBytes : maxVideoBytes;
+  if (Number(req.headers['content-length']) > limit) {
+    throw failure(413, kind === 'image' ? 'Η φωτογραφία ξεπερνά τα 10 MB.' : 'Το αρχείο ήχου ή βίντεο ξεπερνά τα 48 MB.');
+  }
   if (activeUploads) throw failure(429, 'Η μεταφόρτωση είναι προσωρινά απασχολημένη. Δοκίμασε ξανά σε λίγο.');
   activeUploads++;
   try {
     const bytes = await requestBytes(req, limit);
-    if (!(video ? validVideo(bytes) : validPhoto(format, bytes))) throw failure(400, 'Το αρχείο δεν ταιριάζει με τον τύπο που επέλεξες.');
+    const valid = kind === 'image' ? validPhoto(format, bytes) : kind === 'audio' ? validAudio(format, bytes) : validVideo(bytes);
+    if (!valid) throw failure(400, 'Το αρχείο δεν ταιριάζει με τον τύπο που επέλεξες.');
     const file = mediaFile(format === 'jpeg' ? 'jpg' : format, bytes);
     const uploadId = randomBytes(16).toString('hex');
     const blob = local ? file : { path: file.path, sha: (await gh(repoApi + '/git/blobs', token, 'POST',
       { content: bytes.toString('base64'), encoding: 'base64' }, 90000)).sha };
-    (session.uploads ??= new Map()).set(uploadId, { ...blob, video });
+    (session.uploads ??= new Map()).set(uploadId, { ...blob, kind });
     return { uploadId };
   } finally {
     activeUploads--;
@@ -249,19 +271,23 @@ async function stageMedia(req, token, session) {
 
 function referencedMedia(input, resolve) {
   if (!input || typeof input !== 'object' || !Array.isArray(input.gallery)) throw failure(400, 'Έλεγξε τα αρχεία της δημοσίευσης.');
-  const image = input.cover ? resolve(input.cover, false) : null;
-  const poster = input.poster ? resolve(input.poster, false) : null;
+  const image = input.cover ? resolve(input.cover, 'image') : null;
+  const poster = input.poster ? resolve(input.poster, 'image') : null;
   const posterRefs = input.posters ?? [];
   if (!Array.isArray(posterRefs) || posterRefs.length > 100 || posterRefs.some(pair => !Array.isArray(pair) || pair.length !== 2)) {
     throw failure(400, 'Έλεγξε τις εικόνες προεπισκόπησης των βίντεο.');
   }
-  const posters = posterRefs.map(([reference, value]) => [reference, resolve(value, false)]);
-  const gallery = input.gallery.map(value => resolve(value, false));
+  const posters = posterRefs.map(([reference, value]) => [reference, resolve(value, 'image')]);
+  const gallery = input.gallery.map(value => resolve(value, 'image'));
   const appendVideos = Object.hasOwn(input, 'videos');
   const videoRefs = appendVideos ? input.videos : input.video ? [input.video] : [];
   if (!Array.isArray(videoRefs)) throw failure(400, 'Έλεγξε τα βίντεο της δημοσίευσης.');
-  const videos = videoRefs.map(value => resolve(value, true));
-  return { image, poster, posters, gallery, videos, appendVideos, files: [image, poster, ...posters.map(([, file]) => file), ...gallery, ...videos].filter(Boolean) };
+  const videos = videoRefs.map(value => resolve(value, 'video'));
+  const audioRefs = input.audios ?? [];
+  if (!Array.isArray(audioRefs)) throw failure(400, 'Έλεγξε τα αρχεία ήχου της δημοσίευσης.');
+  const audios = audioRefs.map(value => resolve(value, 'audio'));
+  return { image, poster, posters, gallery, videos, audios, appendVideos,
+    files: [image, poster, ...posters.map(([, file]) => file), ...gallery, ...videos, ...audios].filter(Boolean) };
 }
 function previewFile(value, origin) {
   const prefix = 'blob:' + origin + '/';
@@ -305,13 +331,13 @@ function date(value) {
   if (!d || !Number.isFinite(+d) || d.toISOString().slice(0, 10) !== value) throw failure(400, 'Συμπλήρωσε έγκυρη ημερομηνία.');
   return value;
 }
-function videoLink(value) {
+function mediaLink(value) {
   const source = field(value, 1600);
   if (!source) return '';
   let url;
   try { url = new URL(source); } catch { /* reported below */ }
   if (safeUrl(source) && url?.protocol === 'https:' && !url.username && !url.password && !url.port) return url.href;
-  throw failure(400, 'Βάλε έγκυρο σύνδεσμο βίντεο με https://.');
+  throw failure(400, 'Βάλε έγκυρο σύνδεσμο με https://.');
 }
 function orderedMedia(order, existing, added) {
   const knownSources = new Set(existing);
@@ -320,7 +346,7 @@ function orderedMedia(order, existing, added) {
   return [...new Set([...requested.filter(Boolean), ...existing, ...added])];
 }
 function articleInput(input, existing, uploads, id) {
-  const { image, poster, posters = [], gallery, videos, appendVideos } = uploads;
+  const { image, poster, posters = [], gallery, videos, audios = [], appendVideos } = uploads;
   const title = field(input.title, 240, true);
   if (!known(sections, input.category)) throw failure(400, 'Διάλεξε ενότητα.');
   const imageUrl = field(input.image, 1600);
@@ -333,16 +359,19 @@ function articleInput(input, existing, uploads, id) {
   const photos = orderedMedia(input.mediaOrder?.gallery, keptPhotos, gallery.map(source));
   const newVideos = videos.map(source);
   const previousLinks = articleLinks(existing);
-  if (input.videoLinks !== undefined && !Array.isArray(input.videoLinks)) throw failure(400, 'Έλεγξε τους συνδέσμους βίντεο.');
+  if (input.videoLinks !== undefined && !Array.isArray(input.videoLinks)) throw failure(400, 'Έλεγξε τους συνδέσμους της δημοσίευσης.');
   const links = input.videoLinks === undefined
-    ? !appendVideos && newVideos.length ? [] : input.videoLink === undefined ? previousLinks : [videoLink(input.videoLink), ...previousLinks.slice(1)]
-    : input.videoLinks.map(videoLink);
+    ? !appendVideos && newVideos.length ? [] : input.videoLink === undefined ? previousLinks : [mediaLink(input.videoLink), ...previousLinks.slice(1)]
+    : input.videoLinks.map(mediaLink);
   const videoLinks = [...new Set(links.filter(Boolean))];
   const externalVideo = videoLinks[0] || '';
   const removedVideos = new Set(Array.isArray(input.removeVideos) ? input.removeVideos : []);
   const keepExisting = input.removeVideo !== true && (appendVideos || (!newVideos.length && !externalVideo));
   const keptVideos = keepExisting ? articleVideos(existing).filter(src => !removedVideos.has(src)) : [];
   const allVideos = orderedMedia(input.mediaOrder?.videos, keptVideos, newVideos);
+  const removedAudios = new Set(Array.isArray(input.removeAudios) ? input.removeAudios : []);
+  const keptAudios = articleAudios(existing).filter(src => !removedAudios.has(src));
+  const allAudios = orderedMedia(input.mediaOrder?.audios, keptAudios, audios.map(source));
   const firstVideo = allVideos[0];
   const previousFirst = articleVideos(existing)[0];
   const frameByVideo = new Map(allVideos.flatMap(video => {
@@ -357,7 +386,7 @@ function articleInput(input, existing, uploads, id) {
   }
   const fields = { title, date: date(input.date), author: field(input.author, 120), summary: field(input.summary, 800),
     deck: field(input.deck, 2400), image: image ? source(image) : imageUrl,
-    gallery: photos, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoLinks,
+    gallery: photos, audios: allAudios, videos: allVideos, video: firstVideo || '', videoLink: externalVideo, videoLinks,
     videoPosters: Object.fromEntries(frameByVideo), videoPoster: frameByVideo.get(firstVideo) || '',
     heroVideo: !!firstVideo && (input.heroVideo ?? existing?.heroVideo) === true,
     sections: existing?.sections[0] === input.category ? existing.sections : [input.category],
@@ -369,20 +398,22 @@ function articleInput(input, existing, uploads, id) {
   const body = fields.blocks ? rich(fields.blocks) : existing?.body || '';
   const hasBody = /<img\b[^>]*\bsrc=/i.test(body) || !!body.replace(/<[^>]*>/g, '').replace(/&nbsp;|\u00a0/g, ' ').trim();
   const hasPhotos = fields.image || photos.length > 0;
-  const hasVideo = allVideos.length > 0 || externalVideo;
-  if (!hasBody && !fields.deck && !hasPhotos && !hasVideo) {
-    throw failure(400, 'Πρόσθεσε κείμενο, φωτογραφία ή βίντεο για να δημοσιεύσεις.');
+  const hasVideo = allVideos.length > 0;
+  const hasAudio = allAudios.length > 0;
+  const hasLinks = videoLinks.length > 0;
+  const hasMedia = hasVideo || hasAudio || hasLinks;
+  if (!hasBody && !fields.deck && !hasPhotos && !hasMedia) {
+    throw failure(400, 'Πρόσθεσε κείμενο, φωτογραφία, βίντεο, ήχο ή σύνδεσμο για να δημοσιεύσεις.');
   }
-  if (!hasBody && !fields.deck && fields.image && !photos.length && !hasVideo) fields.hero = true;
+  if (!hasBody && !fields.deck && fields.image && !photos.length && !hasMedia) fields.hero = true;
   if (!fields.summary) {
-    fields.summary = fields.deck.slice(0, 300) || (hasBody ? title : hasVideo
-      ? hasPhotos ? 'Φωτογραφίες και βίντεο από το Σταυροδρόμι.' : 'Βίντεο από το Σταυροδρόμι.'
-      : 'Φωτογραφίες από το Σταυροδρόμι.');
+    const media = [hasPhotos && 'Φωτογραφίες', hasVideo && 'Βίντεο', hasAudio && 'Ηχητικά αρχεία', hasLinks && 'Σύνδεσμοι'].filter(Boolean);
+    fields.summary = fields.deck.slice(0, 300) || (hasBody ? title : media.join(', ') + ' από το Σταυροδρόμι.');
   }
   return { fields, item: { ...existing, ...fields, id, body } };
 }
 const dashboard = (state, user) => ({ featured: state.featured, user,
-  mobileHelp: 'Άνοιξε το Σταυροδρόμι από το εικονίδιο της εφαρμογής και μπες στη Διαχείριση. Πάτησε «Νέο άρθρο» για να γράψεις, να επιλέξεις φωτογραφίες και βίντεο από το κινητό ή να επικολλήσεις σύνδεσμο βίντεο. Η δημοσίευση χρειάζεται σύνδεση στο διαδίκτυο.',
+  mobileHelp: 'Άνοιξε το Σταυροδρόμι από το εικονίδιο της εφαρμογής και μπες στη Διαχείριση. Πάτησε «Νέο άρθρο» για να γράψεις, να επιλέξεις φωτογραφίες, βίντεο και αρχεία ήχου από το κινητό ή να επικολλήσεις σύνδεσμο. Η δημοσίευση χρειάζεται σύνδεση στο διαδίκτυο.',
   articles: Object.values(merged(state)).map(({ blocks, sourceNotes, ...item }) => ({ ...item, rev: hash(state.articles[item.id]) })),
   issues: state.issues.map(item => ({ ...item, rev: hash(item) })),
 });
@@ -575,9 +606,9 @@ async function admin(req, res, p, origin) {
     const uploads = p === 'preview' && input.previewMedia
       ? referencedMedia(input.previewMedia, value => previewFile(value, origin))
       : p === 'article' && input.stagedMedia
-        ? referencedMedia(input.stagedMedia, (uploadId, video) => {
+        ? referencedMedia(input.stagedMedia, (uploadId, kind) => {
           const file = session.uploads?.get(uploadId);
-          if (!file || file.video !== video) throw failure(410, 'Η μεταφόρτωση έληξε. Τα αρχεία θα σταλούν ξανά.');
+          if (!file || file.kind !== kind) throw failure(410, 'Η μεταφόρτωση έληξε. Τα αρχεία θα σταλούν ξανά.');
           used.push(uploadId);
           return file;
         })
@@ -642,8 +673,8 @@ function asset(res, p, directory, age = 3600) {
   } catch (error) { if (error.code === 'ENOENT' || error.code === 'ENOTDIR') return false; throw error; }
 }
 
-const videoHeaders = { 'Content-Type': 'video/mp4', 'X-Content-Type-Options': 'nosniff',
-  'Cache-Control': 'public, max-age=31536000, immutable', 'Accept-Ranges': 'bytes' };
+const mediaHeaders = type => ({ 'Content-Type': type, 'X-Content-Type-Options': 'nosniff',
+  'Cache-Control': 'public, max-age=31536000, immutable', 'Accept-Ranges': 'bytes' });
 function byteRange(header, size) {
   const match = /^bytes=(\d*)-(\d*)$/.exec(header);
   if (!match || !size || (!match[1] && !match[2])) return null;
@@ -651,18 +682,18 @@ function byteRange(header, size) {
   const end = match[1] && match[2] ? Math.min(size - 1, Number(match[2])) : size - 1;
   return start <= end ? { start, end } : null;
 }
-function videoResponse(req, res, size, open) {
+function mediaResponse(req, res, headers, size, open) {
   const range = req.method === 'GET' && req.headers.range ? byteRange(req.headers.range, size) : undefined;
   if (range === null) {
-    res.writeHead(416, { ...videoHeaders, 'Content-Range': 'bytes */' + size });
+    res.writeHead(416, { ...headers, 'Content-Range': 'bytes */' + size });
     return res.end();
   }
-  const headers = { ...videoHeaders, 'Content-Length': range ? range.end - range.start + 1 : size };
-  if (range) headers['Content-Range'] = 'bytes ' + range.start + '-' + range.end + '/' + size;
-  res.writeHead(range ? 206 : 200, headers);
+  const responseHeaders = { ...headers, 'Content-Length': range ? range.end - range.start + 1 : size };
+  if (range) responseHeaders['Content-Range'] = 'bytes ' + range.start + '-' + range.end + '/' + size;
+  res.writeHead(range ? 206 : 200, responseHeaders);
   return req.method === 'HEAD' ? res.end() : pipeline(open(range), res);
 }
-async function* sliceVideo(body, range) {
+async function* sliceMedia(body, range) {
   let offset = 0;
   for await (const chunk of body) {
     const next = offset + chunk.length;
@@ -673,14 +704,15 @@ async function* sliceVideo(body, range) {
     offset = next;
   }
 }
-async function uploadedVideo(req, res, p) {
+async function uploadedMedia(req, res, p, type) {
+  const headers = mediaHeaders(type);
   if (local) {
     const filename = path.join(path.dirname(local), p);
     const file = await fs.promises.stat(filename).catch(error => {
       if (error.code !== 'ENOENT') throw error;
     });
     if (!file?.isFile()) return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
-    return videoResponse(req, res, file.size, range => fs.createReadStream(filename, range));
+    return mediaResponse(req, res, headers, file.size, range => fs.createReadStream(filename, range));
   }
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), 15000);
@@ -695,7 +727,6 @@ async function uploadedVideo(req, res, p) {
   }
   if (upstream.status === 416) {
     await upstream.body?.cancel();
-    const headers = { ...videoHeaders };
     const contentRange = upstream.headers.get('content-range');
     if (contentRange) headers['Content-Range'] = contentRange;
     res.writeHead(416, headers);
@@ -703,19 +734,18 @@ async function uploadedVideo(req, res, p) {
   }
   if (!upstream.ok) {
     await upstream.body?.cancel();
-    throw failure(502, 'Το βίντεο δεν είναι διαθέσιμο προσωρινά.');
+    throw failure(502, 'Το αρχείο δεν είναι διαθέσιμο προσωρινά.');
   }
   if (range && upstream.status === 200) {
     const length = Number(upstream.headers.get('content-length'));
     const encoding = upstream.headers.get('content-encoding');
     if (upstream.body && length > 0 && (!encoding || encoding === 'identity')) {
       if (!byteRange(range, length)) await upstream.body.cancel();
-      return videoResponse(req, res, length, part => Readable.from(sliceVideo(upstream.body, part)));
+      return mediaResponse(req, res, headers, length, part => Readable.from(sliceMedia(upstream.body, part)));
     }
     const bytes = Buffer.from(await upstream.arrayBuffer());
-    return videoResponse(req, res, bytes.length, part => Readable.from(part ? bytes.subarray(part.start, part.end + 1) : bytes));
+    return mediaResponse(req, res, headers, bytes.length, part => Readable.from(part ? bytes.subarray(part.start, part.end + 1) : bytes));
   }
-  const headers = { ...videoHeaders };
   for (const key of ['content-range', 'content-length']) {
     const value = upstream.headers.get(key);
     if (value) headers[key] = value;
@@ -866,7 +896,8 @@ const route = async (req, res) => {
       if (!p.split('/').includes('..') && asset(res, p, sourceRoot)) return;
       return respond(res, 404, 'Not found', 'text/plain; charset=utf-8');
     }
-    if (/^\/uploads\/[a-f0-9]{64}\.mp4$/.test(p)) return await uploadedVideo(req, res, p);
+    const mediaFormat = /^\/uploads\/[a-f0-9]{64}\.(mp4|mp3|m4a|wav)$/.exec(p)?.[1];
+    if (mediaFormat) return await uploadedMedia(req, res, p, audioTypes[mediaFormat] || 'video/mp4');
     if (/^\/uploads\/[a-f0-9]{64}\.(jpg|png|webp)$/.test(p)) {
       if (local && asset(res, p, path.resolve(path.dirname(local)), 31536000)) return;
       if (!local) {

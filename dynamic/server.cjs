@@ -961,6 +961,19 @@ if (require.main === module) {
   createServer(route).listen(Number(process.env.PORT || 4173), '0.0.0.0', () => {
     console.log('Stavrodromio ready');
     if (!local) void publicState();
+    if (!local && process.env.RENDER === 'true') {
+      const healthUrl = new URL('/healthz', process.env.RENDER_EXTERNAL_URL || 'https://stavrodromio-koinotita.onrender.com');
+      setInterval(async () => {
+        try {
+          const response = await fetch(healthUrl, { signal: AbortSignal.timeout(8000) });
+          await response.body?.cancel();
+          if (!response.ok) throw new Error('HTTP ' + response.status);
+          console.log('[self-ping] OK');
+        } catch (error) {
+          console.warn('[self-ping] Failed:', error.message);
+        }
+      }, 14 * 60 * 1000).unref();
+    }
   });
 }
 module.exports = { route, cover };
